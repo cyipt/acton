@@ -33,8 +33,8 @@ Potential for cycling and walking:
 Options available to improve provision:
 
 - generate automated suggestions for innovations - these will be of two main types:
-  1) identify the new links that should be added 
-  2) identify the existing streets that should be improved and how they should be improved
+  1) identify the existing streets that should be improved and how they should be improved
+  2) identify the new links that should be added 
 - assess what difference these innovations would make for cycling/walking uptake
 
 
