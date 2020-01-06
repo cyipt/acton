@@ -13,7 +13,7 @@ Current level of provision:
 - routability validation. THe quality of new data can vary. We must be sure the data is topographically correct. Are nodes connected? A visual check can be made using Keepright.
 - identify destinations. These could include shops, schools, health centres, major employment centres, town centres, and public transport (rail/bus) nodes.
 - identify routes from the development to these destinations. Perhaps use the development centroid as the starting point of these routes?
-- (issue #8) assess the quality of the provision. In OSM we can see whether cycleways are separate from traffic/pedestrians, the width etc. We can use this to categorise the quality of cycle infrastructure, potentially into 8 classes or 'cycling states'. 
+- (issue #9) assess the quality of the provision. In OSM we can see whether cycleways are separate from traffic/pedestrians, the width etc. We can use this to categorise the quality of cycle infrastructure, potentially into 8 classes or 'cycling states'. 
 - similarly, investigate how to categorise the quality of walking routes.
 - compare quality of walking/cycle provision within the development with provision beyond the development boundary, on the routes used for accessing key destinations.
 - compare the distance of crow-fly v on-road walk/cycle routes
