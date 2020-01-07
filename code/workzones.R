@@ -39,7 +39,7 @@ st_crs(reszone)
 wz_centroids_wy = wz_centroids[reszone, ]
 mapview(wz_centroids_wy)
 # wz_simplified_wy = wz_simplified[wz_centroids_wy,] # failed, missing areas
-wz_simplified_wy = wz_simplified %>% filter(wz11cd %in% wz_centroids$wz11cd)
+wz_simplified_wy = wz_simplified %>% filter(wz11cd %in% wz_centroids_wy$wz11cd)
 mapview(wz_simplified_wy)
 
 # wz_simple = st_simplify(wz_wyorks,preserveTopology = TRUE, dTolerance = 10) # use rmapshaper
