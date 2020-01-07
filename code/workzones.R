@@ -7,6 +7,20 @@ library(tidyverse)
 
 wz = read_sf("http://geoportal1-ons.opendata.arcgis.com/datasets/a399c2a5922a4beaa080de63c0a218a3_1.geojson")
 
+
+# clean wpz data ----------------------------------------------------------
+
+wz1 = wz[1, ]
+mapview(wz1) # quite detailed...
+wz1_simplified = rmapshaper::ms_simplify(wz1, sys = T)
+mapview(wz1_simplified) # quite detailed...
+system.time({wz_5perc_simplified = rmapshaper::ms_simplify(wz %>% sample_frac(0.05), sys = T)})
+system.time({wz_simplified = rmapshaper::ms_simplify(wz, sys = T)})
+
+saveRDS(wz_5perc_simplified, "wz_5perc_simplified.Rds")
+file.size("wz_5perc_simplified.Rds") / 1e6
+piggyback::pb_upload("wz_5perc_simplified.Rds")
+
 reszone = pct::get_pct_zones(region = "west-yorkshire", geography = "lsoa", purpose = "commute") %>% st_transform(27700)
 iow = pct::get_pct_zones(region = "isle-of-wight", geography = "msoa", purpose = "commute") %>% st_transform(27700)
 
