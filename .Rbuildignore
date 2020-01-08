@@ -5,3 +5,4 @@
 ^pkgdown$
 ^\.travis\.yml$
 ^\.circleci/config\.yml$
+^tic\.R$
