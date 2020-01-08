@@ -1,5 +1,8 @@
 #' Get data from Planit API
 #'
+#' This function requests data from the [Planit.org API](https://www.planit.org.uk/api/).
+#' See their API spec for further information.
+#'
 #' @param bbox Bounding box in the form of xmin, ymin, xmax, ymax, e.g.: `c(-1.3, 53.7, -1.2, 53.9)`
 #' @param base_url The base URL of the service
 #' @param limit How many items to return (e.g. 6, default)
