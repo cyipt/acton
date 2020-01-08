@@ -42,12 +42,18 @@ get_planit_data(
 \item{silent}{Do you want a message? Default is `FALSE`}
 }
 \value{
-A data frame
+A (geographic) data frame
 }
 \description{
-This function requests data from the [Planit.org API](https://www.planit.org.uk/api/).
-See their API spec for further information.
+This function requests data from [planit.org.uk](https://www.planit.org.uk).
+See their [API spec](https://www.planit.org.uk/api/) and their
+[data dictionary](https://www.planit.org.uk/dictionary/)
+for further information.
 }
 \examples{
-get_planit_data(bbox = c(-1.366023, 53.744171, -1.35515, 53.747495))
+bbox = c(-1.366023, 53.744171, -1.35515, 53.747495)
+get_planit_data(bbox) # return geographic (`sf`) object
+get_planit_data(bbox, fmt = "json") # return data frame
+get_planit_data(bbox, end_date = "2008-01-01") # historic data
+get_planit_data(bbox, pcode = "LS2 9JT") # data from specific postcode
 }

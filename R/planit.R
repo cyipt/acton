@@ -1,7 +1,9 @@
 #' Get data from Planit API
 #'
-#' This function requests data from the [Planit.org API](https://www.planit.org.uk/api/).
-#' See their API spec for further information.
+#' This function requests data from [planit.org.uk](https://www.planit.org.uk).
+#' See their [API spec](https://www.planit.org.uk/api/) and their
+#' [data dictionary](https://www.planit.org.uk/dictionary/)
+#' for further information.
 #'
 #' @param bbox Bounding box in the form of xmin, ymin, xmax, ymax, e.g.: `c(-1.3, 53.7, -1.2, 53.9)`
 #' @param query_type The type of query (`"applics"` by default)
@@ -15,7 +17,7 @@
 #' @param krad Radius (km) = only planning applications within the circle perimeter are returned (default 2)
 #' @param silent Do you want a message? Default is `FALSE`
 #'
-#' @return A data frame
+#' @return A (geographic) data frame
 #' @export
 #'
 #' @examples
