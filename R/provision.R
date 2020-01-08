@@ -4,10 +4,11 @@
 #' @param parameters Weightings given to different columns (some of which could be calculated)
 #' @param walking_potential_weights Optional variable to weight the measure by estimated number of trips on different segments (by scenario)
 #'
-#' @return
+#' @return A result
 #' @export
 #'
 #' @examples
+#' estimate_walkability()
 estimate_walkability = function(osm_network, parameters = c(hilliness = 1.3, directness = 1.8), walking_potential_weights = NULL) {
   message("Calculating walking potential...")
   Sys.sleep(2)
