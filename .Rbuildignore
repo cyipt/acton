@@ -6,3 +6,7 @@
 ^\.travis\.yml$
 ^\.circleci/config\.yml$
 ^tic\.R$
+^README\.Rmd$
+^.*\.Rds$
+^code$
+^CODE_OF_CONDUCT\.md$

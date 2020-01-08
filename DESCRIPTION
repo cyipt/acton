@@ -1,6 +1,6 @@
 Package: acton
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Active Transport Options for New Developments
 Version: 0.1.0
 Authors@R: c(
     person("Joey", "Talbot", email = "j.d.talbot@leeds.ac.uk", role = c("aut"), 
@@ -13,8 +13,8 @@ Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 Language: EN-GB
 License: file LICENSE
-URL: https://github.com/ITSLeeds/acton, https://itsleeds.github.io/acton/
-BugReports: https://github.com/ITSLeeds/acton/issues
+URL: https://github.com/cyipt/acton, https://itsleeds.github.io/acton/
+BugReports: https://github.com/cyipt/acton/issues
 Encoding: UTF-8
 LazyData: true
 Imports:
