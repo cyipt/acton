@@ -6,15 +6,26 @@
 \usage{
 get_planit_data(
   bbox,
-  base_url = "https://www.planit.org.uk/api/applics/json",
+  query_type = "applics",
+  query_type_search = NULL,
+  fmt = "geojson",
+  base_url = "https://www.planit.org.uk/api",
   limit = 6,
-  end_date = "2009-02-01",
+  end_date = as.character(Sys.Date()),
   start_date = "2000-02-01",
+  pcode = NULL,
+  krad = NULL,
   silent = FALSE
 )
 }
 \arguments{
 \item{bbox}{Bounding box in the form of xmin, ymin, xmax, ymax, e.g.: `c(-1.3, 53.7, -1.2, 53.9)`}
+
+\item{query_type}{The type of query (`"applics"` by default)}
+
+\item{query_type_search}{Text string associated with the `query_type` (may be updated)}
+
+\item{fmt}{The format of the output (`"geojson"` returns an `sf` object, `"json"` returns a data frame)}
 
 \item{base_url}{The base URL of the service}
 
@@ -24,13 +35,18 @@ get_planit_data(
 
 \item{start_date}{E.g. `"2000-02-01"`}
 
+\item{pcode}{Postcode = UK postcode to use for the centre of a location search}
+
+\item{krad}{Radius (km) = only planning applications within the circle perimeter are returned (default 2)}
+
 \item{silent}{Do you want a message? Default is `FALSE`}
 }
 \value{
 A data frame
 }
 \description{
-Get data from Planit API
+This function requests data from the [Planit.org API](https://www.planit.org.uk/api/).
+See their API spec for further information.
 }
 \examples{
 get_planit_data(bbox = c(-1.366023, 53.744171, -1.35515, 53.747495))
