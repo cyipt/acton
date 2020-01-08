@@ -20,7 +20,7 @@ get_planit_data = function(bbox,
                           silent = FALSE) {
 
   u = get_planit_url(bbox, base_url = "https://www.planit.org.uk/api/applics/json",
-                                limit = 30,
+                                limit = limit,
                                 end_date = "2009-02-01",
                                 start_date = "2000-02-01")
 
