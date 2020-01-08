@@ -31,7 +31,7 @@ get_planit_data(
 
 \item{limit}{How many items to return (e.g. 6, default)}
 
-\item{end_date}{E.g. `"2009-02-01"`}
+\item{end_date}{E.g. `"2009-02-01"`. Default is `as.character(Sys.Date())`.}
 
 \item{start_date}{E.g. `"2000-02-01"`}
 
@@ -51,9 +51,11 @@ See their [API spec](https://www.planit.org.uk/api/) and their
 for further information.
 }
 \examples{
-bbox = c(-1.366023, 53.744171, -1.35515, 53.747495)
-get_planit_data(bbox) # return geographic (`sf`) object
-get_planit_data(bbox, fmt = "json") # return data frame
-get_planit_data(bbox, end_date = "2008-01-01") # historic data
-get_planit_data(bbox, pcode = "LS2 9JT") # data from specific postcode
+bbox = c(-1.4, 53.7, -1.3, 53.8)
+res = get_planit_data(bbox) # return geographic (`sf`) object
+class(res)
+plot(res)
+get_planit_data(bbox, fmt = "json", limit = 2) # return data frame with limit
+get_planit_data(bbox, end_date = "2008-01-01", limit = 2) # historic data
+get_planit_data(bbox, pcode = "LS2 9JT", limit = 2) # data from specific postcode
 }
