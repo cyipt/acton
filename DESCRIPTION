@@ -20,7 +20,9 @@ LazyData: true
 Imports:
     usethis,
     devtools,
-    goodpractice
+    goodpractice,
+    httr,
+    jsonlite
 RoxygenNote: 7.0.2
 Suggests: 
     covr,

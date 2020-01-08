@@ -18,8 +18,11 @@ estimate_walkability(
 \item{walking_potential_weights}{Optional variable to weight the measure by estimated number of trips on different segments (by scenario)}
 }
 \value{
-
+A result
 }
 \description{
 Estimate walkability
+}
+\examples{
+estimate_walkability()
 }
