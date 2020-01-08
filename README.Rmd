@@ -14,22 +14,20 @@ knitr::opts_chunk$set(
 ```
 
 <!-- badges: start -->
-<!-- [![Build Status](https://img.shields.io/travis/ropenscilabs/circle/master?label=macOS&logo=travis&style=flat-square)](https://travis-ci.org/ropenscilabs/circle) -->
-  <!-- [![Travis build status](https://travis-ci.org/cyipt/acton.svg?branch=master)](https://travis-ci.org/cyipt/acton) -->
-  <!-- badges: end -->
-
+[![Travis build status](https://travis-ci.com/cyipt/acton.svg?branch=master)](https://travis-ci.com/cyipt/acton)
+[![CircleCI](https://circleci.com/gh/cyipt/acton.svg?style=svg)](https://circleci.com/gh/cyipt/acton)
+<!-- badges: end -->
 
 # Active Transport Options for New Developments
-
-
-
 
 This project will provide evidence for local authorities, developers and civil society groups to support planning and investment in sustainable transport infrastructure that enables trips to new developments to be made by active modes, walking and cycling.
 It will deliver three main things: evidence on the current level of provision for walking and cycling; evidence on the potential for likely trips to and from the new developments to be made by walking and cycling (including cycling potential to major trip attractors such as cities centres and cycling potential to public transport links); and visualisations of the options available to improve provision.
 
+See the package website at https://cyipt.github.io/acton/
 
+## Project stages
 
-Current level of provision:
+### Current level of provision:
 
 - (issue #11, #7) first we need to identify the locations of the developments we are researching. Basic info required will include the date of completion and the number of homes. We will focus on larger developments in Leeds, Cambridge and the A350 corridor - those of 500+ homes - but we could also look at medium-sized developments.
 - (issue #8) start with an example housing development in Leeds as a prototype dataset.
@@ -45,7 +43,7 @@ Current level of provision:
 - (issue #6) look at severance of walk/cycle routes (eg by major roads that cut off the development from nearby areas)
 
 
-Potential for cycling and walking:
+### Potential for cycling and walking:
 
 - this would assess optimal cycling and walking from development locations, based on their location in regard to the destinations we have already identified. 
 - use the fastest route on CycleStreets, but also look at crow-fly distances because new developments are often characterised by very circuitous roads. See http://www.makingspaceforcycling.org/#principles for an example of this.
@@ -54,7 +52,7 @@ Potential for cycling and walking:
 - (issue #4) for many developments (especially those that tend to represent urban sprawl) the two key areas for improvement are likely to be improvements to major roads to allow cycling/walking, and the creation of new links that don't exist at present.
 
 
-Options available to improve provision:
+### Options available to improve provision:
 
 - generate automated suggestions for innovations - these will be of two main types:
   1) identify the existing streets that should be improved and how they should be improved
@@ -62,7 +60,7 @@ Options available to improve provision:
 - assess what difference these innovations would make for cycling/walking uptake
 
 
-Outputs and Outcomes
+## Outputs and Outcomes
 
 We will generate clean data on cycling and walking provision and potential.
 

@@ -3,9 +3,9 @@
 
 <!-- badges: start -->
 
-<!-- [![Build Status](https://img.shields.io/travis/ropenscilabs/circle/master?label=macOS&logo=travis&style=flat-square)](https://travis-ci.org/ropenscilabs/circle) -->
-
-<!-- [![Travis build status](https://travis-ci.org/cyipt/acton.svg?branch=master)](https://travis-ci.org/cyipt/acton) -->
+[![Travis build
+status](https://travis-ci.com/cyipt/acton.svg?branch=master)](https://travis-ci.com/cyipt/acton)
+[![CircleCI](https://circleci.com/gh/cyipt/acton.svg?style=svg)](https://circleci.com/gh/cyipt/acton)
 <!-- badges: end -->
 
 # Active Transport Options for New Developments
@@ -21,7 +21,11 @@ potential to major trip attractors such as cities centres and cycling
 potential to public transport links); and visualisations of the options
 available to improve provision.
 
-Current level of provision:
+See the package website at <https://cyipt.github.io/acton/>
+
+## Project stages
+
+### Current level of provision:
 
   - (issue \#11, \#7) first we need to identify the locations of the
     developments we are researching. Basic info required will include
@@ -55,7 +59,7 @@ Current level of provision:
   - (issue \#6) look at severance of walk/cycle routes (eg by major
     roads that cut off the development from nearby areas)
 
-Potential for cycling and walking:
+### Potential for cycling and walking:
 
   - this would assess optimal cycling and walking from development
     locations, based on their location in regard to the destinations we
@@ -74,7 +78,7 @@ Potential for cycling and walking:
     to be improvements to major roads to allow cycling/walking, and the
     creation of new links that don’t exist at present.
 
-Options available to improve provision:
+### Options available to improve provision:
 
   - generate automated suggestions for innovations - these will be of
     two main types:
@@ -84,7 +88,7 @@ Options available to improve provision:
   - assess what difference these innovations would make for
     cycling/walking uptake
 
-Outputs and Outcomes
+## Outputs and Outcomes
 
 We will generate clean data on cycling and walking provision and
 potential.
