@@ -3,6 +3,7 @@
 # OS ---------------------------------------------------------------------------
 os: linux
 dist: bionic
+sudo: true
 
 # meta -------------------------------------------------------------------------
 language: r
@@ -14,6 +15,14 @@ latex: false
 env:
   global:
     - MAKEFLAGS="-j 2"
+
+addons:
+    apt:
+        packages:
+            - libudunits2-dev
+            - libproj-dev
+            - libgeos-dev
+            - libgdal-dev
 
 # Stages -----------------------------------------------------------------------
 
