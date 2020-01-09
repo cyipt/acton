@@ -12,7 +12,7 @@
 #' @param base_url The base URL of the service
 #' @param limit How many items to return (e.g. 6, default)
 #' @param end_date E.g. `"2009-02-01"`. Default is `as.character(Sys.Date())`.
-#' @param start_date E.g. `"2000-02-01"`
+#' @param start_date The earliest application (date of application) to be filtered `"2000-02-01"`
 #' @param pcode Postcode = UK postcode to use for the centre of a location search
 #' @param krad Radius (km) = only planning applications within the circle perimeter are returned (default 2)
 #' @param silent Do you want a message? Default is `FALSE`
