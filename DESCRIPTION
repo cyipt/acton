@@ -22,7 +22,8 @@ Imports:
     devtools,
     goodpractice,
     httr,
-    jsonlite
+    jsonlite,
+    sf
 RoxygenNote: 7.0.2
 Suggests: 
     covr,
