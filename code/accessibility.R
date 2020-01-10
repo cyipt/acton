@@ -146,3 +146,20 @@ access_secondary = access_secondary[,c("LSOA_code",
 saveRDS(access_secondary, "../NewDevelopmentsCycling/data/accessibility/access_secondary.Rds")
 
 # unlink("tmp", recursive = TRUE)
+
+
+# upload csv files --------------------------------------------------------
+
+list.files("Z:/data/tmp/")
+excel_files = list.files("Z:/data/tmp/", pattern = "xl", full.names = TRUE)
+
+i = 1
+for(i in 1:length(excel_files)) {
+  base_name = basename(excel_files[i])
+  csv_name = gsub(pattern = ".xlsx", replacement = ".csv", x = base_name)
+  d = readxl::read_excel(excel_files[i])
+  names(d)
+  head(d)
+  readr::write_csv(d, csv_name)
+  piggyback::pb_upload(csv_name)
+}
