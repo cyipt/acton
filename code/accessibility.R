@@ -27,7 +27,7 @@ access_town = access_town[,c("LSOA_code",
                              "TownCyc30pct",
                              "TownCar30pct")]
 
-saveRDS(access_town, "C:/Users/geojta/Dropbox/ITS_PCT_Joey/ACTON/Accessibility_Stats/2017_Revised/data-prepared/access_town.Rds")
+saveRDS(access_town, "../NewDevelopmentsCycling/data/accessibility/access_town.Rds")
 
 #employment
 access_employ <- readxl::read_excel("Z:/data/tmp/jts0501.xlsx")
@@ -64,7 +64,7 @@ access_employ = access_employ[,c("LSOA_code",
                                  "5000EmpCar30pct")]
 
 
-saveRDS(access_employ, "C:/Users/geojta/Dropbox/ITS_PCT_Joey/ACTON/Accessibility_Stats/2017_Revised/data-prepared/access_employ.Rds")
+saveRDS(access_employ, "../NewDevelopmentsCycling/data/accessibility/access_employ.Rds")
 
 #food
 access_food <- readxl::read_excel("Z:/data/tmp/jts0507.xlsx")
@@ -83,7 +83,7 @@ access_food = access_food[,c("LSOA_code",
                              "FoodCar30pct")]
 
 
-saveRDS(access_food, "C:/Users/geojta/Dropbox/ITS_PCT_Joey/ACTON/Accessibility_Stats/2017_Revised/data-prepared/access_food.Rds")
+saveRDS(access_food, "../NewDevelopmentsCycling/data/accessibility/access_food.Rds")
 
 
 #GP
@@ -103,7 +103,7 @@ access_gp = access_gp[,c("LSOA_code",
                          "GPCar30pct")]
 
 
-saveRDS(access_gp, "C:/Users/geojta/Dropbox/ITS_PCT_Joey/ACTON/Accessibility_Stats/2017_Revised/data-prepared/access_gp.Rds")
+saveRDS(access_gp, "../NewDevelopmentsCycling/data/accessibility/access_gp.Rds")
 
 
 #primary
@@ -123,7 +123,7 @@ access_primary = access_primary[,c("LSOA_code",
                                    "PSCar30pct")]
 
 
-saveRDS(access_primary, "C:/Users/geojta/Dropbox/ITS_PCT_Joey/ACTON/Accessibility_Stats/2017_Revised/data-prepared/access_primary.Rds")
+saveRDS(access_primary, "../NewDevelopmentsCycling/data/accessibility/access_primary.Rds")
 
 
 #secondary
@@ -143,6 +143,6 @@ access_secondary = access_secondary[,c("LSOA_code",
                                        "SSCar30pct")]
 
 
-saveRDS(access_secondary, "C:/Users/geojta/Dropbox/ITS_PCT_Joey/ACTON/Accessibility_Stats/2017_Revised/data-prepared/access_secondary.Rds")
+saveRDS(access_secondary, "../NewDevelopmentsCycling/data/accessibility/access_secondary.Rds")
 
 # unlink("tmp", recursive = TRUE)
