@@ -29,5 +29,6 @@ Suggests:
     covr,
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    readODS
 VignetteBuilder: knitr
