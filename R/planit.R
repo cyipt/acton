@@ -24,6 +24,7 @@
 #' bbox = c(-1.4, 53.7, -1.3, 53.8)
 #' res = get_planit_data(bbox) # return geographic (`sf`) object
 #' class(res)
+#' names(res)
 #' plot(res)
 #' get_planit_data(bbox, fmt = "json", limit = 2) # return data frame with limit
 #' get_planit_data(bbox, end_date = "2008-01-01", limit = 2) # historic data

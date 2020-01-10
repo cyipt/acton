@@ -33,7 +33,7 @@ get_planit_data(
 
 \item{end_date}{E.g. `"2009-02-01"`. Default is `as.character(Sys.Date())`.}
 
-\item{start_date}{E.g. `"2000-02-01"`}
+\item{start_date}{The earliest application (date of application) to be filtered `"2000-02-01"`}
 
 \item{pcode}{Postcode = UK postcode to use for the centre of a location search}
 
@@ -54,6 +54,7 @@ for further information.
 bbox = c(-1.4, 53.7, -1.3, 53.8)
 res = get_planit_data(bbox) # return geographic (`sf`) object
 class(res)
+names(res)
 plot(res)
 get_planit_data(bbox, fmt = "json", limit = 2) # return data frame with limit
 get_planit_data(bbox, end_date = "2008-01-01", limit = 2) # historic data
