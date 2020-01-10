@@ -1,0 +1,24 @@
+---
+title: "Introducing the acton package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introducing the acton package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(acton)
+```
+
+
+# Getting planning data
+
+# Getting accessibility data
