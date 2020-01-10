@@ -5,7 +5,6 @@
 #' [data dictionary](https://www.planit.org.uk/dictionary/)
 #' for further information.
 #'
-#' @param bbox Bounding box in the form of xmin, ymin, xmax, ymax, e.g.: `c(-1.3, 53.7, -1.2, 53.9)`
 #' @param query_type The type of query (`"applics"` by default)
 #' @param query_type_search Text string associated with the `query_type` (may be updated)
 #' @param fmt The format of the output (`"geojson"` returns an `sf` object, `"json"` returns a data frame)
@@ -15,6 +14,7 @@
 #' @param start_date The earliest application (date of application) to be filtered `"2000-02-01"`
 #' @param pcode Postcode = UK postcode to use for the centre of a location search
 #' @param krad Radius (km) = only planning applications within the circle perimeter are returned (default 2)
+#' @param bbox Bounding box in the form of xmin, ymin, xmax, ymax, e.g.: `c(-1.3, 53.7, -1.2, 53.9)`
 #' @param silent Do you want a message? Default is `FALSE`
 #'
 #' @return A (geographic) data frame
@@ -22,27 +22,30 @@
 #'
 #' @examples
 #' bbox = c(-1.4, 53.7, -1.3, 53.8)
-#' res = get_planit_data(bbox) # return geographic (`sf`) object
+#' res = get_planit_data(bbox = bbox) # return geographic (`sf`) object
 #' class(res)
 #' plot(res)
-#' get_planit_data(bbox, fmt = "json", limit = 2) # return data frame with limit
-#' get_planit_data(bbox, end_date = "2008-01-01", limit = 2) # historic data
-#' get_planit_data(bbox, pcode = "LS2 9JT", limit = 2) # data from specific postcode
-get_planit_data = function(bbox,
+#' get_planit_data(fmt = "json", limit = 2, bbox = bbox) # return data frame with limit
+#' get_planit_data(end_date = "2008-01-01", limit = 2, bbox = bbox) # historic data
+#' get_planit_data(pcode = "LS2 9JT", limit = 2, bbox = bbox) # data from specific postcode
+#' get_planit_data(query_type = "planapplic", query_type_search = "13/05235/FU@Leeds")
+get_planit_data = function(
                           query_type = "applics",
                           query_type_search = NULL,
                           fmt = "geojson",
-                          base_url = "https://www.planit.org.uk/api",
+                          base_url = "https://www.planit.org.uk/",
                           limit = 6,
                           end_date = as.character(Sys.Date()),
                           start_date = "2000-02-01",
                           pcode = NULL,
                           krad = NULL,
+                          bbox = NULL,
                           silent = FALSE
                           ) {
 
+  # browser()
   if(is.null(query_type_search)) {
-    base_url_updated = paste(base_url, query_type, fmt, sep = "/")
+    base_url_updated = paste(base_url, "api", query_type, fmt, sep = "/")
   } else {
     base_url_updated = paste(base_url, query_type, query_type_search, fmt, sep = "/")
   }

@@ -11,11 +11,11 @@ abc$n_homes = 562
 
 # additional variables
 
-# abc_4326 = st_transform(abc, 4326)
+abc_4326 = st_transform(abc, 4326)
 #
-# lwgeom::st_geod_area(abc_4326)
-# st_area(abc_4326)
-# st_area(abc) # why are these not the same?
+lwgeom::st_geod_area(abc_4326)
+st_area(abc_4326)
+st_area(abc) # why are these not the same?
 
 # abc_buffer = st_buffer(abc, 500)
 # abc_buffer2 = abc_4326 %>%
@@ -61,6 +61,11 @@ reszone = inner_join(reszone,access_gp,by = c("geo_code" = "LSOA_code","LA_Code"
 base = "https://www.planit.org.uk/"
 endpoint = "planapplic/13/05235/FU@Leeds/geojson"
 call1 = paste(base,endpoint, sep = "")
+
+get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "13/05235/FU@Leeds", base_url = "https://www.planit.org.uk/")
+
+get_planit_data(bbox = NULL, pcode = "LS2 9JT", limit = 2) # data from specific postcode
+
 
 # library(httr)
 # library(jsonlite)
