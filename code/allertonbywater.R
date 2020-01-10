@@ -62,7 +62,14 @@ base = "https://www.planit.org.uk/"
 endpoint = "planapplic/13/05235/FU@Leeds/geojson"
 call1 = paste(base,endpoint, sep = "")
 
-get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "13/05235/FU@Leeds", base_url = "https://www.planit.org.uk/")
+
+
+p1 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "13/05235/FU@Leeds", base_url = "https://www.planit.org.uk/")
+p2 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "15/04151/FU@Leeds", base_url = "https://www.planit.org.uk/")
+p3 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "15/01973/FU@Leeds", base_url = "https://www.planit.org.uk/")
+p4 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "15/00415/FU@Leeds", base_url = "https://www.planit.org.uk/")
+
+sites
 
 get_planit_data(bbox = NULL, pcode = "LS2 9JT", limit = 2) # data from specific postcode
 
