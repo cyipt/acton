@@ -3,6 +3,8 @@
 #' The DfT's Journey Time Statistics are outlined here on the
 #' [gov.uk website](https://www.gov.uk/government/statistical-data-sets/journey-time-statistics-data-tables-jts).
 #'
+#' The function uses a data frame of existing tables, created by the script 'accessibility_tables.R' in the data-raw folder.
+#'
 #' The tables starting JTS01 to JTS03 provide national overview data.
 #' The tables JTS0401 to JTS0409 provide data at the Local Authority level.
 #' The tables JTS0501 to JTS0509 provide the same data at the LSOA level.
@@ -19,9 +21,11 @@
 #' @examples
 #' jts_tables
 #' jts_tables$table_title
-#' get_jts_data(table = "jts0401", year = 2017)
-#' get_jts_data(table = "jts0402", year = 2017)
-#' get_jts_data(table = "jts0402", year = 2014)
+#' get_jts_data(table = "jts0101", year = 2017, skip = 7)
+#' # uncomment on released version
+#' # get_jts_data(table = "jts0401", year = 2017)
+#' # get_jts_data(table = "jts0402", year = 2017)
+#' # get_jts_data(table = "jts0402", year = 2014)
 get_jts_data = function(table, year = NULL, u_csv = NULL, skip = 6) {
   table_info = jts_tables[jts_tables$table_code == table, ]
   message("This table's title is ", table_info$table_title[1])
@@ -55,6 +59,7 @@ get_accessibility_data_overview = function(download_dir = tempdir(), table_name 
   list.files(download_dir)
   readODS::read.ods(file.path(download_dir, table_name))[[1]]
 }
+utils::globalVariables("jts_tables")
 
 
 # convert_ods_file_to_csv = function(x) {

@@ -21,6 +21,8 @@ The DfT's Journey Time Statistics are outlined here on the
 [gov.uk website](https://www.gov.uk/government/statistical-data-sets/journey-time-statistics-data-tables-jts).
 }
 \details{
+The function uses a data frame of existing tables, created by the script 'accessibility_tables.R' in the data-raw folder.
+
 The tables starting JTS01 to JTS03 provide national overview data.
 The tables JTS0401 to JTS0409 provide data at the Local Authority level.
 The tables JTS0501 to JTS0509 provide the same data at the LSOA level.
@@ -32,5 +34,9 @@ Data is provided every year from 2014 to 2019 in many cases
 \examples{
 jts_tables
 jts_tables$table_title
-get_jts_data(table = "jts0401", year = 2017)
+get_jts_data(table = "jts0101", year = 2017, skip = 7)
+# uncomment on released version
+# get_jts_data(table = "jts0401", year = 2017)
+# get_jts_data(table = "jts0402", year = 2017)
+# get_jts_data(table = "jts0402", year = 2014)
 }
