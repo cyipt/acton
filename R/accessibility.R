@@ -1,5 +1,40 @@
-# prep acessability
+#' Get accessibility data for particular year and table number
+#'
+#' The DfT's Journey Time Statistics are outlined here on the
+#' [gov.uk website](https://www.gov.uk/government/statistical-data-sets/journey-time-statistics-data-tables-jts).
+#'
+#' The tables starting JTS01 to JTS03 provide national overview data.
+#' The tables JTS0401 to JTS0409 provide data at the Local Authority level.
+#' The tables JTS0501 to JTS0509 provide the same data at the LSOA level.
+#' The tables beginning JTS09 provide data on accessibility to transport hubs.
+#' And the tables beginning JTS10 contain add other variables.
+#'
+#' Data is provided every year from 2014 to 2019 in many cases
+#' @param table The title of the table, e.g. "jts0501"
+#' @param year The year, e.g. 2017
+#' @param u_csv The csv url (not usually needed)
+#' @param skip How many lines to skip before the data starts (6 by default)
+#' @aliases jts_tables
+#' @export
+#' @examples
+#' jts_tables
+#' jts_tables$table_title
+#' get_jts_data(table = "jts0401", year = 2017)
+#' get_jts_data(table = "jts0402", year = 2017)
+#' get_jts_data(table = "jts0402", year = 2014)
+get_jts_data = function(table, year = NULL, u_csv = NULL, skip = 6) {
+  table_info = jts_tables[jts_tables$table_code == table, ]
+  message("This table's title is ", table_info$table_title[1])
+  message("These data files are available for that table code: ", paste0(table_info$csv_file_name, "\n"))
+  if(!is.null(year)) {
+    csv_file_name = paste0(table, "-", year, ".csv")
+    u_original = table_info$table_url[table_info$csv_file_name == csv_file_name]
+    u_csv = table_info$csv_url[table_info$csv_file_name == csv_file_name]
+  }
 
+  message("Reading in file ", u_csv)
+  readr::read_csv(u_csv, skip = skip)
+}
 download_accessibility_files = function(download_dir = tempdir()) {
   u1 = "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/853574/journey-time-statistics-2017.pdf"
   utils::download.file(u1, file.path(download_dir, "journey-time-statistics-2017.pdf"))
@@ -20,6 +55,21 @@ get_accessibility_data_overview = function(download_dir = tempdir(), table_name 
   list.files(download_dir)
   readODS::read.ods(file.path(download_dir, table_name))[[1]]
 }
+
+
+# convert_ods_file_to_csv = function(x) {
+#
+# }
+
+# download_and_read_ods_file = function(x) {
+#   file_name = basename(x)
+#   message("Downloading file ", file_name, " from ", x)
+#   download.file(x, file_name)
+#   readODS::read.ods(file_name)
+# }
+# x = "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/748222/jts0509.ods"
+# download_and_read_ods_file(x)
+# readODS::read.ods()
 
 # library(readxl)
 # library(readODS)
