@@ -14,56 +14,77 @@ knitr::opts_chunk$set(
 ```
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.com/cyipt/acton.svg?branch=master)](https://travis-ci.com/cyipt/acton)
-[![CircleCI](https://circleci.com/gh/cyipt/acton.svg?style=svg)](https://circleci.com/gh/cyipt/acton)
-<!-- badges: end -->
-
-# Active Transport Options for New Developments
-
-This project will provide evidence for local authorities, developers and civil society groups to support planning and investment in sustainable transport infrastructure that enables trips to new developments to be made by active modes, walking and cycling.
-It will deliver three main things: evidence on the current level of provision for walking and cycling; evidence on the potential for likely trips to and from the new developments to be made by walking and cycling (including cycling potential to major trip attractors such as cities centres and cycling potential to public transport links); and visualisations of the options available to improve provision.
-
-See the package website at https://cyipt.github.io/acton/
-
-## Project stages
-
-### Current level of provision:
-
-- (issue #11, #7) first we need to identify the locations of the developments we are researching. Basic info required will include the date of completion and the number of homes. We will focus on larger developments in Leeds, Cambridge and the A350 corridor - those of 500+ homes - but we could also look at medium-sized developments.
-- (issue #8) start with an example housing development in Leeds as a prototype dataset.
-- scoping exercise on the nature of OSM data. Is the development properly mapped? Compare Mastermap v OSM, to validate the OSM data. 
-- routability validation. THe quality of new data can vary. We must be sure the data is topographically correct. Are nodes connected? A visual check can be made using Keepright.
-- (issue #5, #10) identify destinations. These could include shops, schools, health centres, major employment centres, town centres, and public transport (rail/bus) nodes. 
-- identify routes from the development to these destinations. Perhaps use the development centroid as the starting point of these routes?
-- (issue #9) assess the quality of the provision. In OSM we can see whether cycleways are separate from traffic/pedestrians, the width etc. We can use this to categorise the quality of cycle infrastructure, potentially into 8 classes or 'cycling states'. 
-- similarly, investigate how to categorise the quality of walking routes.
-- compare quality of walking/cycle provision within the development with provision beyond the development boundary, on the routes used for accessing key destinations.
-- compare the distance of crow-fly v on-road walk/cycle routes
-- compare existing walk/cycle route times with driving route times
-- (issue #6) look at severance of walk/cycle routes (eg by major roads that cut off the development from nearby areas)
+  [![Travis build status](https://travis-ci.com/cyipt/acton.svg?branch=master)](https://travis-ci.org/cyipt/acton)
+  <!-- badges: end -->
 
 
-### Potential for cycling and walking:
-
-- this would assess optimal cycling and walking from development locations, based on their location in regard to the destinations we have already identified. 
-- use the fastest route on CycleStreets, but also look at crow-fly distances because new developments are often characterised by very circuitous roads. See http://www.makingspaceforcycling.org/#principles for an example of this.
-- (issue #9) look at the difference between the quiet and fast routes, as identified by CycleStreets. 
-- model cycle potential as a function of time taken to cycle v time taken to drive
-- (issue #4) for many developments (especially those that tend to represent urban sprawl) the two key areas for improvement are likely to be improvements to major roads to allow cycling/walking, and the creation of new links that don't exist at present.
+[![Travis build status](https://travis-ci.org/ITSLeeds/RpackageTemplate.svg?branch=master)](https://travis-ci.org/ITSLeeds/RpackageTemplate) [![Coverage status](https://codecov.io/gh/ITSLeeds/RpackageTemplate/branch/master/graph/badge.svg)](https://codecov.io/github/ITSLeeds/RpackageTemplate?branch=master) [![Build status](https://ci.appveyor.com/api/projects/status/gqp3smc04as3qg85?svg=true)](https://ci.appveyor.com/project/layik/RpackageTemplate-05ana) [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 
-### Options available to improve provision:
+# RpackageTemplate
 
-- generate automated suggestions for innovations - these will be of two main types:
-  1) identify the existing streets that should be improved and how they should be improved
-  2) identify the new links that should be added 
-- assess what difference these innovations would make for cycling/walking uptake
+Template to form the basis of ITSLeeds R packages
+
+## Installation
+
+Install the package with **remotes** as follows:
+
+```{r install, eval=FALSE}
+install.packages("remotes") # If you do not already have the remotes package
+remotes::install_github("ITSleeds/RpackageTemplate")
+```
+
+## Usage
+
+To create a new package and get it on your computer:
+
+- Create a new repo on GitHub in an appropriate organisation. You can use this template by clicking the "[Use this template](https://github.com/ITSLeeds/RpackageTemplate/generate)" button in the top right hand corner of this page.
+- Clone the package onto your computer, e.g. by typing `git clone git@github.com:itsleeds/youPackageName` in a Linux terminal (try pressing `Ctl+Shift+T` in RStudio to get to the terminal or open Windows Powershell)
+- Change the name of the .Rproj file, e.g. with the following commands in terminal
+
+```bash
+cd testPackage
+mv RpackageTemplate.Rproj yourPackageName.Rproj
+```
 
 
-## Outputs and Outcomes
+- Open the project in RStudio as follows:
 
-We will generate clean data on cycling and walking provision and potential.
+```{r, eval=FALSE}
+rstudioapi::openProject("/path/to/yourPackageName")
+```
 
-Create prototype map visualising this data.
+## Continuous integration
 
-A report setting out the policy impact - potentially a peer-reviewed paper.
+To add continuous integration, use the following commands:
+
+```{r, eval=FALSE}
+usethis::use_pkgdown()
+usethis::use_travis()
+usethis::use_pkgdown_travis()
+library(travis)
+travis_enable()
+travis::use_travis_deploy()
+use_travis_deploy()
+```
+
+See these resources for further information:
+
+- https://pkgdown.r-lib.org/articles/pkgdown.html
+- https://pkgdown.r-lib.org/reference/deploy_site_github.html
+
+
+
+
+## Acknowledgement
+
+Acknowledge all the fine people who helped build this package.
+
+## Contribution
+
+Please note that the `RpackageTemplate` project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
+
+
+## Package Status
+
+This package is part of ongoing research at the University of Leeds, it is provided "as is" and is likely to be updated and changed without warning to meet the research needs of the University.
