@@ -32,5 +32,7 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    readODS
+    readODS,
+    tmap,
+    dplyr
 VignetteBuilder: knitr

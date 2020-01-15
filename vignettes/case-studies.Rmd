@@ -1,0 +1,64 @@
+---
+title: "Acton case studies"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Acton case studies}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+devtools::install_github("cyipt/acton")
+library(acton)
+library(tmap)
+tmap_mode("view")
+```
+
+## Leeds
+
+### Planning applications
+
+
+
+```{r}
+
+```
+
+### Accessibility indicators
+
+```{r}
+# library(tidyverse)
+# work_accesibility = get_jts_data(table = "jts0501", year = 2017)
+# jts_0501_metadata = get_jts_data(table = "jts0501", year = "Metadata")
+# # View(jts_0501_metadata)
+# wy_zones = pct::get_pct_zones(region = "west-yorkshire", geography = "lsoa")
+# # names(work_accesibility)
+# names(work_accesibility)[1] = names(wy_zones)[1]
+# zones = dplyr::left_join(wy_zones, work_accesibility)
+# zones_leeds = zones %>% filter(lad_name == "Leeds")
+# plot(zones_leeds["100EmpPTt"])
+# plot(zones_leeds["Empl_pop"])
+# plot(zones_leeds$all, zones_leeds$Empl_pop)
+# sf::write_sf(zones_leeds, "zones_leeds_pct_jts_2017_lsoa.geojson")
+# piggyback::pb_upload("zones_leeds_pct_jts_2017_lsoa.geojson")
+# piggyback::pb_download_url("zones_leeds_pct_jts_2017_lsoa.geojson")
+zones_leeds = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/zones_leeds_pct_jts_2017_lsoa.geojson")
+qtm(zones_leeds, "Empl_pop")
+```
+
+According to DfT's JTS, there are many areas that have poor accessibility by active modes and public transport.
+
+```{r}
+# names(zones_leeds)
+tmap_mode("plot")
+qtm(zones_leeds, c("Jobs5000EmpPTt", "Jobs5000EmpCyct", "Jobs5000EmpCart")) +
+  tm_facets(nrow = 1)
+```

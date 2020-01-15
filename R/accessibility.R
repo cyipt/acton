@@ -37,7 +37,10 @@ get_jts_data = function(table, year = NULL, u_csv = NULL, skip = 6) {
   }
 
   message("Reading in file ", u_csv)
-  readr::read_csv(u_csv, skip = skip)
+  res = readr::read_csv(u_csv, skip = skip)
+  names(res) = gsub(pattern = "100", replacement = "Jobs100", names(res))
+  names(res) = gsub(pattern = "500", replacement = "Jobs500", names(res))
+  res
 }
 download_accessibility_files = function(download_dir = tempdir()) {
   u1 = "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/853574/journey-time-statistics-2017.pdf"
