@@ -11,3 +11,4 @@
 ^code$
 ^CODE_OF_CONDUCT\.md$
 ^data-raw$
+^.*\.geojson$
