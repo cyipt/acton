@@ -3,7 +3,7 @@ devtools::install_github("cyipt/acton")
 #>   Use `force = TRUE` to force installation
 
 library(acton)
-library(tidyverse)
+library(dplyr)
 
 
 jts = get_jts_data("jts0501", 2017)

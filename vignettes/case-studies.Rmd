@@ -35,7 +35,7 @@ tmap_mode("view")
 ### Accessibility indicators
 
 ```{r}
-# library(tidyverse)
+# library(dplyr)
 # work_accesibility = get_jts_data(table = "jts0501", year = 2017)
 # jts_0501_metadata = get_jts_data(table = "jts0501", year = "Metadata")
 # # View(jts_0501_metadata)
