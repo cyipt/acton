@@ -1,7 +1,9 @@
 devtools::install_github("cyipt/acton")
 #> Skipping install of 'acton' from a github remote, the SHA1 (6c4468f7) has not changed since last install.
 #>   Use `force = TRUE` to force installation
+
 library(acton)
+library(tidyverse)
 
 
 jts = get_jts_data("jts0501", 2017)
@@ -39,7 +41,15 @@ zz = left_join(zones_leeds,jts, "geo_code" = "LSOA_code")
 
 library(tmap)
 tmap_mode("plot")
+
+
 qtm(zz,"weighted_PTt")
 qtm(zz, c("weighted_PTt", "weighted_Cyct", "weighted_Cart")) +
+  tm_facets(nrow = 1)
+
+qtm(zz, c("Jobs5000EmpPTt", "Jobs5000EmpCyct", "Jobs5000EmpCart")) +
+  tm_facets(nrow = 1)
+
+qtm(zz, c("Jobs5000EmpPTt", "Jobs5000EmpCyct", "Jobs5000EmpCart")) +
   tm_facets(nrow = 1)
 
