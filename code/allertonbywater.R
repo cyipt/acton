@@ -3,7 +3,8 @@ library(mapview)
 library(pct)
 library(tidyverse)
 
-reszone = pct::get_pct_zones(region = "west-yorkshire", geography = "lsoa", purpose = "commute") %>% st_transform(27700) %>% rename(LA_Code = lad11cd)
+reszone = pct::get_pct_zones(region = "west-yorkshire", geography = "lsoa", purpose = "commute") %>% rename(LA_Code = lad11cd)
+reszone_proj = reszone %>% st_transform(27700)
 
 ab = st_sfc(st_polygon(list(cbind(c(441926,441865,442023,442362,442610,442613,442238,442297,442294,442197,442140,441968,441926),c(428055,427794,427620,427630,427579,427690,427906,428008,428094,428085,427954,428061,428055)))))
 abc = st_sf(ab,crs = 27700)
@@ -51,28 +52,25 @@ reszone = inner_join(reszone,access_secondary,by = c("geo_code" = "LSOA_code","L
 reszone = inner_join(reszone,access_gp,by = c("geo_code" = "LSOA_code","LA_Code"))
 
 
-# Allerton Bywater PlanIt data --------------------------------------------
+# PlanIt data for Allerton Bywater and other sites--------------------------------------------
 
-# ?get_planit_data
-
-
-# https://www.planit.org.uk/planapplic/13/05235/FU@Leeds/geojson
-
-base = "https://www.planit.org.uk/"
-endpoint = "planapplic/13/05235/FU@Leeds/geojson"
-call1 = paste(base,endpoint, sep = "")
+# ?get_planit_data #####should work once I can download the acton package
 
 
+# https://www.planit.org.uk/planapplic/13/05235/FU@Leeds/geojson ## the full URL for alleron bywater in planit
+#
+# base = "https://www.planit.org.uk/"
+# endpoint = "planapplic/13/05235/FU@Leeds/geojson"
+# call1 = paste(base,endpoint, sep = "")
+#
+# library(geojsonsf)
+#
+# planit_ab = geojson_sf(call1)
+# head(planit_ab)
+#
+# planit_ab_proj = st_transform(planit_ab,27700)
 
-p1 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "13/05235/FU@Leeds", base_url = "https://www.planit.org.uk/")
-p2 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "15/04151/FU@Leeds", base_url = "https://www.planit.org.uk/")
-p3 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "15/01973/FU@Leeds", base_url = "https://www.planit.org.uk/")
-p4 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "15/00415/FU@Leeds", base_url = "https://www.planit.org.uk/")
-
-sites
-
-get_planit_data(bbox = NULL, pcode = "LS2 9JT", limit = 2) # data from specific postcode
-
+# get_planit_data(bbox = NULL, pcode = "LS2 9JT", limit = 2) # data from specific postcode
 
 # library(httr)
 # library(jsonlite)
@@ -85,29 +83,35 @@ get_planit_data(bbox = NULL, pcode = "LS2 9JT", limit = 2) # data from specific 
 # get_ab_df = as.data.frame(get_ab_json$properties)
 # st_as_sf(get_ab_df, coords = c(get_ab_df$lat, get_ab_df$lng))#fails
 
-library(geojsonsf)
 
-planit_ab = geojson_sf(call1)
-head(planit_ab)
 
-planit_ab_proj = st_transform(planit_ab,27700)
+##########
 
-##now need to identify which LSOA planit_ab_proj falls within
+p1 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "13/05235/FU@Leeds", base_url = "https://www.planit.org.uk/")
+p2 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "15/04151/FU@Leeds", base_url = "https://www.planit.org.uk/")
+p3 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "15/01973/FU@Leeds", base_url = "https://www.planit.org.uk/")
+p4 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "15/00415/FU@Leeds", base_url = "https://www.planit.org.uk/")
 
-# planit_ab_proj$region <- apply(st_intersects(reszone, planit_ab_proj, sparse = FALSE), 2,
-#                      function(col) {
-#                        reszone[which(col), ]$LSOA_code
-#                      })
-#
-# planit_ab_proj$region
+p4 = p4[,-9]
+sites = rbind(p1,p2,p3,p4)
+sites$place = c("AllertonBywater", "Tyersall", "Micklefield", "LeedsClimateInnovationDistrict")
 
-planit_ab_proj = st_join(planit_ab_proj,reszone,join = st_within)
+# sites = st_transform(sites,27700)
+# abc_buffer2 = abc_4326 %>%
+#   st_transform(27700) %>%
+#   st_buffer(500) %>%
+#   st_transform(4326)
 
-planit_ab_proj$geo_code
-planit_ab_proj$LA_Code
-planit_ab_proj$FoodPTt
+sites = sites %>%
+  st_transform(27700)
+sites = st_join(sites,reszone_proj,join = st_within) %>%
+  st_transform(4326)
 
-mapview(planit_ab_proj)
+sites$FoodCart
+sites$geo_code
+
+# mapview(abc) +
+mapview(reszone) + mapview(sites[4,])
 
 
 # Maps --------------------------------------------------------------------
@@ -122,7 +126,7 @@ tmap_mode("view")
 #Accessibility stat examples
 tm_shape(reszone) +
   tm_polygons(col = "FoodPTt") +
-  tm_shape(planit_ab_proj) +
+  tm_shape(sites) +
   tm_dots()
 
 
