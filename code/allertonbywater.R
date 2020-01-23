@@ -2,9 +2,9 @@ library(sf)
 library(mapview)
 library(pct)
 library(tidyverse)
+library(acton)
 
 reszone = pct::get_pct_zones(region = "west-yorkshire", geography = "lsoa", purpose = "commute") %>% rename(LA_Code = lad11cd)
-reszone_proj = reszone %>% st_transform(27700)
 
 
 # Allerton Bywater Millennium Community polygon ---------------------------
@@ -105,12 +105,12 @@ sites$place = c("AllertonBywater", "Tyersall", "Micklefield", "LeedsClimateInnov
 #   st_buffer(500) %>%
 #   st_transform(4326)
 
+reszone_proj = reszone %>% st_transform(27700)
 sites = sites %>%
   st_transform(27700)
 sites = st_join(sites,reszone_proj,join = st_within) %>%
   st_transform(4326)
 
-sites$FoodCart
 sites$geo_code
 
 # mapview(abc) +
