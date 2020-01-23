@@ -6,9 +6,14 @@ library(acton)
 
 reszone = pct::get_pct_zones(region = "west-yorkshire", geography = "lsoa", purpose = "commute") %>% rename(LA_Code = lad11cd)
 
+st_is_valid(reszone)
 resszone = lwgeom::st_make_valid(reszone)
+st_is_valid(reszone)
+
+c = pct::get_pct_centroids(region = "west-yorkshire", geography = "lsoa") %>% rename(LA_Code = lad11cd)
 
 reszone = reszone %>% filter(LA_Code == "E08000035")
+c = c %>% filter(LA_Code == "E08000035")
 
 # Allerton Bywater Millennium Community polygon ---------------------------
 
@@ -136,22 +141,40 @@ p4 = p4[,-9]
 sites = rbind(p1,p2,p3,p4)
 sites$place = c("AllertonBywater", "Tyersall", "Micklefield", "LeedsClimateInnovationDistrict")
 
-# sites = st_transform(sites,27700)
-# abc_buffer2 = abc_4326 %>%
-#   st_transform(27700) %>%
-#   st_buffer(500) %>%
+
+
+# Link the sites with the closest centroid --------------------------------
+
+
+# # this joins the sites with the LSOA they sit within, but I think it would be better to join them with the closest LSOA centroid instead, since it is the centroids that are used as the origin points for the accessibility stats
+# reszone_proj = reszone %>% st_transform(27700)
+#
+# sites = sites %>%
+#   st_transform(27700)
+# sites = st_join(sites,reszone_proj,join = st_within) %>%
 #   st_transform(4326)
 
-reszone_proj = reszone %>% st_transform(27700)
+
+# this finds the nearest centroid to each site
+c_proj = c %>% st_transform(27700)
+
 sites = sites %>%
   st_transform(27700)
-sites = st_join(sites,reszone_proj,join = st_within) %>%
+sites = st_join(sites,c_proj,join = st_nearest_feature) %>%
   st_transform(4326)
+
+# sites$nearest_centroid = sites %>%
+#   st_transform(27700)
+# st_nearest_feature(near,c_proj) %>%
+#   st_transform(4326)
+
 
 sites$geo_code
 
 # mapview(abc) +
-mapview(reszone) + mapview(sites[4,])
+mapview(reszone) +
+mapview(sites) +
+mapview(c[c$geo_code %in% sites$geo_code,])
 
 
 
@@ -168,7 +191,9 @@ tmap_mode("view")
 tm_shape(reszone) +
   tm_polygons(col = "FoodPTt") +
   tm_shape(sites) +
-  tm_dots()
+  tm_dots() +
+  tm_shape(c) +
+  tm_dots(col = "yellow")
 
 
 tm_shape(reszone) +
