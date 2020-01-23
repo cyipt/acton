@@ -40,7 +40,7 @@ zz = left_join(zones_leeds,jts, "geo_code" = "LSOA_code")
 
 
 library(tmap)
-tmap_mode("plot")
+tmap_mode("view")
 
 
 qtm(zz,"weighted_PTt")

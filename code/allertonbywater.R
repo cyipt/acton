@@ -6,6 +6,9 @@ library(tidyverse)
 reszone = pct::get_pct_zones(region = "west-yorkshire", geography = "lsoa", purpose = "commute") %>% rename(LA_Code = lad11cd)
 reszone_proj = reszone %>% st_transform(27700)
 
+
+# Allerton Bywater Millennium Community polygon ---------------------------
+
 ab = st_sfc(st_polygon(list(cbind(c(441926,441865,442023,442362,442610,442613,442238,442297,442294,442197,442140,441968,441926),c(428055,427794,427620,427630,427579,427690,427906,428008,428094,428085,427954,428061,428055)))))
 abc = st_sf(ab,crs = 27700)
 abc$n_homes = 562
@@ -34,12 +37,12 @@ mapview(abc) + mapview(reszone)
 
 # Accessibility stats -----------------------------------------------------
 
-access_town = readRDS("../NewDevelopmentsCycling/data/accessibility/access_town.Rds")
-access_food = readRDS("../NewDevelopmentsCycling/data/accessibility/access_food.Rds")
-access_employ = readRDS("../NewDevelopmentsCycling/data/accessibility/access_employ.Rds")
-access_primary = readRDS("../NewDevelopmentsCycling/data/accessibility/access_primary.Rds")
-access_secondary = readRDS("../NewDevelopmentsCycling/data/accessibility/access_secondary.Rds")
-access_gp = readRDS("../NewDevelopmentsCycling/data/accessibility/access_gp.Rds")
+access_town = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_town.Rds")
+access_food = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_food.Rds")
+access_employ = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_employ.Rds")
+access_primary = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_primary.Rds")
+access_secondary = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_secondary.Rds")
+access_gp = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_gp.Rds")
 
 # wy = unique(reszone$lad11cd)
 # access_town_wy = access_town[access_town$LA_Code %in% wy,]
