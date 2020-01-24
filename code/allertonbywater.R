@@ -2,10 +2,22 @@ library(sf)
 library(mapview)
 library(pct)
 library(tidyverse)
+library(acton)
+library(janitor)
+library(tmap)
+tmap_mode("view")
 
 reszone = pct::get_pct_zones(region = "west-yorkshire", geography = "lsoa", purpose = "commute") %>% rename(LA_Code = lad11cd)
-reszone_proj = reszone %>% st_transform(27700)
 
+which(st_is_valid(reszone) == FALSE)
+reszone = lwgeom::st_make_valid(reszone)
+which(st_is_valid(reszone) == FALSE)
+
+c = pct::get_pct_centroids(region = "west-yorkshire", geography = "lsoa") %>% rename(LA_Code = lad11cd)
+
+##Filter to only include Leeds. But Tyersall is actually closest to a centroid in Bradford
+# reszone = reszone %>% filter(LA_Code == "E08000035")
+# c = c %>% filter(LA_Code == "E08000035")
 
 # Allerton Bywater Millennium Community polygon ---------------------------
 
@@ -37,22 +49,79 @@ mapview(abc) + mapview(reszone)
 
 # Accessibility stats -----------------------------------------------------
 
-access_town = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_town.Rds")
-access_food = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_food.Rds")
-access_employ = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_employ.Rds")
-access_primary = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_primary.Rds")
-access_secondary = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_secondary.Rds")
-access_gp = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_gp.Rds")
+# access_town = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_town.Rds")
+# access_food = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_food.Rds")
+# access_employ = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_employ.Rds")
+# access_primary = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_primary.Rds")
+# access_secondary = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_secondary.Rds")
+# access_gp = readRDS("~/NewDevelopmentsCycling/data/accessibility/access_gp.Rds")
 
 # wy = unique(reszone$lad11cd)
 # access_town_wy = access_town[access_town$LA_Code %in% wy,]
 
+access_employ = get_jts_data("jts0501", 2017)
+access_town = get_jts_data("jts0508", 2017)#error
+access_food = get_jts_data("jts0507", 2017)
+access_primary = get_jts_data("jts0502", 2017)
+access_secondary = get_jts_data("jts0503", 2017)
+access_gp = get_jts_data("jts0505", 2017)#error
+
+access_town = remove_empty(access_town,"cols")
+access_gp = remove_empty(access_gp,"cols")
+
+# Weighted employment figures ---------------------------------
+
+access_employ$weightedJobsPTt = apply(
+  X = access_employ[c("Jobs100EmpPTt", "Jobs500EmpPTt", "Jobs5000EmpPTt")],
+  MARGIN = 1,
+  FUN = weighted.mean,
+  w = c(100, 500, 5000)
+)
+access_employ$weightedJobsCyct = apply(
+  X = access_employ[c("Jobs100EmpCyct", "Jobs500EmpCyct", "Jobs5000EmpCyct")],
+  MARGIN = 1,
+  FUN = weighted.mean,
+  w = c(100, 500, 5000)
+)
+access_employ$weightedJobsCart = apply(
+  X = access_employ[c("Jobs100EmpCart", "Jobs500EmpCart", "Jobs5000EmpCart")],
+  MARGIN = 1,
+  FUN = weighted.mean,
+  w = c(100, 500, 5000)
+)
+
+
+
+# Join the data tables ----------------------------------------------------
+
+#these need to be joined so they show on the maps
 reszone = inner_join(reszone,access_town,by = c("geo_code" = "LSOA_code","LA_Code"))
 reszone = inner_join(reszone,access_food,by = c("geo_code" = "LSOA_code","LA_Code"))
 reszone = inner_join(reszone,access_employ,by = c("geo_code" = "LSOA_code","LA_Code"))
 reszone = inner_join(reszone,access_primary,by = c("geo_code" = "LSOA_code","LA_Code"))
 reszone = inner_join(reszone,access_secondary,by = c("geo_code" = "LSOA_code","LA_Code"))
 reszone = inner_join(reszone,access_gp,by = c("geo_code" = "LSOA_code","LA_Code"))
+
+#these need to be joined to extract the data for the sites
+c = inner_join(c,access_town,by = c("geo_code" = "LSOA_code","LA_Code"))
+c = inner_join(c,access_food,by = c("geo_code" = "LSOA_code","LA_Code"))
+c = inner_join(c,access_employ,by = c("geo_code" = "LSOA_code","LA_Code"))
+c = inner_join(c,access_primary,by = c("geo_code" = "LSOA_code","LA_Code"))
+c = inner_join(c,access_secondary,by = c("geo_code" = "LSOA_code","LA_Code"))
+c = inner_join(c,access_gp,by = c("geo_code" = "LSOA_code","LA_Code"))
+
+
+# Index of overall accessibility ------------------------------------------
+
+reszone = reszone %>%
+  mutate(index_PT = weightedJobsPTt+TownPTt+FoodPTt+PSPTt+SSPTt+GPPTt,
+         index_Cyc = weightedJobsCyct+TownCyct+FoodCyct+PSCyct+SSCyct+GPCyct,
+         index_Car = weightedJobsCart+TownCart+FoodCart+PSCart+SSCart+GPCart)
+
+c = c %>%
+  mutate(index_PT = weightedJobsPTt+TownPTt+FoodPTt+PSPTt+SSPTt+GPPTt,
+         index_Cyc = weightedJobsCyct+TownCyct+FoodCyct+PSCyct+SSCyct+GPCyct,
+         index_Car = weightedJobsCart+TownCart+FoodCart+PSCart+SSCart+GPCart)
 
 
 # PlanIt data for Allerton Bywater and other sites--------------------------------------------
@@ -96,64 +165,114 @@ p3 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search =
 p4 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "15/00415/FU@Leeds", base_url = "https://www.planit.org.uk/")
 
 p4 = p4[,-9]
+
+
+# Link the sites with the closest centroid --------------------------------
+
+
+# # this joins the sites with the LSOA they sit within, but I think it would be better to join them with the closest LSOA centroid instead, since it is the centroids that are used as the origin points for the accessibility stats
+# reszone_proj = reszone %>% st_transform(27700)
+#
+# sites = sites %>%
+#   st_transform(27700)
+# sites = st_join(sites,reszone_proj,join = st_within) %>%
+#   st_transform(4326)
+
+
 sites = rbind(p1,p2,p3,p4)
 sites$place = c("AllertonBywater", "Tyersall", "Micklefield", "LeedsClimateInnovationDistrict")
 
-# sites = st_transform(sites,27700)
-# abc_buffer2 = abc_4326 %>%
-#   st_transform(27700) %>%
-#   st_buffer(500) %>%
-#   st_transform(4326)
+
+
+# this finds the nearest centroid to each site
+c_proj = c %>% st_transform(27700)
 
 sites = sites %>%
   st_transform(27700)
-sites = st_join(sites,reszone_proj,join = st_within) %>%
+sites = st_join(sites,c_proj,join = st_nearest_feature) %>%
   st_transform(4326)
 
-sites$FoodCart
-sites$geo_code
+# sites$nearest_centroid = sites %>%
+#   st_transform(27700)
+# st_nearest_feature(near,c_proj) %>%
+#   st_transform(4326)
+
 
 # mapview(abc) +
-mapview(reszone) + mapview(sites[4,])
+mapview(reszone) +
+mapview(sites) +
+mapview(c[c$geo_code %in% sites$geo_code,])
+
+sites$geo_code
+sites$place
+
+sites$index_PT
+sites$index_Cyc
+sites$index_Car
 
 
 # Maps --------------------------------------------------------------------
 
 
-library(tmap)
-tmap_mode("view")
-
 #Warning - geometry is not valid on row 359
 # reszone[which(st_is_valid(reszone) == FALSE),]
 
+
 #Accessibility stat examples
+tm_shape(reszone) +
+  tm_polygons(c("index_PT", "index_Cyc")) +
+  tm_format("reszone")
+
+tmap_mode("view")
+tm_shape(reszone) +
+  tm_polygons(c("index_PT","index_Cyc","index_Car")) +
+  tm_shape(sites) +
+  tm_dots() +
+  tm_facets(nrow = 1)
+
+# tm_shape(reszone) +
+#   tm_polygons(col = "index_Cyc") +
+#   tm_shape(sites) +
+#   tm_dots()
+#
+# tm_shape(reszone) +
+#   tm_polygons(col = "index_Car") +
+#   tm_shape(sites) +
+  # tm_dots()
+
+
 tm_shape(reszone) +
   tm_polygons(col = "FoodPTt") +
   tm_shape(sites) +
+  tm_dots() +
+  tm_shape(c) +
+  tm_dots(col = "yellow")
+
+
+tm_shape(reszone) +
+  tm_polygons(col = "FoodCyct") +
+  tm_shape(sites) +
   tm_dots()
 
+tm_shape(reszone) +
+  tm_polygons(col = "FoodCart") +
+  tm_shape(sites) +
+  tm_dots()
 
 tm_shape(reszone) +
-  tm_polygons(col = "FoodCyct")
+  tm_polygons(col = "weightedJobsPTt") +
+  tm_shape(sites) +
+  tm_dots()
 
 tm_shape(reszone) +
-  tm_polygons(col = "5000EmpPTt")
+  tm_polygons(col = "weightedJobsCyct") +
+  tm_shape(sites) +
+  tm_dots()
 
 tm_shape(reszone) +
-  tm_polygons(col = "500EmpPTt")
-
-tm_shape(reszone) +
-  tm_polygons(col = "100EmpPTt")
-
-tm_shape(reszone) +
-  tm_polygons(col = "5000EmpCyct")
-
-tm_shape(reszone) +
-  tm_polygons(col = "500EmpCyct")
-
-tm_shape(reszone) +
-  tm_polygons(col = "100EmpCyct")
-
+  tm_polygons(col = "weightedJobsCart") +
+  tm_shape(sites) +
+  tm_dots()
 
 
 
