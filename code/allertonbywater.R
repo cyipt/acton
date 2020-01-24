@@ -4,6 +4,8 @@ library(pct)
 library(tidyverse)
 library(acton)
 library(janitor)
+library(tmap)
+tmap_mode("view")
 
 reszone = pct::get_pct_zones(region = "west-yorkshire", geography = "lsoa", purpose = "commute") %>% rename(LA_Code = lad11cd)
 
@@ -13,8 +15,9 @@ which(st_is_valid(reszone) == FALSE)
 
 c = pct::get_pct_centroids(region = "west-yorkshire", geography = "lsoa") %>% rename(LA_Code = lad11cd)
 
-reszone = reszone %>% filter(LA_Code == "E08000035")
-c = c %>% filter(LA_Code == "E08000035")
+##Filter to only include Leeds. But Tyersall is actually closest to a centroid in Bradford
+# reszone = reszone %>% filter(LA_Code == "E08000035")
+# c = c %>% filter(LA_Code == "E08000035")
 
 # Allerton Bywater Millennium Community polygon ---------------------------
 
@@ -56,25 +59,6 @@ mapview(abc) + mapview(reszone)
 # wy = unique(reszone$lad11cd)
 # access_town_wy = access_town[access_town$LA_Code %in% wy,]
 
-get_jts_data = function(table, year = NULL, u_csv = NULL, skip = 6) {
-  table_info = jts_tables[jts_tables$table_code == table, ]
-  message("This table's title is ", table_info$table_title[1])
-  message("These data files are available for that table code: ", paste0(table_info$csv_file_name, "\n"))
-  if(!is.null(year)) {
-    csv_file_name = paste0(table, "-", year, ".csv")
-    u_original = table_info$table_url[table_info$csv_file_name == csv_file_name]
-    u_csv = table_info$csv_url[table_info$csv_file_name == csv_file_name]
-  }
-
-  message("Reading in file ", u_csv)
-  res = readr::read_csv(u_csv, skip = skip)
-  names(res) = gsub(pattern = "100", replacement = "Jobs100", names(res))
-  names(res) = gsub(pattern = "500", replacement = "Jobs500", names(res))
-  res
-}
-
-act2 = read_csv("https://github.com/cyipt/acton/releases/tag/0.0.1/jts0508-2017.csv",skip = 6)
-
 access_employ = get_jts_data("jts0501", 2017)
 access_town = get_jts_data("jts0508", 2017)#error
 access_food = get_jts_data("jts0507", 2017)
@@ -107,14 +91,37 @@ access_employ$weightedJobsCart = apply(
 )
 
 
+
 # Join the data tables ----------------------------------------------------
 
+#these need to be joined so they show on the maps
 reszone = inner_join(reszone,access_town,by = c("geo_code" = "LSOA_code","LA_Code"))
 reszone = inner_join(reszone,access_food,by = c("geo_code" = "LSOA_code","LA_Code"))
 reszone = inner_join(reszone,access_employ,by = c("geo_code" = "LSOA_code","LA_Code"))
 reszone = inner_join(reszone,access_primary,by = c("geo_code" = "LSOA_code","LA_Code"))
 reszone = inner_join(reszone,access_secondary,by = c("geo_code" = "LSOA_code","LA_Code"))
 reszone = inner_join(reszone,access_gp,by = c("geo_code" = "LSOA_code","LA_Code"))
+
+#these need to be joined to extract the data for the sites
+c = inner_join(c,access_town,by = c("geo_code" = "LSOA_code","LA_Code"))
+c = inner_join(c,access_food,by = c("geo_code" = "LSOA_code","LA_Code"))
+c = inner_join(c,access_employ,by = c("geo_code" = "LSOA_code","LA_Code"))
+c = inner_join(c,access_primary,by = c("geo_code" = "LSOA_code","LA_Code"))
+c = inner_join(c,access_secondary,by = c("geo_code" = "LSOA_code","LA_Code"))
+c = inner_join(c,access_gp,by = c("geo_code" = "LSOA_code","LA_Code"))
+
+
+# Index of overall accessibility ------------------------------------------
+
+reszone = reszone %>%
+  mutate(index_PT = weightedJobsPTt+TownPTt+FoodPTt+PSPTt+SSPTt+GPPTt,
+         index_Cyc = weightedJobsCyct+TownCyct+FoodCyct+PSCyct+SSCyct+GPCyct,
+         index_Car = weightedJobsCart+TownCart+FoodCart+PSCart+SSCart+GPCart)
+
+c = c %>%
+  mutate(index_PT = weightedJobsPTt+TownPTt+FoodPTt+PSPTt+SSPTt+GPPTt,
+         index_Cyc = weightedJobsCyct+TownCyct+FoodCyct+PSCyct+SSCyct+GPCyct,
+         index_Car = weightedJobsCart+TownCart+FoodCart+PSCart+SSCart+GPCart)
 
 
 # PlanIt data for Allerton Bywater and other sites--------------------------------------------
@@ -160,11 +167,6 @@ p4 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search =
 p4 = p4[,-9]
 
 
-sites = rbind(p1,p2,p3,p4)
-sites$place = c("AllertonBywater", "Tyersall", "Micklefield", "LeedsClimateInnovationDistrict")
-
-
-
 # Link the sites with the closest centroid --------------------------------
 
 
@@ -175,6 +177,11 @@ sites$place = c("AllertonBywater", "Tyersall", "Micklefield", "LeedsClimateInnov
 #   st_transform(27700)
 # sites = st_join(sites,reszone_proj,join = st_within) %>%
 #   st_transform(4326)
+
+
+sites = rbind(p1,p2,p3,p4)
+sites$place = c("AllertonBywater", "Tyersall", "Micklefield", "LeedsClimateInnovationDistrict")
+
 
 
 # this finds the nearest centroid to each site
@@ -191,25 +198,49 @@ sites = st_join(sites,c_proj,join = st_nearest_feature) %>%
 #   st_transform(4326)
 
 
-sites$geo_code
-
 # mapview(abc) +
 mapview(reszone) +
 mapview(sites) +
 mapview(c[c$geo_code %in% sites$geo_code,])
 
+sites$geo_code
+sites$place
+
+sites$index_PT
+sites$index_Cyc
+sites$index_Car
 
 
 # Maps --------------------------------------------------------------------
 
-library(tmap)
-tmap_mode("view")
 
 #Warning - geometry is not valid on row 359
 # reszone[which(st_is_valid(reszone) == FALSE),]
 
 
 #Accessibility stat examples
+tm_shape(reszone) +
+  tm_polygons(c("index_PT", "index_Cyc")) +
+  tm_format("reszone")
+
+tmap_mode("view")
+tm_shape(reszone) +
+  tm_polygons(c("index_PT","index_Cyc","index_Car")) +
+  tm_shape(sites) +
+  tm_dots() +
+  tm_facets(nrow = 1)
+
+# tm_shape(reszone) +
+#   tm_polygons(col = "index_Cyc") +
+#   tm_shape(sites) +
+#   tm_dots()
+#
+# tm_shape(reszone) +
+#   tm_polygons(col = "index_Car") +
+#   tm_shape(sites) +
+  # tm_dots()
+
+
 tm_shape(reszone) +
   tm_polygons(col = "FoodPTt") +
   tm_shape(sites) +
