@@ -25,7 +25,8 @@ Imports:
     httr,
     jsonlite,
     sf,
-    readr
+    readr,
+    janitor
 RoxygenNote: 7.0.2
 Suggests: 
     covr,
