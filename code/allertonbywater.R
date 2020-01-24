@@ -3,12 +3,13 @@ library(mapview)
 library(pct)
 library(tidyverse)
 library(acton)
+library(janitor)
 
 reszone = pct::get_pct_zones(region = "west-yorkshire", geography = "lsoa", purpose = "commute") %>% rename(LA_Code = lad11cd)
 
-st_is_valid(reszone)
-resszone = lwgeom::st_make_valid(reszone)
-st_is_valid(reszone)
+which(st_is_valid(reszone) == FALSE)
+reszone = lwgeom::st_make_valid(reszone)
+which(st_is_valid(reszone) == FALSE)
 
 c = pct::get_pct_centroids(region = "west-yorkshire", geography = "lsoa") %>% rename(LA_Code = lad11cd)
 
@@ -55,6 +56,25 @@ mapview(abc) + mapview(reszone)
 # wy = unique(reszone$lad11cd)
 # access_town_wy = access_town[access_town$LA_Code %in% wy,]
 
+get_jts_data = function(table, year = NULL, u_csv = NULL, skip = 6) {
+  table_info = jts_tables[jts_tables$table_code == table, ]
+  message("This table's title is ", table_info$table_title[1])
+  message("These data files are available for that table code: ", paste0(table_info$csv_file_name, "\n"))
+  if(!is.null(year)) {
+    csv_file_name = paste0(table, "-", year, ".csv")
+    u_original = table_info$table_url[table_info$csv_file_name == csv_file_name]
+    u_csv = table_info$csv_url[table_info$csv_file_name == csv_file_name]
+  }
+
+  message("Reading in file ", u_csv)
+  res = readr::read_csv(u_csv, skip = skip)
+  names(res) = gsub(pattern = "100", replacement = "Jobs100", names(res))
+  names(res) = gsub(pattern = "500", replacement = "Jobs500", names(res))
+  res
+}
+
+act2 = read_csv("https://github.com/cyipt/acton/releases/tag/0.0.1/jts0508-2017.csv",skip = 6)
+
 access_employ = get_jts_data("jts0501", 2017)
 access_town = get_jts_data("jts0508", 2017)#error
 access_food = get_jts_data("jts0507", 2017)
@@ -62,6 +82,8 @@ access_primary = get_jts_data("jts0502", 2017)
 access_secondary = get_jts_data("jts0503", 2017)
 access_gp = get_jts_data("jts0505", 2017)#error
 
+access_town = remove_empty(access_town,"cols")
+access_gp = remove_empty(access_gp,"cols")
 
 # Weighted employment figures ---------------------------------
 

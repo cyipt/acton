@@ -37,7 +37,7 @@ get_jts_data = function(table, year = NULL, u_csv = NULL, skip = 6) {
   }
 
   message("Reading in file ", u_csv)
-  res = readr::read_csv(u_csv, skip = skip)
+  res = janitor::remove_empty(readr::read_csv(u_csv, skip = skip),"cols")
   names(res) = gsub(pattern = "100", replacement = "Jobs100", names(res))
   names(res) = gsub(pattern = "500", replacement = "Jobs500", names(res))
   res
