@@ -7,44 +7,19 @@ library(janitor)
 library(tmap)
 tmap_mode("view")
 
-reszone = pct::get_pct_zones(region = "west-yorkshire", geography = "lsoa", purpose = "commute") %>% rename(LA_Code = lad11cd)
+reszone = pct::get_pct_zones(region = "west-yorkshire", geography = "lsoa", purpose = "commute") %>% rename(LA_Code = lad11cd) %>% st_set_crs(4326)
+mzone = pct::get_pct_zones(region = "west-yorkshire", geography = "msoa", purpose = "commute") %>% rename(LA_Code = lad11cd) %>% st_set_crs(4326)
 
 which(st_is_valid(reszone) == FALSE)
 reszone = lwgeom::st_make_valid(reszone)
 which(st_is_valid(reszone) == FALSE)
 
-c = pct::get_pct_centroids(region = "west-yorkshire", geography = "lsoa") %>% rename(LA_Code = lad11cd)
+c = pct::get_pct_centroids(region = "west-yorkshire", geography = "lsoa") %>% rename(LA_Code = lad11cd) %>% st_set_crs(4326)
+m = pct::get_pct_centroids(region = "west-yorkshire", geography = "msoa") %>% rename(LA_Code = lad11cd) %>% st_set_crs(4326)
 
 ##Filter to only include Leeds. But Tyersall is actually closest to a centroid in Bradford
 # reszone = reszone %>% filter(LA_Code == "E08000035")
 # c = c %>% filter(LA_Code == "E08000035")
-
-# Allerton Bywater Millennium Community polygon ---------------------------
-
-ab = st_sfc(st_polygon(list(cbind(c(441926,441865,442023,442362,442610,442613,442238,442297,442294,442197,442140,441968,441926),c(428055,427794,427620,427630,427579,427690,427906,428008,428094,428085,427954,428061,428055)))))
-abc = st_sf(ab,crs = 27700)
-abc$n_homes = 562
-
-# additional variables
-
-abc_4326 = st_transform(abc, 4326)
-#
-lwgeom::st_geod_area(abc_4326)
-st_area(abc_4326)
-st_area(abc) # why are these not the same?
-
-# abc_buffer = st_buffer(abc, 500)
-# abc_buffer2 = abc_4326 %>%
-#   st_transform(27700) %>%
-#   st_buffer(500) %>%
-#   st_transform(4326)
-#
-# abc_buffer3 = stplanr::geo_projected(abc_4326, st_buffer, dist = 500)
-#
-# mapview(abc_buffer) + mapview(abc_buffer2) + mapview(abc_buffer3)
-
-mapview(abc) + mapview(reszone)
-
 
 
 # Accessibility stats -----------------------------------------------------
@@ -181,7 +156,9 @@ p4 = p4[,-9]
 
 sites = rbind(p1,p2,p3,p4)
 sites$place = c("AllertonBywater", "Tyersall", "Micklefield", "LeedsClimateInnovationDistrict")
-
+sites$id = 1:dim(sites)[1]
+sites = sites %>%
+  select(id, place, everything())
 
 
 # this finds the nearest centroid to each site
@@ -197,11 +174,19 @@ sites = st_join(sites,c_proj,join = st_nearest_feature) %>%
 # st_nearest_feature(near,c_proj) %>%
 #   st_transform(4326)
 
+#find nearest MSOA centroid to each site
+m_proj = m %>% st_transform(27700)
+m_code = m_proj %>%
+  select(msoa_code = geo_code)
 
-# mapview(abc) +
-mapview(reszone) +
-mapview(sites) +
-mapview(c[c$geo_code %in% sites$geo_code,])
+sites = sites %>%
+  st_transform(27700)
+sites = st_join(sites,m_code,join = st_nearest_feature) %>%
+  st_transform(4326)
+
+sites = sites %>%
+  select(id, place, geo_code, msoa_code, everything())
+
 
 sites$geo_code
 sites$place
@@ -215,6 +200,18 @@ saveRDS(sites,"~/NewDevelopmentsCycling/data/leeds-sites.Rds")
 
 # Maps --------------------------------------------------------------------
 
+# map sites and nearest centroids
+mapview(reszone) +
+  mapview(sites) +
+  mapview(c[c$geo_code %in% sites$geo_code,])
+
+mapview(mzone) +
+  mapview(sites) +
+  mapview(m[m$geo_code %in% sites$msoa_code,])
+
+mapview(mzone) +
+  mapview(sites) +
+  mapview(m)
 
 #Warning - geometry is not valid on row 359
 # reszone[which(st_is_valid(reszone) == FALSE),]
@@ -275,6 +272,33 @@ tm_shape(reszone) +
   tm_polygons(col = "weightedJobsCart") +
   tm_shape(sites) +
   tm_dots()
+
+# Allerton Bywater Millennium Community polygon ---------------------------
+
+ab = st_sfc(st_polygon(list(cbind(c(441926,441865,442023,442362,442610,442613,442238,442297,442294,442197,442140,441968,441926),c(428055,427794,427620,427630,427579,427690,427906,428008,428094,428085,427954,428061,428055)))))
+abc = st_sf(ab,crs = 27700)
+abc$n_homes = 562
+
+# additional variables
+
+abc_4326 = st_transform(abc, 4326)
+#
+lwgeom::st_geod_area(abc_4326)
+st_area(abc_4326)
+st_area(abc) # why are these not the same?
+
+# abc_buffer = st_buffer(abc, 500)
+# abc_buffer2 = abc_4326 %>%
+#   st_transform(27700) %>%
+#   st_buffer(500) %>%
+#   st_transform(4326)
+#
+# abc_buffer3 = stplanr::geo_projected(abc_4326, st_buffer, dist = 500)
+#
+# mapview(abc_buffer) + mapview(abc_buffer2) + mapview(abc_buffer3)
+
+mapview(abc) + mapview(reszone)
+
 
 
 

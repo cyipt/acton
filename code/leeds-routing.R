@@ -18,25 +18,27 @@ od_all_en_wales = pct::get_od()
 # Create desire lines from development site to common destinations from nearest centroid
 
 c = pct::get_pct_centroids(region = "west-yorkshire", geography = "lsoa") %>% rename(LA_Code = lad11cd)
+m = pct::get_pct_centroids(region = "west-yorkshire", geography = "msoa") %>% rename(LA_Code = lad11cd)
 lines_pct_lsoa = pct::get_pct_lines(region = "west-yorkshire", geography = "lsoa")
+lines_pct_msoa = pct::get_pct_lines(region = "west-yorkshire", geography = "msoa")
 
-centroids_nearest_site = sites$geo_code_msoa
-# not working, to add: MSOA codes to sites
-# od_from_centroids_near_sites = od_all_en_wales %>%
-#   filter(geo_code1 %in% centroids_nearest_site)
+centroids_nearest_site = sites$msoa_code
+#uses MSOA codes
+od_from_centroids_near_sites = od_all_en_wales %>%
+  filter(geo_code1 %in% centroids_nearest_site)
 
-od_from_centroids_near_sites = lines_pct_lsoa %>%
+od_from_centroids_near_sites = lines_pct_msoa %>%
   select(geo_code1, geo_code2, all, bicycle, car_driver, car_passenger
          # bus, taxi etc
          ) %>%
-  filter(geo_code1 %in% centroid_nearest_site, geo_code2 %in% c$geo_code) %>%
+  filter(geo_code1 %in% centroids_nearest_site, geo_code2 %in% m$geo_code) %>%
   sf::st_drop_geometry()
 
-# add on the site_id (first column column)
+# # add on the site_id (first column)
 sites_column_name_updated = sites %>%
-  select(geo_code, everything())
+  select(msoa_code, geo_code, everything())
 
-lines_to_sites = stplanr::od2line(od_from_centroids_near_sites, sites_column_name_updated, c)
+lines_to_sites = stplanr::od2line(od_from_centroids_near_sites, sites_column_name_updated, m)
 plot(lines_to_sites)
 mapview::mapview(lines_to_sites)
 
