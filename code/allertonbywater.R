@@ -210,6 +210,8 @@ sites$index_PT
 sites$index_Cyc
 sites$index_Car
 
+saveRDS(sites,"~/NewDevelopmentsCycling/data/leeds-sites.Rds")
+
 
 # Maps --------------------------------------------------------------------
 
