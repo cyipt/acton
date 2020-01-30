@@ -73,6 +73,7 @@ mapview::mapview(lines_to_sites)
 
 # Creating routes ---------------------------------------------------------
 
+
 library(parallel)
 cl <- makeCluster(detectCores())
 # clusterExport(cl, c("journey"))#not needed and not working
