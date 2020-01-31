@@ -29,6 +29,34 @@ However, there is no real standardisation of how these planning applications are
 
 Moreover, there is no systematic national recording of where homes are being built. The Ministry of Housing, Communities & Local Government produces statistics on the number of new build housing starts and completions in each local planning authority, but this simply records the number of homes in each district. There is no indication of exactly where these homes are being built.
 
-To do this, the PlanIt website (https://www.planit.org.uk/) was developed. This maps current and historic planning applications across the UK, scraping the data from council websites.
+## PlanIt
+
+To do this, the PlanIt website (https://www.planit.org.uk/) was developed. This maps current and historic planning applications across the UK, scraping the data from council websites and making them accessible from a single source. PlanIt collects all types of planning application, not just applications relating to house building.
+
+As part of ACTON, we are improving the PlanIt API to make it easier to search for particular types of planning application. This will involve adding fields such as:
+- app_type (for the different types of planning application e.g. Outline)
+- app_state (to show the status of the application e.g. Approved, Rejected, Current)
+- app_size (to give an estimate of the scale of the planned development)
+
+The number of homes built in a residential development is a key factor of interest, along with any other facilities being constructed. This information is more difficult to obtain as it is often missing from the descriptions, but there are proxy methods for assessing scale, such as the number of documents within a planning application.
+
+The further development of PlanIt will have many benefits beyond the ACTON project since it will make it easier to find planning applications of interest for all sorts of purposes. 
+
+## R package
+
+Another outcome is the development of the `acton` R package. This includes the function `get_planit_data()` which allows R users to search for planning application data without having to use the PlanIt API. This can broaden the use of PlanIt by helping to make its data easier to obtain.
+
+## Case study sites
+
+Using the improved PlanIt functionality and R package, we will identify a set of housing developments to use as case study sites. These will be located in three regions, covering a diverse range of conditions across the country:
+- Leeds
+- Cambridge
+- A350 corridor towns in Wiltshire (Trowbridge/Melksham/Chippenham)
+
+So far we have identified four sites in Leeds with planning approval for >100 homes.
 
 # Getting accessibility data
+
+Having identified our case study sites, the next step is to investigate their accessibility. Government journey time statistics record the time taken to reach a range of services such as primary schools, food stores, GP surgeries, centres of employment and town centres. These are available at the geographical level of the LSOA, an area covering a population of approximately 1500 people or 650 households. 
+
+[As part of the `acton` package, `get_jts_data()` is an R function that returns these journey time statistics for a specified year and table number. We have used these for four sites in Leeds, the results of which can be seen in the article ACTON case studies] (https://cyipt.github.io/acton/articles/case-studies.html)
