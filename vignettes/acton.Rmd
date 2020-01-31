@@ -19,7 +19,7 @@ library(acton)
 ```
 
 
-# Getting planning data
+## Getting planning data
 
 To investigate the accessibility of new housing developments, it is first necessary to identify where new homes are being built. 
 
@@ -29,9 +29,9 @@ However, there is no real standardisation of how these planning applications are
 
 Moreover, there is no systematic national recording of where homes are being built. The Ministry of Housing, Communities & Local Government produces statistics on the number of new build housing starts and completions in each local planning authority, but this simply records the number of homes in each district. There is no indication of exactly where these homes are being built.
 
-## PlanIt
+### PlanIt
 
-To do this, the PlanIt website (https://www.planit.org.uk/) was developed. This maps current and historic planning applications across the UK, scraping the data from council websites and making them accessible from a single source. PlanIt collects all types of planning application, not just applications relating to house building.
+To do this, the [PlanIt website](https://www.planit.org.uk/) was developed. This maps current and historic planning applications across the UK, scraping the data from council websites and making them accessible from a single source. PlanIt collects all types of planning application, not just applications relating to house building.
 
 As part of ACTON, we are improving the PlanIt API to make it easier to search for particular types of planning application. This will involve adding fields such as:
 - app_type (for the different types of planning application e.g. Outline)
@@ -42,11 +42,11 @@ The number of homes built in a residential development is a key factor of intere
 
 The further development of PlanIt will have many benefits beyond the ACTON project since it will make it easier to find planning applications of interest for all sorts of purposes. 
 
-## R package
+### R package
 
 Another outcome is the development of the `acton` R package. This includes the function `get_planit_data()` which allows R users to search for planning application data without having to use the PlanIt API. This can broaden the use of PlanIt by helping to make its data easier to obtain.
 
-## Case study sites
+### Case study sites
 
 Using the improved PlanIt functionality and R package, we will identify a set of housing developments to use as case study sites. These will be located in three regions, covering a diverse range of conditions across the country:
 - Leeds
@@ -55,8 +55,25 @@ Using the improved PlanIt functionality and R package, we will identify a set of
 
 So far we have identified four sites in Leeds with planning approval for >100 homes.
 
-# Getting accessibility data
+## Getting accessibility data
 
 Having identified our case study sites, the next step is to investigate their accessibility. Government journey time statistics record the time taken to reach a range of services such as primary schools, food stores, GP surgeries, centres of employment and town centres. These are available at the geographical level of the LSOA, an area covering a population of approximately 1500 people or 650 households. 
 
-[As part of the `acton` package, `get_jts_data()` is an R function that returns these journey time statistics for a specified year and table number. We have used these for four sites in Leeds, the results of which can be seen in the article ACTON case studies] (https://cyipt.github.io/acton/articles/case-studies.html)
+As part of the `acton` package, `get_jts_data()` is an R function that returns these journey time statistics for a specified year and table number. We have used these to estimate the accessibility of four sites in Leeds, the results of which can be seen in the article [ACTON case studies](https://cyipt.github.io/acton/articles/case-studies.html).
+
+### Identifying key destinations
+
+To further investigate accessibility, destinations of interest must be identified. These could include:
+- town centres (we can use the same dataset as is used in the journey time statistics)
+- railway stations
+- centres of employment
+- retail areas
+- schools and other educational establishments
+
+## Journey routing
+
+We will look at the journeys from case study sites to key destinations. Is it possible to reach these destinations by foot or cycle? How busy are the roads? What are the barriers that sever potential routes? We will investigate the circuitousness of walking and cycling routes, and how they compare to travel times by car. 
+
+The [CycleStreets.net](https://www.cyclestreets.net/) journey planner algorithm generates 'fast' and 'quiet' cycle routes between origins and destinations. As part of ACTON we are improving the way quiet routes are 
+
+## Options to overcome barriers
