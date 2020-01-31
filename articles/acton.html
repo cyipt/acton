@@ -96,38 +96,53 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(acton)</a></code></pre></div>
-<div id="getting-planning-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#getting-planning-data" class="anchor"></a>Getting planning data</h1>
+<div id="getting-planning-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#getting-planning-data" class="anchor"></a>Getting planning data</h2>
 <p>To investigate the accessibility of new housing developments, it is first necessary to identify where new homes are being built.</p>
 <p>There are over 300 local planning authorities across England, including metropolitan boroughs, London boroughs, unitary authorities and non-metropolitan districts. Each of these planning authorities keeps an online record of current and historic planning applications, such as applications to build new homes. The data recorded will include information about the status of the application, the site location, related applications, a description of the proposed application and links to download associated files such as masterplans and transport assessments.</p>
 <p>However, there is no real standardisation of how these planning applications are recorded. For example, various different types of application exist, such as full, outline, reserved matters, and applications for tree works. Yet the codes that record application type vary from one council to the next.</p>
 <p>Moreover, there is no systematic national recording of where homes are being built. The Ministry of Housing, Communities &amp; Local Government produces statistics on the number of new build housing starts and completions in each local planning authority, but this simply records the number of homes in each district. There is no indication of exactly where these homes are being built.</p>
-<div id="planit" class="section level2">
-<h2 class="hasAnchor">
-<a href="#planit" class="anchor"></a>PlanIt</h2>
-<p>To do this, the PlanIt website (<a href="https://www.planit.org.uk/" class="uri">https://www.planit.org.uk/</a>) was developed. This maps current and historic planning applications across the UK, scraping the data from council websites and making them accessible from a single source. PlanIt collects all types of planning application, not just applications relating to house building.</p>
+<div id="planit" class="section level3">
+<h3 class="hasAnchor">
+<a href="#planit" class="anchor"></a>PlanIt</h3>
+<p>To do this, the <a href="https://www.planit.org.uk/">PlanIt website</a> was developed. This maps current and historic planning applications across the UK, scraping the data from council websites and making them accessible from a single source. PlanIt collects all types of planning application, not just applications relating to house building.</p>
 <p>As part of ACTON, we are improving the PlanIt API to make it easier to search for particular types of planning application. This will involve adding fields such as: - app_type (for the different types of planning application e.g. Outline) - app_state (to show the status of the application e.g. Approved, Rejected, Current) - app_size (to give an estimate of the scale of the planned development)</p>
 <p>The number of homes built in a residential development is a key factor of interest, along with any other facilities being constructed. This information is more difficult to obtain as it is often missing from the descriptions, but there are proxy methods for assessing scale, such as the number of documents within a planning application.</p>
 <p>The further development of PlanIt will have many benefits beyond the ACTON project since it will make it easier to find planning applications of interest for all sorts of purposes.</p>
 </div>
-<div id="r-package" class="section level2">
-<h2 class="hasAnchor">
-<a href="#r-package" class="anchor"></a>R package</h2>
+<div id="r-package" class="section level3">
+<h3 class="hasAnchor">
+<a href="#r-package" class="anchor"></a>R package</h3>
 <p>Another outcome is the development of the <code>acton</code> R package. This includes the function <code><a href="../reference/get_planit_data.html">get_planit_data()</a></code> which allows R users to search for planning application data without having to use the PlanIt API. This can broaden the use of PlanIt by helping to make its data easier to obtain.</p>
 </div>
-<div id="case-study-sites" class="section level2">
-<h2 class="hasAnchor">
-<a href="#case-study-sites" class="anchor"></a>Case study sites</h2>
+<div id="case-study-sites" class="section level3">
+<h3 class="hasAnchor">
+<a href="#case-study-sites" class="anchor"></a>Case study sites</h3>
 <p>Using the improved PlanIt functionality and R package, we will identify a set of housing developments to use as case study sites. These will be located in three regions, covering a diverse range of conditions across the country: - Leeds - Cambridge - A350 corridor towns in Wiltshire (Trowbridge/Melksham/Chippenham)</p>
 <p>So far we have identified four sites in Leeds with planning approval for &gt;100 homes.</p>
 </div>
 </div>
-<div id="getting-accessibility-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#getting-accessibility-data" class="anchor"></a>Getting accessibility data</h1>
+<div id="getting-accessibility-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#getting-accessibility-data" class="anchor"></a>Getting accessibility data</h2>
 <p>Having identified our case study sites, the next step is to investigate their accessibility. Government journey time statistics record the time taken to reach a range of services such as primary schools, food stores, GP surgeries, centres of employment and town centres. These are available at the geographical level of the LSOA, an area covering a population of approximately 1500 people or 650 households.</p>
-<p>[As part of the <code>acton</code> package, <code><a href="../reference/get_jts_data.html">get_jts_data()</a></code> is an R function that returns these journey time statistics for a specified year and table number. We have used these for four sites in Leeds, the results of which can be seen in the article ACTON case studies] (<a href="https://cyipt.github.io/acton/articles/case-studies.html" class="uri">https://cyipt.github.io/acton/articles/case-studies.html</a>)</p>
+<p>As part of the <code>acton</code> package, <code><a href="../reference/get_jts_data.html">get_jts_data()</a></code> is an R function that returns these journey time statistics for a specified year and table number. We have used these to estimate the accessibility of four sites in Leeds, the results of which can be seen in the article <a href="https://cyipt.github.io/acton/articles/case-studies.html">ACTON case studies</a>.</p>
+<div id="identifying-key-destinations" class="section level3">
+<h3 class="hasAnchor">
+<a href="#identifying-key-destinations" class="anchor"></a>Identifying key destinations</h3>
+<p>To further investigate accessibility, destinations of interest must be identified. These could include: - town centres (we can use the same dataset as is used in the journey time statistics) - railway stations - centres of employment - retail areas - schools and other educational establishments</p>
+</div>
+</div>
+<div id="journey-routing" class="section level2">
+<h2 class="hasAnchor">
+<a href="#journey-routing" class="anchor"></a>Journey routing</h2>
+<p>We will look at the journeys from case study sites to key destinations. Is it possible to reach these destinations by foot or cycle? How busy are the roads? What are the barriers that sever potential routes? We will investigate the circuitousness of walking and cycling routes, and how they compare to travel times by car.</p>
+<p>The <a href="https://www.cyclestreets.net/">CycleStreets.net</a> journey planner algorithm generates ‘fast’ and ‘quiet’ cycle routes between origins and destinations. As part of ACTON we are improving the way quiet routes are</p>
+</div>
+<div id="options-to-overcome-barriers" class="section level2">
+<h2 class="hasAnchor">
+<a href="#options-to-overcome-barriers" class="anchor"></a>Options to overcome barriers</h2>
 </div>
   </div>
 
@@ -137,14 +152,10 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li>
-<a href="#getting-planning-data">Getting planning data</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#planit">PlanIt</a></li>
-      <li><a href="#r-package">R package</a></li>
-      <li><a href="#case-study-sites">Case study sites</a></li>
-      </ul>
-</li>
+<li><a href="#getting-planning-data">Getting planning data</a></li>
       <li><a href="#getting-accessibility-data">Getting accessibility data</a></li>
+      <li><a href="#journey-routing">Journey routing</a></li>
+      <li><a href="#options-to-overcome-barriers">Options to overcome barriers</a></li>
       </ul>
 </div>
       </div>
