@@ -18,6 +18,16 @@ knitr::opts_chunk$set(
 [![CircleCI](https://circleci.com/gh/cyipt/acton.svg?style=svg)](https://circleci.com/gh/cyipt/acton)
 <!-- badges: end -->
 
+## Installation
+
+To install the `acton` package, run the following commands:
+
+```{r, eval=FALSE}
+install.packages(remotes)
+remotes::install_github("cyipt/acton", dependencies = "Suggests")
+```
+
+
 # Active Transport Options for New Developments
 
 This project will provide evidence for local authorities, developers and civil society groups to support planning and investment in sustainable transport infrastructure that enables trips to new developments to be made by active modes, walking and cycling.
