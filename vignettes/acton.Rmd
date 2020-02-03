@@ -19,7 +19,7 @@ library(acton)
 ```
 
 
-## Getting planning data
+# Getting planning data
 
 To investigate the accessibility of new housing developments, it is first necessary to identify where new homes are being built. 
 
@@ -34,8 +34,11 @@ Moreover, there is no systematic national recording of where homes are being bui
 To do this, the [PlanIt website](https://www.planit.org.uk/) was developed. This maps current and historic planning applications across the UK, scraping the data from council websites and making them accessible from a single source. PlanIt collects all types of planning application, not just applications relating to house building.
 
 As part of ACTON, we are improving the PlanIt API to make it easier to search for particular types of planning application. This will involve adding fields such as:
+
 - app_type (for the different types of planning application e.g. Outline)
+
 - app_state (to show the status of the application e.g. Approved, Rejected, Current)
+
 - app_size (to give an estimate of the scale of the planned development)
 
 The number of homes built in a residential development is a key factor of interest, along with any other facilities being constructed. This information is more difficult to obtain as it is often missing from the descriptions, but there are proxy methods for assessing scale, such as the number of documents within a planning application.
@@ -49,13 +52,16 @@ Another outcome is the development of the `acton` R package. This includes the f
 ### Case study sites
 
 Using the improved PlanIt functionality and R package, we will identify a set of housing developments to use as case study sites. These will be located in three regions, covering a diverse range of conditions across the country:
+
 - Leeds
+
 - Cambridge
+
 - A350 corridor towns in Wiltshire (Trowbridge/Melksham/Chippenham)
 
 So far we have identified four sites in Leeds with planning approval for >100 homes.
 
-## Getting accessibility data
+# Getting accessibility data
 
 Having identified our case study sites, the next step is to investigate their accessibility. Government journey time statistics record the time taken to reach a range of services such as primary schools, food stores, GP surgeries, centres of employment and town centres. These are available at the geographical level of the LSOA, an area covering a population of approximately 1500 people or 650 households. 
 
@@ -64,16 +70,25 @@ As part of the `acton` package, `get_jts_data()` is an R function that returns t
 ### Identifying key destinations
 
 To further investigate accessibility, destinations of interest must be identified. These could include:
+
 - town centres (we can use the same dataset as is used in the journey time statistics)
+
 - railway stations
+
 - centres of employment
+
 - retail areas
+
 - schools and other educational establishments
 
-## Journey routing
+# Journey routing
 
 We will look at the journeys from case study sites to key destinations. Is it possible to reach these destinations by foot or cycle? How busy are the roads? What are the barriers that sever potential routes? We will investigate the circuitousness of walking and cycling routes, and how they compare to travel times by car. 
 
-The [CycleStreets.net](https://www.cyclestreets.net/) journey planner algorithm generates 'fast' and 'quiet' cycle routes between origins and destinations. As part of ACTON we are improving the way quiet routes are 
+The [CycleStreets.net](https://www.cyclestreets.net/) journey planner algorithm generates 'fast', 'balanced' and 'quiet' cycle routes between origins and destinations. As part of ACTON we are improving the way particular types of cycle lane and path are classified. This will lead to better quality routing of 'quiet' routes, through a more accurate characterisation of the cycleability of route segments.
 
-## Options to overcome barriers
+# Options to overcome barriers
+
+New housing developments are often located close to major roads or other features that can represent a physical barrier preventing walking or cycle access. As part of the routing process we will identify the barriers that lead to severance of the routes between new homes and key destinations. We will then explore options to overcome these barriers at our case study sites. 
+
+Options to overcome barriers could include improving conditions on existing roads (such as through traffic calming measures), or providing new links or crossing points that enable connections to be made for walking and cycling. 
