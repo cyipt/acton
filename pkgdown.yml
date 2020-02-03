@@ -4,5 +4,6 @@ pkgdown_sha: ~
 articles:
   acton: acton.html
   case-studies: case-studies.html
+  the-acton-project: the-acton-project.html
   website: website.html
 
