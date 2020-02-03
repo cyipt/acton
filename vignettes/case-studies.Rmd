@@ -74,7 +74,7 @@ od_from_zone1 = data.frame(
   destination = zones_leeds$geo_code[2:9]
 )
 desire_lines = od2line(flow = od_from_zone1, zones_leeds)
-# plot(desire_lines)
+plot(desire_lines)
 # routes_fastest = route(
 #   l = desire_lines,
 #   route_fun = cyclestreets::journey,
