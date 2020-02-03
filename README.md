@@ -1,6 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+## acton
+
 <!-- badges: start -->
 
 [![Travis build
@@ -8,92 +10,70 @@ status](https://travis-ci.com/cyipt/acton.svg?branch=master)](https://travis-ci.
 [![CircleCI](https://circleci.com/gh/cyipt/acton.svg?style=svg)](https://circleci.com/gh/cyipt/acton)
 <!-- badges: end -->
 
-# Active Transport Options for New Developments
+## Introduction
 
-This project will provide evidence for local authorities, developers and
-civil society groups to support planning and investment in sustainable
-transport infrastructure that enables trips to new developments to be
-made by active modes, walking and cycling. It will deliver three main
-things: evidence on the current level of provision for walking and
-cycling; evidence on the potential for likely trips to and from the new
-developments to be made by walking and cycling (including cycling
-potential to major trip attractors such as cities centres and cycling
-potential to public transport links); and visualisations of the options
-available to improve provision.
+**Acton** is a research project to provide evidence for local
+authorities, developers and civil society groups to support planning and
+investment in sustainable transport infrastructure in and around new
+developments. To make the results of the research more reproducible and
+accessible to others, we have also created an R package, which is the
+focus of this README.
 
-See the package website at <https://cyipt.github.io/acton/>
+For information about the wider research project, see the
+[`acton-project`](https://cyipt.github.io/acton/articles/the-acton-project.html)
+vignette.
 
-## Project stages
+For a more detailed overview explaining how to use the package see the
+[`acton` vignette](https://cyipt.github.io/acton/articles/acton.html).
 
-### Current level of provision:
+For results of research into active travel opportunities in and around
+new developments in case study regions, see the [`case-studies`
+vignette](https://cyipt.github.io/acton/articles/case-studies.html).
 
-  - (issue \#11, \#7) first we need to identify the locations of the
-    developments we are researching. Basic info required will include
-    the date of completion and the number of homes. We will focus on
-    larger developments in Leeds, Cambridge and the A350 corridor -
-    those of 500+ homes - but we could also look at medium-sized
-    developments.
-  - (issue \#8) start with an example housing development in Leeds as a
-    prototype dataset.
-  - scoping exercise on the nature of OSM data. Is the development
-    properly mapped? Compare Mastermap v OSM, to validate the OSM data.
-  - routability validation. THe quality of new data can vary. We must be
-    sure the data is topographically correct. Are nodes connected? A
-    visual check can be made using Keepright.
-  - (issue \#5, \#10) identify destinations. These could include shops,
-    schools, health centres, major employment centres, town centres, and
-    public transport (rail/bus) nodes.
-  - identify routes from the development to these destinations. Perhaps
-    use the development centroid as the starting point of these routes?
-  - (issue \#9) assess the quality of the provision. In OSM we can see
-    whether cycleways are separate from traffic/pedestrians, the width
-    etc. We can use this to categorise the quality of cycle
-    infrastructure, potentially into 8 classes or ‘cycling states’.
-  - similarly, investigate how to categorise the quality of walking
-    routes.
-  - compare quality of walking/cycle provision within the development
-    with provision beyond the development boundary, on the routes used
-    for accessing key destinations.
-  - compare the distance of crow-fly v on-road walk/cycle routes
-  - compare existing walk/cycle route times with driving route times
-  - (issue \#6) look at severance of walk/cycle routes (eg by major
-    roads that cut off the development from nearby areas)
+## Installation
 
-### Potential for cycling and walking:
+To install the `acton` package, run the following commands:
 
-  - this would assess optimal cycling and walking from development
-    locations, based on their location in regard to the destinations we
-    have already identified.
-  - use the fastest route on CycleStreets, but also look at crow-fly
-    distances because new developments are often characterised by very
-    circuitous roads. See
-    <http://www.makingspaceforcycling.org/#principles> for an example of
-    this.
-  - (issue \#9) look at the difference between the quiet and fast
-    routes, as identified by CycleStreets.
-  - model cycle potential as a function of time taken to cycle v time
-    taken to drive
-  - (issue \#4) for many developments (especially those that tend to
-    represent urban sprawl) the two key areas for improvement are likely
-    to be improvements to major roads to allow cycling/walking, and the
-    creation of new links that don’t exist at present.
+``` r
+install.packages(remotes)
+remotes::install_github("cyipt/acton", dependencies = "Suggests")
+```
 
-### Options available to improve provision:
+## Setup instructions
 
-  - generate automated suggestions for innovations - these will be of
-    two main types:
-    1)  identify the existing streets that should be improved and how
-        they should be improved
-    2)  identify the new links that should be added
-  - assess what difference these innovations would make for
-    cycling/walking uptake
+To get routes from CycleStreets.net, you will need to set-up an API key
+called CYCLESTREETS with `usethis::edit_renviron()`, as documented here:
+<https://docs.ropensci.org/stplanr/reference/route_cyclestreets.html#details>
 
-## Outputs and Outcomes
+## Brief demo
 
-We will generate clean data on cycling and walking provision and
-potential.
+The package can be used to get data on new developments as follows:
 
-Create prototype map visualising this data.
+``` r
+library(acton)
+# data from specific postcode
+planning_data = get_planit_data(pcode = "LS2 9JT", limit = 2)
+#> Getting data from https://www.planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2020-02-03&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT
+planning_data
+#> Simple feature collection with 2 features and 16 fields
+#> geometry type:  POINT
+#> dimension:      XY
+#> bbox:           xmin: -1.55333 ymin: 53.80796 xmax: -1.55333 ymax: 53.80796
+#> epsg (SRID):    4326
+#> proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#> # A tibble: 2 x 17
+#>   doc_type name  distance url   description when_updated        authority_id source_url authority_name link  postcode address   lat   lng
+#>   <chr>    <chr>    <dbl> <chr> <chr>       <dttm>                     <int> <chr>      <chr>          <chr> <chr>    <chr>   <dbl> <dbl>
+#> 1 PlanApp… Leed…        0 http… Removal of… 2019-07-23 09:45:04          292 https://p… Leeds          http… LS2 9JT  Facult…  53.8 -1.55
+#> 2 PlanApp… Leed…        0 http… Two new of… 2019-02-10 20:52:08          292 https://p… Leeds          http… LS2 9JT  Univer…  53.8 -1.55
+#> # … with 3 more variables: start_date <date>, uid <chr>, geometry <POINT [°]>
+planning_data$name
+#> [1] "Leeds/19/03296/LI" "Leeds/19/00584/FU"
+planning_data$description
+#> [1] "Removal of condition 5 (retention of spiral staircase) of Listed Building Consent 18/03877/LI due to its condition and location"
+#> [2] "Two new off road parking spaces, new bin store, and relocation of existing covered cycle store"
+```
 
-A report setting out the policy impact - potentially a peer-reviewed
-paper.
+## Citing the work
+
+TBC.
