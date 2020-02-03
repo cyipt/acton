@@ -35,6 +35,6 @@ Suggests:
     testthat,
     readODS,
     tmap,
-    dplyr
-Remotes: ropensci/stplanr
+    dplyr,
+    stplanr
 VignetteBuilder: knitr
