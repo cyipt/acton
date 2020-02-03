@@ -13,7 +13,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-# devtools::install_github("cyipt/acton")
 ```
 
 ```{r setup, include=FALSE}
@@ -64,3 +63,25 @@ tmap_mode("plot")
 qtm(zones_leeds, c("Jobs5000EmpPTt", "Jobs5000EmpCyct", "Jobs5000EmpCart")) +
   tm_facets(nrow = 1)
 ```
+
+## Route busyness
+
+```{r}
+library(stplanr)
+od_from_zone1 = data.frame(
+  stringsAsFactors = TRUE,
+  origin = zones_leeds$geo_code[1],
+  destination = zones_leeds$geo_code[2:9]
+)
+desire_lines = od2line(flow = od_from_zone1, zones_leeds)
+plot(desire_lines)
+routes_fastest = route(
+  l = desire_lines,
+  route_fun = cyclestreets::journey,
+  plan = "fastest"
+  )
+routes_fastest$busyness = routes_fastest$busynance / routes_fastest$distances
+plot(routes_fastest["busyness"])
+
+```
+
