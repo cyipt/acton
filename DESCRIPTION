@@ -37,4 +37,5 @@ Suggests:
     tmap,
     dplyr,
     stplanr
+Remotes: ropensci/stplanr
 VignetteBuilder: knitr
