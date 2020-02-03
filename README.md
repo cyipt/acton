@@ -21,7 +21,7 @@ described below.
 
 For information about the wider research project, see [The ACTON
 project](https://cyipt.github.io/acton/articles/the-acton-project.html)
-article on this website.
+report.
 
 ## Installing the R package
 
