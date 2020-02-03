@@ -13,10 +13,54 @@ knitr::opts_chunk$set(
 )
 ```
 
+## acton
+
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.com/cyipt/acton.svg?branch=master)](https://travis-ci.com/cyipt/acton)
 [![CircleCI](https://circleci.com/gh/cyipt/acton.svg?style=svg)](https://circleci.com/gh/cyipt/acton)
 <!-- badges: end -->
+
+## Introduction
+
+**Acton** is a research project to provide evidence for local authorities, developers and civil society groups to support planning and investment in sustainable transport infrastructure in and around new developments.
+To make the results of the research more reproducible and accessible to others, we have also created an R package, which is the focus of this README.
+
+For information about the wider research project, see the `acton-project` vignette.
+
+For a more detailed overview explaining how to use the package see the [`acton` vignette](https://cyipt.github.io/acton/articles/acton.html).
+
+For results of research into active travel opportunities in and around new developments in case study regions, see the [`case-studies` vignette](https://cyipt.github.io/acton/articles/case-studies.html).
+
+
+## Installation
+
+To install the `acton` package, run the following commands:
+
+```{r, eval=FALSE}
+install.packages(remotes)
+remotes::install_github("cyipt/acton", dependencies = "Suggests")
+```
+
+## Setup instructions
+
+To get routes from CycleStreets.net, you will need to set-up an API key called CYCLESTREETS with `usethis::edit_renviron()`, as documented here: https://docs.ropensci.org/stplanr/reference/route_cyclestreets.html#details
+
+## Brief demo
+
+The package can be used to get data on new developments as follows:
+
+```{r}
+library(acton)
+# data from specific postcode
+planning_data = get_planit_data(pcode = "LS2 9JT", limit = 2)
+planning_data
+planning_data$name
+planning_data$description
+```
+
+## Citing the work
+
+TBC.
 
 # Active Transport Options for New Developments
 
