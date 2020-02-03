@@ -28,7 +28,29 @@ tmap_mode("view")
 
 ### Planning applications
 
+Using data from [PlanIt](https://www.planit.org.uk/), we have identified four recent planning applications with approval for >100 homes. 
 
+Allerton Bywater Millennium Community:
+
+- one of a series of Millennium Communities, the development at Allerton Bywater was announced by John Prescott in 1998. The homes lie on the site of Allerton Colliery, which was the last remaining colliery in Leeds when it closed in 1995. The aim was to incorporate the whole of Allerton Bywater village in the project, rather than solely focusing on the site itself. For example, a £500,000 community fund was made available to the parish council to spend on local projects, and community buildings in the village were also refurbished. In total there was £24 million upfront public investment by English Partnerships and the HCA. This included drainage, site clearance and decontamination. The development incorporates high environmental standards for both the homes and the new industrial units, and a number of homes built under a 'Design for Manufacture' competition for a construction cost of no more than £60,000.
+
+- in total there are 562 homes in the Millennium Community. The final phase includes 189 homes and has planning consent 13/05235/FU. A sustrans cycle route passes through the site, which is designed as a HomeZone with shared space streets, although these tend to fill up with parked cars. However, plans for buses to be routed through the site did not materialise. The village lies six miles southeast of Leeds and the buses to Leeds run every 30 minutes. 
+
+Leeds Climate Innovation District:
+
+- situated on the banks of the River Aire, close to Leeds city centre, this development is built around high environmental standards including low carbon timber-framed homes with high levels of insulation and a Mechanical Ventilation Heat Recovery System preventing the need for gas central heating. The homes will be served by solar panels on-site via a private-wire network; a Community Interest Company will be set up that will own the utility cooperative. 
+
+- a new foot/cycle bridge has been erected over the River Aire to connect the two halves of the site and allow a traffic-free route into the city centre. On-site car parking is in an undercroft; spaces have to be purchased at a cost of £15,000.  
+
+- in total there will be over 520 new homes. Phase 1 to the north of the river will contain 312 dwellings, with planning consent 15/00415/FU. 
+
+Micklefield:
+
+- planning consent 15/01973/FU is for a development of 292 residential dwellings in the village of Micklefield. The S106 agreement included £8000 for cycle facilities at nearby Micklefield station. 
+
+Tyersall:
+
+- although the site lies within Leeds it is actually closer to Bradford, and the only road access is to west, via the Bradford suburbs of .
 
 ```{r}
 
