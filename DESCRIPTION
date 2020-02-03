@@ -36,6 +36,7 @@ Suggests:
     readODS,
     tmap,
     dplyr,
-    stplanr
+    stplanr,
+    cyclestreets
 Remotes: ropensci/stplanr
 VignetteBuilder: knitr
