@@ -75,11 +75,11 @@ od_from_zone1 = data.frame(
 )
 desire_lines = od2line(flow = od_from_zone1, zones_leeds)
 plot(desire_lines)
-# routes_fastest = route(
-#   l = desire_lines,
-#   route_fun = cyclestreets::journey,
-#   plan = "fastest" # on CRAN version only fastest works
-#   )
+routes_fastest = route(
+  l = desire_lines,
+  route_fun = cyclestreets::journey,
+  plan = "fastest" # on CRAN version only fastest works
+  )
 # routes_fastest$busyness = routes_fastest$busynance / routes_fastest$distances
 # plot(routes_fastest["busyness"])
 
