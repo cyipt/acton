@@ -75,13 +75,31 @@ od_from_zone1 = data.frame(
 )
 desire_lines = od2line(flow = od_from_zone1, zones_leeds)
 plot(desire_lines)
+```
+
+```{r, eval=FALSE}
 routes_fastest = route(
   l = desire_lines,
   route_fun = cyclestreets::journey,
   plan = "fastest" # on CRAN version only fastest works
   )
-# routes_fastest$busyness = routes_fastest$busynance / routes_fastest$distances
-# plot(routes_fastest["busyness"])
-
 ```
+
+```{r, eval=FALSE, echo=FALSE}
+# save roues_fastest object
+saveRDS(routes_fastest, "routes_fastest.Rds")
+piggyback::pb_upload("routes_fastest.Rds")
+piggyback::pb_download_url("routes_fastest.Rds")
+```
+
+```{r, echo=FALSE}
+routes_fastest = readRDS(url("https://github.com/cyipt/acton/releases/download/0.0.1/routes_fastest.Rds"))
+```
+
+
+```{r plot-fast-routes}
+routes_fastest$busyness = routes_fastest$busynance / routes_fastest$distances
+plot(routes_fastest["busyness"])
+```
+
 
