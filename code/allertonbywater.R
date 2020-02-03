@@ -155,7 +155,7 @@ p4 = p4[,-9]
 
 
 sites = rbind(p1,p2,p3,p4)
-sites$place = c("AllertonBywater", "Tyersall", "Micklefield", "LeedsClimateInnovationDistrict")
+sites$place = c("AllertonBywater", "Tyersal", "Micklefield", "LeedsClimateInnovationDistrict")
 sites$id = 1:dim(sites)[1]
 sites = sites %>%
   select(id, place, everything())
