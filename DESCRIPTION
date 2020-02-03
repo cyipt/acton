@@ -36,4 +36,5 @@ Suggests:
     readODS,
     tmap,
     dplyr
+Remotes: ropensci/stplanr
 VignetteBuilder: knitr
