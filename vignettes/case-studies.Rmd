@@ -95,10 +95,7 @@ Multiple statistics are available for access to centres of employment, including
 According to DfT's JTS, there are many areas that have poor accessibility by active modes and public transport. 
 
 ```{r}
-# names(zones_leeds)
-tmap_mode("plot")
-qtm(zones_leeds, c("Jobs5000EmpPTt", "Jobs5000EmpCyct", "Jobs5000EmpCart")) +
-  tm_facets(nrow = 1)
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73770519-7997ee80-4774-11ea-9a3a-fb100bc405f7.png")
 ```
 
 ## Route busyness
