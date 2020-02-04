@@ -38,7 +38,8 @@ remotes::install_github("cyipt/acton", dependencies = "Suggests")
 ## Setup instructions
 
 To get routes from CycleStreets.net, you will need to set-up an API key
-called CYCLESTREETS with `usethis::edit_renviron()`, as documented here:
+called CYCLESTREETS with `usethis::edit_r_environ()`, as documented
+here:
 <https://docs.ropensci.org/stplanr/reference/route_cyclestreets.html#details>
 
 ## Brief demo
@@ -49,7 +50,7 @@ The package can be used to get data on new developments as follows:
 library(acton)
 # data from specific postcode
 planning_data = get_planit_data(pcode = "LS2 9JT", limit = 2)
-#> Getting data from https://www.planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2020-02-03&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT
+#> Getting data from https://www.planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2020-02-04&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT
 planning_data
 #> Simple feature collection with 2 features and 16 fields
 #> geometry type:  POINT

@@ -53,7 +53,7 @@ Tyersal:
 
 - planning consent 15/04151/FU was gained in April 2016 for a 270 dwelling development on a greenfield site at Tysersal Lane by developer Gleeson Homes. Although the site lies within ths bounds of Leeds it is actually closer to Bradford, and the only road access is to west, via the Bradford suburb of Holme Wood. Regular buses to Bradford city centre pass by the edge of the site. The proposed parking provision is approximately two spaces per dwelling. 
 
-- the site does not fully meet the Leeds Core Strategy Accessibility Standards. A viability assessment was accepted stating that the scheme could not provide all of the usual planning gain contributions (S106 monies). Gleeson's state that their homes are priced at a level so that they can be afforded by 90% of local people in full time employment.
+- the site does not fully meet the Leeds Core Strategy Accessibility Standards. A viability assessment was accepted, stating that the scheme could not provide all of the usual planning gain contributions (S106 monies), with no affordable homes due to be built on site. This is subject on ongoing review. Gleeson's state that their homes are priced at a level so that they can be afforded by 90% of local people in full time employment.
 
 
 ```{r}
@@ -61,6 +61,12 @@ Tyersal:
 ```
 
 ### Accessibility indicators
+
+Journey time statistics (JTS) are available from the Department for Transport recording accessibility at the geographical level of the LSOA (an area covering approximately 1500 residents or 650 households). The statistics include average minimum travel times to key local services and destinations, such as town centres, centres of employment, primary schools, secondary schools, food stores and GP surgeries. 
+
+Travel times are calculated for three modes of travel - by car, by cycle, and by a mode that combines walking and public transport.
+
+The LSOA zones in Leeds are shown below, together with their working age population. LSOA population should normally be relatively constant, but it is considerably higher in some Leeds LSOAs. This may be due to new residential developments (especially student accommodation) built after the LSOA boundaries were set.  
 
 ```{r}
 # library(dplyr)
@@ -82,7 +88,11 @@ zones_leeds = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.
 qtm(zones_leeds, "Empl_pop")
 ```
 
-According to DfT's JTS, there are many areas that have poor accessibility by active modes and public transport.
+The JTS record travel times from the population weighted centroid of each LSOA. New housing developments can be constructed anywhere within an LSOA, and may not necessarily be close to existing homes. To assess the accessibility of new developments we therefore use statistics that relate to the closest LSOA centroid. For our Tyersal Lane case study site, the closest LSOA centroid is in Bradford.
+
+Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. We have combined these three statistics to produce a single measure weighted by the number of jobs.
+
+According to DfT's JTS, there are many areas that have poor accessibility by active modes and public transport. 
 
 ```{r}
 # names(zones_leeds)

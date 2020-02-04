@@ -38,7 +38,7 @@ remotes::install_github("cyipt/acton", dependencies = "Suggests")
 
 ## Setup instructions
 
-To get routes from CycleStreets.net, you will need to set-up an API key called CYCLESTREETS with `usethis::edit_renviron()`, as documented here: https://docs.ropensci.org/stplanr/reference/route_cyclestreets.html#details
+To get routes from CycleStreets.net, you will need to set-up an API key called CYCLESTREETS with `usethis::edit_r_environ()`, as documented here: https://docs.ropensci.org/stplanr/reference/route_cyclestreets.html#details
 
 ## Brief demo
 

@@ -3,7 +3,6 @@ library(mapview)
 library(pct)
 library(tidyverse)
 library(acton)
-library(janitor)
 library(tmap)
 tmap_mode("view")
 
@@ -40,9 +39,6 @@ access_food = get_jts_data("jts0507", 2017)
 access_primary = get_jts_data("jts0502", 2017)
 access_secondary = get_jts_data("jts0503", 2017)
 access_gp = get_jts_data("jts0505", 2017)#error
-
-access_town = remove_empty(access_town,"cols")
-access_gp = remove_empty(access_gp,"cols")
 
 # Weighted employment figures ---------------------------------
 
@@ -226,7 +222,13 @@ tmap_mode("view")
 tm_shape(reszone) +
   tm_polygons(c("index_PT","index_Cyc","index_Car")) +
   tm_shape(sites) +
-  tm_dots() +
+  tm_dots(size=0.3) +
+  tm_facets(nrow = 1)
+
+tm_shape(reszone) +
+  tm_polygons(c("weightedJobsPTt","weightedJobsCyct","weightedJobsCart")) +
+  tm_shape(sites) +
+  tm_dots(size=0.3) +
   tm_facets(nrow = 1)
 
 # tm_shape(reszone) +
