@@ -193,9 +193,9 @@ sites$index_Car
 
 write_sf(sites,"./data/leeds-sites.geojson")
 
-write_sf(reszone,"wy-zones.geojson")
-piggyback::pb_upload("wy-zones.geojson")
-piggyback::pb_download_url("wy-zones.geojson")
+# write_sf(reszone,"wy-zones.geojson")
+# piggyback::pb_upload("wy-zones.geojson")
+# piggyback::pb_download_url("wy-zones.geojson")
 
 # Maps --------------------------------------------------------------------
 
