@@ -191,10 +191,16 @@ sites$index_PT
 sites$index_Cyc
 sites$index_Car
 
-saveRDS(sites,"~/NewDevelopmentsCycling/data/leeds-sites.Rds")
+write_sf(sites,"./data/leeds-sites.geojson")
 
+write_sf(reszone,"wy-zones.geojson")
+piggyback::pb_upload("wy-zones.geojson")
+piggyback::pb_download_url("wy-zones.geojson")
 
 # Maps --------------------------------------------------------------------
+
+sites = read_sf("./data/leeds-sites.geojson")
+reszone = read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/wy-zones.geojson")
 
 # map sites and nearest centroids
 mapview(reszone) +
@@ -218,7 +224,7 @@ tm_shape(reszone) +
   tm_polygons(c("index_PT", "index_Cyc")) +
   tm_format("reszone")
 
-tmap_mode("view")
+tmap_mode("plot")
 tm_shape(reszone) +
   tm_polygons(c("index_PT","index_Cyc","index_Car")) +
   tm_shape(sites) +

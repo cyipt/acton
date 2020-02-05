@@ -92,11 +92,17 @@ The JTS record travel times from the population weighted centroid of each LSOA. 
 
 Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. We have combined these three statistics to produce a single measure weighted by the number of jobs.
 
-According to DfT's JTS, there are many areas that have poor accessibility by active modes and public transport. 
-
 ```{r}
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73770519-7997ee80-4774-11ea-9a3a-fb100bc405f7.png")
 ```
+
+We have then combined the weighted access to employment measure with the measures for access to food stores, town centres, primary schools, secondary schools and GPs. By adding together all of these scores we have generated a single accessibility statistic for each mode of travel. 
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73870615-52105700-4844-11ea-850a-3065ab05da7a.png")
+```
+
+According to DfT's JTS, there are many areas that have poor accessibility by active modes and public transport. 
 
 ## Route busyness
 
