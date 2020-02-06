@@ -57,7 +57,7 @@ Tyersal:
 
 
 ```{r}
-
+# add map of the four sites
 ```
 
 ### Accessibility indicators
@@ -106,40 +106,59 @@ According to DfT's JTS, there are many areas that have poor accessibility by act
 
 ## Route busyness
 
+<!-- ```{r} -->
+<!-- library(stplanr) -->
+<!-- od_from_zone1 = data.frame( -->
+<!--   stringsAsFactors = TRUE, -->
+<!--   origin = zones_leeds$geo_code[1], -->
+<!--   destination = zones_leeds$geo_code[2:9] -->
+<!-- ) -->
+<!-- desire_lines = od2line(flow = od_from_zone1, zones_leeds) -->
+<!-- plot(desire_lines) -->
+<!-- ``` -->
+
+<!-- ```{r, eval=FALSE} -->
+<!-- routes_fastest = route( -->
+<!--   l = desire_lines, -->
+<!--   route_fun = cyclestreets::journey, -->
+<!--   plan = "fastest" # on CRAN version only fastest works -->
+<!--   ) -->
+<!-- ``` -->
+
+<!-- ```{r, eval=FALSE, echo=FALSE} -->
+<!-- # save roues_fastest object -->
+<!-- saveRDS(routes_fastest, "routes_fastest.Rds") -->
+<!-- piggyback::pb_upload("routes_fastest.Rds") -->
+<!-- piggyback::pb_download_url("routes_fastest.Rds") -->
+<!-- ``` -->
+
+<!-- ```{r, echo=FALSE} -->
+<!-- routes_fastest = readRDS(url("https://github.com/cyipt/acton/releases/download/0.0.1/routes_fastest.Rds")) -->
+<!-- ``` -->
+
+<!-- ```{r plot-fast-routes} -->
+<!-- routes_fastest$busyness = routes_fastest$busynance / routes_fastest$distances -->
+<!-- plot(routes_fastest["busyness"]) -->
+<!-- ``` -->
+
+These maps use OD data for journeys to work from the LSOA centroid closest to each site, but changing to point of origin of the journeys so they start at our case study sites. The desire lines are converted to routes using 'fastest journey' option of the `cyclestreets::journey()` function. 
+
+The thickness of the lines is proportional to the number of journeys (using all modes of transport), and the colour represents the busyness of the roads. 
+
+We can see there are some roads used by commuters from these sites that are particularly busy. These include the A63 near Garforth and the A61 on the eastern edge of Leeds City Centre (circle these roads) (remove Sutton Grange Lane which is private)
+
 ```{r}
-library(stplanr)
-od_from_zone1 = data.frame(
-  stringsAsFactors = TRUE,
-  origin = zones_leeds$geo_code[1],
-  destination = zones_leeds$geo_code[2:9]
-)
-desire_lines = od2line(flow = od_from_zone1, zones_leeds)
-plot(desire_lines)
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73958076-43d34100-48ff-11ea-80a3-f06f8205e8d2.png")
 ```
 
-```{r, eval=FALSE}
-routes_fastest = route(
-  l = desire_lines,
-  route_fun = cyclestreets::journey,
-  plan = "fastest" # on CRAN version only fastest works
-  )
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73958097-4b92e580-48ff-11ea-9475-5332580f7083.png")
 ```
 
-```{r, eval=FALSE, echo=FALSE}
-# save roues_fastest object
-saveRDS(routes_fastest, "routes_fastest.Rds")
-piggyback::pb_upload("routes_fastest.Rds")
-piggyback::pb_download_url("routes_fastest.Rds")
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73958112-50f03000-48ff-11ea-993d-a61558866bac.png")
 ```
 
-```{r, echo=FALSE}
-routes_fastest = readRDS(url("https://github.com/cyipt/acton/releases/download/0.0.1/routes_fastest.Rds"))
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73958128-58173e00-48ff-11ea-8cdb-00eb2ca66060.png")
 ```
-
-
-```{r plot-fast-routes}
-routes_fastest$busyness = routes_fastest$busynance / routes_fastest$distances
-plot(routes_fastest["busyness"])
-```
-
-
