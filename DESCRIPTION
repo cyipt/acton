@@ -8,9 +8,8 @@ Authors@R: c(
     person("Robin", "Lovelace", email = "rob00x@gmail.com",      role = c("aut","cre"),
       comment = c(ORCID = "0000-0001-5679-6536"))
     )
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Maintainer: person("Joey", "Talbot", email = "j.d.talbot@leeds.ac.uk")
+Description: Functions for working with planning and accessibility data
 Language: EN-GB
 License: file LICENSE
 URL: https://github.com/cyipt/acton, https://itsleeds.github.io/acton/
