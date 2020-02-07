@@ -2,6 +2,9 @@
 
 library(dplyr)
 library(stplanr)
+library(sf)
+library(mapview)
+library(units)
 
 # make data available
 # sites = readRDS("~/NewDevelopmentsCycling/data/leeds-sites.Rds")
@@ -18,9 +21,9 @@ od_all_en_wales = pct::get_od(omit_intrazonal = TRUE)
 # Create desire lines from development site to common destinations from nearest centroid
 
 c = pct::get_pct_centroids(region = "west-yorkshire", geography = "lsoa") %>% rename(LA_Code = lad11cd)
-m = pct::get_pct_centroids(region = "west-yorkshire", geography = "msoa") %>% rename(LA_Code = lad11cd)
+m = pct::get_centroids_ew() %>% st_transform(4326)
 lines_pct_lsoa = pct::get_pct_lines(region = "west-yorkshire", geography = "lsoa")
-# lines_pct_msoa = pct::get_pct_lines(region = "west-yorkshire", geography = "msoa")
+lines_pct_msoa = pct::get_pct_lines(region = "west-yorkshire", geography = "msoa")
 
 
 # MSOA data ---------------------------------------------------------------
@@ -31,8 +34,9 @@ centroids_nearest_site = sites$msoa_code
 
 # need to also add in lines where geo_code2 matches the sites
 od_from_centroids_near_sites = od_all_en_wales %>%
-  filter(geo_code1 %in% centroids_nearest_site, geo_code2 %in% m$geo_code) %>%
-  sf::st_drop_geometry()
+  filter(geo_code1 %in% centroids_nearest_site
+         , geo_code2 %in% m$msoa11cd # why are there some geo_code2 that aren't listed in m? maybe scottish?
+         )
 
 # od_from_centroids_near_sites = lines_pct_msoa %>%
 #   select(geo_code1, geo_code2, all, bicycle, car_driver, car_passenger
@@ -44,7 +48,7 @@ od_from_centroids_near_sites = od_all_en_wales %>%
 sites_column_name_updated = sites %>%
   select(msoa_code, geo_code, everything())
 
-lines_to_sites = stplanr::od2line(flow = od_from_centroids_near_sites,m,sites_column_name_updated)#why doesn't this work?
+lines_to_sites = stplanr::od2line(flow = od_from_centroids_near_sites,sites_column_name_updated, m)#why doesn't this work?
 plot(lines_to_sites)
 mapview::mapview(lines_to_sites)
 
@@ -69,6 +73,32 @@ sites_column_name_updated = sites %>%
 lines_to_sites = stplanr::od2line(od_from_centroids_near_sites, sites_column_name_updated, c)
 plot(lines_to_sites)
 mapview::mapview(lines_to_sites)
+
+
+# Distances ---------------------------------------------------------------
+
+lines_to_sites = lines_to_sites %>%
+  st_transform(27700) %>%
+  mutate(distance = drop_units(st_length(geometry)/1000)) %>%
+  st_transform(4326)
+
+wmean = lines_to_sites %>%
+  group_by(geo_code1) %>%
+  summarise(mdist = weighted.mean(distance, all),
+            n_employed = sum(all)) %>%
+  st_drop_geometry() %>%
+  rename(msoa_code = geo_code1)
+
+places = sites[,1:4] %>%
+  st_drop_geometry()
+
+wmean = inner_join(places, wmean, by = "msoa_code")
+wmean
+
+under20 = lines_to_sites %>%
+  filter(distance <= 20)
+
+mapview(under20)
 
 
 # Creating routes ---------------------------------------------------------

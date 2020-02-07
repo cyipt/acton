@@ -66,7 +66,7 @@ Journey time statistics (JTS) are available from the Department for Transport re
 
 Travel times are calculated for three modes of travel - by car, by cycle, and by a mode that combines walking and public transport.
 
-The LSOA zones in Leeds are shown below, together with their working age population. LSOA population should normally be relatively constant, but it is considerably higher in some Leeds LSOAs. This may be due to new residential developments (especially student accommodation) built after the LSOA boundaries were set.  
+The LSOA zones in Leeds are shown below, together with their working age population. LSOA population should normally be relatively constant, but it is considerably higher in some Leeds LSOAs. This may be due to new residential developments built after the LSOA boundaries were set, in particular student accommodation and the recent growth in city centre living.  
 
 ```{r}
 # library(dplyr)
