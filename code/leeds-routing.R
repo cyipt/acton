@@ -30,27 +30,27 @@ lines_pct_msoa = pct::get_pct_lines(region = "west-yorkshire", geography = "msoa
 
 #this can find all OD pairs (even beyond west yorkshire and >20km away)
 
-centroids_nearest_site = sites$msoa_code
+centroids_nearest_site_m = sites$msoa_code
 
-# need to also add in lines where geo_code2 matches the sites
-od_from_centroids_near_sites = od_all_en_wales %>%
-  filter(geo_code1 %in% centroids_nearest_site
-         , geo_code2 %in% m$msoa11cd # why are there some geo_code2 that aren't listed in m? maybe scottish?
+# why does this produce so many more lines, even within west yorkshire? it produces 1352 lines (and 2816 when doing both directions), while the lsoa version only produces 115 (135 in both directions). even for msoa lines under 20km there are still 588.
+od_from_centroids_nr_sites_m = od_all_en_wales %>%
+  filter(geo_code1 %in% centroids_nearest_site_m
+         , geo_code2 %in% m$msoa11cd # there are some geo_code2 that aren't listed in m. probably scottish?
          )
 
-# od_from_centroids_near_sites = lines_pct_msoa %>%
+# od_from_centroids_nr_sites_m = lines_pct_msoa %>%
 #   select(geo_code1, geo_code2, all, bicycle, car_driver, car_passenger
 #          # bus, taxi etc
 #          ) %>%
-#   filter(geo_code1 %in% centroids_nearest_site, geo_code2 %in% m$geo_code)
+#   filter(geo_code1 %in% centroids_nearest_site_m, geo_code2 %in% m$geo_code)
 
 # # add on the site_id (first column)
-sites_column_name_updated = sites %>%
+sites_m = sites %>%
   select(msoa_code, geo_code, everything())
 
-lines_to_sites = stplanr::od2line(flow = od_from_centroids_near_sites,sites_column_name_updated, m)#why doesn't this work?
-plot(lines_to_sites)
-mapview::mapview(lines_to_sites)
+lines_m = stplanr::od2line(flow = od_from_centroids_nr_sites_m, sites_m, m)#why doesn't this work?
+plot(lines_m)
+mapview::mapview(lines_m)
 
 
 # LSOA data ---------------------------------------------------------------
@@ -59,6 +59,7 @@ mapview::mapview(lines_to_sites)
 
 centroids_nearest_site = sites$geo_code
 
+# need to also add in lines where geo_code2 matches the sites
 od_from_centroids_near_sites = lines_pct_lsoa %>%
   select(geo_code1, geo_code2, all, bicycle, car_driver, car_passenger
          # bus, taxi etc
@@ -100,6 +101,8 @@ under20 = lines_to_sites %>%
 
 mapview(under20)
 
+###find the proportion of these that are outside west yorkshire
+
 
 # Creating routes ---------------------------------------------------------
 
@@ -115,11 +118,18 @@ routes_to_site_quietest = route(l = lines_to_sites, route_fun = cyclestreets::jo
 mapview::mapview(routes_to_site)
 identical(routes_to_site, routes_to_site_quietest)
 
+###for msoa data
+routes_to_site_m = route(l = under20, route_fun = cyclestreets::journey, cl = cl)
+mapview::mapview(routes_to_site_m)
 
 
 # Busyness ----------------------------------------------------------------
 
 routes_to_site$busyness = routes_to_site$busynance / routes_to_site$distance
+routes_to_site_m$busyness = routes_to_site_m$busynance / routes_to_site_m$distance
+
+write_sf(routes_to_site,"leeds-routes.geojson")
+write_sf(routes_to_site_m,"leeds-routes-msoa.geojson")
 
 mapview(routes_to_site["busyness"],lwd = routes_to_site$all, scale = 0.01) + mapview(sites_column_name_updated[1,])
 
