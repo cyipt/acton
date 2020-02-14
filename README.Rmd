@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-**Acton** is a research project to provide evidence for local authorities, developers and civil society groups to support planning and investment in sustainable transport infrastructure in and around new developments.
+**ACTON** is a research project to provide evidence for local authorities, developers and civil society groups to support planning and investment in sustainable transport infrastructure in and around new developments.
 To make the results of the research more reproducible and accessible to others, we have also created an R package, which is described below.
 
 For information about the wider research project, see [The ACTON project](https://cyipt.github.io/acton/articles/the-acton-project.html) report.
