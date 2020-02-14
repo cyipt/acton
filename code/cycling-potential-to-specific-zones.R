@@ -11,13 +11,13 @@ lvp_osm = opq("leeds") %>%
   add_osm_feature("name", "")
 lvp_sf = osmdata_sf(lvp_osm)
 
-# with geofabric
-devtools::install_github("itsleeds/geofabric")
-library(geofabric)
-View(geofabric_zones)
-wy_osm = get_geofabric("west yorkshire")
-wy_osm = get_geofabric("west yorkshire", layer = "multipolygons")
-f = geofabric::gf_filename(name = "West Yorkshire")
+# with geofabrik
+devtools::install_github("itsleeds/geofabrik")
+library(geofabrik)
+View(geofabrik_zones)
+wy_osm = get_geofabrik("west yorkshire")
+wy_osm = get_geofabrik("west yorkshire", layer = "multipolygons")
+f = geofabrik::gf_filename(name = "West Yorkshire")
 query = "select * from multipolygons where name = 'Leeds Valley Park'"
 lvp = sf::read_sf(f, query = query)
 plot(lvp[1, ])
