@@ -145,7 +145,7 @@ These maps use OD data for journeys to work from the LSOA centroid closest to ea
 
 The thickness of the lines is proportional to the number of journeys (using all modes of transport), and the colour represents the busyness of the roads. 
 
-We can see there are some roads used by commuters from these sites that are particularly busy. These include the A63 near Garforth and the A61 on the eastern edge of Leeds City Centre (circle these roads) (remove Sutton Grange Lane which is private)
+We can see there are some roads used by commuters from these sites that are particularly busy. These include the A63 near Garforth and the A61 on the eastern edge of Leeds City Centre (circle these roads)
 
 ```{r}
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73958076-43d34100-48ff-11ea-80a3-f06f8205e8d2.png")
@@ -156,7 +156,7 @@ knitr::include_graphics("https://user-images.githubusercontent.com/52210872/7395
 ```
 
 ```{r}
-knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73958112-50f03000-48ff-11ea-993d-a61558866bac.png")
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/75466061-79f56500-5981-11ea-85af-d154cb907be8.png")
 ```
 
 ```{r}

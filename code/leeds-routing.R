@@ -80,12 +80,12 @@ mapview::mapview(lines_to_sites)
 
 lines_to_sites = lines_to_sites %>%
   st_transform(27700) %>%
-  mutate(distance = drop_units(st_length(geometry))) %>%
+  mutate(distance_crow_full = drop_units(st_length(geometry)/1000)) %>%
   st_transform(4326)
 
 wmean = lines_to_sites %>%
   group_by(geo_code1) %>%
-  summarise(mdist = weighted.mean(distance, all),
+  summarise(mdist = weighted.mean(distance_crow_full, all),
             n_employed = sum(all)) %>%
   st_drop_geometry() %>%
   rename(geo_code = geo_code1)
@@ -96,19 +96,19 @@ places = sites[,1:4] %>%
 wmean = inner_join(places, wmean, by = "geo_code")
 wmean
 
-# Distances (MSOA)---------------------------------------------------------------
+# distance_crow_fulls (MSOA)---------------------------------------------------------------
 
 lines_m = lines_m %>%
   st_transform(27700) %>%
-  mutate(distance = drop_units(st_length(geometry))) %>% # keeping distance in m not km, so the busyness calculations are comparable with others
+  mutate(distance_crow_full = drop_units(st_length(geometry)/1000)) %>%
   st_transform(4326)
 
 under20 = lines_m %>%
-  filter(distance <= 20000) # keeping distance in m not km, so the busyness calculations are comparable with others
+  filter(distance_crow_full <= 20)
 
 wmean_m = under20 %>%
   group_by(geo_code1) %>%
-  summarise(mdist = weighted.mean(distance, all),
+  summarise(mdist = weighted.mean(distance_crow_full, all),
             n_employed = sum(all)) %>%
   st_drop_geometry() %>%
   rename(msoa_code = geo_code1)
@@ -145,8 +145,8 @@ mapview::mapview(routes_to_site_m)
 
 # Busyness ----------------------------------------------------------------
 
-routes_to_site$busyness = routes_to_site$busynance / routes_to_site$distance
-routes_to_site_m$busyness = routes_to_site_m$busynance / routes_to_site_m$distance
+routes_to_site$busyness = routes_to_site$busynance / routes_to_site$distances
+routes_to_site_m$busyness = routes_to_site_m$busynance / routes_to_site_m$distances
 
 write_sf(routes_to_site,"leeds-routes.geojson")
 write_sf(routes_to_site_m,"leeds-routes-msoa.geojson")
@@ -161,6 +161,6 @@ s4 = unique(routes_to_site$geo_code1)[4]
 
 ### For the busyness maps as recorded in github issue and website case study
 tmap_mode("view")
-tm_shape(routes_to_site[routes_to_site$geo_code1 == s3,]) +
+tm_shape(routes_to_site[routes_to_site$geo_code1 == s2,]) +
   tm_lines(col = "busyness", palette = "YlOrRd", contrast = c(0.3, 0.9), lwd = "all", scale = 5)
 
