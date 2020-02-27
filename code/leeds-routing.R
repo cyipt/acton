@@ -142,6 +142,10 @@ identical(routes_to_site, routes_to_site_quietest)
 routes_to_site_m = route(l = under20, route_fun = cyclestreets::journey, cl = cl)
 mapview::mapview(routes_to_site_m)
 
+s1 = unique(routes_to_site$geo_code1)[1]
+s2 = unique(routes_to_site$geo_code1)[2]
+s3 = unique(routes_to_site$geo_code1)[3]
+s4 = unique(routes_to_site$geo_code1)[4]
 
 # Busyness ----------------------------------------------------------------
 
@@ -151,12 +155,111 @@ routes_to_site_m$busyness = routes_to_site_m$busynance / routes_to_site_m$distan
 write_sf(routes_to_site,"leeds-routes.geojson")
 write_sf(routes_to_site_m,"leeds-routes-msoa.geojson")
 
-mapview(routes_to_site["busyness"],lwd = routes_to_site$all, scale = 0.01) + mapview(sites_column_name_updated[1,])
+# mapview(routes_to_site["busyness"],lwd = routes_to_site$all, scale = 1) + mapview(sites_column_name_updated[1,])
 
-s1 = unique(routes_to_site$geo_code1)[1]
-s2 = unique(routes_to_site$geo_code1)[2]
-s3 = unique(routes_to_site$geo_code1)[3]
-s4 = unique(routes_to_site$geo_code1)[4]
+# Create route network and calculate Go Dutch scenario----------------------------------------------------
+
+# r_grouped_by_segment = routes_to_site %>%
+#   group_by(name, distances, busynance) %>%
+#   summarise(n = n(), all = sum(all), bicycle = sum(bicycle), busyness = mean(busyness))
+
+r_grouped_tyersal = routes_to_site[routes_to_site$geo_code1 == s1,] %>%
+  rename(fx = start_longitude, fy = start_latitude, tx = finish_longitude, ty = finish_latitude) %>%
+  group_by(fx, fy, tx, ty) %>%
+  summarise(
+    n = n(),
+    all = mean(all),
+    average_incline = sum(abs(diff(elevations))) / sum(distances),
+    distance_m = sum(distances),
+    busyness = mean(busyness)
+  ) %>%
+  ungroup()
+
+# summary(r_grouped)
+
+r_grouped_tyersal$go_dutch = pct::uptake_pct_godutch(distance = r_grouped_tyersal$distance_m, gradient = r_grouped_tyersal$average_incline) *
+  r_grouped_tyersal$all
+r_grouped_lines = r_grouped_tyersal %>% st_cast("LINESTRING")
+rnet_go_dutch = overline2(r_grouped_lines, "go_dutch")
+
+# summary(rnet_go_dutch$go_dutch)
+
+tm_shape(rnet_go_dutch) +
+  tm_lines("go_dutch", lwd = "go_dutch", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
+
+####
+
+r_grouped_micklefield = routes_to_site[routes_to_site$geo_code1 == s2,] %>%
+  rename(fx = start_longitude, fy = start_latitude, tx = finish_longitude, ty = finish_latitude) %>%
+  group_by(fx, fy, tx, ty) %>%
+  summarise(
+    n = n(),
+    all = mean(all),
+    average_incline = sum(abs(diff(elevations))) / sum(distances),
+    distance_m = sum(distances),
+    busyness = mean(busyness)
+  ) %>%
+  ungroup()
+
+r_grouped_micklefield$go_dutch = pct::uptake_pct_godutch(distance = r_grouped_micklefield$distance_m, gradient = r_grouped_micklefield$average_incline) *
+  r_grouped_micklefield$all
+r_grouped_lines = r_grouped_micklefield %>% st_cast("LINESTRING")
+rnet_go_dutch = overline2(r_grouped_lines, "go_dutch")
+
+summary(rnet_go_dutch$go_dutch)
+
+tm_shape(rnet_go_dutch) +
+  tm_lines("go_dutch", lwd = "go_dutch", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
+
+######
+
+r_grouped_allerton = routes_to_site[routes_to_site$geo_code1 == s3,] %>%
+  rename(fx = start_longitude, fy = start_latitude, tx = finish_longitude, ty = finish_latitude) %>%
+  group_by(fx, fy, tx, ty) %>%
+  summarise(
+    n = n(),
+    all = mean(all),
+    average_incline = sum(abs(diff(elevations))) / sum(distances),
+    distance_m = sum(distances),
+    busyness = mean(busyness)
+  ) %>%
+  ungroup()
+
+r_grouped_allerton$go_dutch = pct::uptake_pct_godutch(distance = r_grouped_allerton$distance_m, gradient = r_grouped_allerton$average_incline) *
+  r_grouped_allerton$all
+r_grouped_lines = r_grouped_allerton %>% st_cast("LINESTRING")
+rnet_go_dutch = overline2(r_grouped_lines, "go_dutch")
+
+# summary(rnet_go_dutch$go_dutch)
+
+tm_shape(rnet_go_dutch) +
+  tm_lines("go_dutch", lwd = "go_dutch", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
+
+
+####
+
+
+r_grouped_lcid = routes_to_site[routes_to_site$geo_code1 == s4,] %>%
+  rename(fx = start_longitude, fy = start_latitude, tx = finish_longitude, ty = finish_latitude) %>%
+  group_by(fx, fy, tx, ty) %>%
+  summarise(
+    n = n(),
+    all = mean(all),
+    average_incline = sum(abs(diff(elevations))) / sum(distances),
+    distance_m = sum(distances),
+    busyness = mean(busyness)
+  ) %>%
+  ungroup()
+
+r_grouped_lcid$go_dutch = pct::uptake_pct_godutch(distance = r_grouped_lcid$distance_m, gradient = r_grouped_lcid$average_incline) *
+  r_grouped_lcid$all
+r_grouped_lines = r_grouped_lcid %>% st_cast("LINESTRING")
+rnet_go_dutch = overline2(r_grouped_lines, "go_dutch")
+
+# summary(rnet_go_dutch$go_dutch)
+
+tm_shape(rnet_go_dutch) +
+  tm_lines("go_dutch", lwd = "go_dutch", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
 
 
 ### For the busyness maps as recorded in github issue and website case study

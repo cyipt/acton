@@ -145,7 +145,7 @@ These maps use OD data for journeys to work from the LSOA centroid closest to ea
 
 The thickness of the lines is proportional to the number of journeys (using all modes of transport), and the colour represents the busyness of the roads. 
 
-We can see there are some roads used by commuters from these sites that are particularly busy. These include the A63 near Garforth and the A61 on the eastern edge of Leeds City Centre (circle these roads)
+We can see there are some roads used by commuters from these sites that are particularly busy. These include the A63 near Garforth and the A61 on the eastern edge of Leeds City Centre (circle these roads). However, an integral component of the Leeds Climate Innovation District is the construction of a new foot and cycle bridge over the River Aire. This bridge is already in place and allows residents to access Leeds city centre via an off-road riverside path, avoiding the need to use the A61. We should model how this bridge impacts the accessiblity of the site.  
 
 ```{r}
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73958076-43d34100-48ff-11ea-80a3-f06f8205e8d2.png")
