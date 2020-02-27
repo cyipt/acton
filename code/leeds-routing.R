@@ -32,7 +32,7 @@ lines_pct_msoa = pct::get_pct_lines(region = "west-yorkshire", geography = "msoa
 
 centroids_nearest_site_m = sites$msoa_code
 
-# why does this produce so many more lines, even within west yorkshire? it produces 1352 lines (and 2816 when doing both directions), while the lsoa version only produces 115 (135 in both directions). even for msoa lines under 20km there are still 588.
+# why does this produce so many more lines, even within west yorkshire? it produces 1352 lines (and 2816 when doing both directions), while the lsoa version only produces 115 (135 in both directions). even for msoa lines under 20km there are still 588. Is this just because the MSOAs have more commuters going to more places?
 od_from_centroids_nr_sites_m = od_all_en_wales %>%
   filter(geo_code1 %in% centroids_nearest_site_m
          , geo_code2 %in% m$msoa11cd # there are some geo_code2 that aren't listed in m. probably scottish?
@@ -76,11 +76,11 @@ plot(lines_to_sites)
 mapview::mapview(lines_to_sites)
 
 
-# Distances ---------------------------------------------------------------
+# Distances (LSOA)---------------------------------------------------------------
 
 lines_to_sites = lines_to_sites %>%
   st_transform(27700) %>%
-  mutate(distance = drop_units(st_length(geometry)/1000)) %>%
+  mutate(distance = drop_units(st_length(geometry))) %>%
   st_transform(4326)
 
 wmean = lines_to_sites %>%
@@ -88,16 +88,36 @@ wmean = lines_to_sites %>%
   summarise(mdist = weighted.mean(distance, all),
             n_employed = sum(all)) %>%
   st_drop_geometry() %>%
-  rename(msoa_code = geo_code1)
+  rename(geo_code = geo_code1)
 
 places = sites[,1:4] %>%
   st_drop_geometry()
 
-wmean = inner_join(places, wmean, by = "msoa_code")
+wmean = inner_join(places, wmean, by = "geo_code")
 wmean
 
-under20 = lines_to_sites %>%
-  filter(distance <= 20)
+# Distances (MSOA)---------------------------------------------------------------
+
+lines_m = lines_m %>%
+  st_transform(27700) %>%
+  mutate(distance = drop_units(st_length(geometry))) %>% # keeping distance in m not km, so the busyness calculations are comparable with others
+  st_transform(4326)
+
+under20 = lines_m %>%
+  filter(distance <= 20000) # keeping distance in m not km, so the busyness calculations are comparable with others
+
+wmean_m = under20 %>%
+  group_by(geo_code1) %>%
+  summarise(mdist = weighted.mean(distance, all),
+            n_employed = sum(all)) %>%
+  st_drop_geometry() %>%
+  rename(msoa_code = geo_code1)
+
+# places = sites[,1:4] %>%
+  # st_drop_geometry()
+
+wmean_m = inner_join(places, wmean_m, by = "msoa_code")
+wmean_m
 
 mapview(under20)
 
@@ -138,7 +158,9 @@ s2 = unique(routes_to_site$geo_code1)[2]
 s3 = unique(routes_to_site$geo_code1)[3]
 s4 = unique(routes_to_site$geo_code1)[4]
 
+
+### For the busyness maps as recorded in github issue and website case study
 tmap_mode("view")
-tm_shape(routes_to_site[routes_to_site$geo_code1 == s4,]) +
+tm_shape(routes_to_site[routes_to_site$geo_code1 == s3,]) +
   tm_lines(col = "busyness", palette = "YlOrRd", contrast = c(0.3, 0.9), lwd = "all", scale = 5)
 

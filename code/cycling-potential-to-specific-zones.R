@@ -9,7 +9,7 @@ library(pct)
 # with osmdata
 lvp_osm = opq("leeds") %>%
   add_osm_feature("name", "")
-lvp_sf = osmdata_sf(lvp_osm)
+# lvp_sf = osmdata_sf(lvp_osm)
 
 # with geofabrik
 devtools::install_github("itsleeds/geofabrik")
