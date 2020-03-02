@@ -1,0 +1,84 @@
+---
+title: "Active Transport Options for New Developments Workshop"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{acton-workshop}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+The ACTON Workshop will take place on Friday 13th March, starting 10:00.
+
+The objectives are to:
+
+1. Get attendees up-to-speed on progress, and plan the next stages of work
+
+2. To get opinions on how to ensure the project can have wider impact and provide useful outputs
+
+3. To consider how ACTON can contribute to future projects
+
+4. To make progress on ACTON with a focussed coding session tackling problems such as barriers, route severance, and options to improve site accessibility
+
+## Agenda
+
+## Intro and overview (10:00 - 10:30)
+
+- overview of ACTON project
+- go round, everyone briefly introduce their interest in the project / what they’ve been working on and what they want to get done next
+
+## Data and methods (10:30 - 11:00)
+
+(This will include discussion of progress and what we need to get done by end of the project.)
+
+- improvements to PlanIt. How can we best enable the automation and filtering of planning application searches?
+- journey routing for cycling - progress on CycleStreets routing algorithm for ‘quiet’ journeys
+- journey routing for walking – test out using OpenTripPlanner
+- case study sites
+- accessibility and journey time statistics
+- busyness of route segments
+- barriers and severance
+- comparison of route quality/circuitousness for different modes of travel
+- selection of options for improving accessibility of case study sites
+
+**Break**
+
+## Outputs (11:15 - 12:15)
+
+- what outputs do we want to see and what is the progress on these? Such as:
+- report
+- journal article
+- media coverage
+- R package
+- website
+
+## Links with Future work (12:15 - 13:00)
+
+- what benefits can ACTON provide for future stages of CyIPT or related projects?
+- how can methods be generalised from case study sites to move towards a nationwide tool?
+- how do we make sure the project is useful for a wider audience?
+- what areas for further development are people interested in?
+
+**Lunch**
+
+## Hackathon (14:00 - 16:00)
+
+In this section, for developers, we will go in depth and work on the code for some of the topics discussed above, including:
+
+- Methods for estimating severance and identifying key links to overcome severance
+- Integrating the outputs of the ACTON project into other tools such as CyIPT and planning tools
+- Estimating travel to major trip attractors
+- Addressing key limitations of the data
+
+<!-- Pub -->
+
+
+
