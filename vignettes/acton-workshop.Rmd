@@ -20,7 +20,12 @@ knitr::opts_chunk$set(
   - Policy session: 10:00 - 14:00 including lunch
   - Hackathon: 13:00 - 16:00 including lunch
 - Where: The Institute for Transport Studies, University Road, Leeds, LS2 9JT (see [map here](https://g.page/ITSLeeds?share))
-- Who: Anyone interested in sustainable transport and land use policy (particularly the sessions before lunch) and people interested in data, code and technologies underlying transport planning tools (particularly the Hackathon after lunch), anyone is welcome at both. 
+- Who: Anyone interested in sustainable transport and land use policy (particularly the sessions before lunch) and people interested in data, code and technologies underlying transport planning tools (particularly the Hackathon after lunch), anyone is welcome at both
+- How to apply: please [sign-up on Eventbrite](https://www.eventbrite.co.uk/e/workshop-on-active-transport-options-for-new-developments-tickets-97758417057)
+
+![](https://user-images.githubusercontent.com/1825120/75694077-db7a4400-5c9f-11ea-8817-2a024e32c52b.png)
+
+**Two developments in the case study data for Leeds, illustrating differences in provision for active transport**
 
 The objectives are to:
 
