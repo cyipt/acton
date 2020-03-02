@@ -34,33 +34,39 @@ The objectives are to:
 
 - overview of ACTON project
 - go round, everyone briefly introduce their interest in the project / what they’ve been working on and what they want to get done next
+- local policy and planning considerations
 
-## Data and methods (10:30 - 11:00)
+## Data and methods (10:30 - 11:30)
 
-(This will include discussion of progress and what we need to get done by end of the project.)
+(This will include discussion of progress and expected next steps)
 
-- improvements to PlanIt. How can we best enable the automation and filtering of planning application searches?
-- journey routing for cycling - progress on CycleStreets routing algorithm for ‘quiet’ journeys
-- journey routing for walking – test out using OpenTripPlanner
-- case study sites
-- accessibility and journey time statistics
-- busyness of route segments
-- barriers and severance
-- comparison of route quality/circuitousness for different modes of travel
-- selection of options for improving accessibility of case study sites
+- Talk on input data and API access from CycleStreets.net (20 minutes)
+  - improvements to PlanIt. How can we best enable the automation and filtering of planning application searches?
+  - journey routing for cycling - progress on CycleStreets routing algorithm for ‘quiet’ journeys
+- Findings from case study sites by Joey Talbot (20 minutes)
+  - accessibility and journey time statistics
+  - busyness of route segments
+  - barriers and severance
+- Discussion (20 minutes)
+  - comparison of route quality/circuitousness for different modes of travel
+  - selection of options for improving accessibility of case study sites
 
 **Break**
 
-## Outputs (11:15 - 12:15)
+## Outputs (11:55 - 12:15)
 
-- what outputs do we want to see and what is the progress on these? Such as:
-- report
-- journal article
-- media coverage
-- R package
-- website
+- Overview of outputs so far by Robin Lovelace (15 minutes)
+- Discussion of what stakeholders need and would like from the project, including from
+  - web service / tool
+  - the final report
+  - journal article
+  - media coverage
+  - R package
+  - website
 
 ## Links with Future work (12:15 - 13:00)
+
+Group discussion with feedback after 30 minutes
 
 - what benefits can ACTON provide for future stages of CyIPT or related projects?
 - how can methods be generalised from case study sites to move towards a nationwide tool?
@@ -73,10 +79,11 @@ The objectives are to:
 
 In this section, for developers, we will go in depth and work on the code for some of the topics discussed above, including:
 
-- Methods for estimating severance and identifying key links to overcome severance
-- Integrating the outputs of the ACTON project into other tools such as CyIPT and planning tools
-- Estimating travel to major trip attractors
-- Addressing key limitations of the data
+- methods for estimating severance and identifying key links to overcome severance
+- journey routing for walking – test out using OpenTripPlanner
+- integrating the outputs of the ACTON project into other tools such as CyIPT and planning tools
+- estimating travel to major trip attractors
+- addressing key limitations of the data
 
 <!-- Pub -->
 
