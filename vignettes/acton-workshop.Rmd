@@ -16,7 +16,11 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-The ACTON Workshop will take place on Friday 13th March, starting 10:00.
+- When: The ACTON Workshop will take place on Friday 13th March, 10:00 - 16:00
+  - Policy session: 10:00 - 14:00 including lunch
+  - Hackathon: 13:00 - 16:00 including lunch
+- Where: The Institute for Transport Studies, University Road, Leeds, LS2 9JT (see [map here](https://g.page/ITSLeeds?share))
+- Who: Anyone interested in sustainable transport and land use policy (particularly the sessions before lunch) and people interested in data, code and technologies underlying transport planning tools (particularly the Hackathon after lunch), anyone is welcome at both. 
 
 The objectives are to:
 
