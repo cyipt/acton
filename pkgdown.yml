@@ -2,6 +2,7 @@ pandoc: '2.2'
 pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
+  acton-workshop: acton-workshop.html
   acton: acton.html
   case-studies: case-studies.html
   the-acton-project: the-acton-project.html
