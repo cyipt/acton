@@ -37,7 +37,7 @@ The objectives are to:
 ## Intro and overview (10:00 - 10:30)
 
 - overview of ACTON project
-- go round, everyone briefly introduce their interest in the project / what they’ve been working on and what they want to get done next
+- go round with intro to interest in the project and what they hope to get out of it
 - local policy and planning considerations
 
 ## Data and methods (10:30 - 11:30)
@@ -57,7 +57,7 @@ The objectives are to:
 
 **Break**
 
-## Outputs (11:55 - 12:15)
+## Outputs (11:45 - 12:15)
 
 - Overview of outputs so far by Robin Lovelace (15 minutes)
 - Discussion of what stakeholders need and would like from the project, including from
