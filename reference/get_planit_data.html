@@ -101,7 +101,7 @@ for further information." />
       <a href="../articles/acton-workshop.html">Active Transport Options for New Developments Workshop</a>
     </li>
     <li>
-      <a href="../articles/case-studies.html">Acton case studies</a>
+      <a href="../articles/case-studies.html">Case studies</a>
     </li>
     <li>
       <a href="../articles/the-acton-project.html">The ACTON project</a>
@@ -143,7 +143,7 @@ for further information.</p>
 
     <pre class="usage"><span class='fu'>get_planit_data</span>(
   <span class='kw'>query_type</span> <span class='kw'>=</span> <span class='st'>"applics"</span>,
-  <span class='kw'>query_type_search</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>query_value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fmt</span> <span class='kw'>=</span> <span class='st'>"geojson"</span>,
   <span class='kw'>base_url</span> <span class='kw'>=</span> <span class='st'>"https://www.planit.org.uk/"</span>,
   <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>6</span>,
@@ -163,7 +163,7 @@ for further information.</p>
       <td><p>The type of query (`"applics"` by default)</p></td>
     </tr>
     <tr>
-      <th>query_type_search</th>
+      <th>query_value</th>
       <td><p>Text string associated with the `query_type` (may be updated)</p></td>
     </tr>
     <tr>
@@ -262,7 +262,7 @@ for further information.</p>
 #&gt; 2 PlanApp… Leed…        0 http… Listed Bui… 2018-08-14 08:53:45          292
 #&gt; # … with 10 more variables: source_url &lt;chr&gt;, authority_name &lt;chr&gt;, link &lt;chr&gt;,
 #&gt; #   postcode &lt;chr&gt;, address &lt;chr&gt;, lat &lt;dbl&gt;, lng &lt;dbl&gt;, start_date &lt;date&gt;,
-#&gt; #   uid &lt;chr&gt;, geometry &lt;POINT [°]&gt;</div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>query_type</span> <span class='kw'>=</span> <span class='st'>"planapplic"</span>, <span class='kw'>query_type_search</span> <span class='kw'>=</span> <span class='st'>"13/05235/FU@Leeds"</span>)</div><div class='output co'>#&gt; <span class='message'>Getting data from https://www.planit.org.uk/planapplic/13/05235/FU@Leeds/geojson?limit=6&amp;bbox=&amp;end_date=2020-03-03&amp;start_date=2000-02-01&amp;pg_sz=6</span></div><div class='output co'>#&gt; Simple feature collection with 1 feature and 13 fields
+#&gt; #   uid &lt;chr&gt;, geometry &lt;POINT [°]&gt;</div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>query_type</span> <span class='kw'>=</span> <span class='st'>"planapplic"</span>, <span class='kw'>query_value</span> <span class='kw'>=</span> <span class='st'>"13/05235/FU@Leeds"</span>)</div><div class='output co'>#&gt; <span class='message'>Getting data from https://www.planit.org.uk/planapplic/13/05235/FU@Leeds/geojson?limit=6&amp;bbox=&amp;end_date=2020-03-03&amp;start_date=2000-02-01&amp;pg_sz=6</span></div><div class='output co'>#&gt; Simple feature collection with 1 feature and 13 fields
 #&gt; geometry type:  POINT
 #&gt; dimension:      XY
 #&gt; bbox:           xmin: -1.360979 ymin: 53.74662 xmax: -1.360979 ymax: 53.74662
