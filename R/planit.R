@@ -16,6 +16,7 @@
 #' @param start_date The earliest application (date of application) to be filtered `"2000-02-01"`
 #' @param pcode Postcode = UK postcode to use for the centre of a location search
 #' @param krad Radius (km) = only planning applications within the circle perimeter are returned (default 2)
+#' @param auth Authority name
 #' @param bbox Bounding box in the form of xmin, ymin, xmax, ymax, e.g.: `c(-1.3, 53.7, -1.2, 53.9)`
 #' @param silent Do you want a message? Default is `FALSE`
 #'
@@ -29,10 +30,11 @@
 #' names(res)
 #' plot(res)
 #' get_planit_data(fmt = "json", limit = 2, bbox = bbox) # return data frame with limit
+#' get_planit_data(fmt = "json", limit = 2, auth = "leeds")
 #' get_planit_data(end_date = "2008-01-01", limit = 2, bbox = bbox) # historic data
 #' get_planit_data(pcode = "LS2 9JT", limit = 2, bbox = bbox) # data from specific postcode
 #' get_planit_data(query_type = "planapplic", query_value = "13/05235/FU@Leeds")
-#' # get_planit_data(query_type = "areas", query_value = "leeds") # fails...
+#' get_planit_data(query_type = "planarea", query_value = "leeds") # fails...
 #' planitareas = get_planit_data(query_type = "areas", limit = 2)
 #' nrow(planitareas)
 #' planitareas$name
@@ -45,6 +47,7 @@ get_planit_data = function(
                           limit = 6,
                           end_date = as.character(Sys.Date()),
                           start_date = "2000-02-01",
+                          auth = NULL,
                           pcode = NULL,
                           krad = NULL,
                           bbox = NULL,
@@ -73,6 +76,7 @@ get_planit_data = function(
       # ensure all results are on one page, I think (RL)
       pg_sz = limit,
       pcode = pcode,
+      auth = auth,
       krad = krad
     )
   }

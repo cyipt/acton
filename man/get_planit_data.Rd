@@ -12,6 +12,7 @@ get_planit_data(
   limit = 6,
   end_date = as.character(Sys.Date()),
   start_date = "2000-02-01",
+  auth = NULL,
   pcode = NULL,
   krad = NULL,
   bbox = NULL,
@@ -21,7 +22,8 @@ get_planit_data(
 \arguments{
 \item{query_type}{The type of query (`"applics"` by default)}
 
-\item{query_value}{Text string associated with the `query_type` (may be updated)}
+\item{query_value}{Text string associated with the `query_type`.
+To be used only when `query_type` is not `"applics"`.}
 
 \item{fmt}{The format of the output (`"geojson"` returns an `sf` object, `"json"` returns a data frame)}
 
@@ -32,6 +34,8 @@ get_planit_data(
 \item{end_date}{E.g. `"2009-02-01"`. Default is `as.character(Sys.Date())`.}
 
 \item{start_date}{The earliest application (date of application) to be filtered `"2000-02-01"`}
+
+\item{auth}{Authority name}
 
 \item{pcode}{Postcode = UK postcode to use for the centre of a location search}
 
@@ -57,7 +61,13 @@ class(res)
 names(res)
 plot(res)
 get_planit_data(fmt = "json", limit = 2, bbox = bbox) # return data frame with limit
+get_planit_data(fmt = "json", limit = 2, auth = "leeds")
 get_planit_data(end_date = "2008-01-01", limit = 2, bbox = bbox) # historic data
 get_planit_data(pcode = "LS2 9JT", limit = 2, bbox = bbox) # data from specific postcode
 get_planit_data(query_type = "planapplic", query_value = "13/05235/FU@Leeds")
+get_planit_data(query_type = "planarea", query_value = "leeds") # fails...
+planitareas = get_planit_data(query_type = "areas", limit = 2)
+nrow(planitareas)
+planitareas$name
+planitareas
 }
