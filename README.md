@@ -12,16 +12,47 @@ status](https://travis-ci.com/cyipt/acton.svg?branch=master)](https://travis-ci.
 
 ## Introduction
 
-**Acton** is a research project to provide evidence for local
-authorities, developers and civil society groups to support planning and
-investment in sustainable transport infrastructure in and around new
-developments. To make the results of the research more reproducible and
-accessible to others, we have also created an R package, which is
-described below.
+**ACTON** stands for active transport options for new developments.
+ACTON a research project to provide evidence for local authorities,
+developers and civil society groups to support planning and investment
+in sustainable transport infrastructure in and around new developments.
+To make the results of the research more reproducible and accessible to
+others, it is also an R package.
 
-For information about the wider research project, see [The ACTON
-project](https://cyipt.github.io/acton/articles/the-acton-project.html)
-report.
+## What does ACTON do?
+
+In first place, ACTON is about evidence-based planning and that means it
+is about data. ACTON provides easy access to actionable data from 4 main
+sources, each of which is already in the public domain, which had never
+before been made available in a single place or analysed together to
+support planning, as illustrated in the schematic diagram below.
+
+The four main data sources shown above are:
+
+  - PlanIt data on new developments based on planning documents
+    submitted to local government planning departments
+  - Accessibility data, including travel times by mode for different
+    trip purposes, e.g. the average time taken to cycle to the shops,
+    for small administrative zones (MSOA and LSOA level)
+  - Route data from routing services such as CycleStreets.net, providing
+    data on the transport network with variables such as busyness and
+    speed limits along roads nearby new and planned development sites
+  - Census data, providing demographic data and likely work destinations
+    at the origin-destination level (plus data derived from the Census
+    via the Propensity to Cycle Tool project)
+
+<img src="man/figures/README-workflow-1.png" width="100%" />
+
+ACTON seeks to make these datasets more widely accessible and actionable
+by combining them and using them to assess walking and cycling provision
+in and around new developments, to inform policies and investment
+
+For more information about the research project, see the in-progress
+[ACTON
+report](https://cyipt.github.io/acton/articles/the-acton-project.html)
+and [case
+study](https://cyipt.github.io/acton/articles/case-studies.html)
+articles.
 
 ## Installing the R package
 
@@ -50,7 +81,7 @@ The package can be used to get data on new developments as follows:
 library(acton)
 # data from specific postcode
 planning_data = get_planit_data(pcode = "LS2 9JT", limit = 2)
-#> Getting data from https://www.planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2020-02-04&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT
+#> Getting data from https://www.planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2020-03-03&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT
 planning_data
 #> Simple feature collection with 2 features and 16 fields
 #> geometry type:  POINT
@@ -61,16 +92,16 @@ planning_data
 #> # A tibble: 2 x 17
 #>   doc_type name  distance url   description when_updated        authority_id
 #>   <chr>    <chr>    <dbl> <chr> <chr>       <dttm>                     <int>
-#> 1 PlanApp… Leed…        0 http… Removal of… 2019-07-23 09:45:04          292
-#> 2 PlanApp… Leed…        0 http… Two new of… 2019-02-10 20:52:08          292
+#> 1 PlanApp… Leed…        0 http… Alteration… 2019-07-02 11:47:13          292
+#> 2 PlanApp… Leed…        0 http… Listed Bui… 2018-08-14 09:53:45          292
 #> # … with 10 more variables: source_url <chr>, authority_name <chr>, link <chr>,
 #> #   postcode <chr>, address <chr>, lat <dbl>, lng <dbl>, start_date <date>,
 #> #   uid <chr>, geometry <POINT [°]>
 planning_data$name
-#> [1] "Leeds/19/03296/LI" "Leeds/19/00584/FU"
+#> [1] "Leeds/19/02996/FU" "Leeds/18/03877/LI"
 planning_data$description
-#> [1] "Removal of condition 5 (retention of spiral staircase) of Listed Building Consent 18/03877/LI due to its condition and location"
-#> [2] "Two new off road parking spaces, new bin store, and relocation of existing covered cycle store"
+#> [1] "Alterations to carry out works to two public realm areas at university campus entrance"                                                                                                            
+#> [2] "Listed Building application for partial demolition, external alterations and refurbishment of multiple levels of accommodation and associated improvements to existing teaching and research space"
 ```
 
 ## Documentation
