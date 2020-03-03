@@ -7,7 +7,8 @@
 #'
 #' @param query_type The type of query (`"applics"` by default)
 #'
-#' @param query_type_value Text string associated with the `query_type` (may be updated)
+#' @param query_value Text string associated with the `query_type`.
+#'   To be used only when `query_type` is not `"applics"`.
 #' @param fmt The format of the output (`"geojson"` returns an `sf` object, `"json"` returns a data frame)
 #' @param base_url The base URL of the service
 #' @param limit How many items to return (e.g. 6, default)
@@ -30,15 +31,15 @@
 #' get_planit_data(fmt = "json", limit = 2, bbox = bbox) # return data frame with limit
 #' get_planit_data(end_date = "2008-01-01", limit = 2, bbox = bbox) # historic data
 #' get_planit_data(pcode = "LS2 9JT", limit = 2, bbox = bbox) # data from specific postcode
-#' get_planit_data(query_type = "planapplic", query_type_value = "13/05235/FU@Leeds")
-#' get_planit_data(query_type = "areas", query_type_value = "leeds") # return data frame with limit
-#' planitareas = get_planit_data(query_type = "areas", limit = 2) # return data frame with limit
+#' get_planit_data(query_type = "planapplic", query_value = "13/05235/FU@Leeds")
+#' # get_planit_data(query_type = "areas", query_value = "leeds") # fails...
+#' planitareas = get_planit_data(query_type = "areas", limit = 2)
 #' nrow(planitareas)
 #' planitareas$name
 #' planitareas
 get_planit_data = function(
                           query_type = "applics",
-                          query_type_value = NULL,
+                          query_value = NULL,
                           fmt = "geojson",
                           base_url = "https://www.planit.org.uk/",
                           limit = 6,
@@ -51,15 +52,15 @@ get_planit_data = function(
                           ) {
 
   # browser()
-  if(is.null(query_type_value) ) {
+  if(is.null(query_value) ) {
     base_url_updated = paste(base_url, "api", query_type, fmt, sep = "/")
   } else {
-    base_url_updated = paste(base_url, query_type, query_type_value, fmt, sep = "/")
+    base_url_updated = paste(base_url, query_type, query_value, fmt, sep = "/")
   }
 
   bbox_char = bbox_to_string(bbox)
 
-  if(query_type == "areas" & is.null(query_type_value)) {
+  if(query_type == "areas" & is.null(query_value)) {
     query = list(
       pg_sz = limit
     )

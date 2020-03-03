@@ -6,7 +6,7 @@
 \usage{
 get_planit_data(
   query_type = "applics",
-  query_type_search = NULL,
+  query_value = NULL,
   fmt = "geojson",
   base_url = "https://www.planit.org.uk/",
   limit = 6,
@@ -21,7 +21,7 @@ get_planit_data(
 \arguments{
 \item{query_type}{The type of query (`"applics"` by default)}
 
-\item{query_type_search}{Text string associated with the `query_type` (may be updated)}
+\item{query_value}{Text string associated with the `query_type` (may be updated)}
 
 \item{fmt}{The format of the output (`"geojson"` returns an `sf` object, `"json"` returns a data frame)}
 
@@ -59,5 +59,5 @@ plot(res)
 get_planit_data(fmt = "json", limit = 2, bbox = bbox) # return data frame with limit
 get_planit_data(end_date = "2008-01-01", limit = 2, bbox = bbox) # historic data
 get_planit_data(pcode = "LS2 9JT", limit = 2, bbox = bbox) # data from specific postcode
-get_planit_data(query_type = "planapplic", query_type_search = "13/05235/FU@Leeds")
+get_planit_data(query_type = "planapplic", query_value = "13/05235/FU@Leeds")
 }

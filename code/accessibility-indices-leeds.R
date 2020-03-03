@@ -130,10 +130,10 @@ c = c %>%
 
 ##########
 
-p1 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "13/05235/FU@Leeds", base_url = "https://www.planit.org.uk/")
-p2 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "15/04151/FU@Leeds", base_url = "https://www.planit.org.uk/")
-p3 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "15/01973/FU@Leeds", base_url = "https://www.planit.org.uk/")
-p4 = get_planit_data(bbox = NULL, query_type = "planapplic", query_type_search = "15/00415/FU@Leeds", base_url = "https://www.planit.org.uk/")
+p1 = get_planit_data(bbox = NULL, query_type = "planapplic", query_value = "13/05235/FU@Leeds", base_url = "https://www.planit.org.uk/")
+p2 = get_planit_data(bbox = NULL, query_type = "planapplic", query_value = "15/04151/FU@Leeds", base_url = "https://www.planit.org.uk/")
+p3 = get_planit_data(bbox = NULL, query_type = "planapplic", query_value = "15/01973/FU@Leeds", base_url = "https://www.planit.org.uk/")
+p4 = get_planit_data(bbox = NULL, query_type = "planapplic", query_value = "15/00415/FU@Leeds", base_url = "https://www.planit.org.uk/")
 
 p4 = p4[,-9]
 

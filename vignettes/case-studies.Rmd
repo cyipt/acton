@@ -35,9 +35,10 @@ Data from [PlanIt](https://www.planit.org.uk/), accessed using the `acton` R pac
 
 The following code gets and subsets the relevant PlanIt:
 
-```{r}
+```{r, eval=FALSE}
+# note work in progress!
 library(acton)
-d = get_planit_data(query_type_search = "Allerton Byewater")
+d = get_planit_data(query_value = "Allerton Byewater")
 bbox = c(-1.4, 53.7, -1.3, 53.8)
 res = get_planit_data(bbox = bbox) # return geographic (`sf`) object
 class(res)
