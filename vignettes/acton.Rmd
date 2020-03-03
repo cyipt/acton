@@ -1,5 +1,5 @@
 ---
-title: "Introducing the acton package"
+title: "Active Transport Options for New Developments"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introducing the acton package}
@@ -18,6 +18,13 @@ knitr::opts_chunk$set(
 library(acton)
 ```
 
+In an era where decarbonisation is a must, the transport sector is now the UK's largest source of carbon emissions and one which - unlike other sectors - has not seen any reduction in recent years. On the contrary, the construction of new residential developments having locations and designs that promote car dependency risks locking us into increasingly unsustainable lifestyles in future.
+
+The ACTON project brings together several key datasets to answer the question how can we improve new housing developments for walking and cycling? 
+
+To do this we use several key datasets for transport and planning data: planning applications, census data, accessibility statistics and routing algorithms.
+
+Flow diagram of ACTON project
 
 # Getting planning data
 
