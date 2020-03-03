@@ -149,6 +149,7 @@ for further information.</p>
   <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>6</span>,
   <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>()),
   <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"2000-02-01"</span>,
+  <span class='kw'>auth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>pcode</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>krad</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>bbox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -164,7 +165,8 @@ for further information.</p>
     </tr>
     <tr>
       <th>query_value</th>
-      <td><p>Text string associated with the `query_type` (may be updated)</p></td>
+      <td><p>Text string associated with the `query_type`.
+To be used only when `query_type` is not `"applics"`.</p></td>
     </tr>
     <tr>
       <th>fmt</th>
@@ -185,6 +187,10 @@ for further information.</p>
     <tr>
       <th>start_date</th>
       <td><p>The earliest application (date of application) to be filtered `"2000-02-01"`</p></td>
+    </tr>
+    <tr>
+      <th>auth</th>
+      <td><p>Authority name</p></td>
     </tr>
     <tr>
       <th>pcode</th>
@@ -236,7 +242,30 @@ for further information.</p>
 #&gt; 2 WF10 5ET Rustic Villa Leeds Road Cutsyke Castleford WF10 5ET 53.71458
 #&gt;         lng start_date          uid
 #&gt; 1 -1.389420 2020-02-28 20/01275/CLP
-#&gt; 2 -1.361207 2020-02-24 20/00437/DEM</div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"2008-01-01"</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>bbox</span> <span class='kw'>=</span> <span class='no'>bbox</span>) <span class='co'># historic data</span></div><div class='output co'>#&gt; <span class='message'>Getting data from https://www.planit.org.uk/api/applics/geojson?limit=2&amp;bbox=-1.4%2C53.7%2C-1.3%2C53.8&amp;end_date=2008-01-01&amp;start_date=2000-02-01&amp;pg_sz=2</span></div><div class='output co'>#&gt; Simple feature collection with 2 features and 15 fields
+#&gt; 2 -1.361207 2020-02-24 20/00437/DEM</div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>fmt</span> <span class='kw'>=</span> <span class='st'>"json"</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>auth</span> <span class='kw'>=</span> <span class='st'>"leeds"</span>)</div><div class='output co'>#&gt; <span class='message'>Getting data from https://www.planit.org.uk/api/applics/json?limit=2&amp;bbox=&amp;end_date=2020-03-03&amp;start_date=2000-02-01&amp;pg_sz=2&amp;auth=leeds</span></div><div class='output co'>#&gt;     doc_type                 name
+#&gt; 1 PlanApplic Leeds/20/9/00050/MOD
+#&gt; 2 PlanApplic Leeds/20/9/00049/MOD
+#&gt;                                                                                                                  url
+#&gt; 1 https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=Q6K0ZPJBGQD00
+#&gt; 2 https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=Q6K0Z2JBGQ300
+#&gt;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 description
+#&gt; 1 Amendment to previously Approved application 19/01537/FU to move the first floor wall forward and addition of window to side of single storey extension - NON MATERIAL LAMENDMENT to 19/03082/FU - 1. Change aspect ratio of ground floor windows to front elevation of extension from portrait to letterbox to lift the sill level in-line with that of the nearest adjacent window in the existing front elevation. 2. Substitute the window to the proposed ground floor side elevation with a bifold door and relocate towards the rear corner to form a more contiguous expanse of openable door to the rear garden.
+#&gt; 2                                                                                                                                                                                                                                                                                                                                                                                                                                                       Single storey side extension; single storey front extension; part two storey, part single storey rear extension - NON MATERIAL AMENDMENT to 18/02314/FU - amendment
+#&gt;                       when_updated authority_id
+#&gt; 1 2020-03-03T00:13:17.051000+00:00          292
+#&gt; 2 2020-03-03T00:13:17.051000+00:00          292
+#&gt;                                                                        source_url
+#&gt; 1 https://publicaccess.leeds.gov.uk/online-applications/search.do?action=advanced
+#&gt; 2 https://publicaccess.leeds.gov.uk/online-applications/search.do?action=advanced
+#&gt;   authority_name                                                       link
+#&gt; 1          Leeds https://www.planit.org.uk/planapplic/Leeds/20/9/00050/MOD/
+#&gt; 2          Leeds https://www.planit.org.uk/planapplic/Leeds/20/9/00049/MOD/
+#&gt;   postcode                                    address      lat       lng
+#&gt; 1  LS6 4JZ    2 Green Crescent Meanwood Leeds LS6 4JZ 53.82934 -1.568523
+#&gt; 2 LS17 8RA 28 High Ash Drive Alwoodley Leeds LS17 8RA 53.85824 -1.525914
+#&gt;   start_date            uid
+#&gt; 1 2020-03-02 20/9/00050/MOD
+#&gt; 2 2020-03-02 20/9/00049/MOD</div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"2008-01-01"</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>bbox</span> <span class='kw'>=</span> <span class='no'>bbox</span>) <span class='co'># historic data</span></div><div class='output co'>#&gt; <span class='message'>Getting data from https://www.planit.org.uk/api/applics/geojson?limit=2&amp;bbox=-1.4%2C53.7%2C-1.3%2C53.8&amp;end_date=2008-01-01&amp;start_date=2000-02-01&amp;pg_sz=2</span></div><div class='output co'>#&gt; Simple feature collection with 2 features and 15 fields
 #&gt; geometry type:  POINT
 #&gt; dimension:      XY
 #&gt; bbox:           xmin: -1.388536 ymin: 53.72471 xmax: -1.373375 ymax: 53.79225
@@ -273,7 +302,34 @@ for further information.</p>
 #&gt;   &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;dttm&gt;                     &lt;int&gt; &lt;chr&gt;     
 #&gt; 1 PlanApp… Leed… http… Full appli… 2019-12-01 02:47:48          292 https://p…
 #&gt; # … with 7 more variables: authority_name &lt;chr&gt;, address &lt;chr&gt;, lat &lt;dbl&gt;,
-#&gt; #   lng &lt;dbl&gt;, start_date &lt;date&gt;, uid &lt;chr&gt;, geometry &lt;POINT [°]&gt;</div></pre>
+#&gt; #   lng &lt;dbl&gt;, start_date &lt;date&gt;, uid &lt;chr&gt;, geometry &lt;POINT [°]&gt;</div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>query_type</span> <span class='kw'>=</span> <span class='st'>"planarea"</span>, <span class='kw'>query_value</span> <span class='kw'>=</span> <span class='st'>"leeds"</span>) <span class='co'># fails...</span></div><div class='output co'>#&gt; <span class='message'>Getting data from https://www.planit.org.uk/planarea/leeds/geojson?limit=6&amp;bbox=&amp;end_date=2020-03-03&amp;start_date=2000-02-01&amp;pg_sz=6</span></div><div class='output co'>#&gt; Simple feature collection with 1 feature and 18 fields
+#&gt; geometry type:  POLYGON
+#&gt; dimension:      XY
+#&gt; bbox:           xmin: -1.800421 ymin: 53.69897 xmax: -1.290382 ymax: 53.94587
+#&gt; epsg (SRID):    4326
+#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#&gt; # A tibble: 1 x 19
+#&gt;   doc_type area_id gss_code name  parent_name url   when_updated       
+#&gt;   &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt; &lt;dttm&gt;             
+#&gt; 1 PlanArea     292 E080000… Leeds West Yorks… http… 2020-01-27 18:23:51
+#&gt; # … with 12 more variables: planning_url &lt;chr&gt;, own_applications &lt;int&gt;,
+#&gt; #   area_type &lt;chr&gt;, snac_code &lt;chr&gt;, long_name &lt;chr&gt;, parent_id &lt;int&gt;,
+#&gt; #   branch &lt;dbl&gt;, mapit_code &lt;int&gt;, n_applications &lt;int&gt;, iso31662_code &lt;chr&gt;,
+#&gt; #   linked_regions &lt;list&gt;, geometry &lt;POLYGON [°]&gt;</div><div class='input'><span class='no'>planitareas</span> <span class='kw'>=</span> <span class='fu'>get_planit_data</span>(<span class='kw'>query_type</span> <span class='kw'>=</span> <span class='st'>"areas"</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='message'>Getting data from https://www.planit.org.uk/api/areas/geojson?pg_sz=2</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>planitareas</span>)</div><div class='output co'>#&gt; [1] 2</div><div class='input'><span class='no'>planitareas</span>$<span class='no'>name</span></div><div class='output co'>#&gt; [1] "Aberdeen"      "Aberdeenshire"</div><div class='input'><span class='no'>planitareas</span></div><div class='output co'>#&gt; Simple feature collection with 2 features and 16 fields
+#&gt; geometry type:  MULTIPOLYGON
+#&gt; dimension:      XY
+#&gt; bbox:           xmin: -14.01552 ymin: 54.43398 xmax: -0.32118 ymax: 61.06
+#&gt; epsg (SRID):    4326
+#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#&gt; # A tibble: 2 x 17
+#&gt;   doc_type area_id gss_code name  url   when_updated        planning_url
+#&gt;   &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;dttm&gt;              &lt;chr&gt;       
+#&gt; 1 PlanArea     384 S120000… Aber… http… 2020-01-29 00:55:13 https://pub…
+#&gt; 2 PlanArea     385 S120000… Aber… http… 2020-01-29 00:55:15 https://upa…
+#&gt; # … with 10 more variables: own_applications &lt;int&gt;, area_type &lt;chr&gt;,
+#&gt; #   snac_code &lt;chr&gt;, long_name &lt;chr&gt;, link &lt;chr&gt;, branch &lt;dbl&gt;,
+#&gt; #   mapit_code &lt;int&gt;, n_applications &lt;int&gt;, iso31662_code &lt;chr&gt;,
+#&gt; #   geometry &lt;MULTIPOLYGON [°]&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
