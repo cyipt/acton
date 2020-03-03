@@ -97,8 +97,22 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p><strong>Acton</strong> is a research project to provide evidence for local authorities, developers and civil society groups to support planning and investment in sustainable transport infrastructure in and around new developments. To make the results of the research more reproducible and accessible to others, we have also created an R package, which is described below.</p>
-<p>For information about the wider research project, see <a href="https://cyipt.github.io/acton/articles/the-acton-project.html">The ACTON project</a> report.</p>
+<p><strong>ACTON</strong> stands for active transport options for new developments. ACTON a research project to provide evidence for local authorities, developers and civil society groups to support planning and investment in sustainable transport infrastructure in and around new developments. To make the results of the research more reproducible and accessible to others, it is also an R package.</p>
+</div>
+<div id="what-does-acton-do" class="section level2">
+<h2 class="hasAnchor">
+<a href="#what-does-acton-do" class="anchor"></a>What does ACTON do?</h2>
+<p>In first place, ACTON is about evidence-based planning and that means it is about data. ACTON provides easy access to actionable data from 4 main sources, each of which is already in the public domain, which had never before been made available in a single place or analysed together to support planning, as illustrated in the schematic diagram below.</p>
+<p>The four main data sources shown above are:</p>
+<ul>
+<li>PlanIt data on new developments based on planning documents submitted to local government planning departments</li>
+<li>Accessibility data, including travel times by mode for different trip purposes, e.g. the average time taken to cycle to the shops, for small administrative zones (MSOA and LSOA level)</li>
+<li>Route data from routing services such as CycleStreets.net, providing data on the transport network with variables such as busyness and speed limits along roads nearby new and planned development sites</li>
+<li>Census data, providing demographic data and likely work destinations at the origin-destination level (plus data derived from the Census via the Propensity to Cycle Tool project)</li>
+</ul>
+<p><img src="reference/figures/README-workflow-1.png" width="100%"></p>
+<p>ACTON seeks to make these datasets more widely accessible and actionable by combining them and using them to assess walking and cycling provision in and around new developments, to inform policies and investment</p>
+<p>For more information about the research project, see the in-progress <a href="https://cyipt.github.io/acton/articles/the-acton-project.html">ACTON report</a> and <a href="https://cyipt.github.io/acton/articles/case-studies.html">case study</a> articles.</p>
 </div>
 <div id="installing-the-r-package" class="section level2">
 <h2 class="hasAnchor">
@@ -119,7 +133,7 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(acton)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># data from specific postcode</span></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">planning_data =<span class="st"> </span><span class="kw"><a href="reference/get_planit_data.html">get_planit_data</a></span>(<span class="dt">pcode =</span> <span class="st">"LS2 9JT"</span>, <span class="dt">limit =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; Getting data from https://www.planit.org.uk/api/applics/geojson?limit=2&amp;bbox=&amp;end_date=2020-02-04&amp;start_date=2000-02-01&amp;pg_sz=2&amp;pcode=LS2%209JT</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; Getting data from https://www.planit.org.uk/api/applics/geojson?limit=2&amp;bbox=&amp;end_date=2020-03-03&amp;start_date=2000-02-01&amp;pg_sz=2&amp;pcode=LS2%209JT</span></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">planning_data</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; Simple feature collection with 2 features and 16 fields</span></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; geometry type:  POINT</span></a>
@@ -130,16 +144,16 @@
 <a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; # A tibble: 2 x 17</span></a>
 <a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt;   doc_type name  distance url   description when_updated        authority_id</span></a>
 <a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       &lt;dttm&gt;                     &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; 1 PlanApp… Leed…        0 http… Removal of… 2019-07-23 09:45:04          292</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; 2 PlanApp… Leed…        0 http… Two new of… 2019-02-10 20:52:08          292</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; 1 PlanApp… Leed…        0 http… Alteration… 2019-07-02 11:47:13          292</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; 2 PlanApp… Leed…        0 http… Listed Bui… 2018-08-14 09:53:45          292</span></a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; # … with 10 more variables: source_url &lt;chr&gt;, authority_name &lt;chr&gt;, link &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; #   postcode &lt;chr&gt;, address &lt;chr&gt;, lat &lt;dbl&gt;, lng &lt;dbl&gt;, start_date &lt;date&gt;,</span></a>
 <a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; #   uid &lt;chr&gt;, geometry &lt;POINT [°]&gt;</span></a>
 <a class="sourceLine" id="cb2-20" data-line-number="20">planning_data<span class="op">$</span>name</a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; [1] "Leeds/19/03296/LI" "Leeds/19/00584/FU"</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; [1] "Leeds/19/02996/FU" "Leeds/18/03877/LI"</span></a>
 <a class="sourceLine" id="cb2-22" data-line-number="22">planning_data<span class="op">$</span>description</a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt; [1] "Removal of condition 5 (retention of spiral staircase) of Listed Building Consent 18/03877/LI due to its condition and location"</span></a>
-<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; [2] "Two new off road parking spaces, new bin store, and relocation of existing covered cycle store"</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt; [1] "Alterations to carry out works to two public realm areas at university campus entrance"                                                                                                            </span></a>
+<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; [2] "Listed Building application for partial demolition, external alterations and refurbishment of multiple levels of accommodation and associated improvements to existing teaching and research space"</span></a></code></pre></div>
 </div>
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
