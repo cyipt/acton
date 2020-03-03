@@ -2,7 +2,15 @@
 library(nomnoml)
 
 # datasets are in square brackets
+nom1 = nomnoml::nomnoml("
+#direction: down
+#.box: fill=#8f8 visual=ellipse
+[PlanIt]-[<box>ACTON]
+[Accessibility]-[ACTON]
+[Route]-[ACTON]
+[Census]-[ACTON]
+")
 
-nomnoml::nomnoml(
-  "A-B"
-)
+class(nom1)
+htmlwidgets::saveWidget()
+webshot::appshot()
