@@ -9,22 +9,23 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
+  out.width = "100%",
   collapse = TRUE,
   comment = "#>"
 )
-```
-
-```{r setup}
-library(acton)
 ```
 
 In an era where decarbonisation is a must, the transport sector is now the UK's largest source of carbon emissions and one which - unlike other sectors - has not seen any reduction in recent years. On the contrary, the construction of new residential developments having locations and designs that promote car dependency risks locking us into increasingly unsustainable lifestyles in future.
 
 The ACTON project brings together several key datasets to answer the question how can we improve new housing developments for walking and cycling? 
 
-To do this we use several key datasets for transport and planning data: planning applications, census data, accessibility statistics and routing algorithms.
+To do this we use several key datasets for transport and planning data: planning applications, census data, accessibility statistics and routing algorithms, as illustrated in the simplistic schematic below.
 
-Flow diagram of ACTON project
+```{r flow2, echo=FALSE, fig.cap="Schematic diagram of the ACTON project and its four main data sources (boxes)"}
+# to be updated in readme code
+knitr::include_graphics("https://cyipt.github.io/acton/reference/figures/README-workflow-1.png")
+```
+
 
 # Getting planning data
 
@@ -55,6 +56,11 @@ The further development of PlanIt will have many benefits beyond the ACTON proje
 ### R package
 
 Another outcome is the development of the `acton` R package. This includes the function `get_planit_data()` which allows R users to search for planning application data without having to use the PlanIt API. This can broaden the use of PlanIt by helping to make its data easier to obtain.
+After it has been installed, the package can be loaded as follows:
+
+```{r setup}
+library(acton)
+```
 
 ### Case study sites
 

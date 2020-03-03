@@ -26,8 +26,6 @@ knitr::opts_chunk$set(
 ACTON a research project to provide evidence for local authorities, developers and civil society groups to support planning and investment in sustainable transport infrastructure in and around new developments.
 To make the results of the research more reproducible and accessible to others, it is also an R package.
 
-## What does ACTON do?
-
 In first place, ACTON is about evidence-based planning and that means it is about data.
 ACTON provides easy access to actionable data from 4 main sources, each of which is already in the public domain, which had never before been made available in a single place or analysed together to support planning, as illustrated in the schematic diagram below.
 

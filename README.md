@@ -19,13 +19,13 @@ in sustainable transport infrastructure in and around new developments.
 To make the results of the research more reproducible and accessible to
 others, it is also an R package.
 
-## What does ACTON do?
-
 In first place, ACTON is about evidence-based planning and that means it
 is about data. ACTON provides easy access to actionable data from 4 main
 sources, each of which is already in the public domain, which had never
 before been made available in a single place or analysed together to
 support planning, as illustrated in the schematic diagram below.
+
+<img src="man/figures/README-workflow-1.png" width="100%" />
 
 The four main data sources shown above are:
 
@@ -40,8 +40,6 @@ The four main data sources shown above are:
   - Census data, providing demographic data and likely work destinations
     at the origin-destination level (plus data derived from the Census
     via the Propensity to Cycle Tool project)
-
-<img src="man/figures/README-workflow-1.png" width="100%" />
 
 ACTON seeks to make these datasets more widely accessible and actionable
 by combining them and using them to assess walking and cycling provision
