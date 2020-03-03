@@ -87,6 +87,8 @@ We will look at the journeys from case study sites to key destinations. Is it po
 
 The [CycleStreets.net](https://www.cyclestreets.net/) journey planner algorithm generates 'fast', 'balanced' and 'quiet' cycle routes between origins and destinations. As part of ACTON we are improving the way particular types of cycle lane and path are classified. This will lead to better quality routing of 'quiet' routes, through a more accurate characterisation of the cycleability of route segments.
 
+## Busyness estimation
+
 # Options to overcome barriers
 
 New housing developments are often located close to major roads or other features that can represent a physical barrier preventing walking or cycle access. As part of the routing process we will identify the barriers that lead to severance of the routes between new homes and key destinations. We will then explore options to overcome these barriers at our case study sites. 
