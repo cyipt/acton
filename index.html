@@ -99,6 +99,9 @@
 <a href="#introduction" class="anchor"></a>Introduction</h2>
 <p><strong>ACTON</strong> stands for active transport options for new developments. ACTON a research project to provide evidence for local authorities, developers and civil society groups to support planning and investment in sustainable transport infrastructure in and around new developments. To make the results of the research more reproducible and accessible to others, it is also an R package.</p>
 <p>In first place, ACTON is about evidence-based planning and that means it is about data. ACTON provides easy access to actionable data from 4 main sources, each of which is already in the public domain, which had never before been made available in a single place or analysed together to support planning, as illustrated in the schematic diagram below.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">#&gt; QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-robin'</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#&gt; TypeError: Attempting to change the setter of an unconfigurable property.</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#&gt; TypeError: Attempting to change the setter of an unconfigurable property.</span></a></code></pre></div>
 <p><img src="reference/figures/README-workflow-1.png" width="100%"></p>
 <p>The four main data sources shown above are:</p>
 <ul>
@@ -114,8 +117,8 @@
 <h2 class="hasAnchor">
 <a href="#installing-the-r-package" class="anchor"></a>Installing the R package</h2>
 <p>To install the <code>acton</code> package, run the following commands in an R console (see <a href="https://docs.ropensci.org/stats19/articles/stats19-training-setup.html">here</a> for information on installing R):</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"remotes"</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">remotes<span class="op">::</span><span class="kw"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"cyipt/acton"</span>, <span class="dt">dependencies =</span> <span class="st">"Suggests"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"remotes"</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">remotes<span class="op">::</span><span class="kw"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"cyipt/acton"</span>, <span class="dt">dependencies =</span> <span class="st">"Suggests"</span>)</a></code></pre></div>
 </div>
 <div id="setup-instructions" class="section level2">
 <h2 class="hasAnchor">
@@ -126,30 +129,30 @@
 <h2 class="hasAnchor">
 <a href="#brief-demo" class="anchor"></a>Brief demo</h2>
 <p>The package can be used to get data on new developments as follows:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(acton)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># data from specific postcode</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">planning_data =<span class="st"> </span><span class="kw"><a href="reference/get_planit_data.html">get_planit_data</a></span>(<span class="dt">pcode =</span> <span class="st">"LS2 9JT"</span>, <span class="dt">limit =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; Getting data from https://www.planit.org.uk/api/applics/geojson?limit=2&amp;bbox=&amp;end_date=2020-03-03&amp;start_date=2000-02-01&amp;pg_sz=2&amp;pcode=LS2%209JT</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">planning_data</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; Simple feature collection with 2 features and 16 fields</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; geometry type:  POINT</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; dimension:      XY</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; bbox:           xmin: -1.55333 ymin: 53.80796 xmax: -1.55333 ymax: 53.80796</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; epsg (SRID):    4326</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; # A tibble: 2 x 17</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt;   doc_type name  distance url   description when_updated        authority_id</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       &lt;dttm&gt;                     &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; 1 PlanApp… Leed…        0 http… Alteration… 2019-07-02 11:47:13          292</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; 2 PlanApp… Leed…        0 http… Listed Bui… 2018-08-14 09:53:45          292</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; # … with 10 more variables: source_url &lt;chr&gt;, authority_name &lt;chr&gt;, link &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; #   postcode &lt;chr&gt;, address &lt;chr&gt;, lat &lt;dbl&gt;, lng &lt;dbl&gt;, start_date &lt;date&gt;,</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; #   uid &lt;chr&gt;, geometry &lt;POINT [°]&gt;</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">planning_data<span class="op">$</span>name</a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; [1] "Leeds/19/02996/FU" "Leeds/18/03877/LI"</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22">planning_data<span class="op">$</span>description</a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt; [1] "Alterations to carry out works to two public realm areas at university campus entrance"                                                                                                            </span></a>
-<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; [2] "Listed Building application for partial demolition, external alterations and refurbishment of multiple levels of accommodation and associated improvements to existing teaching and research space"</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(acton)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># data from specific postcode</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">planning_data =<span class="st"> </span><span class="kw"><a href="reference/get_planit_data.html">get_planit_data</a></span>(<span class="dt">pcode =</span> <span class="st">"LS2 9JT"</span>, <span class="dt">limit =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; Getting data from https://www.planit.org.uk/api/applics/geojson?limit=2&amp;bbox=&amp;end_date=2020-03-04&amp;start_date=2000-02-01&amp;pg_sz=2&amp;pcode=LS2%209JT</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">planning_data</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; Simple feature collection with 2 features and 16 fields</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; geometry type:  POINT</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; dimension:      XY</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; bbox:           xmin: -1.55333 ymin: 53.80796 xmax: -1.55333 ymax: 53.80796</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; epsg (SRID):    4326</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; # A tibble: 2 x 17</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt;   doc_type name  distance url   description when_updated        authority_id</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       &lt;dttm&gt;                     &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; 1 PlanApp… Leed…        0 http… Alteration… 2019-07-02 11:47:13          292</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; 2 PlanApp… Leed…        0 http… Listed Bui… 2018-08-14 09:53:45          292</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; # … with 10 more variables: source_url &lt;chr&gt;, authority_name &lt;chr&gt;, link &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; #   postcode &lt;chr&gt;, address &lt;chr&gt;, lat &lt;dbl&gt;, lng &lt;dbl&gt;, start_date &lt;date&gt;,</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; #   uid &lt;chr&gt;, geometry &lt;POINT [°]&gt;</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">planning_data<span class="op">$</span>name</a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt; [1] "Leeds/19/02996/FU" "Leeds/18/03877/LI"</span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22">planning_data<span class="op">$</span>description</a>
+<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt; [1] "Alterations to carry out works to two public realm areas at university campus entrance"                                                                                                            </span></a>
+<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt; [2] "Listed Building application for partial demolition, external alterations and refurbishment of multiple levels of accommodation and associated improvements to existing teaching and research space"</span></a></code></pre></div>
 </div>
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
