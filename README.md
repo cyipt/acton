@@ -25,10 +25,6 @@ sources, each of which is already in the public domain, which had never
 before been made available in a single place or analysed together to
 support planning, as illustrated in the schematic diagram below.
 
-    #> QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-robin'
-    #> TypeError: Attempting to change the setter of an unconfigurable property.
-    #> TypeError: Attempting to change the setter of an unconfigurable property.
-
 <img src="man/figures/README-workflow-1.png" width="100%" />
 
 The four main data sources shown above are:
@@ -92,13 +88,11 @@ planning_data
 #> epsg (SRID):    4326
 #> proj4string:    +proj=longlat +datum=WGS84 +no_defs
 #> # A tibble: 2 x 17
-#>   doc_type name  distance url   description when_updated        authority_id
-#>   <chr>    <chr>    <dbl> <chr> <chr>       <dttm>                     <int>
-#> 1 PlanApp… Leed…        0 http… Alteration… 2019-07-02 11:47:13          292
-#> 2 PlanApp… Leed…        0 http… Listed Bui… 2018-08-14 09:53:45          292
-#> # … with 10 more variables: source_url <chr>, authority_name <chr>, link <chr>,
-#> #   postcode <chr>, address <chr>, lat <dbl>, lng <dbl>, start_date <date>,
-#> #   uid <chr>, geometry <POINT [°]>
+#>   doc_type name  distance url   description when_updated        authority_id source_url authority_name link  postcode address   lat
+#>   <chr>    <chr>    <dbl> <chr> <chr>       <dttm>                     <int> <chr>      <chr>          <chr> <chr>    <chr>   <dbl>
+#> 1 PlanApp… Leed…        0 http… Alteration… 2019-07-02 11:47:13          292 https://p… Leeds          http… LS2 9JT  Parkin…  53.8
+#> 2 PlanApp… Leed…        0 http… Listed Bui… 2018-08-14 09:53:45          292 https://p… Leeds          http… LS2 9JT  Facult…  53.8
+#> # … with 4 more variables: lng <dbl>, start_date <date>, uid <chr>, geometry <POINT [°]>
 planning_data$name
 #> [1] "Leeds/19/02996/FU" "Leeds/18/03877/LI"
 planning_data$description
