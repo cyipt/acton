@@ -25,6 +25,10 @@ sources, each of which is already in the public domain, which had never
 before been made available in a single place or analysed together to
 support planning, as illustrated in the schematic diagram below.
 
+    #> QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-robin'
+    #> TypeError: Attempting to change the setter of an unconfigurable property.
+    #> TypeError: Attempting to change the setter of an unconfigurable property.
+
 <img src="man/figures/README-workflow-1.png" width="100%" />
 
 The four main data sources shown above are:
@@ -79,7 +83,7 @@ The package can be used to get data on new developments as follows:
 library(acton)
 # data from specific postcode
 planning_data = get_planit_data(pcode = "LS2 9JT", limit = 2)
-#> Getting data from https://www.planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2020-03-03&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT
+#> Getting data from https://www.planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2020-03-04&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT
 planning_data
 #> Simple feature collection with 2 features and 16 fields
 #> geometry type:  POINT

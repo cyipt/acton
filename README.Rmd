@@ -36,8 +36,8 @@ nomnoml::nomnoml("
 #.box: fill=#8f8 visual=ellipse
 [PlanIt]-[<box>ACTON]
 [Accessibility]-[ACTON]
+[Travel/Demographics]-[ACTON]
 [Route]-[ACTON]
-[Census]-[ACTON]
 ")
 ```
 
