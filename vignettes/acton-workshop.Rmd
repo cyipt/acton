@@ -42,17 +42,17 @@ The objectives are to:
 ## Intro and overview (10:00 - 10:30)
 
 - overview of ACTON project
-- go round with intro to interest in the project and what they hope to get out of it
-- local policy and planning considerations
+- go round with introductions and interest in the project
+- local policy and planning considerations by **David Ellis, WSP**
 
 ## Data and methods (10:30 - 11:30)
 
 (This will include discussion of progress and expected next steps)
 
-- Talk on input data and API access from CycleStreets.net (20 minutes)
+- Talk on input data and API access from **CycleStreets.net** (20 minutes)
   - improvements to PlanIt. How can we best enable the automation and filtering of planning application searches?
   - journey routing for cycling - progress on CycleStreets routing algorithm for ‘quiet’ journeys
-- Findings from case study sites by Joey Talbot (20 minutes)
+- Findings from case study sites by **Joey Talbot** (20 minutes)
   - accessibility and journey time statistics
   - busyness of route segments
   - barriers and severance
@@ -64,8 +64,8 @@ The objectives are to:
 
 ## Outputs (11:45 - 12:15)
 
-- Overview of outputs so far by Robin Lovelace (15 minutes)
-- Discussion of what stakeholders need and would like from the project, including from
+- Overview of outputs so far by **Robin Lovelace** (5 minutes)
+- Panel discussion of needs and wants for tools for integrating active transport in new developments (25 minutes)
   - web service / tool
   - the final report
   - journal article
@@ -73,14 +73,14 @@ The objectives are to:
   - R package
   - website
 
-## Links with Future work (12:15 - 13:00)
+## Links with future work (12:15 - 13:00)
 
-Group discussion with feedback after 30 minutes
-
-- what benefits can ACTON provide for future stages of CyIPT or related projects?
-- how can methods be generalised from case study sites to move towards a nationwide tool?
-- how do we make sure the project is useful for a wider audience?
-- what areas for further development are people interested in?
+- Links with spatial network analysis approaches for walkability by **Crispin Cooper** (15 minutes, )
+- Group discussion with feedback after 15 minutes
+  - what benefits can ACTON provide for future stages of CyIPT or related projects?
+  - how can methods be generalised from case study sites to move towards a nationwide tool?
+  - how do we make sure the project is useful for a wider audience?
+  - what areas for further development are people interested in?
 
 **Lunch**
 
