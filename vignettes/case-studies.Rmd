@@ -39,15 +39,25 @@ The following code gets and subsets the relevant PlanIt data for leeds:
 # note work in progress!
 library(acton)
 # d = get_planit_data(query_value = "Allerton Byewater") # cannot search in description file
-res = get_planit_data(
+applications_leeds = get_planit_data(
   limit = 100,
   auth = "Leeds",
   app_size = "large",
   app_state = "permitted"
   )
-nrow(res)
-tm_shape(res) + tm_dots(col = "app_type") +
+nrow(applications_leeds)
+tm_shape(applications_leeds) + tm_dots(col = "app_type") +
   tm_basemap(server = "CartoDB.Positron")
+```
+
+The result in the `applications_leeds` contain much rich information the planning application, under the following column headings:
+
+```{r}
+names(applications_leeds)
+```
+
+```{r}
+DT::datatable(applications_leeds[-c(1, 9)])
 ```
 
 
