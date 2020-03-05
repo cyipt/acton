@@ -70,7 +70,7 @@ The objectives are to:
   - accessibility and journey time statistics
   - busyness of route segments
   - barriers and severance
-- Links with spatial network analysis approaches for walkability by **Crispin Cooper** (20 minutes)
+- Spatial network analysis approaches for walkability by **Crispin Cooper** (20 minutes)
 
 <!-- - Discussion (20 minutes) -->
 <!--   - comparison of route quality/circuitousness for different modes of travel -->
