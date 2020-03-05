@@ -48,7 +48,7 @@ The following code gets and subsets the relevant PlanIt data for leeds:
 library(acton)
 # d = get_planit_data(query_value = "Allerton Byewater") # cannot search in description file
 applications_leeds = get_planit_data(
-  limit = 100,
+  limit = 500,
   auth = "Leeds",
   app_size = "large",
   app_state = "permitted"
@@ -71,6 +71,20 @@ DT::datatable(applications_leeds[-c(1, 9)])
 The following code gets the specific applications we will use for this case study of Leeds:
 
 ```{r}
+ids = c(
+  "13/05235/FU",
+  "15/04151/FU",
+  "15/00415/FU",
+  "15/01973/FU"
+)
+applications_case_study = applications_leeds[
+  applications_leeds$uid %in% ids,
+]
+nrow(applications_case_study)
+```
+
+
+```{r, echo=FALSE, eval=FALSE}
 # Aim: in future subset from the results when the API gives all large applications
 application_ids = c(
   "13/05235/FU@Leeds",
