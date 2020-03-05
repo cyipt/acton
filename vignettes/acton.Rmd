@@ -61,13 +61,27 @@ Moreover, there is no systematic national recording of where homes are being bui
 
 To address this problem, the [PlanIt website](https://www.planit.org.uk/) was developed. The website aggregates and maps current and historic planning applications across the UK, scraping the data from all planning authority websites and making them accessible from a single source. PlanIt collects all types of planning application, not just applications relating to house building.
 
-As part of ACTON, the PlanIt API is being improved to make it easier to search for particular types of planning application. This will involve adding fields such as:
+As part of ACTON, the PlanIt API is being improved to make it easier to search for particular types of planning application. This has involved deriving terms for the following searchable fields:
 
-- app_type (for the different types of planning application e.g. Outline, Amendment)
+- 'app_size' (for the scale of the proposed development) - including
+    Large = Major, large scale developments
+    Medium = Other applications involving multiple dwellings
+    Small = All others
 
-- app_state (to show the status of the application e.g. Approved, Rejected, Current)
+- 'app_state' (to show the decision status for the application) - including
+    Undecided = The application is currently active, no decision has been made
+    Permitted = The application was approved
+    Conditions = The application was approved, but conditions were imposed
+    Rejected = The application was refused
+    Withdrawn = The application was withdrawn before a decision was taken
 
-- app_size (to give an estimate of the scale of the planned development)
+- 'app_type' (to show the type of application) - including
+    Full = Full and householder planning applications
+    Outline = Proposals prior to a full application, including assessments, scoping opinions, outline applications etc
+    Amendment = Amendments, alterations or conditions arising from existing or previous applications
+    Heritage = Conservation issues and listed buildings
+    Trees = Tree and hedge works
+    Advertising = Advertising and signs
 
 The number of homes built in a residential development is a key factor of interest, along with any other facilities being constructed. This information is more difficult to obtain as it is often missing from the descriptions, but there are proxy methods for assessing scale, such as the number of documents within a planning application and the longer period allowed before deciding a large scale application.
 
