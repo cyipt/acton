@@ -220,119 +220,42 @@ To be used only when `query_type` is not `"applics"`.</p></td>
     <p>A (geographic) data frame</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>bbox</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1.4</span>, <span class='fl'>53.7</span>, -<span class='fl'>1.3</span>, <span class='fl'>53.8</span>)
-<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>get_planit_data</span>(<span class='kw'>bbox</span> <span class='kw'>=</span> <span class='no'>bbox</span>, <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='co'># return geographic (`sf`) object</span></div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=6&amp;bbox=-1.4%2C53.7%2C-1.3%2C53.8&amp;end_date=2020-03-05&amp;start_date=2000-02-01&amp;pg_sz=6</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; [1] "sf"         "tbl_df"     "tbl"        "data.frame"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;  [1] "address"        "app_size"       "app_state"      "app_type"      
+    <pre class="examples"><div class='input'><span class='co'># tmaptools::bb("university leeds") # find a bounding box</span>
+<span class='no'>bbox</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1.5</span>, <span class='fl'>53.7</span>, -<span class='fl'>1.3</span>, <span class='fl'>53.8</span>)
+<span class='no'>res</span> <span class='kw'>=</span> <span class='fu'>get_planit_data</span>(<span class='kw'>bbox</span> <span class='kw'>=</span> <span class='no'>bbox</span>, <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='co'># return geographic (`sf`) object</span></div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=6&amp;bbox=-1.5%2C53.7%2C-1.3%2C53.8&amp;end_date=2020-03-05&amp;start_date=2000-02-01&amp;pg_sz=6</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; [1] "sf"         "tbl_df"     "tbl"        "data.frame"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt;  [1] "address"        "app_size"       "app_state"      "app_type"      
 #&gt;  [5] "authority_id"   "authority_name" "description"    "lat"           
 #&gt;  [9] "link"           "lng"            "name"           "postcode"      
 #&gt; [13] "rec_type"       "source_url"     "start_date"     "uid"           
-#&gt; [17] "url"            "when_updated"   "associated_id"  "geometry"      </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: plotting the first 10 out of 19 attributes; use max.plot = 19 to plot all</span></div><div class='img'><img src='get_planit_data-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>fmt</span> <span class='kw'>=</span> <span class='st'>"json"</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>bbox</span> <span class='kw'>=</span> <span class='no'>bbox</span>) <span class='co'># return data frame with limit</span></div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/json?limit=2&amp;bbox=-1.4%2C53.7%2C-1.3%2C53.8&amp;end_date=2020-03-05&amp;start_date=2000-02-01&amp;pg_sz=2</span></div><div class='output co'>#&gt;                                               address app_size app_state
-#&gt; 1            14 Lyndon Avenue Garforth Leeds LS25 1DZ    Small Undecided
-#&gt; 2 Rustic Villa Leeds Road Cutsyke Castleford WF10 5ET    Small Undecided
+#&gt; [17] "url"            "when_updated"   "associated_id"  "geometry"      </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_geometry.html'>st_geometry</a></span>(<span class='no'>res</span>))</div><div class='img'><img src='get_planit_data-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>fmt</span> <span class='kw'>=</span> <span class='st'>"json"</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>bbox</span> <span class='kw'>=</span> <span class='no'>bbox</span>) <span class='co'># return data frame with limit</span></div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/json?limit=2&amp;bbox=-1.5%2C53.7%2C-1.3%2C53.8&amp;end_date=2020-03-05&amp;start_date=2000-02-01&amp;pg_sz=2</span></div><div class='output co'>#&gt;                                               address app_size app_state
+#&gt; 1 30 Primrose Hill Gardens Swillington Leeds LS26 8XH    Small Undecided
+#&gt; 2                147 Selby Road Halton Leeds LS15 7JG    Small Undecided
 #&gt;   app_type authority_id authority_name
 #&gt; 1  Outline          292          Leeds
-#&gt; 2    Other          293      Wakefield
-#&gt;                                                                                                                               description
-#&gt; 1 Certificate of Proposed Lawful Development for a dormer window to the rear and rooflights to the front, new side window to ground floor
-#&gt; 2                                                                        Demolition of 1no. three bedroom dwelling and associated garages
-#&gt;        lat                                                         link
-#&gt; 1 53.79304     https://dev.planit.org.uk/planapplic/Leeds/20/01275/CLP/
-#&gt; 2 53.71458 https://dev.planit.org.uk/planapplic/Wakefield/20/00437/DEM/
-#&gt;         lng                   name postcode   rec_type
-#&gt; 1 -1.389420     Leeds/20/01275/CLP LS25 1DZ PlanApplic
-#&gt; 2 -1.361207 Wakefield/20/00437/DEM WF10 5ET PlanApplic
-#&gt;                                                                        source_url
-#&gt; 1 https://publicaccess.leeds.gov.uk/online-applications/search.do?action=advanced
-#&gt; 2 https://planning.wakefield.gov.uk/online-applications/search.do?action=advanced
-#&gt;   start_date          uid
-#&gt; 1 2020-02-28 20/01275/CLP
-#&gt; 2 2020-02-24 20/00437/DEM
-#&gt;                                                                                                                  url
-#&gt; 1 https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?keyVal=Q6ARKEJBKW000&amp;activeTab=summary
-#&gt; 2 https://planning.wakefield.gov.uk/online-applications/applicationDetails.do?keyVal=Q663HGQQJXK00&amp;activeTab=summary
-#&gt;                       when_updated
-#&gt; 1 2020-03-03T00:15:12.846000+00:00
-#&gt; 2 2020-03-03T10:21:47.792000+00:00</div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>fmt</span> <span class='kw'>=</span> <span class='st'>"json"</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>auth</span> <span class='kw'>=</span> <span class='st'>"leeds"</span>)</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/json?limit=2&amp;bbox=&amp;end_date=2020-03-05&amp;start_date=2000-02-01&amp;pg_sz=2&amp;auth=leeds</span></div><div class='output co'>#&gt;                                     address app_size app_state app_type
-#&gt; 1  6 Buckstone Oval Moortown Leeds LS17 5HG    Small Undecided  Outline
-#&gt; 2 Civic Hall Calverley Street Leeds LS1 1UR    Small Undecided     Full
-#&gt;   authority_id authority_name
-#&gt; 1          292          Leeds
-#&gt; 2          292          Leeds
-#&gt;                                                                                                                                            description
-#&gt; 1 Certificate of Proposed Lawful Development for an extension to gable, dormer window to rear and rooflights to front; single storey extension to rear
-#&gt; 2                                Internal and external alterations including new automatic doors to main entrance and CCTV cameras on lighting columns
+#&gt; 2     Full          292          Leeds
+#&gt;                                                                   description
+#&gt; 1   Certificte of Proposed Lawful Development for a dormer window to the rear
+#&gt; 2 5.62m single storey rear extension, 3.4m to ridge height and 2.82m to eaves
 #&gt;        lat                                                     link       lng
-#&gt; 1 53.85319 https://dev.planit.org.uk/planapplic/Leeds/20/01372/CLP/ -1.560571
-#&gt; 2 53.80248  https://dev.planit.org.uk/planapplic/Leeds/20/00146/FU/ -1.548438
+#&gt; 1 53.76632 https://dev.planit.org.uk/planapplic/Leeds/20/00976/CLP/ -1.414885
+#&gt; 2 53.79770 https://dev.planit.org.uk/planapplic/Leeds/20/01418/DHH/ -1.474994
 #&gt;                 name postcode   rec_type
-#&gt; 1 Leeds/20/01372/CLP LS17 5HG PlanApplic
-#&gt; 2  Leeds/20/00146/FU  LS1 1UR PlanApplic
+#&gt; 1 Leeds/20/00976/CLP LS26 8XH PlanApplic
+#&gt; 2 Leeds/20/01418/DHH LS15 7JG PlanApplic
 #&gt;                                                                        source_url
 #&gt; 1 https://publicaccess.leeds.gov.uk/online-applications/search.do?action=advanced
 #&gt; 2 https://publicaccess.leeds.gov.uk/online-applications/search.do?action=advanced
 #&gt;   start_date          uid
-#&gt; 1 2020-03-04 20/01372/CLP
-#&gt; 2 2020-03-04  20/00146/FU
+#&gt; 1 2020-03-04 20/00976/CLP
+#&gt; 2 2020-03-02 20/01418/DHH
 #&gt;                                                                                                                  url
-#&gt; 1 https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=Q6EXKMJBFSN00
-#&gt; 2 https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=Q3SLK2JB0C000
-#&gt;                       when_updated
-#&gt; 1 2020-03-05T02:13:33.677000+00:00
-#&gt; 2 2020-03-05T02:13:33.678000+00:00</div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"2008-01-01"</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>bbox</span> <span class='kw'>=</span> <span class='no'>bbox</span>) <span class='co'># historic data</span></div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=2&amp;bbox=-1.4%2C53.7%2C-1.3%2C53.8&amp;end_date=2008-01-01&amp;start_date=2000-02-01&amp;pg_sz=2</span></div><div class='output co'>#&gt; Simple feature collection with 2 features and 19 fields
-#&gt; geometry type:  POINT
-#&gt; dimension:      XY
-#&gt; bbox:           xmin: -1.388536 ymin: 53.72471 xmax: -1.373375 ymax: 53.79225
-#&gt; epsg (SRID):    4326
-#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs
-#&gt; # A tibble: 2 x 20
-#&gt;   address app_size app_state app_type authority_id authority_name decided_date
-#&gt;   &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;          &lt;date&gt;      
-#&gt; 1 7 Main… Small    Permitted Full              292 Leeds          2008-02-22  
-#&gt; 2 Brambl… Small    Permitted Full              293 Wakefield      2008-02-19  
-#&gt; # … with 13 more variables: description &lt;chr&gt;, lat &lt;dbl&gt;, link &lt;chr&gt;,
-#&gt; #   lng &lt;dbl&gt;, name &lt;chr&gt;, postcode &lt;chr&gt;, rec_type &lt;chr&gt;, source_url &lt;chr&gt;,
-#&gt; #   start_date &lt;date&gt;, uid &lt;chr&gt;, url &lt;chr&gt;, when_updated &lt;dttm&gt;,
-#&gt; #   geometry &lt;POINT [°]&gt;</div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>pcode</span> <span class='kw'>=</span> <span class='st'>"LS2 9JT"</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>bbox</span> <span class='kw'>=</span> <span class='no'>bbox</span>) <span class='co'># data from specific postcode</span></div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=2&amp;bbox=-1.4%2C53.7%2C-1.3%2C53.8&amp;end_date=2020-03-05&amp;start_date=2000-02-01&amp;pg_sz=2&amp;pcode=LS2%209JT</span></div><div class='output co'>#&gt; Simple feature collection with 2 features and 19 fields
-#&gt; geometry type:  POINT
-#&gt; dimension:      XY
-#&gt; bbox:           xmin: -1.55333 ymin: 53.80796 xmax: -1.55333 ymax: 53.80796
-#&gt; epsg (SRID):    4326
-#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs
-#&gt; # A tibble: 2 x 20
-#&gt;   address app_size app_state app_type authority_id authority_name description
-#&gt;   &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;           &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;      
-#&gt; 1 Parkin… Small    Undecided Full              292 Leeds          Alteration…
-#&gt; 2 Facult… &lt;NA&gt;     Undecided Heritage          292 Leeds          Listed Bui…
-#&gt; # … with 13 more variables: distance &lt;dbl&gt;, lat &lt;dbl&gt;, link &lt;chr&gt;, lng &lt;dbl&gt;,
-#&gt; #   name &lt;chr&gt;, postcode &lt;chr&gt;, rec_type &lt;chr&gt;, source_url &lt;chr&gt;,
-#&gt; #   start_date &lt;date&gt;, uid &lt;chr&gt;, url &lt;chr&gt;, when_updated &lt;dttm&gt;,
-#&gt; #   geometry &lt;POINT [°]&gt;</div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>query_type</span> <span class='kw'>=</span> <span class='st'>"planapplic"</span>, <span class='kw'>query_value</span> <span class='kw'>=</span> <span class='st'>"13/05235/FU@Leeds"</span>)</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/planapplic/13/05235/FU@Leeds/geojson?limit=6&amp;bbox=&amp;end_date=2020-03-05&amp;start_date=2000-02-01&amp;pg_sz=6</span></div><div class='output co'>#&gt; Simple feature collection with 1 feature and 18 fields
-#&gt; geometry type:  POINT
-#&gt; dimension:      XY
-#&gt; bbox:           xmin: -1.360979 ymin: 53.74662 xmax: -1.360979 ymax: 53.74662
-#&gt; epsg (SRID):    4326
-#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs
-#&gt; # A tibble: 1 x 19
-#&gt;   app_state decided_date app_type name  rec_type url   description
-#&gt;   &lt;chr&gt;     &lt;date&gt;       &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;      
-#&gt; 1 Permitted 2014-11-10   Full     Leed… PlanApp… http… Full appli…
-#&gt; # … with 12 more variables: when_updated &lt;dttm&gt;, authority_id &lt;int&gt;,
-#&gt; #   source_url &lt;chr&gt;, authority_name &lt;chr&gt;, other_fields &lt;chr&gt;, address &lt;chr&gt;,
-#&gt; #   lat &lt;dbl&gt;, lng &lt;dbl&gt;, app_size &lt;chr&gt;, start_date &lt;date&gt;, uid &lt;chr&gt;,
-#&gt; #   geometry &lt;POINT [°]&gt;</div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>query_type</span> <span class='kw'>=</span> <span class='st'>"planarea"</span>, <span class='kw'>query_value</span> <span class='kw'>=</span> <span class='st'>"leeds"</span>) <span class='co'># fails...</span></div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/planarea/leeds/geojson?limit=6&amp;bbox=&amp;end_date=2020-03-05&amp;start_date=2000-02-01&amp;pg_sz=6</span></div><div class='output co'>#&gt; Simple feature collection with 1 feature and 22 fields
-#&gt; geometry type:  POLYGON
-#&gt; dimension:      XY
-#&gt; bbox:           xmin: -1.800421 ymin: 53.69897 xmax: -1.290382 ymax: 53.94587
-#&gt; epsg (SRID):    4326
-#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs
-#&gt; # A tibble: 1 x 23
-#&gt;   area_id rec_type parent_name gss_code source own_applications area_type
-#&gt;     &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;    
-#&gt; 1     292 PlanArea West Yorks… E080000… MapIt…           135473 Metropol…
-#&gt; # … with 16 more variables: parent_id &lt;int&gt;, branch &lt;dbl&gt;, n_siblings &lt;int&gt;,
-#&gt; #   source_url &lt;chr&gt;, snac_code &lt;chr&gt;, mapit_code &lt;int&gt;, n_children &lt;int&gt;,
-#&gt; #   name &lt;chr&gt;, long_name &lt;chr&gt;, url &lt;chr&gt;, when_updated &lt;dttm&gt;,
-#&gt; #   planning_url &lt;chr&gt;, iso31662_code &lt;chr&gt;, n_applications &lt;int&gt;,
-#&gt; #   linked_regions &lt;list&gt;, geometry &lt;POLYGON [°]&gt;</div><div class='input'><span class='no'>leeds_area</span> <span class='kw'>=</span> <span class='fu'>get_planit_data</span>(<span class='kw'>query_type</span> <span class='kw'>=</span> <span class='st'>"areas"</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>auth</span> <span class='kw'>=</span> <span class='st'>"Leeds"</span>)</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/areas/geojson?auth=Leeds&amp;pg_sz=2</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>leeds_area</span>) <span class='co'># geographic outline of the area</span></div><div class='output co'>#&gt; <span class='warning'>Warning: plotting the first 9 out of 23 attributes; use max.plot = 23 to plot all</span></div><div class='img'><img src='get_planit_data-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>planitareas</span> <span class='kw'>=</span> <span class='fu'>get_planit_data</span>(<span class='kw'>query_type</span> <span class='kw'>=</span> <span class='st'>"areas"</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/areas/geojson?pg_sz=2</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>planitareas</span>)</div><div class='output co'>#&gt; [1] 2</div><div class='input'><span class='no'>planitareas</span>$<span class='no'>name</span></div><div class='output co'>#&gt; [1] "Aberdeen"      "Aberdeenshire"</div><div class='input'><span class='no'>planitareas</span></div><div class='output co'>#&gt; Simple feature collection with 2 features and 23 fields
+#&gt; 1 https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=Q5N7CYJB0FZ00
+#&gt; 2 https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=Q6KI9VJB0FZ00
+#&gt;                       when_updated associated_id
+#&gt; 1 2020-03-05T03:48:40.679000+00:00          &lt;NA&gt;
+#&gt; 2 2020-03-05T02:13:33.677000+00:00   5.62m 2.82m</div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>fmt</span> <span class='kw'>=</span> <span class='st'>"json"</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>auth</span> <span class='kw'>=</span> <span class='st'>"leeds"</span>)$<span class='no'>description</span></div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/json?limit=2&amp;bbox=&amp;end_date=2020-03-05&amp;start_date=2000-02-01&amp;pg_sz=2&amp;auth=leeds</span></div><div class='output co'>#&gt; [1] "Certificate of Proposed Lawful Development for an extension to gable, dormer window to rear and rooflights to front; single storey extension to rear"
+#&gt; [2] "Internal and external alterations including new automatic doors to main entrance and CCTV cameras on lighting columns"                               </div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"2008-01-01"</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>bbox</span> <span class='kw'>=</span> <span class='no'>bbox</span>)$<span class='no'>description</span> <span class='co'># historic data</span></div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=2&amp;bbox=-1.5%2C53.7%2C-1.3%2C53.8&amp;end_date=2008-01-01&amp;start_date=2000-02-01&amp;pg_sz=2</span></div><div class='output co'>#&gt; [1] "Change of use of first floor toning bed salon to holistic fitness studio"
+#&gt; [2] "Conversion of garage to habitable room"                                  </div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>pcode</span> <span class='kw'>=</span> <span class='st'>"LS2 9JT"</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>bbox</span> <span class='kw'>=</span> <span class='no'>bbox</span>)$<span class='no'>description</span> <span class='co'># data from specific postcode</span></div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=2&amp;bbox=-1.5%2C53.7%2C-1.3%2C53.8&amp;end_date=2020-03-05&amp;start_date=2000-02-01&amp;pg_sz=2&amp;pcode=LS2%209JT</span></div><div class='output co'>#&gt; [1] "Alterations to carry out works to two public realm areas at university campus entrance"                                                                                                            
+#&gt; [2] "Listed Building application for partial demolition, external alterations and refurbishment of multiple levels of accommodation and associated improvements to existing teaching and research space"</div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>query_type</span> <span class='kw'>=</span> <span class='st'>"planapplic"</span>, <span class='kw'>query_value</span> <span class='kw'>=</span> <span class='st'>"13/05235/FU@Leeds"</span>)$<span class='no'>description</span></div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/planapplic/13/05235/FU@Leeds/geojson?limit=6&amp;bbox=&amp;end_date=2020-03-05&amp;start_date=2000-02-01&amp;pg_sz=6</span></div><div class='output co'>#&gt; [1] "Full application for 189 new homes including affordable houses and elderly persons apartments, commercial facilities including retail and industrial/employment units and outline application for additional commercial uses"</div><div class='input'><span class='fu'>get_planit_data</span>(<span class='kw'>query_type</span> <span class='kw'>=</span> <span class='st'>"planarea"</span>, <span class='kw'>query_value</span> <span class='kw'>=</span> <span class='st'>"leeds"</span>)$<span class='no'>description</span></div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/planarea/leeds/geojson?limit=6&amp;bbox=&amp;end_date=2020-03-05&amp;start_date=2000-02-01&amp;pg_sz=6</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Unknown or uninitialised column: 'description'.</span></div><div class='output co'>#&gt; NULL</div><div class='input'><span class='no'>leeds_area</span> <span class='kw'>=</span> <span class='fu'>get_planit_data</span>(<span class='kw'>query_type</span> <span class='kw'>=</span> <span class='st'>"areas"</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>auth</span> <span class='kw'>=</span> <span class='st'>"Leeds"</span>)</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/areas/geojson?auth=Leeds&amp;pg_sz=2</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>leeds_area</span>) <span class='co'># geographic outline of the area</span></div><div class='output co'>#&gt; <span class='warning'>Warning: plotting the first 9 out of 23 attributes; use max.plot = 23 to plot all</span></div><div class='img'><img src='get_planit_data-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>planitareas</span> <span class='kw'>=</span> <span class='fu'>get_planit_data</span>(<span class='kw'>query_type</span> <span class='kw'>=</span> <span class='st'>"areas"</span>, <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/areas/geojson?pg_sz=2</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>planitareas</span>)</div><div class='output co'>#&gt; [1] 2</div><div class='input'><span class='no'>planitareas</span>$<span class='no'>name</span></div><div class='output co'>#&gt; [1] "Aberdeen"      "Aberdeenshire"</div><div class='input'><span class='no'>planitareas</span></div><div class='output co'>#&gt; Simple feature collection with 2 features and 23 fields
 #&gt; geometry type:  MULTIPOLYGON
 #&gt; dimension:      XY
 #&gt; bbox:           xmin: -14.01552 ymin: 54.43398 xmax: -0.320965 ymax: 61.06
