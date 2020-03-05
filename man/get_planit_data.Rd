@@ -17,6 +17,8 @@ get_planit_data(
   krad = NULL,
   bbox = NULL,
   app_size = NULL,
+  app_state = NULL,
+  app_type = NULL,
   silent = FALSE
 )
 }
@@ -45,6 +47,10 @@ To be used only when `query_type` is not `"applics"`.}
 \item{bbox}{Bounding box in the form of xmin, ymin, xmax, ymax, e.g.: `c(-1.3, 53.7, -1.2, 53.9)`}
 
 \item{app_size}{PlanIt classification for the size of planning applications. Values are `"large"` `"medium"` and `"small"`}
+
+\item{app_state}{Current decision status of the planning application (Undecided, Permitted, Conditions, Rejected, Withdrawn, Referred, Unresolved, Other)}
+
+\item{app_type}{Type of the application (Full, Outline, Amendment, Heritage, Trees, Advertising, Telecoms, Other)}
 
 \item{silent}{Do you want a message? Default is `FALSE`}
 }
