@@ -18,6 +18,7 @@
 #' @param krad Radius (km) = only planning applications within the circle perimeter are returned (default 2)
 #' @param auth Authority name
 #' @param bbox Bounding box in the form of xmin, ymin, xmax, ymax, e.g.: `c(-1.3, 53.7, -1.2, 53.9)`
+#' @param app_size PlanIt classification for the size of planning applications. Values are `"large"` `"medium"` and `"small"`
 #' @param silent Do you want a message? Default is `FALSE`
 #'
 #' @return A (geographic) data frame
@@ -35,6 +36,8 @@
 #' get_planit_data(pcode = "LS2 9JT", limit = 2, bbox = bbox) # data from specific postcode
 #' get_planit_data(query_type = "planapplic", query_value = "13/05235/FU@Leeds")
 #' get_planit_data(query_type = "planarea", query_value = "leeds") # fails...
+#' leeds_area = get_planit_data(query_type = "areas", limit = 2, auth = "Leeds")
+#' plot(leeds_area) # geographic outline of the area
 #' planitareas = get_planit_data(query_type = "areas", limit = 2)
 #' nrow(planitareas)
 #' planitareas$name
@@ -51,6 +54,7 @@ get_planit_data = function(
                           pcode = NULL,
                           krad = NULL,
                           bbox = NULL,
+                          app_size = NULL,
                           silent = FALSE
                           ) {
 
@@ -65,6 +69,7 @@ get_planit_data = function(
 
   if(query_type == "areas" & is.null(query_value)) {
     query = list(
+      auth = auth,
       pg_sz = limit
     )
   } else {
@@ -77,7 +82,8 @@ get_planit_data = function(
       pg_sz = limit,
       pcode = pcode,
       auth = auth,
-      krad = krad
+      krad = krad,
+      app_size = app_size
     )
   }
 

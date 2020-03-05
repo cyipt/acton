@@ -16,6 +16,7 @@ get_planit_data(
   pcode = NULL,
   krad = NULL,
   bbox = NULL,
+  app_size = NULL,
   silent = FALSE
 )
 }
@@ -43,6 +44,8 @@ To be used only when `query_type` is not `"applics"`.}
 
 \item{bbox}{Bounding box in the form of xmin, ymin, xmax, ymax, e.g.: `c(-1.3, 53.7, -1.2, 53.9)`}
 
+\item{app_size}{PlanIt classification for the size of planning applications. Values are `"large"` `"medium"` and `"small"`}
+
 \item{silent}{Do you want a message? Default is `FALSE`}
 }
 \value{
@@ -66,6 +69,8 @@ get_planit_data(end_date = "2008-01-01", limit = 2, bbox = bbox) # historic data
 get_planit_data(pcode = "LS2 9JT", limit = 2, bbox = bbox) # data from specific postcode
 get_planit_data(query_type = "planapplic", query_value = "13/05235/FU@Leeds")
 get_planit_data(query_type = "planarea", query_value = "leeds") # fails...
+leeds_area = get_planit_data(query_type = "areas", limit = 2, auth = "Leeds")
+plot(leeds_area) # geographic outline of the area
 planitareas = get_planit_data(query_type = "areas", limit = 2)
 nrow(planitareas)
 planitareas$name
