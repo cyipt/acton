@@ -154,6 +154,8 @@ for further information.</p>
   <span class='kw'>krad</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>bbox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>app_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>app_state</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>app_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>silent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
 
@@ -208,6 +210,14 @@ To be used only when `query_type` is not `"applics"`.</p></td>
     <tr>
       <th>app_size</th>
       <td><p>PlanIt classification for the size of planning applications. Values are `"large"` `"medium"` and `"small"`</p></td>
+    </tr>
+    <tr>
+      <th>app_state</th>
+      <td><p>Current decision status of the planning application (Undecided, Permitted, Conditions, Rejected, Withdrawn, Referred, Unresolved, Other)</p></td>
+    </tr>
+    <tr>
+      <th>app_type</th>
+      <td><p>Type of the application (Full, Outline, Amendment, Heritage, Trees, Advertising, Telecoms, Other)</p></td>
     </tr>
     <tr>
       <th>silent</th>
