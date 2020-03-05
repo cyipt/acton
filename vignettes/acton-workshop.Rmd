@@ -43,7 +43,7 @@ The objectives are to:
 
 - overview of ACTON project
 - go round with introductions and interest in the project
-- local policy and planning considerations by **David Ellis, WSP**
+- local policy and planning considerations by **David Ellis, WSP** (15 minutes)
 
 ## Policy requirements (10:30 - 11:10)
 
@@ -64,7 +64,7 @@ The objectives are to:
 (This will include discussion of progress and expected next steps)
 
 - Talk on input data and API access from **CycleStreets.net** (20 minutes)
-  - improvements to PlanIt. How can we best enable the automation and filtering of planning application searches?
+  - improvements to PlanIt
   - journey routing for cycling - progress on CycleStreets routing algorithm for ‘quiet’ journeys
 - Findings from case study sites by **Joey Talbot** (20 minutes)
   - accessibility and journey time statistics
@@ -72,6 +72,7 @@ The objectives are to:
   - barriers and severance
 - Spatial network analysis approaches for walkability by **Crispin Cooper** (20 minutes)
 
+<!-- How can we best enable the automation and filtering of planning application searches? -->
 <!-- - Discussion (20 minutes) -->
 <!--   - comparison of route quality/circuitousness for different modes of travel -->
 <!--   - selection of options for improving accessibility of case study sites -->
