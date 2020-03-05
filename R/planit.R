@@ -19,6 +19,8 @@
 #' @param auth Authority name
 #' @param bbox Bounding box in the form of xmin, ymin, xmax, ymax, e.g.: `c(-1.3, 53.7, -1.2, 53.9)`
 #' @param app_size PlanIt classification for the size of planning applications. Values are `"large"` `"medium"` and `"small"`
+#' @param app_state Current decision status of the planning application (Undecided, Permitted, Conditions, Rejected, Withdrawn, Referred, Unresolved, Other)
+#' @param app_type Type of the application (Full, Outline, Amendment, Heritage, Trees, Advertising, Telecoms, Other)
 #' @param silent Do you want a message? Default is `FALSE`
 #'
 #' @return A (geographic) data frame
@@ -55,6 +57,8 @@ get_planit_data = function(
                           krad = NULL,
                           bbox = NULL,
                           app_size = NULL,
+                          app_state = NULL,
+                          app_type = NULL,
                           silent = FALSE
                           ) {
 
@@ -83,7 +87,9 @@ get_planit_data = function(
       pcode = pcode,
       auth = auth,
       krad = krad,
-      app_size = app_size
+      app_size = app_size,
+      app_state = app_state,
+      app_type = app_type
     )
   }
 
