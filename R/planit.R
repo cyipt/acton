@@ -27,17 +27,18 @@
 #' @export
 #'
 #' @examples
-#' bbox = c(-1.4, 53.7, -1.3, 53.8)
+#' # tmaptools::bb("university leeds") # find a bounding box
+#' bbox = c(-1.5, 53.7, -1.3, 53.8)
 #' res = get_planit_data(bbox = bbox, silent = FALSE) # return geographic (`sf`) object
 #' class(res)
 #' names(res)
-#' plot(res)
+#' plot(sf::st_geometry(res))
 #' get_planit_data(fmt = "json", limit = 2, bbox = bbox) # return data frame with limit
-#' get_planit_data(fmt = "json", limit = 2, auth = "leeds")
-#' get_planit_data(end_date = "2008-01-01", limit = 2, bbox = bbox) # historic data
-#' get_planit_data(pcode = "LS2 9JT", limit = 2, bbox = bbox) # data from specific postcode
-#' get_planit_data(query_type = "planapplic", query_value = "13/05235/FU@Leeds")
-#' get_planit_data(query_type = "planarea", query_value = "leeds") # fails...
+#' get_planit_data(fmt = "json", limit = 2, auth = "leeds")$description
+#' get_planit_data(end_date = "2008-01-01", limit = 2, bbox = bbox)$description # historic data
+#' get_planit_data(pcode = "LS2 9JT", limit = 2, bbox = bbox)$description # data from specific postcode
+#' get_planit_data(query_type = "planapplic", query_value = "13/05235/FU@Leeds")$description
+#' get_planit_data(query_type = "planarea", query_value = "leeds")$description
 #' leeds_area = get_planit_data(query_type = "areas", limit = 2, auth = "Leeds")
 #' plot(leeds_area) # geographic outline of the area
 #' planitareas = get_planit_data(query_type = "areas", limit = 2)
@@ -59,7 +60,7 @@ get_planit_data = function(
                           app_size = NULL,
                           app_state = NULL,
                           app_type = NULL,
-                          silent = FALSE
+                          silent = FALSE # make true at some point?
                           ) {
 
   # browser()
