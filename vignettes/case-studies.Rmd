@@ -9,27 +9,35 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  echo = FALSE,
+  echo = TRUE,
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-```{r setup, include=FALSE}
+# Introduction
+
+
+
+This document demonstrates the data outputs from the ACTON project based on case study regions.
+It is a reproducible technical document with code that shows how to get the results with the `acton` package.
+To reproduce the results you must first install the `acton` package as follows:
+
+```r
+remotes::install_github("cyipt/acton")
+```
+
+
+```{r setup}
 library(acton)
 library(tmap)
 tmap_mode("view")
 ```
 
-This document demonstrates the data outputs from the ACTON project based on case study regions.
 
 <!-- Provide overview image of all three regions as a 'metafigure' -->
 
-## Leeds
-
-
-
-### Planning applications
+## A case study Leeds
 
 Data from [PlanIt](https://www.planit.org.uk/), accessed using the `acton` R package, was used to identify four recent large planning applications: 
 
@@ -60,14 +68,56 @@ names(applications_leeds)
 DT::datatable(applications_leeds[-c(1, 9)])
 ```
 
+The following code gets the specific applications we will use for this case study of Leeds:
 
-Allerton Bywater Millennium Community:
+```{r}
+# Aim: in future subset from the results when the API gives all large applications
+application_ids = c(
+  "13/05235/FU@Leeds",
+  "15/04151/FU@Leeds",
+  "15/00415/FU@Leeds",
+  "15/01973/FU@Leeds"
+)
+# get_planit_data(query_type = "planapplic", query_value = application_ids)
+applications_case_study_list = lapply(
+  application_ids,
+  get_planit_data,
+  query_type = "planapplic"
+  )
+application_variable_names = sapply(applications_case_study_list, names)
+applications_consistent_names = lapply(applications_case_study_list, function(x) {
+  x[application_variable_names[[1]]]
+})
+applications_case_study = do.call(what = rbind, applications_consistent_names)
+```
+
+An overview of the case study sites is shown in the map below.
+
+```{r}
+tm_shape(applications_case_study) +
+  tm_dots()
+```
+
+We will describe the Allerton Bywater application in more depth and use it to illustrate the data returned by the PlanIt API, before describing the other development sites.
+
+## Allerton Bywater Millennium Community:
 
 - one of a series of Millennium Communities, the development at Allerton Bywater was announced by John Prescott in 1998. The homes lie on the site of Allerton Colliery, which was the last remaining colliery in Leeds when it closed in 1995. The aim was to incorporate the whole of Allerton Bywater village in the project, rather than solely focusing on the site itself. For example, a £500,000 community fund was made available to the parish council to spend on local projects, and community buildings in the village were also refurbished. In total there was £24 million upfront public investment by English Partnerships and the HCA. This included drainage, site clearance and decontamination. The development incorporates high environmental standards for both the homes and the new industrial units, and a number of homes built under a 'Design for Manufacture' competition for a construction cost of no more than £60,000.
 
 - in total there are 562 homes in the Millennium Community. The final phase includes 189 homes and has planning consent 13/05235/FU. A sustrans cycle route passes through the site, which is designed as a HomeZone with shared space streets, although these tend to fill up with parked cars. However, plans for buses to be routed through the site did not materialise. The village lies eight miles southeast of Leeds and the buses to Leeds run every 30 minutes, as well as more frequent services to Garforth and Castleford. 
 
-Leeds Climate Innovation District:
+### Data on the application
+
+... to add ...
+
+```{r}
+allerton_bywater = applications_case_study[1, ]
+allerton_bywater$app_state
+allerton_bywater$address
+allerton_bywater$decided_date
+```
+
+## Leeds Climate Innovation District
 
 - situated on the banks of the River Aire, close to Leeds city centre, the Climate Innovation District is being developed by Leeds-based firm Citu. The development is built around high environmental standards including low carbon timber-framed homes with high levels of insulation and a Mechanical Ventilation Heat Recovery System preventing the need for gas central heating. The homes will be served by solar panels on-site via a private-wire network; a Community Interest Company will be set up that will own the utility cooperative. 
 
@@ -75,13 +125,13 @@ Leeds Climate Innovation District:
 
 - in total there will be over 520 new homes. Phase 1 to the north of the river will contain 312 dwellings, with planning consent 15/00415/FU. 
 
-Micklefield:
+## Micklefield
 
 - planning consent 15/01973/FU is for a development of 292 residential dwellings by house builders Barratt Homes and Persimmon Homes on greenfield land in the village of Micklefield, nine miles east of Leeds. 
 
 - the site does not fully meet the Leeds Core Strategy Accessibility Standards. There are bus stops nearby but the services are infrequent, with only an hourly service increasing to two an hour at peak times. However, Micklefield station allows access to Leeds city centre with a 20 minute journey time. The S106 agreement includes £8000 for improved cycle facilities at the station. It also mandates 15% affordable housing, of which 60% is for social rent.
 
-Tyersal:
+## Tyersal
 
 - planning consent 15/04151/FU was gained in April 2016 for a 270 dwelling development on a greenfield site at Tysersal Lane by developer Gleeson Homes. Although the site lies within ths bounds of Leeds it is actually closer to Bradford, and the only road access is to west, via the Bradford suburb of Holme Wood. Regular buses to Bradford city centre pass by the edge of the site. The proposed parking provision is approximately two spaces per dwelling. 
 
