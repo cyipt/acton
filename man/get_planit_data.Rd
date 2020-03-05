@@ -8,7 +8,7 @@ get_planit_data(
   query_type = "applics",
   query_value = NULL,
   fmt = "geojson",
-  base_url = "https://www.planit.org.uk/",
+  base_url = "https://dev.planit.org.uk",
   limit = 6,
   end_date = as.character(Sys.Date()),
   start_date = "2000-02-01",
@@ -56,7 +56,7 @@ for further information.
 }
 \examples{
 bbox = c(-1.4, 53.7, -1.3, 53.8)
-res = get_planit_data(bbox = bbox) # return geographic (`sf`) object
+res = get_planit_data(bbox = bbox, silent = FALSE) # return geographic (`sf`) object
 class(res)
 names(res)
 plot(res)
