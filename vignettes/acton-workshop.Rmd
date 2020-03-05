@@ -104,7 +104,8 @@ In this section, for developers, we will go in depth and work on the code for so
 - journey routing for walking – test out using OpenTripPlanner
 - integrating the outputs of the ACTON project into other tools such as CyIPT and planning tools
 - estimating travel to major trip attractors
-- addressing key limitations of the data
+- sketching a user interface to access ACTON data via a webtool, inspired by and building on https://www.streetfocus.uk/ 
+<!-- - addressing key limitations of the data -->
 
 <!-- Pub -->
 
