@@ -59,7 +59,7 @@ Moreover, there is no systematic national recording of where homes are being bui
 
 ## New developments data from PlanIt
 
-To address this problem, the [PlanIt website](https://www.planit.org.uk/) was developed. The website aggregates and maps current and historic planning applications across the UK, scraping the data from all planning authority websites and making them accessible from a single source. PlanIt collects all types of planning application, not just applications relating to house building.
+To address this problem, the [PlanIt website](https://www.planit.org.uk/) was developed. The website aggregates and maps current and historic planning applications across the UK, scraping the data from all planning authority websites (98% coverage) and making them accessible from a single source. PlanIt collects all types of planning application, not just applications relating to house building.
 
 As part of ACTON, the PlanIt API is being improved to make it easier to search for particular types of planning application. This has involved deriving terms for the following searchable fields:
 
