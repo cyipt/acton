@@ -34,12 +34,15 @@ The four main data sources shown above are:
   - Accessibility data, including travel times by mode for different
     trip purposes, e.g. the average time taken to cycle to the shops,
     for small administrative zones (MSOA and LSOA level)
+  - Trave/demographic data from surveys (the 2011 Census in the first
+    instance), providing information about the number of people in
+    different groups in administrative zones and likely work
+    destinations at the origin-destination level (plus data derived from
+    the Census via the Propensity to Cycle Tool project)
   - Route data from routing services such as CycleStreets.net, providing
-    data on the transport network with variables such as busyness and
-    speed limits along roads nearby new and planned development sites
-  - Census data, providing demographic data and likely work destinations
-    at the origin-destination level (plus data derived from the Census
-    via the Propensity to Cycle Tool project)
+    information on the transport networks surrounding new development
+    sites, with variables such as busyness and speed limits along roads
+    nearby new and planned development sites
 
 ACTON seeks to make these datasets more widely accessible and actionable
 by combining them and using them to assess walking and cycling provision
@@ -78,26 +81,31 @@ The package can be used to get data on new developments as follows:
 ``` r
 library(acton)
 # data from specific postcode
-planning_data = get_planit_data(pcode = "LS2 9JT", limit = 2)
-#> Getting data from https://www.planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2020-03-04&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT
+planning_data = get_planit_data(pcode = "LS2 9JT", limit = 2, app_size = "large")
+#> Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2020-03-08&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT&app_size=large
 planning_data
-#> Simple feature collection with 2 features and 16 fields
+#> Simple feature collection with 2 features and 26 fields
 #> geometry type:  POINT
 #> dimension:      XY
-#> bbox:           xmin: -1.55333 ymin: 53.80796 xmax: -1.55333 ymax: 53.80796
+#> bbox:           xmin: -1.553865 ymin: 53.80698 xmax: -1.552019 ymax: 53.80897
 #> epsg (SRID):    4326
 #> proj4string:    +proj=longlat +datum=WGS84 +no_defs
-#> # A tibble: 2 x 17
-#>   doc_type name  distance url   description when_updated        authority_id source_url authority_name link  postcode address   lat
-#>   <chr>    <chr>    <dbl> <chr> <chr>       <dttm>                     <int> <chr>      <chr>          <chr> <chr>    <chr>   <dbl>
-#> 1 PlanApp… Leed…        0 http… Alteration… 2019-07-02 11:47:13          292 https://p… Leeds          http… LS2 9JT  Parkin…  53.8
-#> 2 PlanApp… Leed…        0 http… Listed Bui… 2018-08-14 09:53:45          292 https://p… Leeds          http… LS2 9JT  Facult…  53.8
-#> # … with 4 more variables: lng <dbl>, start_date <date>, uid <chr>, geometry <POINT [°]>
+#> # A tibble: 2 x 27
+#>   address altid app_size app_state app_type associated_id authority_id
+#>   <chr>   <chr> <chr>    <chr>     <chr>    <chr>                <int>
+#> 1 Old Mi… <NA>  Large    Permitted Full     <NA>                   292
+#> 2 Univer… <NA>  Large    Permitted Full     <NA>                   292
+#> # … with 20 more variables: authority_name <chr>, consulted_date <chr>,
+#> #   decided_date <date>, description <chr>, distance <dbl>, docs <chr>,
+#> #   lat <dbl>, link <chr>, lng <dbl>, name <chr>, other_fields <chr>,
+#> #   postcode <chr>, rec_type <chr>, reference <chr>, source_url <chr>,
+#> #   start_date <date>, uid <chr>, url <chr>, when_updated <dttm>,
+#> #   geometry <POINT [°]>
 planning_data$name
-#> [1] "Leeds/19/02996/FU" "Leeds/18/03877/LI"
+#> [1] "Leeds/17/03618/FU" "Leeds/12/04663/FU"
 planning_data$description
-#> [1] "Alterations to carry out works to two public realm areas at university campus entrance"                                                                                                            
-#> [2] "Listed Building application for partial demolition, external alterations and refurbishment of multiple levels of accommodation and associated improvements to existing teaching and research space"
+#> [1] "6 storey new build research and teaching building; alterations to listed building; new landscaped public realm and alterations to the Clarendon Road/Cemetery Road junction"
+#> [2] "Demolition of existing buildings and erection of a 6 storey library with ancillary landscaping"
 ```
 
 ## Documentation
