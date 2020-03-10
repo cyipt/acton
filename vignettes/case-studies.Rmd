@@ -187,26 +187,85 @@ Journey time statistics (JTS) are available from the Department for Transport re
 
 Travel times are calculated for three modes of travel - by car, by cycle, and by a mode that combines walking and public transport.
 
-The LSOA zones in Leeds are shown below, together with their working age population. LSOA population should normally be relatively constant, but it is considerably higher in some Leeds LSOAs. This may be due to new residential developments built after the LSOA boundaries were set, in particular student accommodation and the recent growth in city centre living.  
+In the following code we download data for journey times to the nearest centres of employment, town centres, food stores, primary schools, secondary schools and GP surgeries.
+
+There are several different statistics representing employment centres. We combine measures for employment centres of different sizes to create a single employment metric. We then combine this with the other journey time statistics to generate a single index of accessibility for each mode of travel. 
+
+```{r, eval = FALSE}
+library(dplyr)
+
+zones_leeds = pct::get_pct_zones(region = "west-yorkshire", geography = "lsoa", purpose = "commute") %>% rename(LA_Code = lad11cd) %>% st_set_crs(4326)
+
+which(st_is_valid(zones_leeds) == FALSE)
+zones_leeds = lwgeom::st_make_valid(zones_leeds)
+which(st_is_valid(zones_leeds) == FALSE)
+
+# c = pct::get_pct_centroids(region = "west-yorkshire", geography = "lsoa") %>% rename(LA_Code = lad11cd) %>% st_set_crs(4326)
+
+access_employ = get_jts_data("jts0501", 2017)
+access_town = get_jts_data("jts0508", 2017)
+access_food = get_jts_data("jts0507", 2017)
+access_primary = get_jts_data("jts0502", 2017)
+access_secondary = get_jts_data("jts0503", 2017)
+access_gp = get_jts_data("jts0505", 2017)
+
+access_employ$weightedJobsPTt = apply(
+  X = access_employ[c("Jobs100EmpPTt", "Jobs500EmpPTt", "Jobs5000EmpPTt")],
+  MARGIN = 1,
+  FUN = weighted.mean,
+  w = c(100, 500, 5000)
+)
+access_employ$weightedJobsCyct = apply(
+  X = access_employ[c("Jobs100EmpCyct", "Jobs500EmpCyct", "Jobs5000EmpCyct")],
+  MARGIN = 1,
+  FUN = weighted.mean,
+  w = c(100, 500, 5000)
+)
+access_employ$weightedJobsCart = apply(
+  X = access_employ[c("Jobs100EmpCart", "Jobs500EmpCart", "Jobs5000EmpCart")],
+  MARGIN = 1,
+  FUN = weighted.mean,
+  w = c(100, 500, 5000)
+)
+
+zones_leeds = inner_join(zones_leeds,access_town,by = c("geo_code" = "LSOA_code","LA_Code"))
+zones_leeds = inner_join(zones_leeds,access_food,by = c("geo_code" = "LSOA_code","LA_Code"))
+zones_leeds = inner_join(zones_leeds,access_employ,by = c("geo_code" = "LSOA_code","LA_Code"))
+zones_leeds = inner_join(zones_leeds,access_primary,by = c("geo_code" = "LSOA_code","LA_Code"))
+zones_leeds = inner_join(zones_leeds,access_secondary,by = c("geo_code" = "LSOA_code","LA_Code"))
+zones_leeds = inner_join(zones_leeds,access_gp,by = c("geo_code" = "LSOA_code","LA_Code"))
+
+zones_leeds = zones_leeds %>%
+  mutate(index_PT = weightedJobsPTt+TownPTt+FoodPTt+PSPTt+SSPTt+GPPTt,
+         index_Cyc = weightedJobsCyct+TownCyct+FoodCyct+PSCyct+SSCyct+GPCyct,
+         index_Car = weightedJobsCart+TownCart+FoodCart+PSCart+SSCart+GPCart)
+```
+
+```{r, eval = FALSE, echo = FALSE}
+sf::write_sf(zones_leeds, "zones_leeds_lsoa.geojson")
+piggyback::pb_upload("zones_leeds_lsoa.geojson")
+piggyback::pb_download_url("zones_leeds_lsoa.geojson")
+```
+
+```{r, echo = FALSE}
+zones_leeds = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/zones_leeds_lsoa.geojson")
+```
+
+Now we can map the journey time statistics across Leeds and West Yorkshire.
+
+The first map shows the LSOA zones in Leeds together with their working age population. LSOA population should normally be relatively constant, but it is considerably higher in some Leeds LSOAs. This may be due to new residential developments built after the LSOA boundaries were set, in particular student accommodation and the recent growth in city centre living. 
+
+The second set of maps shows ...
 
 ```{r}
-# library(dplyr)
-# work_accesibility = get_jts_data(table = "jts0501", year = 2017)
-# jts_0501_metadata = get_jts_data(table = "jts0501", year = "Metadata")
-# # View(jts_0501_metadata)
-# wy_zones = pct::get_pct_zones(region = "west-yorkshire", geography = "lsoa")
-# # names(work_accesibility)
-# names(work_accesibility)[1] = names(wy_zones)[1]
-# zones = dplyr::left_join(wy_zones, work_accesibility)
-# zones_leeds = zones %>% filter(lad_name == "Leeds")
-# plot(zones_leeds["100EmpPTt"])
-# plot(zones_leeds["Empl_pop"])
-# plot(zones_leeds$all, zones_leeds$Empl_pop)
-# sf::write_sf(zones_leeds, "zones_leeds_pct_jts_2017_lsoa.geojson")
-# piggyback::pb_upload("zones_leeds_pct_jts_2017_lsoa.geojson")
-# piggyback::pb_download_url("zones_leeds_pct_jts_2017_lsoa.geojson")
-zones_leeds = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/zones_leeds_pct_jts_2017_lsoa.geojson")
 qtm(zones_leeds, "Empl_pop") #change the colour palette
+
+tmap_mode("plot")
+tm_shape(zones_leeds2) +
+  tm_polygons(c("index_PT","index_Cyc","index_Car")) +
+  tm_shape(applications_case_study) +
+  tm_dots(size=0.3) +
+  tm_facets(nrow = 1)
 ```
 
 The JTS record travel times from the population weighted centroid of each LSOA. New housing developments can be constructed anywhere within an LSOA, and may not necessarily be close to existing homes. To assess the accessibility of new developments we therefore use statistics that relate to the closest LSOA centroid. For our Tyersal Lane case study site, the closest LSOA centroid is in Bradford.
