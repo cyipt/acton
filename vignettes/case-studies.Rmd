@@ -43,10 +43,10 @@ Data from [PlanIt](https://www.planit.org.uk/), accessed using the `acton` R pac
 
 The following code gets and subsets the relevant PlanIt data for leeds:
 
+<!-- d = get_planit_data(query_value = "Allerton Bywater") # cannot search in description file -->
+
 ```{r}
 # note work in progress!
-library(acton)
-# d = get_planit_data(query_value = "Allerton Byewater") # cannot search in description file
 applications_leeds = get_planit_data(
   limit = 500,
   auth = "Leeds",
@@ -58,14 +58,14 @@ tm_shape(applications_leeds) + tm_dots(col = "app_type") +
   tm_basemap(server = "CartoDB.Positron")
 ```
 
-The result in the `applications_leeds` contain much rich information the planning application, under the following column headings:
+The result in the `applications_leeds` object contains much rich information about the planning applications, under the following column headings:
 
 ```{r}
 names(applications_leeds)
 ```
 
 ```{r}
-DT::datatable(applications_leeds[-c(1, 9)])
+DT::datatable(applications_leeds[-c(1, 9, 11, 12, 13, 18, 21)])
 ```
 
 The following code gets the specific applications we will use for this case study of Leeds:
@@ -85,24 +85,24 @@ nrow(applications_case_study)
 
 
 ```{r, echo=FALSE, eval=FALSE}
-# Aim: in future subset from the results when the API gives all large applications
-application_ids = c(
-  "13/05235/FU@Leeds",
-  "15/04151/FU@Leeds",
-  "15/00415/FU@Leeds",
-  "15/01973/FU@Leeds"
-)
-# get_planit_data(query_type = "planapplic", query_value = application_ids)
-applications_case_study_list = lapply(
-  application_ids,
-  get_planit_data,
-  query_type = "planapplic"
-  )
-application_variable_names = sapply(applications_case_study_list, names)
-applications_consistent_names = lapply(applications_case_study_list, function(x) {
-  x[application_variable_names[[1]]]
-})
-applications_case_study = do.call(what = rbind, applications_consistent_names)
+# # Aim: in future subset from the results when the API gives all large applications
+# application_ids = c(
+#   "13/05235/FU@Leeds",
+#   "15/04151/FU@Leeds",
+#   "15/00415/FU@Leeds",
+#   "15/01973/FU@Leeds"
+# )
+# # get_planit_data(query_type = "planapplic", query_value = application_ids)
+# applications_case_study_list = lapply(
+#   application_ids,
+#   get_planit_data,
+#   query_type = "planapplic"
+#   )
+# application_variable_names = sapply(applications_case_study_list, names)
+# applications_consistent_names = lapply(applications_case_study_list, function(x) {
+#   x[application_variable_names[[1]]]
+# })
+# applications_case_study = do.call(what = rbind, applications_consistent_names)
 ```
 
 An overview of the case study sites is shown in the map below.
@@ -116,47 +116,72 @@ We will describe the Allerton Bywater application in more depth and use it to il
 
 ## Allerton Bywater Millennium Community:
 
-- one of a series of Millennium Communities, the development at Allerton Bywater was announced by John Prescott in 1998. The homes lie on the site of Allerton Colliery, which was the last remaining colliery in Leeds when it closed in 1995. The aim was to incorporate the whole of Allerton Bywater village in the project, rather than solely focusing on the site itself. For example, a £500,000 community fund was made available to the parish council to spend on local projects, and community buildings in the village were also refurbished. In total there was £24 million upfront public investment by English Partnerships and the HCA. This included drainage, site clearance and decontamination. The development incorporates high environmental standards for both the homes and the new industrial units, and a number of homes built under a 'Design for Manufacture' competition for a construction cost of no more than £60,000.
+- One of a series of Millennium Communities, the development at Allerton Bywater was announced by John Prescott in 1998. The homes lie on the site of Allerton Colliery, which was the last remaining colliery in Leeds when it closed in 1995. Prior to the development, Allerton Bywater village had a population of around 4,000, and the aim was to incorporate the whole of the village in the project, rather than solely focusing on the site itself. For example, a £500,000 community fund was made available to the parish council to spend on local projects, and community buildings in the village were also refurbished. In total there was £24 million upfront public investment by English Partnerships and the HCA. This included drainage, site clearance and decontamination. 
 
-- in total there are 562 homes in the Millennium Community. The final phase includes 189 homes and has planning consent 13/05235/FU. A sustrans cycle route passes through the site, which is designed as a HomeZone with shared space streets, although these tend to fill up with parked cars. However, plans for buses to be routed through the site did not materialise. The village lies eight miles southeast of Leeds and the buses to Leeds run every 30 minutes, as well as more frequent services to Garforth and Castleford. 
+- The development incorporates new industrial and office units as well as homes, with high environmental standards for both of these. The industrial units at the east of the site were the first in the UK to meet the BREEAM 'Excellent' standard, while the new homes were built to the EcoHomes 'Excellent' standard or the Code for Sustainable Homes Level 3. A number of homes were built under a 'Design for Manufacture' competition for a construction cost of no more than £60,000.
+
+- In total there are 562 homes in the Millennium Community. A Sustrans cycle route passes through the site and there is good walking and cycling access to the rest of the village and its surrounds, although some paths can get very muddy in winter. Local services such as shops, pubs, cafes, a primary school, park, community centre and nature reserve lie on the edge of the site or within easy walking distance.
+
+- Plans for buses to be routed through the site did not materialise. The village lies eight miles southeast of Leeds and the buses to Leeds run roughly every 30 minutes. There are more frequent services to Garforth and Castleford. The nearest railway station is Castleford, at 43 minutes walk, with a well-built riverside path to follow. Much of the Millennium Community is designed as a HomeZone with shared space streets, although these tend to fill up with parked cars. Initial phases were built with 1.6 parking spaces per dwelling, but the amount of on-street parking lead to calls to increase this and later phases have 2 parking spaces per dwelling.
 
 ### Data on the application
 
-... to add ...
+The planning application we have selected for Allerton Bywater relates to the final phase of the Millennium Community. This includes 189 homes and has planning consent 13/05235/FU.
+
+We can see that this is classified by PlanIt.org.uk as a large application. The application was submitted in December 2013 by Keepmoat Homes and the Homes and Communities Agency and was approved in November 2014.
+
+The available fields include links to the full PlanIt record and the planning application information from Leeds City Council. 
 
 ```{r}
-allerton_bywater = applications_case_study[1, ]
+allerton_bywater = applications_case_study[applications_case_study$uid == "13/05235/FU",]
+allerton_bywater$description
+allerton_bywater$link
+allerton_bywater$url
 allerton_bywater$app_state
+allerton_bywater$app_size
+allerton_bywater$app_type
 allerton_bywater$address
+allerton_bywater$start_date
 allerton_bywater$decided_date
 ```
 
-## Leeds Climate Innovation District
+The original outline planning application for the entire Allerton Bywater Millennium Community can be found as follows:
 
-- situated on the banks of the River Aire, close to Leeds city centre, the Climate Innovation District is being developed by Leeds-based firm Citu. The development is built around high environmental standards including low carbon timber-framed homes with high levels of insulation and a Mechanical Ventilation Heat Recovery System preventing the need for gas central heating. The homes will be served by solar panels on-site via a private-wire network; a Community Interest Company will be set up that will own the utility cooperative. 
+```{r}
+allerton_bywater_original = get_planit_data(query_type = "planapplic", query_value = "33/311/00/OT@Leeds")
+allerton_bywater_original$description
+allerton_bywater_original$link
+allerton_bywater_original$decided_date
+```
 
-- a new foot/cycle bridge has been erected over the River Aire to connect the two halves of the site and allow a traffic-free route into the city centre. On-site car parking is in an undercroft; these spaces have to be purchased at a cost of £15,000. Cycle parking is available on-site.
+## Other Leeds case study sites
 
-- in total there will be over 520 new homes. Phase 1 to the north of the river will contain 312 dwellings, with planning consent 15/00415/FU. 
+### Leeds Climate Innovation District
 
-## Micklefield
+- Situated on the banks of the River Aire, close to Leeds city centre, the Climate Innovation District is being developed by Leeds-based firm Citu. The development is built around high environmental standards including low carbon timber-framed homes with high levels of insulation and a Mechanical Ventilation Heat Recovery System preventing the need for gas central heating. The homes will be served by solar panels on-site via a private-wire network; a Community Interest Company will be set up that will own the utility cooperative. 
 
-- planning consent 15/01973/FU is for a development of 292 residential dwellings by house builders Barratt Homes and Persimmon Homes on greenfield land in the village of Micklefield, nine miles east of Leeds. 
+- A new foot/cycle bridge has been erected over the River Aire to connect the two halves of the site and allow a traffic-free route into the city centre. On-site car parking is in an undercroft; these spaces have to be purchased at a cost of £15,000. Cycle parking is available on-site.
 
-- the site does not fully meet the Leeds Core Strategy Accessibility Standards. There are bus stops nearby but the services are infrequent, with only an hourly service increasing to two an hour at peak times. However, Micklefield station allows access to Leeds city centre with a 20 minute journey time. The S106 agreement includes £8000 for improved cycle facilities at the station. It also mandates 15% affordable housing, of which 60% is for social rent.
+- In total there will be over 520 new homes. Phase 1 to the north of the river will contain 312 dwellings, with planning consent 15/00415/FU. 
 
-## Tyersal
+### Micklefield
 
-- planning consent 15/04151/FU was gained in April 2016 for a 270 dwelling development on a greenfield site at Tysersal Lane by developer Gleeson Homes. Although the site lies within ths bounds of Leeds it is actually closer to Bradford, and the only road access is to west, via the Bradford suburb of Holme Wood. Regular buses to Bradford city centre pass by the edge of the site. The proposed parking provision is approximately two spaces per dwelling. 
+- Planning consent 15/01973/FU is for a development of 292 residential dwellings by house builders Barratt Homes and Persimmon Homes on greenfield land in the village of Micklefield, nine miles east of Leeds. 
 
-- the site does not fully meet the Leeds Core Strategy Accessibility Standards. A viability assessment was accepted, stating that the scheme could not provide all of the usual planning gain contributions (S106 monies), with no affordable homes due to be built on site. This is subject on ongoing review. Gleeson's state that their homes are priced at a level so that they can be afforded by 90% of local people in full time employment.
+- The site does not fully meet the Leeds Core Strategy Accessibility Standards. There are bus stops nearby but the services are infrequent, with only an hourly service increasing to two an hour at peak times. However, Micklefield station allows access to Leeds city centre with a 20 minute journey time. The S106 agreement includes £8000 for improved cycle facilities at the station. It also mandates 15% affordable housing, of which 60% is for social rent.
+
+### Tyersal
+
+- Planning consent 15/04151/FU was gained in April 2016 for a 270 dwelling development on a greenfield site at Tysersal Lane by developer Gleeson Homes. Although the site lies within ths bounds of Leeds it is actually closer to Bradford, and the only road access is to west, via the Bradford suburb of Holme Wood. Regular buses to Bradford city centre pass by the edge of the site. The proposed parking provision is approximately two spaces per dwelling. 
+
+- The site does not fully meet the Leeds Core Strategy Accessibility Standards. A viability assessment was accepted, stating that the scheme could not provide all of the usual planning gain contributions (S106 monies), with no affordable homes due to be built on site. This is subject on ongoing review. Gleeson's state that their homes are priced at a level so that they can be afforded by 90% of local people in full time employment.
 
 
 ```{r}
 # add map of the four sites
 ```
 
-### Accessibility indicators
+## Accessibility indicators
 
 Journey time statistics (JTS) are available from the Department for Transport recording accessibility at the geographical level of the LSOA (an area covering approximately 1500 residents or 650 households). The statistics include average minimum travel times to key local services and destinations, such as town centres, centres of employment, primary schools, secondary schools, food stores and GP surgeries. 
 
@@ -181,7 +206,7 @@ The LSOA zones in Leeds are shown below, together with their working age populat
 # piggyback::pb_upload("zones_leeds_pct_jts_2017_lsoa.geojson")
 # piggyback::pb_download_url("zones_leeds_pct_jts_2017_lsoa.geojson")
 zones_leeds = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/zones_leeds_pct_jts_2017_lsoa.geojson")
-qtm(zones_leeds, "Empl_pop")
+qtm(zones_leeds, "Empl_pop") #change the colour palette
 ```
 
 The JTS record travel times from the population weighted centroid of each LSOA. New housing developments can be constructed anywhere within an LSOA, and may not necessarily be close to existing homes. To assess the accessibility of new developments we therefore use statistics that relate to the closest LSOA centroid. For our Tyersal Lane case study site, the closest LSOA centroid is in Bradford.
