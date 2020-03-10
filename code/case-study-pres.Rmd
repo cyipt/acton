@@ -1,0 +1,63 @@
+---
+title: "Active Transport Options for New Developments"
+subtitle: "`r emojifont::emoji('bike')` `r emojifont::emoji('house')` `r emojifont::emoji('walking_woman')` <br/>A case study of new housing sites in Leeds"
+author: "Joey Talbot, Robin Lovelace, Martin Lucas-Smith, Andrew Speakman and Simon Nuttall"
+institute: "Institute for Transport Studies, University of Leeds"
+date: "Leeds, 13/03/2020"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(tmap)
+library(acton)
+tmap_mode("plot")
+```
+
+
+# Getting planning data
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76353318-6abed180-6308-11ea-9fd7-f976347600c7.png")
+```
+
+---
+
+# Code to extract sites
+
+---
+
+# Case study sites
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76352731-6f36ba80-6307-11ea-8444-c775f09818d2.PNG")
+```
+
+---
+
+# Photos of Allerton Bywater and LCID
+
+---
+
+# Access to employment
+
+---
+
+# Overall accessibility index
+
+--- 
+
+# Route busyness
+
+---
+
+# Go Dutch
+
+
