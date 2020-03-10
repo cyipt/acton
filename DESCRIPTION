@@ -36,6 +36,7 @@ Suggests:
     dplyr,
     stplanr,
     cyclestreets,
-    DT
+    DT,
+    lwgeom
 Remotes: ropensci/stplanr
 VignetteBuilder: knitr

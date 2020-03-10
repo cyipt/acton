@@ -242,9 +242,9 @@ zones_leeds = zones_leeds %>%
 ```
 
 ```{r, eval = FALSE, echo = FALSE}
-sf::write_sf(zones_leeds, "zones_leeds_lsoa.geojson")
-piggyback::pb_upload("zones_leeds_lsoa.geojson")
-piggyback::pb_download_url("zones_leeds_lsoa.geojson")
+# sf::write_sf(zones_leeds, "zones_leeds_lsoa.geojson")
+# piggyback::pb_upload("zones_leeds_lsoa.geojson")
+# piggyback::pb_download_url("zones_leeds_lsoa.geojson")
 ```
 
 ```{r, echo = FALSE}
@@ -255,34 +255,43 @@ Now we can map the journey time statistics across Leeds and West Yorkshire.
 
 The first map shows the LSOA zones in Leeds together with their working age population. LSOA population should normally be relatively constant, but it is considerably higher in some Leeds LSOAs. This may be due to new residential developments built after the LSOA boundaries were set, in particular student accommodation and the recent growth in city centre living. 
 
-The second set of maps shows ...
-
 ```{r}
 qtm(zones_leeds, "Empl_pop") #change the colour palette
+```
 
+The JTS record travel times from the population weighted centroid of each LSOA. New housing developments can be constructed anywhere within an LSOA, and may not necessarily be close to existing homes. To assess the accessibility of new developments we therefore use statistics that relate to the closest LSOA centroid. For our Tyersal Lane case study site, the closest LSOA centroid is in Bradford.
+
+Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. As explained earlier, we have combined these three statistics to produce a single measure weighted by the number of jobs. This is shown in the maps below.
+
+```{r, eval = FALSE}
 tmap_mode("plot")
-tm_shape(zones_leeds2) +
+tm_shape(zones_leeds) +
   tm_polygons(c("index_PT","index_Cyc","index_Car")) +
   tm_shape(applications_case_study) +
   tm_dots(size=0.3) +
   tm_facets(nrow = 1)
 ```
 
-The JTS record travel times from the population weighted centroid of each LSOA. New housing developments can be constructed anywhere within an LSOA, and may not necessarily be close to existing homes. To assess the accessibility of new developments we therefore use statistics that relate to the closest LSOA centroid. For our Tyersal Lane case study site, the closest LSOA centroid is in Bradford.
-
-Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. We have combined these three statistics to produce a single measure weighted by the number of jobs.
-
-```{r}
+```{r, echo = FALSE}
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73770519-7997ee80-4774-11ea-9a3a-fb100bc405f7.png")
 ```
 
-We have then combined the weighted access to employment measure with the measures for access to food stores, town centres, primary schools, secondary schools and GPs. By adding together all of these scores we have generated a single accessibility statistic for each mode of travel. 
+We have then combined the weighted access to employment measure with the measures for access to food stores, town centres, primary schools, secondary schools and GPs. By adding together all of these scores we have generated a single accessibility index for each mode of travel. 
 
-```{r}
+```{r, eval = FALSE}
+tmap_mode("plot")
+tm_shape(zones_leeds) +
+  tm_polygons(c("index_PT","index_Cyc","index_Car")) +
+  tm_shape(applications_case_study) +
+  tm_dots(size=0.3) +
+  tm_facets(nrow = 1)
+```
+
+```{r, echo = FALSE}
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73870615-52105700-4844-11ea-850a-3065ab05da7a.png")
 ```
 
-According to DfT's JTS, there are many areas that have poor accessibility by active modes and public transport. 
+According to these measures, there are many areas that have poor accessibility by active modes and public transport. 
 
 ## Route busyness
 
