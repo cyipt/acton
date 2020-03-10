@@ -37,11 +37,11 @@ tmap_mode("view")
 
 <!-- Provide overview image of all three regions as a 'metafigure' -->
 
-## A case study Leeds
+## A case study of Leeds
 
 Data from [PlanIt](https://www.planit.org.uk/), accessed using the `acton` R package, was used to identify four recent large planning applications: 
 
-The following code gets and subsets the relevant PlanIt data for leeds:
+The following code gets and subsets the relevant PlanIt data for Leeds:
 
 <!-- d = get_planit_data(query_value = "Allerton Bywater") # cannot search in description file -->
 
@@ -105,22 +105,15 @@ nrow(applications_case_study)
 # applications_case_study = do.call(what = rbind, applications_consistent_names)
 ```
 
-An overview of the case study sites is shown in the map below.
-
-```{r}
-tm_shape(applications_case_study) +
-  tm_dots()
-```
-
 We will describe the Allerton Bywater application in more depth and use it to illustrate the data returned by the PlanIt API, before describing the other development sites.
 
-## Allerton Bywater Millennium Community:
+## Allerton Bywater Millennium Community
 
 - One of a series of Millennium Communities, the development at Allerton Bywater was announced by John Prescott in 1998. The homes lie on the site of Allerton Colliery, which was the last remaining colliery in Leeds when it closed in 1995. Prior to the development, Allerton Bywater village had a population of around 4,000, and the aim was to incorporate the whole of the village in the project, rather than solely focusing on the site itself. For example, a £500,000 community fund was made available to the parish council to spend on local projects, and community buildings in the village were also refurbished. In total there was £24 million upfront public investment by English Partnerships and the HCA. This included drainage, site clearance and decontamination. 
 
-- The development incorporates new industrial and office units as well as homes, with high environmental standards for both of these. The industrial units at the east of the site were the first in the UK to meet the BREEAM 'Excellent' standard, while the new homes were built to the EcoHomes 'Excellent' standard or the Code for Sustainable Homes Level 3. A number of homes were built under a 'Design for Manufacture' competition for a construction cost of no more than £60,000.
+- The development incorporates new industrial and office units as well as homes, with high environmental standards for both of these. A design code was adopted and development of the site began in 2005. The industrial units at the east of the site were the first in the UK to meet the BREEAM 'Excellent' standard, while the new homes were built to the EcoHomes 'Excellent' standard or the Code for Sustainable Homes Level 3. A number of homes were built under a 'Design for Manufacture' competition for a construction cost of no more than £60,000.
 
-- In total there are 562 homes in the Millennium Community. A Sustrans cycle route passes through the site and there is good walking and cycling access to the rest of the village and its surrounds, although some paths can get very muddy in winter. Local services such as shops, pubs, cafes, a primary school, park, community centre and nature reserve lie on the edge of the site or within easy walking distance.
+- In total there are 562 homes in the Millennium Community. A Sustrans cycle route passes through the site and there is good walking and cycling access to the rest of the village and its surrounds, although parts of the cycle route can get very muddy in winter. Local services such as shops, pubs, cafes, a primary school, park, community centre and nature reserve lie on the edge of the site or within easy walking distance.
 
 - Plans for buses to be routed through the site did not materialise. The village lies eight miles southeast of Leeds and the buses to Leeds run roughly every 30 minutes. There are more frequent services to Garforth and Castleford. The nearest railway station is Castleford, at 43 minutes walk, with a well-built riverside path to follow. Much of the Millennium Community is designed as a HomeZone with shared space streets, although these tend to fill up with parked cars. Initial phases were built with 1.6 parking spaces per dwelling, but the amount of on-street parking lead to calls to increase this and later phases have 2 parking spaces per dwelling.
 
@@ -130,7 +123,7 @@ The planning application we have selected for Allerton Bywater relates to the fi
 
 We can see that this is classified by PlanIt.org.uk as a large application. The application was submitted in December 2013 by Keepmoat Homes and the Homes and Communities Agency and was approved in November 2014.
 
-The available fields include links to the full PlanIt record and the planning application information from Leeds City Council. 
+Available fields include links to the full PlanIt record and to planning application information from Leeds City Council. 
 
 ```{r}
 allerton_bywater = applications_case_study[applications_case_study$uid == "13/05235/FU",]
@@ -145,16 +138,26 @@ allerton_bywater$start_date
 allerton_bywater$decided_date
 ```
 
-The original outline planning application for the entire Allerton Bywater Millennium Community can be found as follows:
+The original outline planning application for the entire Allerton Bywater Millennium Community can be found as follows. This was submitted in November 2000 and approved in August 2002.
 
 ```{r}
 allerton_bywater_original = get_planit_data(query_type = "planapplic", query_value = "33/311/00/OT@Leeds")
 allerton_bywater_original$description
-allerton_bywater_original$link
+allerton_bywater_original$url
+allerton_bywater_original$start_date
 allerton_bywater_original$decided_date
 ```
 
 ## Other Leeds case study sites
+
+An overview of the four case study sites is shown in the map below.
+
+```{r}
+applications_case_study$site = as.factor(c("Tyersal","Micklefield","Leeds Climate Innovation District","Allerton Bywater"))
+tm_shape(applications_case_study) +
+  tm_dots(col = "site", size = 0.1)  +
+  tm_basemap(server = "CartoDB.Positron")
+```
 
 ### Leeds Climate Innovation District
 
@@ -175,11 +178,6 @@ allerton_bywater_original$decided_date
 - Planning consent 15/04151/FU was gained in April 2016 for a 270 dwelling development on a greenfield site at Tysersal Lane by developer Gleeson Homes. Although the site lies within ths bounds of Leeds it is actually closer to Bradford, and the only road access is to west, via the Bradford suburb of Holme Wood. Regular buses to Bradford city centre pass by the edge of the site. The proposed parking provision is approximately two spaces per dwelling. 
 
 - The site does not fully meet the Leeds Core Strategy Accessibility Standards. A viability assessment was accepted, stating that the scheme could not provide all of the usual planning gain contributions (S106 monies), with no affordable homes due to be built on site. This is subject on ongoing review. Gleeson's state that their homes are priced at a level so that they can be afforded by 90% of local people in full time employment.
-
-
-```{r}
-# add map of the four sites
-```
 
 ## Accessibility indicators
 
