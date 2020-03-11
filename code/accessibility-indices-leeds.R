@@ -85,14 +85,14 @@ c = inner_join(c,access_gp,by = c("geo_code" = "LSOA_code","LA_Code"))
 # Index of overall accessibility ------------------------------------------
 
 reszone = reszone %>%
-  mutate(index_PT = weightedJobsPTt+TownPTt+FoodPTt+PSPTt+SSPTt+GPPTt,
-         index_Cyc = weightedJobsCyct+TownCyct+FoodCyct+PSCyct+SSCyct+GPCyct,
-         index_Car = weightedJobsCart+TownCart+FoodCart+PSCart+SSCart+GPCart)
+  mutate(index_PT = (weightedJobsPTt+TownPTt+FoodPTt+PSPTt+SSPTt+GPPTt)/6,
+         index_Cyc = (weightedJobsCyct+TownCyct+FoodCyct+PSCyct+SSCyct+GPCyct)/6,
+         index_Car = (weightedJobsCart+TownCart+FoodCart+PSCart+SSCart+GPCart)/6)
 
 c = c %>%
-  mutate(index_PT = weightedJobsPTt+TownPTt+FoodPTt+PSPTt+SSPTt+GPPTt,
-         index_Cyc = weightedJobsCyct+TownCyct+FoodCyct+PSCyct+SSCyct+GPCyct,
-         index_Car = weightedJobsCart+TownCart+FoodCart+PSCart+SSCart+GPCart)
+  mutate(index_PT = (weightedJobsPTt+TownPTt+FoodPTt+PSPTt+SSPTt+GPPTt)/6,
+         index_Cyc = (weightedJobsCyct+TownCyct+FoodCyct+PSCyct+SSCyct+GPCyct)/6,
+         index_Car = (weightedJobsCart+TownCart+FoodCart+PSCart+SSCart+GPCart)/6)
 
 
 # PlanIt data for Allerton Bywater and other sites--------------------------------------------
@@ -193,8 +193,8 @@ sites$index_Car
 
 write_sf(sites,"./data/leeds-sites.geojson")
 
-# write_sf(reszone,"wy-zones.geojson")
-# piggyback::pb_upload("wy-zones.geojson")
+# write_sf(reszone,"./data/wy-zones.geojson")
+# piggyback::pb_upload("./data/wy-zones.geojson")
 # piggyback::pb_download_url("wy-zones.geojson")
 
 # Maps --------------------------------------------------------------------
@@ -242,7 +242,7 @@ tm_shape(reszone_leeds) +
   tm_facets(nrow = 1)
 
 tm_shape(reszone_leeds) +
-  tm_polygons(c("weightedJobsPTt","weightedJobsCyct","weightedJobsCart"),palette="-viridis",title = c("Walk/PT","Cycle","Car")) +
+  tm_polygons(c("weightedJobsPTt","weightedJobsCyct","weightedJobsCart"),palette="-cividis",title = c("Walk/PT","Cycle","Car")) +
   tm_shape(sites) +
   tm_dots(size=0.2) +
   tm_facets(nrow = 1)
@@ -257,24 +257,17 @@ tm_shape(reszone_leeds) +
 #   tm_shape(sites) +
   # tm_dots()
 
-
-tm_shape(reszone) +
-  tm_polygons(col = "FoodPTt") +
+tm_shape(reszone_leeds) +
+  tm_polygons(c("FoodPTt","FoodCyct","FoodCart"),palette="-inferno",title = c("Walk/PT","Cycle","Car")) +
   tm_shape(sites) +
-  tm_dots() +
-  tm_shape(c) +
-  tm_dots(col = "yellow")
+  tm_dots(size=0.2) +
+  tm_facets(nrow = 1)
 
-
-tm_shape(reszone) +
-  tm_polygons(col = "FoodCyct") +
+tm_shape(reszone_leeds) +
+  tm_polygons(c("GPPTt","GPCyct","GPCart"),palette="-magma",title = c("Walk/PT","Cycle","Car")) +
   tm_shape(sites) +
-  tm_dots()
-
-tm_shape(reszone) +
-  tm_polygons(col = "FoodCart") +
-  tm_shape(sites) +
-  tm_dots()
+  tm_dots(size=0.2) +
+  tm_facets(nrow = 1)
 
 tm_shape(reszone) +
   tm_polygons(col = "weightedJobsPTt") +

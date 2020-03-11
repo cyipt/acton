@@ -132,7 +132,7 @@ cl <- makeCluster(detectCores())
 # clusterExport(cl, c("journey"))#not needed and not working
 routes_to_site = route(l = lines_to_sites, route_fun = cyclestreets::journey, cl = cl)
 
-#There is an error with the quiet routes. These come out as identical to the fast routes
+
 routes_to_site_quietest = route(l = lines_to_sites, route_fun = cyclestreets::journey, cl = cl, plan = "quietest")
 
 mapview::mapview(routes_to_site)
@@ -151,7 +151,10 @@ s4 = unique(routes_to_site$geo_code1)[4]
 # Busyness ----------------------------------------------------------------
 
 routes_to_site$busyness = routes_to_site$busynance / routes_to_site$distances
+
 routes_to_site_m$busyness = routes_to_site_m$busynance / routes_to_site_m$distances
+
+routes_to_site_quietest$busyness = routes_to_site_quietest$busynance / routes_to_site_quietest$distances
 
 write_sf(routes_to_site,"leeds-routes.geojson")
 write_sf(routes_to_site_m,"leeds-routes-msoa.geojson")
@@ -289,8 +292,14 @@ tm_shape(rnet_go_dutch_lcid) +
 tm_shape(rnet_all_lcid) +
   tm_lines("all", lwd = "all", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
 
+
+
 ### For the busyness maps as recorded in github issue and website case study
-tmap_mode("plot")
 tm_shape(routes_to_site[routes_to_site$geo_code1 == s3,]) +
+  tm_lines(col = "busyness", palette = "-magma", lwd = "all", scale = 5, legend.lwd.show = TRUE, legend.col.show = FALSE)
+
+
+#####Allerton Bywater quiet routes
+tm_shape(routes_to_site_quietest[routes_to_site_quietest$geo_code1 == s3,]) +
   tm_lines(col = "busyness", palette = "-magma", lwd = "all", scale = 5, legend.lwd.show = TRUE, legend.col.show = FALSE)
 

@@ -59,6 +59,43 @@ knitr::include_graphics("https://user-images.githubusercontent.com/52210872/7635
 
 ---
 
+# What makes a good place for walking and cycling?
+
+--
+
+.pull-left[
+
+- safe streets?
+
+- easy to reach shops, schools, work?
+
+- segregated cycle routes?
+
+- vibrant communities?
+
+- feels like a real town?
+
+- car-free?
+
+]
+
+--
+
+.pull-right[
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76454603-dcf8ea00-63cc-11ea-8ae0-42ae08df6744.jpg")
+```
+
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76454759-0a459800-63cd-11ea-9e61-1140b296b1b8.jpg")
+```
+
+]
+
+---
+
 # Allerton Bywater Millennium Community
 
 .pull-left[
@@ -129,7 +166,7 @@ Statistics for time taken to reach the nearest:
 - secondary schools
 - GP surgeries
 
-By walking / public transport, cycling, and car.
+by walking / public transport, cycling, and car.
 
 ---
 
@@ -139,17 +176,63 @@ By walking / public transport, cycling, and car.
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76424159-c7b99680-639f-11ea-95c5-1198d977be1f.png")
 ```
 
+- this is the weighted mean of metrics for the time taken to reach centres with 100-499 jobs, 500-4999 jobs, and 5000+ jobs.
+
+---
+
+# Access to food stores
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76458967-4a0f7e00-63d3-11ea-9583-b82698a961da.png")
+```
+
+---
+
+# Access to GP surgeries
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76458951-424fd980-63d3-11ea-8be9-f8ba91873669.png")
+```
+
+
 ---
 
 # Overall accessibility index
 
 ```{r}
-knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76423215-575e4580-639e-11ea-9c18-c5aa24c3b79a.png")
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76458014-bdb08b80-63d1-11ea-88dd-a5da8020ea5d.png")
 ```
 
 ---
 
-# All journeys
+# Journey to work from new housing developments
+
+- how long does it take to reach work?
+- how busy are the roads?
+- are direct walking and cycling routes available?
+- are potential routes severed by barriers such as major roads? 
+
+.pull-left[
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76460607-36194b80-63d6-11ea-9920-90988064493e.JPG")
+```
+
+
+]
+
+.pull-right[
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76460581-269a0280-63d6-11ea-8255-e597c0e536c7.JPG")
+```
+
+]
+
+
+---
+
+# Allerton Bywater routes to work - All
 
 ```{r}
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76435138-8977a380-63ae-11ea-8569-7bb3ec4441c9.png")
@@ -157,7 +240,7 @@ knitr::include_graphics("https://user-images.githubusercontent.com/52210872/7643
 
 ---
 
-# Go Dutch
+# Allerton Bywater routes to work - Go Dutch
 
 ```{r}
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/75472896-24728580-598c-11ea-8ab5-94809a8bb404.png")
@@ -165,7 +248,7 @@ knitr::include_graphics("https://user-images.githubusercontent.com/52210872/7547
 
 ---
 
-# Route Busyness
+# Route Busyness (fast routes)
 
 ```{r}
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76446573-2e9a7800-63bf-11ea-8145-476e32b863f7.png")
@@ -207,3 +290,11 @@ knitr:::include_graphics("https://user-images.githubusercontent.com/52210872/764
 
 
 ]
+
+---
+
+# Route Busyness (quiet routes)
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76462073-f7d15b80-63d8-11ea-8aff-6bc19a135496.png")
+```
