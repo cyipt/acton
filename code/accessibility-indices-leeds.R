@@ -202,6 +202,16 @@ write_sf(sites,"./data/leeds-sites.geojson")
 sites = read_sf("./data/leeds-sites.geojson")
 reszone = read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/wy-zones.geojson")
 
+# tmaptools::palette_explorer()
+
+reszone_leeds = reszone %>%
+  filter(lad_name == "Leeds")
+
+applications_case_study$site = as.factor(c("Tyersal","Micklefield","Leeds Climate Innovation District","Allerton Bywater"))
+tm_shape(applications_case_study) +
+  tm_dots(col = "place", size = 0.1)  +
+  tm_basemap(server = "CartoDB.Positron")
+
 # map sites and nearest centroids
 mapview(reszone) +
   mapview(sites) +
@@ -224,17 +234,17 @@ tm_shape(reszone) +
   tm_polygons(c("index_PT", "index_Cyc")) +
   tm_format("reszone")
 
-tmap_mode("plot")
-tm_shape(reszone) +
-  tm_polygons(c("index_PT","index_Cyc","index_Car")) +
+tmap_mode("view")
+tm_shape(reszone_leeds) +
+  tm_polygons(c("index_PT","index_Cyc","index_Car"),palette="-viridis",title = c("Walk/PT","Cycle","Car")) +
   tm_shape(sites) +
-  tm_dots(size=0.3) +
+  tm_dots(size=0.2) +
   tm_facets(nrow = 1)
 
-tm_shape(reszone) +
-  tm_polygons(c("weightedJobsPTt","weightedJobsCyct","weightedJobsCart")) +
+tm_shape(reszone_leeds) +
+  tm_polygons(c("weightedJobsPTt","weightedJobsCyct","weightedJobsCart"),palette="-viridis",title = c("Walk/PT","Cycle","Car")) +
   tm_shape(sites) +
-  tm_dots(size=0.3) +
+  tm_dots(size=0.2) +
   tm_facets(nrow = 1)
 
 # tm_shape(reszone) +

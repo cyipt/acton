@@ -25,12 +25,29 @@ tmap_mode("plot")
 # Getting planning data
 
 ```{r}
-knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76353318-6abed180-6308-11ea-9fd7-f976347600c7.png")
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76416974-ec0f7600-6393-11ea-9631-81616cee9f27.png")
+```
+
+```{r, eval = FALSE, echo = TRUE}
+applications_leeds = get_planit_data(
+limit = 500,
+auth = "Leeds",
+app_size = "large",
+app_state = "permitted"
+)
+
+tm_shape(applications_leeds) + tm_dots(col = "app_type") +
+tm_basemap(server = "CartoDB.Positron")
 ```
 
 ---
 
-# Code to extract sites
+# Large Leeds planning consents
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76353318-6abed180-6308-11ea-9fd7-f976347600c7.png")
+```
+
 
 ---
 
@@ -42,22 +59,133 @@ knitr::include_graphics("https://user-images.githubusercontent.com/52210872/7635
 
 ---
 
-# Photos of Allerton Bywater and LCID
+# Allerton Bywater Millennium Community
+
+.pull-left[
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76417991-c4211200-6395-11ea-9b0b-88ac37cb950a.jpg")
+```
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76418042-dac76900-6395-11ea-8d1b-2b07074cd9b3.jpg")
+```
+
+]
+
+.pull-right[
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76418103-f2065680-6395-11ea-8f84-2d82e23b7f2a.jpg")
+```
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76418010-cdaa7a00-6395-11ea-9f46-15b4a58561d5.jpg")
+```
+
+]
+
+---
+
+# Leeds Climate Innovation District
+
+.pull-left[
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76418964-786f6800-6397-11ea-82fd-e513edb475bf.jpg")
+```
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76418978-80c7a300-6397-11ea-9db5-3ed82d75d0c1.jpg")
+```
+
+]
+
+.pull-right[
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76418931-6988b580-6397-11ea-8d53-43ffb42371fb.jpg")
+```
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76418947-70afc380-6397-11ea-8e4e-4aa2ecbcb43c.jpg")
+```
+
+]
+
+
+---
+
+# Journey Time Statistics
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76434729-f6d70480-63ad-11ea-9351-5a4beb7d5a92.png")
+```
+Statistics for time taken to reach the nearest:
+- centres of employment
+- town centres
+- food stores
+- primary schools
+- secondary schools
+- GP surgeries
+
+By walking / public transport, cycling, and car.
 
 ---
 
 # Access to employment
 
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76424159-c7b99680-639f-11ea-95c5-1198d977be1f.png")
+```
+
 ---
 
 # Overall accessibility index
 
---- 
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76423215-575e4580-639e-11ea-9c18-c5aa24c3b79a.png")
+```
 
-# Route busyness
+---
+
+# All journeys
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76435138-8977a380-63ae-11ea-8569-7bb3ec4441c9.png")
+```
 
 ---
 
 # Go Dutch
 
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/75472896-24728580-598c-11ea-8ab5-94809a8bb404.png")
+```
+
+---
+
+# Route Busyness
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73958076-43d34100-48ff-11ea-80a3-f06f8205e8d2.png")
+```
+
+---
+
+# Barriers
+
+Map of A roads and river
+
+---
+
+# Severance
+
+Point to specific places
+
+---
+
+# Overcoming the barriers
+
+Map of lines way
 

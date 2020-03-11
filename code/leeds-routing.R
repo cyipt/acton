@@ -179,13 +179,19 @@ r_grouped_tyersal = routes_to_site[routes_to_site$geo_code1 == s1,] %>%
 
 r_grouped_tyersal$go_dutch = pct::uptake_pct_godutch(distance = r_grouped_tyersal$distance_m, gradient = r_grouped_tyersal$average_incline) *
   r_grouped_tyersal$all
-r_grouped_lines = r_grouped_tyersal %>% st_cast("LINESTRING")
-rnet_go_dutch = overline2(r_grouped_lines, "go_dutch")
+r_grouped_lines_tyersal = r_grouped_tyersal %>% st_cast("LINESTRING")
+rnet_go_dutch_tyersal = overline2(r_grouped_lines_tyersal, "go_dutch")
+
+routes_to_site_tyersal = routes_to_site[routes_to_site$geo_code1 == s1,]
+rnet_all_tyersal = overline2(routes_to_site_tyersal, "all")
 
 # summary(rnet_go_dutch$go_dutch)
 
-tm_shape(rnet_go_dutch) +
+tm_shape(rnet_go_dutch_tyersal) +
   tm_lines("go_dutch", lwd = "go_dutch", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
+
+tm_shape(rnet_all_tyersal) +
+  tm_lines("all", lwd = "all", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
 
 ####
 
@@ -203,13 +209,19 @@ r_grouped_micklefield = routes_to_site[routes_to_site$geo_code1 == s2,] %>%
 
 r_grouped_micklefield$go_dutch = pct::uptake_pct_godutch(distance = r_grouped_micklefield$distance_m, gradient = r_grouped_micklefield$average_incline) *
   r_grouped_micklefield$all
-r_grouped_lines = r_grouped_micklefield %>% st_cast("LINESTRING")
-rnet_go_dutch = overline2(r_grouped_lines, "go_dutch")
+r_grouped_lines_micklefield = r_grouped_micklefield %>% st_cast("LINESTRING")
+rnet_go_dutch_micklefield = overline2(r_grouped_lines_micklefield, "go_dutch")
+
+routes_to_site_micklefield = routes_to_site[routes_to_site$geo_code1 == s2,]
+rnet_all_micklefield = overline2(routes_to_site_micklefield, "all")
 
 summary(rnet_go_dutch$go_dutch)
 
 tm_shape(rnet_go_dutch) +
   tm_lines("go_dutch", lwd = "go_dutch", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
+
+tm_shape(rnet_all_micklefield) +
+  tm_lines("all", lwd = "all", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
 
 ######
 
@@ -227,13 +239,20 @@ r_grouped_allerton = routes_to_site[routes_to_site$geo_code1 == s3,] %>%
 
 r_grouped_allerton$go_dutch = pct::uptake_pct_godutch(distance = r_grouped_allerton$distance_m, gradient = r_grouped_allerton$average_incline) *
   r_grouped_allerton$all
-r_grouped_lines = r_grouped_allerton %>% st_cast("LINESTRING")
-rnet_go_dutch = overline2(r_grouped_lines, "go_dutch")
+r_grouped_lines_allerton = r_grouped_allerton %>% st_cast("LINESTRING")
+rnet_go_dutch_allerton = overline2(r_grouped_lines_allerton, "go_dutch")
+
+routes_to_site_allerton = routes_to_site[routes_to_site$geo_code1 == s3,]
+rnet_all_allerton = overline2(routes_to_site_allerton, "all")
+
 
 # summary(rnet_go_dutch$go_dutch)
 
 tm_shape(rnet_go_dutch) +
   tm_lines("go_dutch", lwd = "go_dutch", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
+
+tm_shape(rnet_all_allerton) +
+  tm_lines("all", lwd = "all", scale = 10, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
 
 
 ####
@@ -253,17 +272,22 @@ r_grouped_lcid = routes_to_site[routes_to_site$geo_code1 == s4,] %>%
 
 r_grouped_lcid$go_dutch = pct::uptake_pct_godutch(distance = r_grouped_lcid$distance_m, gradient = r_grouped_lcid$average_incline) *
   r_grouped_lcid$all
-r_grouped_lines = r_grouped_lcid %>% st_cast("LINESTRING")
-rnet_go_dutch = overline2(r_grouped_lines, "go_dutch")
+r_grouped_lines_lcid = r_grouped_lcid %>% st_cast("LINESTRING")
+rnet_go_dutch_lcid = overline2(r_grouped_lines_lcid, "go_dutch")
+
+routes_to_site_lcid = routes_to_site[routes_to_site$geo_code1 == s4,]
+rnet_all_lcid = overline2(routes_to_site_lcid, "all")
 
 # summary(rnet_go_dutch$go_dutch)
 
-tm_shape(rnet_go_dutch) +
+tm_shape(rnet_go_dutch_lcid) +
   tm_lines("go_dutch", lwd = "go_dutch", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
 
+tm_shape(rnet_all_lcid) +
+  tm_lines("all", lwd = "all", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
 
 ### For the busyness maps as recorded in github issue and website case study
-tmap_mode("view")
-tm_shape(routes_to_site[routes_to_site$geo_code1 == s2,]) +
-  tm_lines(col = "busyness", palette = "YlOrRd", contrast = c(0.3, 0.9), lwd = "all", scale = 5)
+tmap_mode("plot")
+tm_shape(routes_to_site[routes_to_site$geo_code1 == s3,]) +
+  tm_lines(col = "busyness", palette = "YlOrRd", contrast = c(0.3, 0.9), lwd = "all", scale = 5, legend.lwd.show = TRUE, legend.col.show = FALSE)
 
