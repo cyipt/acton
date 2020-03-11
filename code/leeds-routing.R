@@ -136,6 +136,7 @@ routes_to_site = route(l = lines_to_sites, route_fun = cyclestreets::journey, cl
 routes_to_site_quietest = route(l = lines_to_sites, route_fun = cyclestreets::journey, cl = cl, plan = "quietest")
 
 mapview::mapview(routes_to_site)
+mapview::mapview(routes_to_site_quietest)
 identical(routes_to_site, routes_to_site_quietest)
 
 ###for msoa data
@@ -217,7 +218,7 @@ rnet_all_micklefield = overline2(routes_to_site_micklefield, "all")
 
 summary(rnet_go_dutch$go_dutch)
 
-tm_shape(rnet_go_dutch) +
+tm_shape(rnet_go_dutch_micklefield) +
   tm_lines("go_dutch", lwd = "go_dutch", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
 
 tm_shape(rnet_all_micklefield) +
@@ -246,9 +247,11 @@ routes_to_site_allerton = routes_to_site[routes_to_site$geo_code1 == s3,]
 rnet_all_allerton = overline2(routes_to_site_allerton, "all")
 
 
+
+
 # summary(rnet_go_dutch$go_dutch)
 
-tm_shape(rnet_go_dutch) +
+tm_shape(rnet_go_dutch_allerton) +
   tm_lines("go_dutch", lwd = "go_dutch", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
 
 tm_shape(rnet_all_allerton) +
@@ -289,5 +292,5 @@ tm_shape(rnet_all_lcid) +
 ### For the busyness maps as recorded in github issue and website case study
 tmap_mode("plot")
 tm_shape(routes_to_site[routes_to_site$geo_code1 == s3,]) +
-  tm_lines(col = "busyness", palette = "YlOrRd", contrast = c(0.3, 0.9), lwd = "all", scale = 5, legend.lwd.show = TRUE, legend.col.show = FALSE)
+  tm_lines(col = "busyness", palette = "-magma", lwd = "all", scale = 5, legend.lwd.show = TRUE, legend.col.show = FALSE)
 

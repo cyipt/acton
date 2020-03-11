@@ -168,24 +168,42 @@ knitr::include_graphics("https://user-images.githubusercontent.com/52210872/7547
 # Route Busyness
 
 ```{r}
-knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73958076-43d34100-48ff-11ea-80a3-f06f8205e8d2.png")
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76446573-2e9a7800-63bf-11ea-8145-476e32b863f7.png")
 ```
 
 ---
 
-# Barriers
+# Barriers and severance
 
-Map of A roads and river
+```{r}
+knitr:::include_graphics("https://user-images.githubusercontent.com/52210872/76439171-e75aba00-63b3-11ea-835c-0f2791ce4f50.png")
+```
 
 ---
 
-# Severance
+# Barriers and severance
 
-Point to specific places
+```{r}
+knitr:::include_graphics("https://user-images.githubusercontent.com/52210872/76440260-7d431480-63b5-11ea-856b-74d26330cd6d.png")
+```
 
 ---
 
 # Overcoming the barriers
 
-Map of lines way
+.pull-left[
 
+```{r}
+knitr:::include_graphics("https://user-images.githubusercontent.com/52210872/76441583-8fbe4d80-63b7-11ea-9a6f-ba791206991f.png")
+```
+
+]
+
+.pull-right[
+
+```{r}
+knitr:::include_graphics("https://user-images.githubusercontent.com/52210872/76441606-977df200-63b7-11ea-823d-ccddd564f195.png")
+```
+
+
+]
