@@ -28,8 +28,9 @@ remotes::install_github("cyipt/acton")
 ```
 
 
-```{r setup}
+```{r setup, message=FALSE, results='hide'}
 library(acton)
+library(dplyr)
 library(tmap)
 tmap_mode("view")
 ```
@@ -81,6 +82,22 @@ applications_case_study = applications_leeds[
   applications_leeds$uid %in% ids,
 ]
 nrow(applications_case_study)
+```
+
+
+```{r, eval=FALSE, echo=FALSE}
+# aim: save case study applications
+applications_case_study_leeds = applications_case_study
+usethis::use_data(applications_case_study_leeds)
+```
+
+The descripton of each is shown in the table below, with context shown for each in the following subsections:
+
+```{r}
+applications_case_study %>% 
+  sf::st_drop_geometry() %>% 
+  select(description, url) %>% 
+  knitr::kable()
 ```
 
 
