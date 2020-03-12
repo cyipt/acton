@@ -84,6 +84,13 @@ nrow(applications_case_study)
 ```
 
 
+```{r, eval=FALSE, echo=FALSE}
+# aim: save case study applications
+applications_case_study_leeds = applications_case_study
+usethis::use_data(applications_case_study_leeds)
+```
+
+
 ```{r, echo=FALSE, eval=FALSE}
 # # Aim: in future subset from the results when the API gives all large applications
 # application_ids = c(

@@ -1,0 +1,22 @@
+---
+title: "Indicators of active transport provision"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Indicators of active transport provision}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(acton)
+```
+
+As described in the ACTON [case studies](https://cyipt.github.io/acton/articles/case-studies.html) vignette, there is much data on new developments and the surrounding environment (in terms of journey times to key destinations, distances to trip attractors and the nature of route networks).
+This document is about integrating the variables to provide meaningful indicators at the level of each new development.
