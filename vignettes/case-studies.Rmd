@@ -28,8 +28,9 @@ remotes::install_github("cyipt/acton")
 ```
 
 
-```{r setup}
+```{r setup, message=FALSE, results='hide'}
 library(acton)
+library(dplyr)
 library(tmap)
 tmap_mode("view")
 ```
