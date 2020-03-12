@@ -186,6 +186,22 @@ knitr::include_graphics("https://user-images.githubusercontent.com/52210872/7642
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76458967-4a0f7e00-63d3-11ea-9583-b82698a961da.png")
 ```
 
+.pull-left[
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76515726-03149d80-6452-11ea-8e0b-d7a1928ed22e.jpg")
+```
+
+]
+
+.pull-right[
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76516013-95b53c80-6452-11ea-9bf3-ec000acd9b8e.JPG")
+```
+
+]
+
 ---
 
 # Access to GP surgeries
@@ -194,6 +210,21 @@ knitr::include_graphics("https://user-images.githubusercontent.com/52210872/7645
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76458951-424fd980-63d3-11ea-8be9-f8ba91873669.png")
 ```
 
+.pull-left[
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76516637-b03be580-6453-11ea-9a8e-ceeb8a5f9e48.jpg")
+```
+
+]
+
+.pull-right[
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76516655-b92cb700-6453-11ea-8c5f-4e25815abe2f.jpg")
+```
+
+]
 
 ---
 
@@ -301,8 +332,16 @@ knitr::include_graphics("https://user-images.githubusercontent.com/52210872/7646
 
 ---
 
-# What prevents people using the quiet routes?
+# Why not use the quiet routes?
 
 ```{r}
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76513464-3fde9580-644e-11ea-81b0-bb90b6a05db3.png")
+```
+
+---
+
+# What next?
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76517652-94d1da00-6455-11ea-8019-bd067d934d1d.JPG")
 ```

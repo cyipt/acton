@@ -148,13 +148,16 @@ s2 = unique(routes_to_site$geo_code1)[2]
 s3 = unique(routes_to_site$geo_code1)[3]
 s4 = unique(routes_to_site$geo_code1)[4]
 
-# Busyness ----------------------------------------------------------------
+# Busyness and speed----------------------------------------------------------------
 
 routes_to_site$busyness = routes_to_site$busynance / routes_to_site$distances
 
 routes_to_site_m$busyness = routes_to_site_m$busynance / routes_to_site_m$distances
 
 routes_to_site_quietest$busyness = routes_to_site_quietest$busynance / routes_to_site_quietest$distances
+
+routes_to_site_quietest = routes_to_site_quietest %>% mutate(speed=distances/time)
+routes_to_site = routes_to_site %>% mutate(speed=distances/time)
 
 write_sf(routes_to_site,"leeds-routes.geojson")
 write_sf(routes_to_site_m,"leeds-routes-msoa.geojson")
@@ -294,6 +297,11 @@ tm_shape(rnet_all_lcid) +
 
 
 
+
+# Busyness and speed ------------------------------------------------------
+
+
+
 ### For the busyness maps as recorded in github issue and website case study
 tm_shape(routes_to_site[routes_to_site$geo_code1 == s3,]) +
   tm_lines(col = "busyness", palette = "-magma", lwd = "all", scale = 5, legend.lwd.show = TRUE, legend.col.show = FALSE)
@@ -303,9 +311,61 @@ tm_shape(routes_to_site[routes_to_site$geo_code1 == s3,]) +
 tm_shape(routes_to_site_quietest[routes_to_site_quietest$geo_code1 == s3,]) +
   tm_lines(col = "busyness", palette = "-magma", lwd = "all", scale = 5, legend.lwd.show = TRUE, legend.col.show = FALSE)
 
+
+## Speed
 routes_to_site_quietest = routes_to_site_quietest %>% mutate(speed=distances/time)
 routes_to_site_quietest %>%
   filter(speed < 1,
          geo_code1 == s3 # Allerton Bywater
          ) %>%
   mapview::mapview()
+
+routes_to_site = routes_to_site %>% mutate(speed=distances/time)
+
+##Group route segments by destination - obtain entire routes
+
+r_whole_routes = routes_to_site %>%
+  group_by(geo_code1, geo_code2) %>%
+  summarise(
+    all = mean(all),
+    average_incline = sum(abs(diff(elevations))) / sum(distances),
+    distance_km = sum(distances)/1000,
+    busyness = mean(busyness),
+    time_mins = sum(time)/60
+  ) %>%
+  ungroup()
+
+r_whole_routes = r_whole_routes %>%
+  mutate(speed_mph = (distance_km*1000)/(time_mins*60)*2.237)
+
+summary(r_whole_routes[r_whole_routes$geo_code1 == s1,])
+summary(r_whole_routes[r_whole_routes$geo_code1 == s2,])
+summary(r_whole_routes[r_whole_routes$geo_code1 == s3,])
+summary(r_whole_routes[r_whole_routes$geo_code1 == s4,])
+
+r_whole_routes_quiet = routes_to_site_quietest %>%
+  group_by(geo_code1, geo_code2) %>%
+  summarise(
+    all = mean(all),
+    average_incline = sum(abs(diff(elevations))) / sum(distances),
+    distance_km = sum(distances)/1000,
+    busyness = mean(busyness),
+    time_mins = sum(time)/60
+  ) %>%
+  ungroup()
+
+r_whole_routes_quiet = r_whole_routes_quiet %>%
+  mutate(speed_mph = (distance_km*1000)/(time_mins*60)*2.237)
+
+summary(r_whole_routes_quiet[r_whole_routes_quiet$geo_code1 == s1,])
+summary(r_whole_routes_quiet[r_whole_routes_quiet$geo_code1 == s2,])
+summary(r_whole_routes_quiet[r_whole_routes_quiet$geo_code1 == s3,])
+summary(r_whole_routes_quiet[r_whole_routes_quiet$geo_code1 == s4,])
+
+###Speed maps - quiet and fast routes
+
+tm_shape(routes_to_site_quietest[routes_to_site_quietest$geo_code1 == s3,]) +
+  tm_lines(col = "speed", palette = "-magma", lwd = "all", scale = 5, legend.col.show = TRUE)
+
+tm_shape(routes_to_site[routes_to_site$geo_code1 == s3,]) +
+  tm_lines(col = "speed", palette = "-magma", lwd = "all", scale = 5, legend.col.show = TRUE)
