@@ -39,16 +39,16 @@ The objectives are to:
 
 ## Agenda
 
-## Intro and overview (10:00 - 10:30)
+## Intro and overview (10:00 - 10:25)
 
 - overview of ACTON project
 - go round with introductions and interest in the project
 - local policy and planning considerations by **David Ellis, WSP** (15 minutes)
 
-## Policy requirements (10:30 - 11:10)
+## Policy requirements (10:25 - 11:00)
 
 - How to improve active transport provision around new developments: a policy perspective by **Ray Georgeson** (10 minutes)
-- Panel discussion of needs and wants for tools for integrating active transport in new developments (30 minutes)
+- Panel discussion of needs and wants for tools for integrating active transport in new developments (25 minutes)
 
   <!-- - web service / tool -->
   <!-- - the final report -->
@@ -59,14 +59,14 @@ The objectives are to:
 
 **Break**
   
-## Data and methods (11:45 - 12:15)
+## Data and methods (11:20 - 12:15)
 
 (This will include discussion of progress and expected next steps)
 
 - Talk on input data and API access from **CycleStreets.net** (20 minutes)
   - improvements to PlanIt
   - journey routing for cycling - progress on CycleStreets routing algorithm for ‘quiet’ journeys
-- Findings from case study sites by **Joey Talbot** (20 minutes)
+- Findings from case study sites by **Joey Talbot** (15 minutes)
   - accessibility and journey time statistics
   - busyness of route segments
   - barriers and severance
