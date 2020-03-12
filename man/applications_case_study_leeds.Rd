@@ -12,6 +12,6 @@ The schema data can be (re-)generated using case studies vignette.
 }
 \examples{
 applications_case_study_leeds
-plot(applications_case_study_leeds)
+# plot(applications_case_study_leeds)
 }
 \keyword{datasets}

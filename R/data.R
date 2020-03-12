@@ -7,5 +7,5 @@
 #' @name applications_case_study_leeds
 #' @examples
 #' applications_case_study_leeds
-#' plot(applications_case_study_leeds)
+#' # plot(applications_case_study_leeds)
 NULL
