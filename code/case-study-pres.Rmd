@@ -298,3 +298,11 @@ knitr:::include_graphics("https://user-images.githubusercontent.com/52210872/764
 ```{r}
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76462073-f7d15b80-63d8-11ea-8aff-6bc19a135496.png")
 ```
+
+---
+
+# What prevents people using the quiet routes?
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76513464-3fde9580-644e-11ea-81b0-bb90b6a05db3.png")
+```

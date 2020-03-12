@@ -303,3 +303,9 @@ tm_shape(routes_to_site[routes_to_site$geo_code1 == s3,]) +
 tm_shape(routes_to_site_quietest[routes_to_site_quietest$geo_code1 == s3,]) +
   tm_lines(col = "busyness", palette = "-magma", lwd = "all", scale = 5, legend.lwd.show = TRUE, legend.col.show = FALSE)
 
+routes_to_site_quietest = routes_to_site_quietest %>% mutate(speed=distances/time)
+routes_to_site_quietest %>%
+  filter(speed < 1,
+         geo_code1 == s3 # Allerton Bywater
+         ) %>%
+  mapview::mapview()
