@@ -90,6 +90,15 @@ applications_case_study_leeds = applications_case_study
 usethis::use_data(applications_case_study_leeds)
 ```
 
+The descripton of each is shown in the table below, with context shown for each in the following subsections:
+
+```{r}
+applications_case_study %>% 
+  sf::st_drop_geometry() %>% 
+  select(description, url) %>% 
+  knitr::kable()
+```
+
 
 ```{r, echo=FALSE, eval=FALSE}
 # # Aim: in future subset from the results when the API gives all large applications

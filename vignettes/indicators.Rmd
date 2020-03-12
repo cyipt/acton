@@ -14,9 +14,30 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, message=FALSE, results='hide'}
 library(acton)
+library(dplyr)
+library(tmap)
+tmap_mode("view")
 ```
 
 As described in the ACTON [case studies](https://cyipt.github.io/acton/articles/case-studies.html) vignette, there is much data on new developments and the surrounding environment (in terms of journey times to key destinations, distances to trip attractors and the nature of route networks).
 This document is about integrating the variables to provide meaningful indicators at the level of each new development.
+
+Four case study sites illustrate the nature of planning applications data:
+
+```{r, out.width="100%"}
+qtm(applications_case_study_leeds)
+```
+
+Key variables from this dataset include the description field and date of:
+
+```{r}
+names(applications_case_study_leeds)
+applications_case_study_leeds %>% 
+  sf::st_drop_geometry() %>% 
+  select(description, name, url) %>% 
+  knitr::kable()
+```
+
+
