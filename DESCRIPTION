@@ -37,6 +37,7 @@ Suggests:
     stplanr,
     cyclestreets,
     DT,
-    lwgeom
+    lwgeom,
+    pct
 Remotes: ropensci/stplanr
 VignetteBuilder: knitr
