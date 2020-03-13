@@ -156,6 +156,25 @@ routes_to_site_m$busyness = routes_to_site_m$busynance / routes_to_site_m$distan
 
 routes_to_site_quietest$busyness = routes_to_site_quietest$busynance / routes_to_site_quietest$distances
 
+#####Add in site names####
+
+routes_to_site = routes_to_site %>%
+  mutate(site = ifelse(geo_code1 == s1, "Tyersal",ifelse(
+    geo_code1 == s2, "Micklefield",ifelse(
+      geo_code1 == s3, "Allerton_Bywater","LCID"))))
+
+routes_to_site_quietest = routes_to_site_quietest %>%
+  mutate(site = ifelse(geo_code1 == s1, "Tyersal",ifelse(
+    geo_code1 == s2, "Micklefield",ifelse(
+      geo_code1 == s3, "Allerton_Bywater","LCID"))))
+
+routes_to_site_m = routes_to_site_m %>%
+  mutate(site = ifelse(geo_code1 == s1, "Tyersal",ifelse(
+    geo_code1 == s2, "Micklefield",ifelse(
+      geo_code1 == s3, "Allerton_Bywater","LCID"))))
+
+############
+
 routes_to_site_quietest = routes_to_site_quietest %>% mutate(speed=distances/time)
 routes_to_site = routes_to_site %>% mutate(speed=distances/time)
 
@@ -325,7 +344,7 @@ routes_to_site = routes_to_site %>% mutate(speed=distances/time)
 ##Group route segments by destination - obtain entire routes
 
 r_whole_routes = routes_to_site %>%
-  group_by(geo_code1, geo_code2) %>%
+  group_by(geo_code1, geo_code2, site) %>%
   summarise(
     all = mean(all),
     average_incline = sum(abs(diff(elevations))) / sum(distances),
@@ -338,13 +357,19 @@ r_whole_routes = routes_to_site %>%
 r_whole_routes = r_whole_routes %>%
   mutate(speed_mph = (distance_km*1000)/(time_mins*60)*2.237)
 
+r_whole_weighted = r_whole_routes %>%
+  group_by(geo_code1, site) %>%
+  st_drop_geometry() %>%
+  summarise(mean_speed = weighted.mean(speed_mph,all))
+r_whole_weighted
+
 summary(r_whole_routes[r_whole_routes$geo_code1 == s1,])
 summary(r_whole_routes[r_whole_routes$geo_code1 == s2,])
 summary(r_whole_routes[r_whole_routes$geo_code1 == s3,])
 summary(r_whole_routes[r_whole_routes$geo_code1 == s4,])
 
 r_whole_routes_quiet = routes_to_site_quietest %>%
-  group_by(geo_code1, geo_code2) %>%
+  group_by(geo_code1, geo_code2, site) %>%
   summarise(
     all = mean(all),
     average_incline = sum(abs(diff(elevations))) / sum(distances),
@@ -356,6 +381,12 @@ r_whole_routes_quiet = routes_to_site_quietest %>%
 
 r_whole_routes_quiet = r_whole_routes_quiet %>%
   mutate(speed_mph = (distance_km*1000)/(time_mins*60)*2.237)
+
+r_whole_quiet_weighted = r_whole_routes_quiet %>%
+  group_by(geo_code1, site) %>%
+  st_drop_geometry() %>%
+  summarise(mean_speed = weighted.mean(speed_mph,all))
+r_whole_quiet_weighted
 
 summary(r_whole_routes_quiet[r_whole_routes_quiet$geo_code1 == s1,])
 summary(r_whole_routes_quiet[r_whole_routes_quiet$geo_code1 == s2,])
