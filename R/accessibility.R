@@ -12,6 +12,7 @@
 #' And the tables beginning JTS10 contain add other variables.
 #'
 #' Data is provided every year from 2014 to 2019 in many cases
+#' @inheritParams get_planit_data
 #' @param table The title of the table, e.g. "jts0501"
 #' @param year The year, e.g. 2017
 #' @param u_csv The csv url (not usually needed)
@@ -23,10 +24,18 @@
 #' jts_tables$table_title
 #' get_jts_data(table = "jts0101", year = 2017, skip = 7)
 #' # uncomment on released version
-#' # get_jts_data(table = "jts0401", year = 2017)
+#' get_jts_data(table = "jts0401", year = 2017) # at LA level
+#' get_jts_data(table = "jts0501", year = 2017) # at LSOA level
+#' jts_zones = get_jts_data(table = "jts0501", year = 2017, auth = "Leeds") # at LSOA level
+#' plot(jts_zones)
+#' jts_zones = get_jts_data(table = "jts0501", year = 2017, auth = "greater-manchester") # PCT region
+#' plot(jts_zones)
+#' # get_jts_data(table = "jts0402", year = 2017)
+#' # get_jts_data(table = "jts0403", year = 2017)
+#' # get_jts_data(table = "jts0402", year = 2017)
 #' # get_jts_data(table = "jts0402", year = 2017)
 #' # get_jts_data(table = "jts0402", year = 2014)
-get_jts_data = function(table, year = NULL, u_csv = NULL, skip = 6) {
+get_jts_data = function(table, year = NULL, u_csv = NULL, skip = 6, auth = NULL) {
   table_info = jts_tables[jts_tables$table_code == table, ]
   message("This table's title is ", table_info$table_title[1])
   message("These data files are available for that table code: ", paste0(table_info$csv_file_name, "\n"))
@@ -37,9 +46,24 @@ get_jts_data = function(table, year = NULL, u_csv = NULL, skip = 6) {
   }
 
   message("Reading in file ", u_csv)
-  res = janitor::remove_empty(readr::read_csv(u_csv, skip = skip),"cols")
+  res = janitor::remove_empty(readr::read_csv(u_csv, skip = skip), "cols")
   names(res) = gsub(pattern = "100", replacement = "Jobs100", names(res))
   names(res) = gsub(pattern = "500", replacement = "Jobs500", names(res))
+  if(!is.null(auth)) {
+    auth_is_region = auth %in% pct::pct_regions_lookup$region_name
+    if(auth_is_region) {
+      region = auth
+      region_zones = pct::get_pct_zones(region, geography = "lsoa")
+      region_zones$LSOA_code = region_zones$geo_code
+      res = inner_join(region_zones["LSOA_code"], res)
+      return(res)
+    }
+    region = pct::pct_regions_lookup$region_name[pct::pct_regions_lookup$lad16nm == auth]
+    region_zones = pct::get_pct_zones(region, geography = "lsoa")
+    la_zones = region_zones[region_zones$lad_name == auth, ]
+    la_zones$LSOA_code = la_zones$geo_code
+    res = inner_join(la_zones["LSOA_code"], res)
+  }
   res
 }
 download_accessibility_files = function(download_dir = tempdir()) {

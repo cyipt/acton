@@ -5,7 +5,7 @@
 \alias{jts_tables}
 \title{Get accessibility data for particular year and table number}
 \usage{
-get_jts_data(table, year = NULL, u_csv = NULL, skip = 6)
+get_jts_data(table, year = NULL, u_csv = NULL, skip = 6, auth = NULL)
 }
 \arguments{
 \item{table}{The title of the table, e.g. "jts0501"}
@@ -15,6 +15,8 @@ get_jts_data(table, year = NULL, u_csv = NULL, skip = 6)
 \item{u_csv}{The csv url (not usually needed)}
 
 \item{skip}{How many lines to skip before the data starts (6 by default)}
+
+\item{auth}{Authority name}
 }
 \description{
 The DfT's Journey Time Statistics are outlined here on the
@@ -36,7 +38,15 @@ jts_tables
 jts_tables$table_title
 get_jts_data(table = "jts0101", year = 2017, skip = 7)
 # uncomment on released version
-# get_jts_data(table = "jts0401", year = 2017)
+get_jts_data(table = "jts0401", year = 2017) # at LA level
+get_jts_data(table = "jts0501", year = 2017) # at LSOA level
+jts_zones = get_jts_data(table = "jts0501", year = 2017, auth = "Leeds") # at LSOA level
+plot(jts_zones)
+jts_zones = get_jts_data(table = "jts0501", year = 2017, auth = "greater-manchester") # PCT region
+plot(jts_zones)
+# get_jts_data(table = "jts0402", year = 2017)
+# get_jts_data(table = "jts0403", year = 2017)
+# get_jts_data(table = "jts0402", year = 2017)
 # get_jts_data(table = "jts0402", year = 2017)
 # get_jts_data(table = "jts0402", year = 2014)
 }
