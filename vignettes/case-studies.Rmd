@@ -165,6 +165,8 @@ allerton_bywater_original$start_date
 allerton_bywater_original$decided_date
 ```
 
+
+
 ## Other Leeds case study sites
 
 An overview of the four case study sites is shown in the map below.
@@ -364,3 +366,23 @@ knitr::include_graphics("https://user-images.githubusercontent.com/52210872/7546
 ```{r}
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73958128-58173e00-48ff-11ea-8cdb-00eb2ca66060.png")
 ```
+
+
+## Joining on active transport variables
+
+```{r}
+# zone_centroids = pct::get_pct_centroids()
+applications_joined = sf::st_join(applications_case_study,
+            zones_leeds %>% select(index_PT, index_Cyc, index_Car)
+            ) 
+# applications_joined = sf::st_join(applications_case_study,
+#             zones_leeds %>% select(index_PT, index_Cyc, index_Car)
+#             , join = st_nearest_feature 
+#             ) 
+plot(applications_joined %>% select(matches("index")))
+```
+
+## Indicators
+
+The next stage is to convert the rich data we now have for each development into an indicator of active transport provision. 
+That is covered in the next article.
