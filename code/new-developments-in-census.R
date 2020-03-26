@@ -71,17 +71,13 @@ poundbury = c("E00166094", "E00166095", "E00166096", "E00166097", "E00166098", "
 upton = c("E00169237", "E00169240", "E00169239", "E00169242")
 wichelstowe = c("E00166484", "E00166486", "E00166485")
 wynyard = c("E00061995", "E00174145", "E00174146", "E00174147", "E00174188", "E00174185", "E00060314")
-hamptons = c("E01033175", "E01033176", "E01033177","E01033178", "E01033180", "E01033174", "E01033181")
+hamptons = c("E00171289", "E00171291", "E00171254", "E00171256", "E00171257", "E00171319", "E00171260", "E00171272", "E00171275", "E00171276", "E00171284", "E00171295", "E00171322", "E00171323", "E00171330", "E00171320", "E00171271", "E00171273", "E00171277", "E00171302", "E00171308", "E00171321", "E00171299", "E00171274", "E00171298", "E00171300", "E00171301", "E00171303", "E00171304", "E00171306", "E00171307", "E00171290", "E00171285", "E00171286", "E00171292", "E00171305", "E00171315", "E00171316", "E00171317", "E00171318", "E00171288", "E00171253", "E00171255", "E00171278", "E00171293", "E00171294", "E00171296", "E00171297", "E00171309", "E00171310", "E00171311", "E00171312", "E00171313", "E00171314", "E00171324")
 wixams = c("E00173781", "E00173782", "E00173784")
 stockmoor = c("E00165964", "E00165966", "E00165967", "E00165975")
 
-ladcode = "E01032641"
-oacodes = getsubgeographies(ladcode, "OA11")
-oacodes
-
-
-lsoa = pct::get_pct_zones(region = "west-yorkshire") %>%
-
+# ladcode = "E01033181"
+# oacodes = getsubgeographies(ladcode, "OA11")
+# oacodes
 
 geog_new_homes = c(allerton_bywater, chapelford, dickens_heath, newc_great_park, paxcroft, poundbury, upton, wichelstowe, wynyard, hamptons, wixams, stockmoor)
 
@@ -90,9 +86,14 @@ all_sites = list(allerton_bywater, chapelford, dickens_heath, newc_great_park, p
 
 oa_data_all = nomis_get_data(id = "NM_568_1", geography = geog_new_homes, measures = "20100", rural_urban="0")
 
+dim(oa_data_all)
+
 oa_data_all = oa_data_all %>%
   select(GEOGRAPHY, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, GEOGRAPHY_TYPECODE, CELL, CELL_NAME, MEASURES, MEASURES_NAME, OBS_VALUE, OBS_STATUS, OBS_STATUS_NAME, OBS_CONF, OBS_CONF_NAME) %>%
   inner_join(oas, by = c("GEOGRAPHY" = "geo_code"))
+oa_data_all = st_as_sf(oa_data_all)
+
+dim(oa_data_all)
 
 # Create SITE variable identifying which site the row belongs to
 library(data.table)
@@ -101,10 +102,39 @@ oa_data_all = inner_join(oa_data_all,LDT, by = c("GEOGRAPHY" = "V1")) %>%
   rename(SITE = .id)
 
 
-
 # Getting LSOA codes ------------------------------------------------------
 
-sf::st_join(oa_)
+# lsoa = pct::get_pct_zones(region = "west-yorkshire")
+
+u = "https://borders.ukdataservice.ac.uk/ukborders/easy_download/prebuilt/shape/England_lsoa_2011_clipped.zip"
+
+lsoas = ukboundaries::duraz(u = u)
+# oas_pwc = ??? # would be good to get population weighted - it exists, not urgent priority
+lsoas_centroids1 = get_pct_centroids(region = "west-yorkshire", geography = "lsoa")
+lsoas_centroids2 = get_pct_centroids(region = "cheshire", geography = "lsoa")
+lsoas_centroids3 = get_pct_centroids(region = "north-east", geography = "lsoa")
+lsoas_centroids4 = get_pct_centroids(region = "wiltshire", geography = "lsoa")
+lsoas_centroids5 = get_pct_centroids(region = "cambridgeshire", geography = "lsoa")
+lsoas_centroids6 = get_pct_centroids(region = "west-midlands", geography = "lsoa")
+lsoas_centroids7 = get_pct_centroids(region = "dorset", geography = "lsoa")
+lsoas_centroids8 = get_pct_centroids(region = "northamptonshire", geography = "lsoa")
+lsoas_centroids9 = get_pct_centroids(region = "bedfordshire", geography = "lsoa")
+lsoas_centroids10 = get_pct_centroids(region = "somerset", geography = "lsoa")
+
+lsoas_centroids = rbind(lsoas_centroids1, lsoas_centroids2, lsoas_centroids3, lsoas_centroids4, lsoas_centroids5, lsoas_centroids6, lsoas_centroids7, lsoas_centroids8, lsoas_centroids9, lsoas_centroids10) %>%
+  select(geo_code, geometry)
+
+
+
+# Join the OA data to LSOA geo_codes
+oa_data_centroids = sf::st_centroid(oa_data_all)
+joined = sf::st_join(oa_data_centroids, lsoas)
+names(joined)
+dim(joined)
+
+# Join the result to the LSOA centroid geometry
+joined = st_drop_geometry(joined)
+joined2 = inner_join(joined, lsoas_centroids, by = c("code" = "geo_code"))
 
 
 # create model estimating mode share --------------------------------------
