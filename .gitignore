@@ -9,3 +9,4 @@ docs/
 *.Rds
 *.geojson
 ssh.exe.stackdump
+large_old_apps.csv

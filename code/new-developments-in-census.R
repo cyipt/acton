@@ -2,18 +2,21 @@
 
 library(pct)
 library(dplyr)
+library(acton)
 
 
-abz = get_pct_zones(region = "west-yorkshire", geography = "lsoa")
+# Find homes built around 2000-2010 ---------------------------------------
 
-mapview::mapview(abz)
+# This is very strange. Whatever limit I choose, the number of applications returned is slightly below the limit.
+large_old_apps = get_planit_data(auth = "Leeds", app_size = "medium",app_state = "Permitted", end_date = "2005-01-01", limit = 500)
+dim(large_old_apps)
+View(large_old_apps)
 
-# LSOAs are too large. There are none that cover the Millennium Community only. These two are in the old village.
-abz = abz %>%
-  filter(geo_code == "E01011308" | geo_code == "E01011307")
+readr::write_csv(large_old_apps, "large_old_apps.csv")
+piggyback::pb_upload("large_old_apps.csv")
 
-# hello robin
-# hello joey
+
+# Get OA boundary data ----------------------------------------------------
 
 u = "https://borders.ukdataservice.ac.uk/ukborders/easy_download/prebuilt/shape/infuse_oa_lyr_2011_clipped.zip"
 
@@ -44,7 +47,9 @@ piggyback::pb_download_url("oas_leeds_simple_10.Rds")
 
 oas_leeds = readRDS(url("https://github.com/cyipt/acton/releases/download/0.0.1/oas_leeds.Rds")) # why does this not work?
 
-# get travel data at OA level
+
+# Get travel data at OA (or LSOA) level -----------------------------------
+
 # there are two approaches:
 # 1  start with zone data
 # 2  start with OD data and aggregate
@@ -59,20 +64,48 @@ allerton_bywater_oa_data = allerton_bywater_oa_data %>%
 # there are two different ways the same geography can be specified
 allerton_bywater = c("E00170565", "E00170564", "E00170567")
 chapelford = c("E00063394", "E00172881", "E00172882", "E00172884", "E00172889", "E00172890", "E00172892", "E00172895", "E00172896", "E00173169", "E00173170")
-dickens_heath = c("E01032885", "E00168171", "E00168172", "E00168175", "E00168173", "E00168177", "E00168176", "E00168178", "E00168174", "E00051490")
-newc_great_park = c("E01033550", "E00175591", "E00175572", "E00042147")
+dickens_heath = c("E00168165", "E00168166", "E00168167", "E00168168", "E00168169", "E00168170", "E00168171", "E00168172", "E00168175", "E00168173", "E00168177", "E00168176", "E00168178", "E00168174", "E00051490")
+newc_great_park = c("E00175566", "E00175567", "E00175568", "E00175569", "E00175570", "E00175573", "E00175591", "E00175572", "E00042147")
 paxcroft = c("E00166462", "E00166415", "E00166413", "E00163729", "E00166403", "E00166406", "E00166338", "E00163618", "E00163617")
-poundbury = c("E01032641", "E00166086", "E00166084", "E00104084")
+poundbury = c("E00166094", "E00166095", "E00166096", "E00166097", "E00166098", "E00166099", "E00166086", "E00166084", "E00104084")
 upton = c("E00169237", "E00169240", "E00169239", "E00169242")
 wichelstowe = c("E00166484", "E00166486", "E00166485")
-wynyard = c("E01033476", "E00174185", "E00060314")
+wynyard = c("E00061995", "E00174145", "E00174146", "E00174147", "E00174188", "E00174185", "E00060314")
+hamptons = c("E01033175", "E01033176", "E01033177","E01033178", "E01033180", "E01033174", "E01033181")
+wixams = c("E00173781", "E00173782", "E00173784")
+stockmoor = c("E00165964", "E00165966", "E00165967", "E00165975")
 
-geog_new_homes = c(allerton_bywater, chapelford, dickens_heath, newc_great_park, paxcroft, poundbury, upton, wichelstowe, wynyard)
+ladcode = "E01032641"
+oacodes = getsubgeographies(ladcode, "OA11")
+oacodes
+
+
+lsoa = pct::get_pct_zones(region = "west-yorkshire") %>%
+
+
+geog_new_homes = c(allerton_bywater, chapelford, dickens_heath, newc_great_park, paxcroft, poundbury, upton, wichelstowe, wynyard, hamptons, wixams, stockmoor)
+
+all_sites = list(allerton_bywater, chapelford, dickens_heath, newc_great_park, paxcroft, poundbury, upton, wichelstowe, wynyard, hamptons, wixams, stockmoor)
+
 
 oa_data_all = nomis_get_data(id = "NM_568_1", geography = geog_new_homes, measures = "20100", rural_urban="0")
 
 oa_data_all = oa_data_all %>%
-  select(GEOGRAPHY, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, GEOGRAPHY_TYPECODE, CELL, CELL_NAME, MEASURES, MEASURES_NAME, OBS_VALUE, OBS_STATUS, OBS_STATUS_NAME, OBS_CONF, OBS_CONF_NAME)
+  select(GEOGRAPHY, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, GEOGRAPHY_TYPECODE, CELL, CELL_NAME, MEASURES, MEASURES_NAME, OBS_VALUE, OBS_STATUS, OBS_STATUS_NAME, OBS_CONF, OBS_CONF_NAME) %>%
+  inner_join(oas, by = c("GEOGRAPHY" = "geo_code"))
+
+# Create SITE variable identifying which site the row belongs to
+library(data.table)
+LDT = rbindlist(lapply(all_sites, data.table), idcol = TRUE)
+oa_data_all = inner_join(oa_data_all,LDT, by = c("GEOGRAPHY" = "V1")) %>%
+  rename(SITE = .id)
+
+
+
+# Getting LSOA codes ------------------------------------------------------
+
+sf::st_join(oa_)
+
 
 # create model estimating mode share --------------------------------------
 
@@ -90,3 +123,6 @@ oa_data_all = oa_data_all %>%
 #     family = quasibinomial)
 # pcycle = predict(m, new_data)
 # boot::inv.logit(pcycle) # to get back to percent
+
+ladcode = "E09000001" # City of London
+oacodes = getsubgeographies(ladcode, "OA11")
