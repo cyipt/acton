@@ -16,19 +16,20 @@ library(units)
 sites = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/sites-leeds.geojson")
 # identify centroid closest to
 
-od_all_en_wales = pct::get_od(omit_intrazonal = TRUE)
 
 # Create desire lines from development site to common destinations from nearest centroid
 
 c = pct::get_pct_centroids(region = "west-yorkshire", geography = "lsoa") %>% rename(LA_Code = lad11cd)
 m = pct::get_centroids_ew() %>% st_transform(4326)
 lines_pct_lsoa = pct::get_pct_lines(region = "west-yorkshire", geography = "lsoa")
-lines_pct_msoa = pct::get_pct_lines(region = "west-yorkshire", geography = "msoa")
+# lines_pct_msoa = pct::get_pct_lines(region = "west-yorkshire", geography = "msoa") # not needed
 
 
 # MSOA data ---------------------------------------------------------------
 
 #this can find all OD pairs (even beyond west yorkshire and >20km away)
+
+od_all_en_wales = pct::get_od(omit_intrazonal = TRUE)
 
 centroids_nearest_site_m = sites$msoa_code
 
@@ -59,13 +60,28 @@ mapview::mapview(lines_m)
 
 centroids_nearest_site = sites$geo_code
 
-# need to also add in lines where geo_code2 matches the sites
-od_from_centroids_near_sites = lines_pct_lsoa %>%
+od_from_centroids_near_sites1 = lines_pct_lsoa %>%
   select(geo_code1, geo_code2, all, bicycle, car_driver, car_passenger
          # bus, taxi etc
   ) %>%
   filter(geo_code1 %in% centroids_nearest_site, geo_code2 %in% c$geo_code) %>%
   sf::st_drop_geometry()
+
+`%notin%` <- Negate(`%in%`)
+
+# adding in lines where geo_code2 matches the sites, instead of geo_code1
+od_from_centroids_near_sites2 = lines_pct_lsoa %>%
+  select(geo_code1, geo_code2, all, bicycle, car_driver, car_passenger
+         # bus, taxi etc
+  ) %>%
+  filter(geo_code2 %in% centroids_nearest_site & geo_code1 %in% c$geo_code & geo_code1 %notin% centroids_nearest_site ) %>%
+  rename(geo_code1 = geo_code2, geo_code2 = geo_code1) %>%
+  sf::st_drop_geometry()
+
+od_from_centroids_near_sites = rbind(od_from_centroids_near_sites1, od_from_centroids_near_sites2)
+
+dim(od_from_centroids_near_sites)
+
 
 # # add on the site_id (first column)
 sites_column_name_updated = sites %>%

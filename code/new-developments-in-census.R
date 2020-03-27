@@ -8,7 +8,7 @@ library(acton)
 # Find homes built around 2000-2010 ---------------------------------------
 
 # This is very strange. Whatever limit I choose, the number of applications returned is slightly below the limit.
-large_old_apps = get_planit_data(auth = "Leeds", app_size = "medium",app_state = "Permitted", end_date = "2005-01-01", limit = 500)
+large_old_apps = get_planit_data(auth = "leeds", app_size = "medium",app_state = "Permitted", end_date = "2005-01-01", limit = 500)
 dim(large_old_apps)
 View(large_old_apps)
 
@@ -136,6 +136,293 @@ dim(joined)
 joined = st_drop_geometry(joined)
 joined2 = inner_join(joined, lsoas_centroids, by = c("code" = "geo_code"))
 
+# Get the list of LSOA geo_codes being used
+geo_codes_used = unique(joined2$code)
+
+
+# Routing -----------------------------------------------------------------
+
+#Get routes from LSOA centroids to workplaces
+
+`%notin%` <- Negate(`%in%`)
+
+##
+
+lines_leeds = pct::get_pct_lines(region = "west-yorkshire", geography = "lsoa")
+
+lines_leeds1 = lines_leeds %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code1 %in% geo_codes_used) %>%
+  sf::st_drop_geometry()
+
+dim(lines_leeds1)
+
+lines_leeds2 = lines_leeds %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code2 %in% geo_codes_used & geo_code1 %notin% geo_codes_used) %>%
+  rename(geo_code1 = geo_code2, geo_code2 = geo_code1) %>%
+  sf::st_drop_geometry()
+
+dim(lines_leeds2)
+
+lines_leeds = rbind(lines_leeds1, lines_leeds2)
+
+dim(lines_leeds)
+
+##
+
+
+lines_warrington = pct::get_pct_lines(region = "cheshire", geography = "lsoa")
+
+lines_warrington1 = lines_warrington %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code1 %in% geo_codes_used) %>%
+  sf::st_drop_geometry()
+
+dim(lines_warrington1)
+
+lines_warrington2 = lines_warrington %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code2 %in% geo_codes_used & geo_code1 %notin% geo_codes_used) %>%
+  rename(geo_code1 = geo_code2, geo_code2 = geo_code1) %>%
+  sf::st_drop_geometry()
+
+dim(lines_warrington2)
+
+lines_warrington = rbind(lines_warrington1, lines_warrington2)
+
+dim(lines_warrington)
+
+##
+
+
+lines_northeast = pct::get_pct_lines(region = "north-east", geography = "lsoa")
+
+lines_northeast1 = lines_northeast %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code1 %in% geo_codes_used) %>%
+  sf::st_drop_geometry()
+
+dim(lines_northeast1)
+
+lines_northeast2 = lines_northeast %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code2 %in% geo_codes_used & geo_code1 %notin% geo_codes_used) %>%
+  rename(geo_code1 = geo_code2, geo_code2 = geo_code1) %>%
+  sf::st_drop_geometry()
+
+dim(lines_northeast2)
+
+lines_northeast = rbind(lines_northeast1, lines_northeast2)
+
+dim(lines_northeast)
+
+##
+
+lines_wiltshire = pct::get_pct_lines(region = "wiltshire", geography = "lsoa")
+
+lines_wiltshire1 = lines_wiltshire %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code1 %in% geo_codes_used) %>%
+  sf::st_drop_geometry()
+
+dim(lines_wiltshire1)
+
+lines_wiltshire2 = lines_wiltshire %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code2 %in% geo_codes_used & geo_code1 %notin% geo_codes_used) %>%
+  rename(geo_code1 = geo_code2, geo_code2 = geo_code1) %>%
+  sf::st_drop_geometry()
+
+dim(lines_wiltshire2)
+
+lines_wiltshire = rbind(lines_wiltshire1, lines_wiltshire2)
+
+dim(lines_wiltshire)
+
+##
+
+lines_cambridgeshire = pct::get_pct_lines(region = "cambridgeshire", geography = "lsoa")
+
+lines_cambridgeshire1 = lines_cambridgeshire %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code1 %in% geo_codes_used) %>%
+  sf::st_drop_geometry()
+
+dim(lines_cambridgeshire1)
+
+lines_cambridgeshire2 = lines_cambridgeshire %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code2 %in% geo_codes_used & geo_code1 %notin% geo_codes_used) %>%
+  rename(geo_code1 = geo_code2, geo_code2 = geo_code1) %>%
+  sf::st_drop_geometry()
+
+dim(lines_cambridgeshire2)
+
+lines_cambridgeshire = rbind(lines_cambridgeshire1, lines_cambridgeshire2)
+
+dim(lines_cambridgeshire)
+
+##
+
+
+lines_westmids = pct::get_pct_lines(region = "west-midlands", geography = "lsoa")
+
+lines_westmids1 = lines_westmids %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code1 %in% geo_codes_used) %>%
+  sf::st_drop_geometry()
+
+dim(lines_westmids1)
+
+lines_westmids2 = lines_westmids %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code2 %in% geo_codes_used & geo_code1 %notin% geo_codes_used) %>%
+  rename(geo_code1 = geo_code2, geo_code2 = geo_code1) %>%
+  sf::st_drop_geometry()
+
+dim(lines_westmids2)
+
+lines_westmids = rbind(lines_westmids1, lines_westmids2)
+
+dim(lines_westmids)
+
+##
+
+
+lines_dorset = pct::get_pct_lines(region = "dorset", geography = "lsoa")
+
+lines_dorset1 = lines_dorset %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code1 %in% geo_codes_used) %>%
+  sf::st_drop_geometry()
+
+dim(lines_dorset1)
+
+lines_dorset2 = lines_dorset %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code2 %in% geo_codes_used & geo_code1 %notin% geo_codes_used) %>%
+  rename(geo_code1 = geo_code2, geo_code2 = geo_code1) %>%
+  sf::st_drop_geometry()
+
+dim(lines_dorset2)
+
+lines_dorset = rbind(lines_dorset1, lines_dorset2)
+
+dim(lines_dorset)
+
+##
+
+
+lines_northants = pct::get_pct_lines(region = "northamptonshire", geography = "lsoa")
+
+lines_northants1 = lines_northants %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code1 %in% geo_codes_used) %>%
+  sf::st_drop_geometry()
+
+dim(lines_northants1)
+
+lines_northants2 = lines_northants %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code2 %in% geo_codes_used & geo_code1 %notin% geo_codes_used) %>%
+  rename(geo_code1 = geo_code2, geo_code2 = geo_code1) %>%
+  sf::st_drop_geometry()
+
+dim(lines_northants2)
+
+lines_northants = rbind(lines_northants1, lines_northants2)
+
+dim(lines_northants)
+
+##
+
+
+lines_bedford = pct::get_pct_lines(region = "bedfordshire", geography = "lsoa")
+
+lines_bedford1 = lines_bedford %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code1 %in% geo_codes_used) %>%
+  sf::st_drop_geometry()
+
+dim(lines_bedford1)
+
+lines_bedford2 = lines_bedford %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code2 %in% geo_codes_used & geo_code1 %notin% geo_codes_used) %>%
+  rename(geo_code1 = geo_code2, geo_code2 = geo_code1) %>%
+  sf::st_drop_geometry()
+
+dim(lines_bedford2)
+
+lines_bedford = rbind(lines_bedford1, lines_bedford2)
+
+dim(lines_bedford)
+
+##
+
+
+lines_somerset = pct::get_pct_lines(region = "somerset", geography = "lsoa")
+
+lines_somerset1 = lines_somerset %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code1 %in% geo_codes_used) %>%
+  sf::st_drop_geometry()
+
+
+dim(lines_somerset1)
+
+lines_somerset2 = lines_somerset %>%
+  select(geo_code1, geo_code2, all, bicycle, foot, car_driver
+         # dutch_slc etc
+  ) %>%
+  filter(geo_code2 %in% geo_codes_used & geo_code1 %notin% geo_codes_used) %>%
+  rename(geo_code1 = geo_code2, geo_code2 = geo_code1) %>%
+  sf::st_drop_geometry()
+
+dim(lines_somerset2)
+
+lines_somerset = rbind(lines_somerset1, lines_somerset2)
+
+dim(lines_somerset)
 
 # create model estimating mode share --------------------------------------
 
