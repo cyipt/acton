@@ -3,6 +3,8 @@
 library(pct)
 library(dplyr)
 library(acton)
+library(nomisr)
+library(sf)
 
 
 # Find homes built around 2000-2010 ---------------------------------------
@@ -61,6 +63,10 @@ allerton_bywater_oa_data = nomis_get_data(id = "NM_568_1", geography = c( "12542
 allerton_bywater_oa_data = allerton_bywater_oa_data %>%
   select(GEOGRAPHY, GEOGRAPHY_CODE, CELL, CELL_NAME, MEASURES, MEASURES_NAME, OBS_VALUE, OBS_STATUS, OBS_STATUS_NAME, OBS_CONF, OBS_CONF_NAME)
 
+
+# Start here for the method used ------------------------------------------
+
+
 # there are two different ways the same geography can be specified
 allerton_bywater = c("E00170565", "E00170564", "E00170567")
 chapelford = c("E00063394", "E00172881", "E00172882", "E00172884", "E00172889", "E00172890", "E00172892", "E00172895", "E00172896", "E00173169", "E00173170")
@@ -95,11 +101,11 @@ oa_data_all = st_as_sf(oa_data_all)
 
 dim(oa_data_all)
 
-# Create SITE variable identifying which site the row belongs to
+# Create site variable identifying which site the row belongs to
 library(data.table)
 LDT = rbindlist(lapply(all_sites, data.table), idcol = TRUE)
 oa_data_all = inner_join(oa_data_all,LDT, by = c("GEOGRAPHY" = "V1")) %>%
-  rename(SITE = .id)
+  rename(site = .id)
 
 
 # Getting LSOA codes ------------------------------------------------------
@@ -140,6 +146,9 @@ joined2 = inner_join(joined, lsoas_centroids, by = c("code" = "geo_code"))
 geo_codes_used = unique(joined2$code)
 
 
+write_sf(joined2, "oa-level-data.geojson")
+piggyback::pb_upload("oa-level-data.geojson")
+
 # Routing -----------------------------------------------------------------
 
 #Get desire lines from LSOA centroids to workplaces
@@ -158,6 +167,8 @@ lines_somerset = pct::get_pct_lines(region = "somerset", geography = "lsoa")
 lines_all = rbind(lines_leeds, lines_warrington, lines_northeast, lines_wiltshire, lines_cambridgeshire, lines_westmids, lines_dorset, lines_northants, lines_bedford, lines_somerset) %>%
   unique()
 
+write_sf(lines_all, "lines-all.geojson")
+piggyback::pb_upload("lines-all.geojson")
 
 ##
 
@@ -188,51 +199,65 @@ dim(lines_both)
 
 # Adding in the site ID
 site_id = joined2 %>%
-  select(c(code, SITE)) %>%
+  select(c(code, site)) %>%
   unique()
 
 lines_both = inner_join(lines_both,site_id, by = c("geo_code1" = "code"))
 
 mapview(lines_both)
 
+write_sf(lines_both, "lines-all-sites.geojson")
+piggyback::pb_upload("lines-all-sites.geojson")
+
 
 # Convert the lines into routes-------------------------------------------------
 
-
+library(cyclestreets)
 library(parallel)
+library(stplanr)
 cl <- makeCluster(detectCores())
 clusterExport(cl, c("journey"))#not needed and not working
-routes_to_site = route(l = lines_both, route_fun = cyclestreets::journey)
+routes_to_site = route(l = lines_both, route_fun = cyclestreets::journey
+                       # , cl = cl  # this isn't working, why?
+                       )
 
 mapview(routes_to_site)
 
-## Create route network
-routes_to_site$busyness = routes_to_site$busynance / routes_to_site$distances
 
-r_grouped_census = routes_to_site %>%
-  rename(fx = start_longitude, fy = start_latitude, tx = finish_longitude, ty = finish_latitude) %>%
-  group_by(fx, fy, tx, ty) %>%
-  summarise(
-    n = n(),
-    all = mean(all),
-    average_incline = sum(abs(diff(elevations))) / sum(distances),
-    distance_m = sum(distances),
-    busyness = mean(busyness)
-  ) %>%
-  ungroup()
+routes_to_site$busyness = routes_to_site$busynance / routes_to_site$distances
+routes_to_site = routes_to_site %>% mutate(speed=distances/time)
+
+write_sf(routes_to_site, "routes-all-sites.geojson")
+piggyback::pb_upload("routes-all-sites.geojson")
+
+## Create route network
+
+# r_grouped_census = routes_to_site %>%
+#   rename(fx = start_longitude, fy = start_latitude, tx = finish_longitude, ty = finish_latitude) %>%
+#   group_by(fx, fy, tx, ty) %>%
+#   summarise(
+#     n = n(),
+#     all = mean(all),
+#     average_incline = sum(abs(diff(elevations))) / sum(distances),
+#     distance_m = sum(distances),
+#     busyness = mean(busyness)
+#   ) %>%
+#   ungroup()
 
 
 # summary(r_grouped)
 
-r_grouped_census$go_dutch = pct::uptake_pct_godutch(distance = r_grouped_census$distance_m, gradient = r_grouped_census$average_incline) *
-  r_grouped_census$all
-r_grouped_lines_census = r_grouped_census %>% st_cast("LINESTRING")
-rnet_go_dutch_census = overline2(r_grouped_lines_census, "go_dutch")
+# r_grouped_census$go_dutch = pct::uptake_pct_godutch(distance = r_grouped_census$distance_m, gradient = r_grouped_census$average_incline) *
+#   r_grouped_census$all
+# r_grouped_lines_census = r_grouped_census %>% st_cast("LINESTRING")
+# rnet_go_dutch_census = overline2(r_grouped_lines_census, "go_dutch")
 
 # routes_to_site_census = routes_to_site
 rnet_all_census = overline2(routes_to_site, "all")
 
-# summary(rnet_go_dutch$go_dutch)
+write_sf(rnet_all_census, "rnet-all-census.geojson")
+piggyback::pb_upload("rnet-all-census.geojson")
+
 
 library(tmap)
 tmap_mode("view")
@@ -242,6 +267,38 @@ tm_shape(rnet_go_dutch_census) +
 
 tm_shape(rnet_all_census) +
   tm_lines("all", lwd = "all", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
+
+
+##Group route segments by destination
+
+r_whole_routes = routes_to_site %>%
+  group_by(geo_code1, geo_code2, site) %>%
+  summarise(
+    all = mean(all),
+    average_incline = sum(abs(diff(elevations))) / sum(distances),
+    distance_km = sum(distances)/1000,
+    mean_busyness = weighted.mean(busyness,distances),
+    max_busyness = max(busyness),
+    time_mins = sum(time)/60
+  ) %>%
+  ungroup()
+
+r_whole_routes = r_whole_routes %>%
+  mutate(speed_mph = (distance_km*1000)/(time_mins*60)*2.237)
+
+##Get mean metrics for each site
+
+##these should be weighted by the number of people in OAs within each LSOA (eg avoid it being dominated by Hartlepool)
+r_whole_weighted = r_whole_routes %>%
+  group_by(site) %>%
+  st_drop_geometry() %>%
+  summarise(mean_speed = weighted.mean(speed_mph,all),
+            mean_distance = weighted.mean(distance_km,all),
+            mean_busyness = weighted.mean(mean_busyness,all),
+            max_busyness = weighted.mean(max_busyness,all))
+r_whole_weighted
+
+summary(r_whole_routes[r_whole_routes$site == 1,])
 
 
 # create model estimating mode share --------------------------------------
