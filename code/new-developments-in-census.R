@@ -47,7 +47,7 @@ piggyback::pb_upload("oas_leeds_simple_10.Rds")
 piggyback::pb_download_url("oas_leeds.Rds")
 piggyback::pb_download_url("oas_leeds_simple_10.Rds")
 
-oas_leeds = readRDS(url("https://github.com/cyipt/acton/releases/download/0.0.1/oas_leeds.Rds")) # why does this not work?
+oas_leeds = readRDS(url("https://github.com/cyipt/acton/releases/download/0.0.1/oas_leeds.Rds")) # for readRDS you need to specify url()
 
 
 # Get travel data at OA (or LSOA) level -----------------------------------
@@ -140,13 +140,13 @@ dim(joined)
 
 # Join the result to the LSOA centroid geometry
 joined = st_drop_geometry(joined)
-joined2 = inner_join(joined, lsoas_centroids, by = c("code" = "geo_code"))
+oa_level_data = inner_join(joined, lsoas_centroids, by = c("code" = "geo_code"))
 
 # Get the list of LSOA geo_codes being used
-geo_codes_used = unique(joined2$code)
+geo_codes_used = unique(oa_level_data$code)
 
 
-write_sf(joined2, "oa-level-data.geojson")
+write_sf(oa_level_data, "oa-level-data.geojson")
 piggyback::pb_upload("oa-level-data.geojson")
 
 # Routing -----------------------------------------------------------------
@@ -198,7 +198,7 @@ lines_both = rbind(lines_1, lines_2)
 dim(lines_both)
 
 # Adding in the site ID
-site_id = joined2 %>%
+site_id = oa_level_data %>%
   select(c(code, site)) %>%
   unique()
 
@@ -229,6 +229,9 @@ routes_to_site = routes_to_site %>% mutate(speed=distances/time)
 
 write_sf(routes_to_site, "routes-all-sites.geojson")
 piggyback::pb_upload("routes-all-sites.geojson")
+
+routes_to_site = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/routes-all-sites.geojson")
+
 
 ## Create route network
 
@@ -286,17 +289,81 @@ r_whole_routes = routes_to_site %>%
 r_whole_routes = r_whole_routes %>%
   mutate(speed_mph = (distance_km*1000)/(time_mins*60)*2.237)
 
-##Get mean metrics for each site
 
-##these should be weighted by the number of people in OAs within each LSOA (eg avoid it being dominated by Hartlepool)
+##Get mean metrics for each LSOA
+
 r_whole_weighted = r_whole_routes %>%
-  group_by(site) %>%
+  group_by(geo_code1, site) %>%
   st_drop_geometry() %>%
   summarise(mean_speed = weighted.mean(speed_mph,all),
             mean_distance = weighted.mean(distance_km,all),
             mean_busyness = weighted.mean(mean_busyness,all),
             max_busyness = weighted.mean(max_busyness,all))
 r_whole_weighted
+
+# Get OA level data
+
+piggyback::pb_download_url("oa-level-data.geojson")
+oa_level_data = read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/oa-level-data.geojson")
+
+oa_data_grouped_walk = oa_level_data %>%
+  filter(CELL == 10) %>%
+  group_by(code) %>%
+  summarise(
+    obs_value = sum(OBS_VALUE)
+  ) %>%
+  st_drop_geometry()
+
+oa_data_grouped_cycle = oa_level_data %>%
+  filter(CELL == 9) %>%
+  group_by(code) %>%
+  summarise(
+    obs_value = sum(OBS_VALUE)
+  ) %>%
+  st_drop_geometry()
+
+oa_data_grouped_all = oa_level_data %>%
+  filter(CELL == 0) %>%
+  group_by(code) %>%
+  summarise(
+    obs_value = sum(OBS_VALUE)
+  ) %>%
+  st_drop_geometry()
+
+oa_data_grouped_home = oa_level_data %>%
+  filter(CELL == 1) %>%
+  group_by(code) %>%
+  summarise(
+    obs_value = sum(OBS_VALUE)
+  ) %>%
+  st_drop_geometry()
+
+oa_data_grouped_unempl = oa_level_data %>%
+  filter(CELL == 12) %>%
+  group_by(code) %>%
+  summarise(
+    obs_value = sum(OBS_VALUE)
+  ) %>%
+  st_drop_geometry()
+
+oa_data_grouped_commuters = inner_join(oa_data_grouped_all,oa_data_grouped_home, by = "code") %>%
+  rename(all = obs_value.x, home = obs_value.y) %>%
+  inner_join(oa_data_grouped_unempl, by = "code") %>%
+  rename(unemployed = obs_value) %>%
+  mutate(commuters = all - home - unemployed) %>%
+  select(code,commuters)
+
+oa_data_grouped = inner_join(oa_data_grouped_cycle, oa_data_grouped_walk, by = "code") %>%
+  rename(cycle = obs_value.x, walk = obs_value.y) %>%
+  inner_join(oa_data_grouped_commuters, by = "code")
+
+##Join OA and LSOA data
+
+full_dataset_by_lsoa = inner_join(r_whole_weighted,oa_data_grouped, by = c("geo_code1" = "code"))
+
+##weight by the number of commuters in OAs within each LSOA (eg avoid Wynyard being dominated by Hartlepool)
+
+full_dataset_by_site =
 
 summary(r_whole_routes[r_whole_routes$site == 1,])
 
