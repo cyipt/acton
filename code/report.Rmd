@@ -4,7 +4,7 @@ author: "Robin Lovelace, Joey Talbot, Martin Lucas-Smith, Andrew Speakman and Si
 output: pdf_document
 ---
 
-```{r setup, include=FALSE, message = FALSE, results='hide'}
+```{r setup, include=FALSE, message = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(acton)
 library(knitr)
@@ -68,7 +68,7 @@ To address this problem, the [PlanIt website](https://www.planit.org.uk/) was de
 
 ### PlanIt API
 
-PlanIt has an API which allows users to search for planning applications using a range of criteria.....
+PlanIt has an API which allows users to search for planning applications using a range of criteria, such as address, planning authority, bounding box, date or planning application identifier.
 
 As part of ACTON, the PlanIt API has been improved to make it easier to search for particular types of planning application. These updates are currently available on the [dev](https://dev.planit.org.uk/) version of PlanIt. We have derived terms for the following searchable fields:
 
@@ -83,14 +83,20 @@ As part of ACTON, the PlanIt API has been improved to make it easier to search f
     Conditions = The application was approved, but conditions were imposed
     Rejected = The application was refused
     Withdrawn = The application was withdrawn before a decision was taken
+    Referred = The application was referred to government or to another authority
+    Unresolved = The application is no longer active but no decision was made eg split decision
+    Other = Status not known
 
 - 'app_type' (to show the type of application) - including
     Full = Full and householder planning applications
     Outline = Proposals prior to a full application, including assessments, scoping opinions, outline applications etc
-    Amendment = Amendments, alterations or conditions arising from existing or previous applications
+    Amendment = Amendments or alterations arising from existing or previous applications
+    Conditions = Discharge of conditions imposed on existing applications
     Heritage = Conservation issues and listed buildings
     Trees = Tree and hedge works
     Advertising = Advertising and signs
+    Telecoms = Telecommunications including phone masts
+    Other = All other types eg agricultural, electrical
 
 The number of homes built in a residential development is a key factor of interest, along with any other facilities being constructed. This information is difficult to obtain as it is often missing from the description fields of planning applications. We have therefore used proxy methods for assessing scale, such as the number of documents within a planning application and the length of time allowed before deciding a large scale application. For example, criteria for 'app_size' = large include applications having >100 attached documents and >60 statutory days allowed before a decision is made on the application.
 
@@ -98,7 +104,7 @@ The further development of PlanIt will have many benefits beyond the ACTON proje
 
 ## Accessibility data
 
-In assessing the suitability of a proposed site for residential development, one of the most important questions will be how accessible the site is. The provision of local services is and community facilities is a key enabler of active travel. It's no use building top quality cycle and walking provision within the site if residents are presented with a 30 minute walk from their homes to reach the local shops. 
+In assessing the suitability of a proposed site for residential development, one of the most important questions will be how accessible the site is. The provision of local services and community facilities is a key enabler of active travel. It's no use building top quality cycle and walking provision within the site if residents are presented with a 30 minute walk from their homes to reach the local shops. 
 
 Journey time statistics published by the Department for Transport record the time taken to reach a range of services such as primary and secondary schools, food stores, GP surgeries, centres of employment and town centres. These are available at the geographical level of the LSOA, an area covering a population of approximately 1500 people or 650 households. The statistics include journey times by three different modes of travel:
 
@@ -108,16 +114,25 @@ Journey time statistics published by the Department for Transport record the tim
 
 The `acton` R package (described below) includes a function for the import of the these journey time statistics into R.
 
-## Census data
+## Demographic data
+
+We have obtained demographic data from the 2011 census, including the method of travel for journeys to work and journey origin-destination data. With its comprehensive national coverage, this allows us to investigate journey origins and destinations with the high geographical resolution necessary to differentiate new housing developments from neighbouring areas of older housing stock.
+
+Of course, the ACTON project aims to enable the investigation of the many new residential developments that have been built since 2011 and for which travel data is not available, but to do this we need an existing data source to allow methods to be developed. Census data is a key data source for the Propensity to Cycle Tool, and we use the `pct` R package to access this data.
 
 ## Routing algorithms
 
-The [CycleStreets.net](https://www.cyclestreets.net/) journey planner algorithm generates 'fast', 'balanced' and 'quiet' cycle routes between origins and destinations. As part of ACTON we are improving the way particular types of cycle lane and path are classified. This will lead to better quality routing of 'quiet' routes, through a more accurate characterisation of the cycleability of route segments.
+Sources such as census data provide information on journey origins and destinations. Missing from this are the routes that are used to travel from the origin to the destination. These routes must be inferred using routing algorithms.
+
+[CycleStreets.net](https://www.cyclestreets.net/) is a journey planner focusing on routes used for cycling. With a public facing website, CycleStreets helps people find a cycle route that is right for them. Such routes range from direct routes appropriate for confident on-road cyclists to quieter routes for people who want to avoid busy roads.
+
+CycleStreets includes three routing options, generating 'fast', 'balanced' or 'quiet' cycle routes between journey origins and destinations. For the fast routes, journey time is minimised, with no consideration given to factors such as the busyness of the roads. For the quiet routes, a parameter called "busyness" is minimised. The balanced routes use a combination of these two approaches, in which both journey time and busyness are taken into account.   
+
+As part of ACTON we have improved the way in which the busyness of particular types of cycle lane and path is classified, leading to better quality routing of 'quiet' routes through a more accurate characterisation of the cycleability of route segments.
 
 ### Busyness estimation
 
-New homes often lie close to major roads and bypasses that act as barriers which limit or discourage sustainable modes of travel. By contrast there are sometimes long established bridleways, towpaths or other paths which could be upgraded.
-CycleStreets is a journey planner that helps people find a cycle route that is right for them. Such routes range from direct routes appropriate to confident on-road cyclists to quieter routes for people who want to avoid busy roads.
+New homes often lie close to major roads and bypasses that act as barriers which limit or discourage sustainable modes of travel. By contrast there are sometimes long established bridleways, towpaths or other paths which could be upgraded. 
 
 CycleStreets uses a key metric, known as the 'busyness score' to rate each section of a cycle route. This provides a measure of the cycleability of the route and helps determine the suitability of it for each type of rider. It takes into account many features of the streets and paths used for cycling, including the width, speed limits, presence of cycle lanes or dedicated cycle tracks, and obstacles along the way.
 
@@ -126,6 +141,10 @@ As part of ACTON the process of setting the busyness score by CycleStreets is be
 We estimate the busyness of the roads which constitute routes from our case study sites to workplaces or other key destinations. The improved busyness score will allow calculation of an index of average road busyness for the area surrounding each site.
 
 ## Uptake scenarios
+
+The Propensity to Cycle Tool (PCT) is a well-used national tool for cycle infrastructure planning. It uses 2011 Census data and CycleStreets.net routing services to map current cycling levels at high geographic resolutions, as well as a series of scenarios modeling how cycle usage could increase. These scenarios take the same journey origin-destination data from the 2011 Census and estimate how the share of journeys by different methods of travel could change. In particular, the Go Dutch scenario models what would happen if people in the UK cycled as much as those in the Netherlands, accounting for journey distance and hilliness.
+
+An existing limitation of the PCT is the fact that because it uses 2011 census data it does not account for new developments built since 2011. ACTON exists to bridge this gap, by applying PCT methods to new residential areas. An example of this can be found in the Leeds case study described below, where we take journey to work origin-destination data for the LSOAs (Lower Super Output Areas) closest to the new housing sites, reroute this to move the journey origin to the sites themselves rather than the nearest LSOA centroid, then apply the Go Dutch scenario to investigate expected levels of cycling uptake for these routes.
 
 # R package
 
@@ -182,25 +201,30 @@ To get routes from CycleStreets.net, you will need to set up an API key called C
 
 # Leeds case study
 
-Using the data sources described above, we have produced a case study of new housing developments in Leeds, showing accessibility across the city and the routing of journeys to work for residents of four new housing sites.  
+Using the data sources described above, we have produced a case study of new housing developments in Leeds. We investigate accessibility across the city for active travel modes. Using CycleStreets.net for journey routing, we look at journeys to work for the residents of four new housing sites.  
 
 ## Planning applications
 
 Data from [PlanIt](https://www.planit.org.uk/), accessed using the `acton` R package, was used to identify recent large planning applications within the city boundaries: 
 
-The following code gets and subsets the relevant PlanIt data for Leeds:
+The following code gets and subsets the relevant PlanIt data for Leeds. This extracts large applications where planning consent has been granted:
 
 
-```{r, eval = FALSE}
+```{r, eval=FALSE}
 applications_leeds = get_planit_data(
   limit = 500,
   auth = "Leeds",
   app_size = "large",
   app_state = "permitted"
   )
-tm_shape(applications_leeds) + tm_dots(col = "app_type") +
-  tm_basemap(server = "CartoDB.Positron")
 ```
+
+```{r, echo=FALSE}
+applications_leeds = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/applications-leeds.geojson")
+#tm_shape(applications_leeds) + tm_dots(col = "app_type") +
+ # tm_basemap(server = "CartoDB.Positron")
+```
+
 
 <!-- ```{r} -->
 <!-- knitr::include_graphics("https://user-images.githubusercontent.com/52210872/77913768-c12a8a80-728c-11ea-963f-e6bad2decd38.png") -->
@@ -211,6 +235,228 @@ The result in the `applications_leeds` object contains much rich information abo
 <!-- ```{r} -->
 <!-- DT::datatable(applications_leeds[c(3, 4, 5, 8, 9, 15)]) -->
 <!-- ``` -->
+
+## The four chosen sites
+
+From the 281 large planning applications identified as described above, we have selected four of these for which the descriptions reveal a high number of homes have been consented. These can be seen in the following table:
+
+```{r}
+ids = c(
+  "13/05235/FU",
+  "15/04151/FU",
+  "15/00415/FU",
+  "15/01973/FU"
+)
+applications_case_study = applications_leeds[
+  applications_leeds$uid %in% ids,
+]
+nrow(applications_case_study)
+
+applications_case_study %>% 
+  sf::st_drop_geometry() %>% 
+  select(description, url) %>% 
+  knitr::kable()
+```
+
+An overview of the four case study sites is shown in the map below.
+
+```{r}
+applications_case_study$site = as.factor(c("Tyersal","Micklefield","Leeds Climate Innovation District","Allerton Bywater"))
+#tm_shape(applications_case_study) +
+  #tm_dots(col = "site", size = 0.1)  +
+ # tm_basemap(server = "CartoDB.Positron")
+```
+
+
+We will describe the Allerton Bywater application in more depth and use it to illustrate the data returned by the PlanIt API, before describing the other development sites.
+
+## Allerton Bywater Millennium Community
+
+- One of a series of Millennium Communities, the development at Allerton Bywater was announced by John Prescott in 1998. The homes lie on the site of Allerton Colliery, which was the last remaining colliery in Leeds when it closed in 1995. Prior to the development, Allerton Bywater village had a population of around 4,000, and the aim was to incorporate the whole of the village in the project, rather than solely focusing on the site itself. For example, a £500,000 community fund was made available to the parish council to spend on local projects, and community buildings in the village were also refurbished. In total there was £24 million upfront public investment by English Partnerships and the HCA. This included drainage, site clearance and decontamination. 
+
+- The development incorporates new industrial and office units as well as homes, with high environmental standards for both of these. A design code was adopted and development of the site began in 2005. The industrial units at the east of the site were the first in the UK to meet the BREEAM 'Excellent' standard, while the new homes were built to the EcoHomes 'Excellent' standard or the Code for Sustainable Homes Level 3. A number of homes were built under a 'Design for Manufacture' competition for a construction cost of no more than £60,000.
+
+- In total there are 562 homes in the Millennium Community. A Sustrans cycle route passes through the site and there is good walking and cycling access to the rest of the village and its surrounds, although parts of the cycle route can get very muddy in winter. Local services such as shops, pubs, cafes, a primary school, park, community centre and nature reserve lie on the edge of the site or within easy walking distance.
+
+- Plans for buses to be routed through the site did not materialise. The village lies eight miles southeast of Leeds and the buses to Leeds run roughly every 30 minutes. There are more frequent services to Garforth and Castleford. The nearest railway station is Castleford, at 43 minutes walk, with a well-built riverside path to follow. Much of the Millennium Community is designed as a HomeZone with shared space streets, although these tend to fill up with parked cars. Initial phases were built with 1.6 parking spaces per dwelling, but the amount of on-street parking lead to calls to increase this and later phases have 2 parking spaces per dwelling.
+
+### Data on the application
+
+The planning application we have selected for Allerton Bywater relates to the final phase of the Millennium Community. This includes 189 homes and has planning consent 13/05235/FU.
+
+We can see that this is classified by PlanIt.org.uk as a large application. The application was submitted in December 2013 by Keepmoat Homes and the Homes and Communities Agency and was approved in November 2014.
+
+Available fields include links to the full PlanIt record and to planning application information from Leeds City Council. 
+
+
+```{r}
+allerton_bywater = applications_case_study[applications_case_study$uid == "13/05235/FU",]
+allerton_bywater$description
+allerton_bywater$link
+allerton_bywater$url
+allerton_bywater$app_state
+allerton_bywater$app_size
+allerton_bywater$app_type
+allerton_bywater$address
+allerton_bywater$start_date
+allerton_bywater$decided_date
+```
+
+The original outline planning application for the entire Allerton Bywater Millennium Community can be found as follows. This was submitted in November 2000 and approved in August 2002.
+
+```{r}
+allerton_bywater_original = get_planit_data(query_type = "planapplic", query_value = "33/311/00/OT@Leeds")
+allerton_bywater_original$description
+allerton_bywater_original$url
+allerton_bywater_original$start_date
+allerton_bywater_original$decided_date
+```
+
+
+### Leeds Climate Innovation District
+
+- Situated on the banks of the River Aire, close to Leeds city centre, the Climate Innovation District is being developed by Leeds-based firm Citu. The development is built around high environmental standards including low carbon timber-framed homes with high levels of insulation and a Mechanical Ventilation Heat Recovery System preventing the need for gas central heating. The homes will be served by solar panels on-site via a private-wire network; a Community Interest Company will be set up that will own the utility cooperative. 
+
+- A new foot/cycle bridge has been erected over the River Aire to connect the two halves of the site and allow a traffic-free route into the city centre. On-site car parking is in an undercroft; these spaces have to be purchased at a cost of £15,000. Cycle parking is available on-site.
+
+- In total there will be over 520 new homes. Phase 1 to the north of the river will contain 312 dwellings, with planning consent 15/00415/FU. 
+
+
+### Micklefield
+
+- Planning consent 15/01973/FU is for a development of 292 residential dwellings by house builders Barratt Homes and Persimmon Homes on greenfield land in the village of Micklefield, nine miles east of Leeds. 
+
+- The site does not fully meet the Leeds Core Strategy Accessibility Standards. There are bus stops nearby but the services are infrequent, with only an hourly service increasing to two an hour at peak times. However, Micklefield station allows access to Leeds city centre with a 20 minute journey time. The S106 agreement includes £8000 for improved cycle facilities at the station. It also mandates 15% affordable housing, of which 60% is for social rent.
+
+### Tyersal
+
+- Planning consent 15/04151/FU was gained in April 2016 for a 270 dwelling development on a greenfield site at Tysersal Lane by developer Gleeson Homes. Although the site lies within ths bounds of Leeds it is actually closer to Bradford, and the only road access is to west, via the Bradford suburb of Holme Wood. Regular buses to Bradford city centre pass by the edge of the site. The proposed parking provision is approximately two spaces per dwelling. 
+
+- The site does not fully meet the Leeds Core Strategy Accessibility Standards. A viability assessment was accepted, stating that the scheme could not provide all of the usual planning gain contributions (S106 monies), with no affordable homes due to be built on site. This is subject on ongoing review. Gleeson's state that their homes are priced at a level so that they can be afforded by 90% of local people in full time employment.
+
+
+## Accessibility indicators
+
+Journey time statistics (JTS) are available from the Department for Transport recording accessibility at the geographical level of the LSOA (an area covering approximately 1500 residents or 650 households). The statistics include average minimum travel times to key local services and destinations, such as town centres, centres of employment, primary schools, secondary schools, food stores and GP surgeries. 
+
+Travel times are calculated for three modes of travel - by car, by cycle, and by a mode that combines walking and public transport.
+
+In the following code we download data for journey times to the nearest centres of employment, town centres, food stores, primary schools, secondary schools and GP surgeries.
+
+There are several different statistics representing employment centres. We combine measures for employment centres of different sizes to create a single employment metric. We then combine this with the other journey time statistics to generate a single index of accessibility for each mode of travel. 
+
+```{r, eval = FALSE}
+library(dplyr)
+
+zones_leeds = pct::get_pct_zones(region = "west-yorkshire", geography = "lsoa", purpose = "commute") %>% rename(LA_Code = lad11cd) %>% st_set_crs(4326)
+
+which(st_is_valid(zones_leeds) == FALSE)
+zones_leeds = lwgeom::st_make_valid(zones_leeds)
+which(st_is_valid(zones_leeds) == FALSE)
+
+# c = pct::get_pct_centroids(region = "west-yorkshire", geography = "lsoa") %>% rename(LA_Code = lad11cd) %>% st_set_crs(4326)
+
+access_employ = get_jts_data("jts0501", 2017)
+access_town = get_jts_data("jts0508", 2017)
+access_food = get_jts_data("jts0507", 2017)
+access_primary = get_jts_data("jts0502", 2017)
+access_secondary = get_jts_data("jts0503", 2017)
+access_gp = get_jts_data("jts0505", 2017)
+
+access_employ$weightedJobsPTt = apply(
+  X = access_employ[c("Jobs100EmpPTt", "Jobs500EmpPTt", "Jobs5000EmpPTt")],
+  MARGIN = 1,
+  FUN = weighted.mean,
+  w = c(100, 500, 5000)
+)
+access_employ$weightedJobsCyct = apply(
+  X = access_employ[c("Jobs100EmpCyct", "Jobs500EmpCyct", "Jobs5000EmpCyct")],
+  MARGIN = 1,
+  FUN = weighted.mean,
+  w = c(100, 500, 5000)
+)
+access_employ$weightedJobsCart = apply(
+  X = access_employ[c("Jobs100EmpCart", "Jobs500EmpCart", "Jobs5000EmpCart")],
+  MARGIN = 1,
+  FUN = weighted.mean,
+  w = c(100, 500, 5000)
+)
+
+zones_leeds = inner_join(zones_leeds,access_town,by = c("geo_code" = "LSOA_code","LA_Code"))
+zones_leeds = inner_join(zones_leeds,access_food,by = c("geo_code" = "LSOA_code","LA_Code"))
+zones_leeds = inner_join(zones_leeds,access_employ,by = c("geo_code" = "LSOA_code","LA_Code"))
+zones_leeds = inner_join(zones_leeds,access_primary,by = c("geo_code" = "LSOA_code","LA_Code"))
+zones_leeds = inner_join(zones_leeds,access_secondary,by = c("geo_code" = "LSOA_code","LA_Code"))
+zones_leeds = inner_join(zones_leeds,access_gp,by = c("geo_code" = "LSOA_code","LA_Code"))
+
+zones_leeds = zones_leeds %>%
+  mutate(index_PT = weightedJobsPTt+TownPTt+FoodPTt+PSPTt+SSPTt+GPPTt,
+         index_Cyc = weightedJobsCyct+TownCyct+FoodCyct+PSCyct+SSCyct+GPCyct,
+         index_Car = weightedJobsCart+TownCart+FoodCart+PSCart+SSCart+GPCart)
+```
+
+```{r, eval = FALSE, echo = FALSE}
+# sf::write_sf(zones_leeds, "zones_leeds_lsoa.geojson")
+# piggyback::pb_upload("zones_leeds_lsoa.geojson")
+# piggyback::pb_download_url("zones_leeds_lsoa.geojson")
+```
+
+```{r, echo = FALSE}
+zones_leeds = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/zones_leeds_lsoa.geojson")
+```
+
+Now we can map the journey time statistics across Leeds and West Yorkshire.
+
+The first map shows the LSOA zones in Leeds together with their working age population. LSOA population should normally be relatively constant, but it is considerably higher in some Leeds LSOAs. This may be due to new residential developments built after the LSOA boundaries were set, in particular student accommodation and the recent growth in city centre living. 
+
+```{r}
+#qtm(zones_leeds, "Empl_pop")
+```
+
+The JTS record travel times from the population weighted centroid of each LSOA. New housing developments can be constructed anywhere within an LSOA, and may not necessarily be close to existing homes. To assess the accessibility of new developments we therefore use statistics that relate to the closest LSOA centroid. For our Tyersal Lane case study site, the closest LSOA centroid is in Bradford.
+
+Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. As explained earlier, we have combined these three statistics to produce a single measure weighted by the number of jobs. This is shown in the maps below.
+
+```{r, eval = FALSE}
+tm_shape(zones_leeds) +
+  tm_polygons(c("weightedJobsPTt","weightedJobsCyct","weightedJobsCart"),palette="-cividis",title = c("Walk/PT","Cycle","Car") +
+  tm_shape(applications_case_study) +
+  tm_dots(size=0.2) +
+  tm_facets(nrow = 1)
+```
+
+```{r, echo = FALSE}
+#knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76424159-c7b99680-639f-11ea-95c5-1198d977be1f.png")
+```
+
+We have then combined the weighted access to employment measure with the measures for access to food stores, town centres, primary schools, secondary schools and GPs. By adding together all of these scores we have generated a single accessibility index for each mode of travel. 
+
+```{r, eval = FALSE}
+tm_shape(zones_leeds) +
+  tm_polygons(c("index_PT","index_Cyc","index_Car"),palette="-viridis",title = c("Walk/PT","Cycle","Car") +
+  tm_shape(applications_case_study) +
+  tm_dots(size=0.2) +
+  tm_facets(nrow = 1)
+```
+
+```{r, echo = FALSE}
+#knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76458014-bdb08b80-63d1-11ea-88dd-a5da8020ea5d.png")
+```
+
+According to these measures, there are many areas that have poor accessibility by active modes and public transport. 
+
+## Route busyness
+
+
+These maps use OD data for journeys to work from the LSOA centroid closest to each site, but changing to point of origin of the journeys so they start at our case study sites. The desire lines are converted to routes using 'fastest journey' option of the `cyclestreets::journey()` function. 
+
+The thickness of the lines is proportional to the number of journeys (using all modes of transport), and the colour represents the busyness of the roads. 
+
+We can see there are some roads used by commuters from these sites that are particularly busy. These include the A63 near Garforth and the A61 on the eastern edge of Leeds City Centre (circle these roads). However, an integral component of the Leeds Climate Innovation District is the construction of a new foot and cycle bridge over the River Aire. This bridge is already in place and allows residents to access Leeds city centre via an off-road riverside path, avoiding the need to use the A61. We should model how this bridge impacts the accessiblity of the site.  
+
+## Journeys to work
+
+Show maps for all journeys to work and those under Go Dutch scenario.
 
 # Model
 
