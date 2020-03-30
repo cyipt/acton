@@ -1,0 +1,230 @@
+---
+title: "Active Transport Options for New Housing Developments: The ACTON project"
+author: "Robin Lovelace, Joey Talbot, Martin Lucas-Smith, Andrew Speakman and Simon Nuttall"
+output: pdf_document
+---
+
+```{r setup, include=FALSE, message = FALSE, results='hide'}
+knitr::opts_chunk$set(echo = TRUE)
+library(acton)
+library(knitr)
+library(dplyr)
+library(tmap)
+tmap_mode("view")
+```
+
+
+# Introduction
+
+In an era where decarbonisation is a must, the transport sector is now the UK's largest source of carbon emissions and one which - unlike other sectors - has not seen any reduction in recent years. On the contrary, the construction of new residential developments having locations and designs that promote car dependency risks locking us into increasingly unsustainable lifestyles in future.
+
+## Components of the ACTON project
+
+The ACTON project brings together several key datasets to answer the question how can we improve new housing developments for walking and cycling? 
+
+To do this we use a range of transport and planning data: 
+
+- planning applications
+- census data
+- accessibility statistics
+- routing algorithms
+- cycle uptake models
+
+This is illustrated in the simple schematic below.
+
+<!-- ```{r flow2, echo=FALSE, fig.cap="Schematic diagram of the ACTON project and its four main data sources (boxes)"} -->
+<!-- # to be updated in readme code -->
+<!-- # knitr::include_graphics("https://cyipt.github.io/acton/reference/figures/README-workflow-1.png") -->
+<!-- knitr::include_graphics("https://user-images.githubusercontent.com/52210872/77912271-2761de00-728a-11ea-985d-17d4a31a144d.png") -->
+<!-- ``` -->
+
+In bringing together these datasets, there are several outputs that we have developed. The further development of these and their use for policy purposes was discussed in workshop held in Leeds in March 2020. 
+
+Firstly, we have created an R package named `acton` that is freely available for download from github. This contains functions that aid with the import of planning application and accessibility data.
+
+Building on this, we have then produced a case study to investigates the accessibility for active travel of a set of new housing developments in Leeds, West Yorkshire.
+
+Finally, we begun to develop a prototype indicator model designed to predict active travel mode share in new housing developments. 
+
+These will each be described in greater detail in the remaining sections of this report. 
+
+# The ACTON Datasets
+
+There are a series of datasets which have either been further developed as part of the ACTON project, or where the ACTON project has helped to open them up for a wider range of uses. We will describe these sources in turn.
+
+## Planning application data - the PlanIt website
+
+To investigate the accessibility of new housing developments, it is first necessary to identify where new homes are being built. 
+
+There are over 300 local planning authorities across England, including metropolitan boroughs, London boroughs, unitary authorities and non-metropolitan districts. Each of these planning authorities keeps an online record of current and historic planning applications, such as applications to build new homes. The data recorded will include information about the status of the application, the site location, related applications, a description of the proposed application and links to download associated files such as masterplans and transport assessments. 
+
+However, there is no real standardisation of how these planning applications are recorded. For example, various different types of application exist, such as full, outline, reserved matters, and applications for tree works. Yet the codes that record application type vary from one council to the next.
+
+Moreover, there is no systematic national recording of where homes are being built. The Ministry of Housing, Communities & Local Government produces statistics on the number of new build housing starts and completions in each local planning authority, but this simply records the number of homes in each district. There is no indication of exactly where these homes are being built.
+
+### New developments data from PlanIt
+
+To address this problem, the [PlanIt website](https://www.planit.org.uk/) was developed. The website aggregates and maps current and historic planning applications across the UK, scraping the data from all planning authority websites (98% coverage) and making them accessible from a single source. PlanIt collects all types of planning application, not just applications relating to house building.
+
+### PlanIt API
+
+PlanIt has an API which allows users to search for planning applications using a range of criteria.....
+
+As part of ACTON, the PlanIt API has been improved to make it easier to search for particular types of planning application. These updates are currently available on the [dev](https://dev.planit.org.uk/) version of PlanIt. We have derived terms for the following searchable fields:
+
+- 'app_size' (for the scale of the proposed development) - including
+    Large = Major, large scale developments
+    Medium = Other applications involving multiple dwellings
+    Small = All others
+
+- 'app_state' (to show the decision status for the application) - including
+    Undecided = The application is currently active, no decision has been made
+    Permitted = The application was approved
+    Conditions = The application was approved, but conditions were imposed
+    Rejected = The application was refused
+    Withdrawn = The application was withdrawn before a decision was taken
+
+- 'app_type' (to show the type of application) - including
+    Full = Full and householder planning applications
+    Outline = Proposals prior to a full application, including assessments, scoping opinions, outline applications etc
+    Amendment = Amendments, alterations or conditions arising from existing or previous applications
+    Heritage = Conservation issues and listed buildings
+    Trees = Tree and hedge works
+    Advertising = Advertising and signs
+
+The number of homes built in a residential development is a key factor of interest, along with any other facilities being constructed. This information is difficult to obtain as it is often missing from the description fields of planning applications. We have therefore used proxy methods for assessing scale, such as the number of documents within a planning application and the length of time allowed before deciding a large scale application. For example, criteria for 'app_size' = large include applications having >100 attached documents and >60 statutory days allowed before a decision is made on the application.
+
+The further development of PlanIt will have many benefits beyond the ACTON project since it will make it easier to find planning applications of interest for all sorts of purposes. For example, [StreetFocus.uk](https://www.streetfocus.uk/) makes PlanIt data more widely available, with a public-facing website that brings the PlanIt planning application data together with street-level data on proposals for local improvements to the public realm or to active travel infrastructure. This can be used to help identify places where new developments could potentially help to fund nearby improvements through mechanisms such as S106 agreements. Enabling these synergies to be identified at an early stage in the planning process allows great scope for assisting both the proponents of local improvement schemes and the developers who desire greater certainty in terms of the level of S106 funding they are called on to provide.
+
+## Accessibility data
+
+In assessing the suitability of a proposed site for residential development, one of the most important questions will be how accessible the site is. The provision of local services is and community facilities is a key enabler of active travel. It's no use building top quality cycle and walking provision within the site if residents are presented with a 30 minute walk from their homes to reach the local shops. 
+
+Journey time statistics published by the Department for Transport record the time taken to reach a range of services such as primary and secondary schools, food stores, GP surgeries, centres of employment and town centres. These are available at the geographical level of the LSOA, an area covering a population of approximately 1500 people or 650 households. The statistics include journey times by three different modes of travel:
+
+- car
+- bicycle
+- a combined walking / public transport measure, showing the fastest journey time by these two modes (either walking alone or walking and public transport in combination).
+
+The `acton` R package (described below) includes a function for the import of the these journey time statistics into R.
+
+## Census data
+
+## Routing algorithms
+
+The [CycleStreets.net](https://www.cyclestreets.net/) journey planner algorithm generates 'fast', 'balanced' and 'quiet' cycle routes between origins and destinations. As part of ACTON we are improving the way particular types of cycle lane and path are classified. This will lead to better quality routing of 'quiet' routes, through a more accurate characterisation of the cycleability of route segments.
+
+### Busyness estimation
+
+New homes often lie close to major roads and bypasses that act as barriers which limit or discourage sustainable modes of travel. By contrast there are sometimes long established bridleways, towpaths or other paths which could be upgraded.
+CycleStreets is a journey planner that helps people find a cycle route that is right for them. Such routes range from direct routes appropriate to confident on-road cyclists to quieter routes for people who want to avoid busy roads.
+
+CycleStreets uses a key metric, known as the 'busyness score' to rate each section of a cycle route. This provides a measure of the cycleability of the route and helps determine the suitability of it for each type of rider. It takes into account many features of the streets and paths used for cycling, including the width, speed limits, presence of cycle lanes or dedicated cycle tracks, and obstacles along the way.
+
+As part of ACTON the process of setting the busyness score by CycleStreets is being further developed. This will allow it to take account of new types of cycling infrastructure and move towards a model that distinguishes between eight different states of cycling that are fundamental to how people choose a route.
+
+We estimate the busyness of the roads which constitute routes from our case study sites to workplaces or other key destinations. The improved busyness score will allow calculation of an index of average road busyness for the area surrounding each site.
+
+## Uptake scenarios
+
+# R package
+
+One of the outputs of this project is the `acton` R package. Available on github, this includes two main functions that allow users to download planning application and accessibility data.
+
+## Installing the R package
+
+To install the `acton` package, run the following commands in an R console (see [here](https://docs.ropensci.org/stats19/articles/stats19-training-setup.html) for information on installing R):
+
+```{r, eval=FALSE}
+install.packages("remotes")
+remotes::install_github("cyipt/acton")
+```
+
+After it has been installed, the package can be loaded as follows:
+
+```{r}
+library(acton)
+```
+
+## Functions
+
+The `acton` package contains two main functions:
+
+- get_planit_data()
+- get_jts_data()
+
+The function `get_planit_data()` allows R users to search for planning application data without having to use the PlanIt API. This can broaden the use of PlanIt by helping to make its data easier to obtain.
+
+The function `get_jts_data()` enables the downloading of journey time statistics. There are 44 tables in total, most of which include annual data for the years 2014 to 2019. 
+
+## Brief demo
+
+The package can be used to get data on new developments as follows:
+
+```{r, eval = FALSE}
+library(acton)
+# data from specific postcode
+planning_data = get_planit_data(pcode = "LS2 9JT", limit = 2, app_size = "large")
+planning_data
+planning_data$name
+planning_data$description
+
+jts_tables
+unique(jts_tables$table_title)
+
+accessibility_data = get_jts_data()
+get_jts_data(table = "jts0101", year = 2017, skip = 7)
+```
+
+## Further R instructions
+
+To get routes from CycleStreets.net, you will need to set up an API key called CYCLESTREETS. This can be done with `usethis::edit_r_environ()`, as documented here: https://docs.ropensci.org/stplanr/reference/route_cyclestreets.html#details
+
+# Leeds case study
+
+Using the data sources described above, we have produced a case study of new housing developments in Leeds, showing accessibility across the city and the routing of journeys to work for residents of four new housing sites.  
+
+## Planning applications
+
+Data from [PlanIt](https://www.planit.org.uk/), accessed using the `acton` R package, was used to identify recent large planning applications within the city boundaries: 
+
+The following code gets and subsets the relevant PlanIt data for Leeds:
+
+
+```{r, eval = FALSE}
+applications_leeds = get_planit_data(
+  limit = 500,
+  auth = "Leeds",
+  app_size = "large",
+  app_state = "permitted"
+  )
+tm_shape(applications_leeds) + tm_dots(col = "app_type") +
+  tm_basemap(server = "CartoDB.Positron")
+```
+
+<!-- ```{r} -->
+<!-- knitr::include_graphics("https://user-images.githubusercontent.com/52210872/77913768-c12a8a80-728c-11ea-963f-e6bad2decd38.png") -->
+<!-- ``` -->
+
+The result in the `applications_leeds` object contains much rich information about the planning applications.
+
+<!-- ```{r} -->
+<!-- DT::datatable(applications_leeds[c(3, 4, 5, 8, 9, 15)]) -->
+<!-- ``` -->
+
+# Model
+
+# Conclusions
+
+The ACTON project has successfully demonstrated the benefits of providing actionable evidence about active travel provision associated with new developments in a single place.
+Although the input datasets used by ACTON were already in the public domain, they were scattered across multiple websites making them hard to access, let alone use as the basis of evidence-based decision-making.
+
+The project not only demonstrates the benefits of combining datasets using real-world examples, but it has also resulted in a new tool, the `acton` R package, that represents a step change in the ease-of-access to two vital sources of data policymakers and planners:
+
+- Data on new developments is now far more accessible to researchers and others without needing to write API queries via the new function `get_planit_data()`
+- Data on accessibility is now far more accessible to researchers via the new function `get_jts_data()`, which gets data from DfT's open Journey Time Statistics
+
+These functions and the datasets they open-up provide a strong foundation for further work.
+We plan to work with potential funders to ensure that the value generated in the course of this 3 month project can be made available to everyone, either as a self-standing tool or as part of a wider toolkit for sustainable transport planning.
+
+Details about follow-on work will be posted on the project's issue tracker at https://github.com/cyipt/acton/issues, where interested stakeholders are welcome to post ideas and follow-on questions.

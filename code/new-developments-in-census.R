@@ -5,17 +5,17 @@ library(dplyr)
 library(acton)
 library(nomisr)
 library(sf)
-
+library(ukboundaries)
 
 # Find homes built around 2000-2010 ---------------------------------------
 
-# This is very strange. Whatever limit I choose, the number of applications returned is slightly below the limit.
-large_old_apps = get_planit_data(auth = "leeds", app_size = "medium",app_state = "Permitted", end_date = "2005-01-01", limit = 500)
-dim(large_old_apps)
-View(large_old_apps)
-
-readr::write_csv(large_old_apps, "large_old_apps.csv")
-piggyback::pb_upload("large_old_apps.csv")
+# # This is very strange. Whatever limit I choose, the number of applications returned is slightly below the limit.
+# large_old_apps = get_planit_data(auth = "leeds", app_size = "medium",app_state = "Permitted", end_date = "2005-01-01", limit = 500)
+# dim(large_old_apps)
+# View(large_old_apps)
+#
+# readr::write_csv(large_old_apps, "large_old_apps.csv")
+# piggyback::pb_upload("large_old_apps.csv")
 
 
 # Get OA boundary data ----------------------------------------------------
@@ -27,41 +27,41 @@ oas = ukboundaries::duraz(u = u)
 oas_centroids = sf::st_centroid(oas)
 oas
 
-leeds_27700 = ukboundaries::leeds %>% sf::st_transform(27700)
-oas_leeds_centroids = oas_centroids[leeds_27700, ]
-mapview::mapview(oas_leeds_centroids)
-oas_leeds = oas %>%
-  filter(geo_code %in% oas_leeds_centroids$geo_code)
-saveRDS(oas_leeds, "oas_leeds.Rds")
-piggyback::pb_upload("oas_leeds.Rds")
-mapview::mapview(oas_leeds)
-
-oas_leeds_simple_10 = oas_leeds %>%
-  rmapshaper::ms_simplify(sys = T, keep = 0.1)
-
-mapview::mapview(oas_leeds_simple_10)
-# oas_centroid_ew = pct::get_centroids_ew() # msoa centroids
-saveRDS(oas_leeds_simple_10, "oas_leeds_simple_10.Rds")
-piggyback::pb_upload("oas_leeds_simple_10.Rds")
-
-piggyback::pb_download_url("oas_leeds.Rds")
-piggyback::pb_download_url("oas_leeds_simple_10.Rds")
-
-oas_leeds = readRDS(url("https://github.com/cyipt/acton/releases/download/0.0.1/oas_leeds.Rds")) # for readRDS you need to specify url()
-
-
-# Get travel data at OA (or LSOA) level -----------------------------------
-
-# there are two approaches:
-# 1  start with zone data
-# 2  start with OD data and aggregate
-
-# 1 - get travel data at zone level
-
-allerton_bywater_oa_data = nomis_get_data(id = "NM_568_1", geography = c( "1254262620","1254262621","1254262622"), measures = "20100", rural_urban="0")
-
-allerton_bywater_oa_data = allerton_bywater_oa_data %>%
-  select(GEOGRAPHY, GEOGRAPHY_CODE, CELL, CELL_NAME, MEASURES, MEASURES_NAME, OBS_VALUE, OBS_STATUS, OBS_STATUS_NAME, OBS_CONF, OBS_CONF_NAME)
+# leeds_27700 = ukboundaries::leeds %>% sf::st_transform(27700)
+# oas_leeds_centroids = oas_centroids[leeds_27700, ]
+# mapview::mapview(oas_leeds_centroids)
+# oas_leeds = oas %>%
+#   filter(geo_code %in% oas_leeds_centroids$geo_code)
+# saveRDS(oas_leeds, "oas_leeds.Rds")
+# piggyback::pb_upload("oas_leeds.Rds")
+# mapview::mapview(oas_leeds)
+#
+# oas_leeds_simple_10 = oas_leeds %>%
+#   rmapshaper::ms_simplify(sys = T, keep = 0.1)
+#
+# mapview::mapview(oas_leeds_simple_10)
+# # oas_centroid_ew = pct::get_centroids_ew() # msoa centroids
+# saveRDS(oas_leeds_simple_10, "oas_leeds_simple_10.Rds")
+# piggyback::pb_upload("oas_leeds_simple_10.Rds")
+#
+# piggyback::pb_download_url("oas_leeds.Rds")
+# piggyback::pb_download_url("oas_leeds_simple_10.Rds")
+#
+# oas_leeds = readRDS(url("https://github.com/cyipt/acton/releases/download/0.0.1/oas_leeds.Rds")) # for readRDS you need to specify url()
+#
+#
+# # Get travel data at OA (or LSOA) level -----------------------------------
+#
+# # there are two approaches:
+# # 1  start with zone data
+# # 2  start with OD data and aggregate
+#
+# # 1 - get travel data at zone level
+#
+# allerton_bywater_oa_data = nomis_get_data(id = "NM_568_1", geography = c( "1254262620","1254262621","1254262622"), measures = "20100", rural_urban="0")
+#
+# allerton_bywater_oa_data = allerton_bywater_oa_data %>%
+#   select(GEOGRAPHY, GEOGRAPHY_CODE, CELL, CELL_NAME, MEASURES, MEASURES_NAME, OBS_VALUE, OBS_STATUS, OBS_STATUS_NAME, OBS_CONF, OBS_CONF_NAME)
 
 
 # Start here for the method used ------------------------------------------
@@ -81,9 +81,6 @@ hamptons = c("E00171289", "E00171291", "E00171254", "E00171256", "E00171257", "E
 wixams = c("E00173781", "E00173782", "E00173784")
 stockmoor = c("E00165964", "E00165966", "E00165967", "E00165975")
 
-# ladcode = "E01033181"
-# oacodes = getsubgeographies(ladcode, "OA11")
-# oacodes
 
 geog_new_homes = c(allerton_bywater, chapelford, dickens_heath, newc_great_park, paxcroft, poundbury, upton, wichelstowe, wynyard, hamptons, wixams, stockmoor)
 
@@ -149,6 +146,61 @@ geo_codes_used = unique(oa_level_data$code)
 write_sf(oa_level_data, "oa-level-data.geojson")
 piggyback::pb_upload("oa-level-data.geojson")
 
+# Group OA level data by OA
+
+piggyback::pb_download_url("oa-level-data.geojson")
+oa_level_data = read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/oa-level-data.geojson")
+
+oa_data_grouped_walk = oa_level_data %>%
+  filter(CELL == 10) %>%
+  group_by(code) %>%
+  summarise(
+    obs_value = sum(OBS_VALUE)
+  ) %>%
+  st_drop_geometry()
+
+oa_data_grouped_cycle = oa_level_data %>%
+  filter(CELL == 9) %>%
+  group_by(code) %>%
+  summarise(
+    obs_value = sum(OBS_VALUE)
+  ) %>%
+  st_drop_geometry()
+
+oa_data_grouped_all = oa_level_data %>%
+  filter(CELL == 0) %>%
+  group_by(code) %>%
+  summarise(
+    obs_value = sum(OBS_VALUE)
+  )
+
+oa_data_grouped_home = oa_level_data %>%
+  filter(CELL == 1) %>%
+  group_by(code) %>%
+  summarise(
+    obs_value = sum(OBS_VALUE)
+  ) %>%
+  st_drop_geometry()
+
+oa_data_grouped_unempl = oa_level_data %>%
+  filter(CELL == 12) %>%
+  group_by(code) %>%
+  summarise(
+    obs_value = sum(OBS_VALUE)
+  ) %>%
+  st_drop_geometry()
+
+oa_data_grouped_commuters = inner_join(oa_data_grouped_all,oa_data_grouped_home, by = "code") %>%
+  rename(all = obs_value.x, home = obs_value.y) %>%
+  inner_join(oa_data_grouped_unempl, by = "code") %>%
+  rename(unemployed = obs_value) %>%
+  mutate(commuters = all - home - unemployed) %>%
+  select(code,commuters)
+
+oa_data_grouped = inner_join(oa_data_grouped_cycle, oa_data_grouped_walk, by = "code") %>%
+  rename(cycle = obs_value.x, walk = obs_value.y) %>%
+  inner_join(oa_data_grouped_commuters, by = "code")
+
 # Routing -----------------------------------------------------------------
 
 #Get desire lines from LSOA centroids to workplaces
@@ -209,6 +261,54 @@ mapview(lines_both)
 write_sf(lines_both, "lines-all-sites.geojson")
 piggyback::pb_upload("lines-all-sites.geojson")
 
+piggyback::pb_download_url("lines-all-sites.geojson")
+lines_both = read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/lines-all-sites.geojson")
+
+####Replace the geometry with more appropriate OA centroids (one for each LSOA or site) so the routing is done from the right places. I can copy the methods from leeds_routes.R for this.
+###And join with oa_data_grouped and replace `all` `bicycle` `foot` with appropriate proportions
+
+##grouping the LSOA data for totals for travel to work by foot, bicycle, all, so I can know how much to reduce them by proportionally.
+# lsoa_data_grouped = lines_both %>%
+#   group_by(geo_code1, SITE) %>%
+#   summarise(
+#     all = sum(all),
+#     bicycle = sum(bicycle),
+#     foot = sum(foot)
+#   ) %>%
+#   st_drop_geometry()
+#
+# ##
+#
+# both_grouped = lsoa_data_grouped %>%
+#   inner_join(oa_data_grouped, by = c("geo_code1" = "code"))
+
+
+#reducing totals proportionally by the number of OAs being used
+
+oacodes = NULL
+listcodes = NULL
+for(i in 1:length(geo_codes_used)) {
+  ladcode = geo_codes_used[i]
+  oacodes = getsubgeographies(ladcode, "OA11")
+  listcodes[i] = list(oacodes)
+    }
+oacodes
+listcodes
+
+listed = data.frame(geo_codes_used)
+listed$listcodes <- sapply(listcodes, paste0, collapse=",")
+
+
+joined2 %>% group_by()
+
+listed$all_sites = sapply(all_sites, paste0, collapse=",") # this doesn't work because they are organised by site, not by LSOA
+
+listed
+
+
+
+# Join the list
+cbind(lsoa_data_grouped,listcodes)
 
 # Convert the lines into routes-------------------------------------------------
 
@@ -261,12 +361,22 @@ rnet_all_census = overline2(routes_to_site, "all")
 write_sf(rnet_all_census, "rnet-all-census.geojson")
 piggyback::pb_upload("rnet-all-census.geojson")
 
+piggyback::pb_download_url("rnet-all-census.geojson")
+rnet_all_census = read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/rnet-all-census.geojson")
+
+## Make busyness map
+
+##I need the maps to be weighted by the OA data on number of commuters (as the stats already are) In STARS a similar re-splitting of lines was done. Check this.
+
 
 library(tmap)
 tmap_mode("view")
 
 tm_shape(rnet_go_dutch_census) +
   tm_lines("go_dutch", lwd = "go_dutch", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
+
+tm_shape(rnet_all_census) +
+  tm_lines("all", lwd = "all", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
 
 tm_shape(rnet_all_census) +
   tm_lines("all", lwd = "all", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
@@ -291,6 +401,7 @@ r_whole_routes = r_whole_routes %>%
 
 
 ##Get mean metrics for each LSOA
+# these are weighted by the number of commuters on each route
 
 r_whole_weighted = r_whole_routes %>%
   group_by(geo_code1, site) %>%
@@ -301,71 +412,31 @@ r_whole_weighted = r_whole_routes %>%
             max_busyness = weighted.mean(max_busyness,all))
 r_whole_weighted
 
-# Get OA level data
-
-piggyback::pb_download_url("oa-level-data.geojson")
-oa_level_data = read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/oa-level-data.geojson")
-
-oa_data_grouped_walk = oa_level_data %>%
-  filter(CELL == 10) %>%
-  group_by(code) %>%
-  summarise(
-    obs_value = sum(OBS_VALUE)
-  ) %>%
-  st_drop_geometry()
-
-oa_data_grouped_cycle = oa_level_data %>%
-  filter(CELL == 9) %>%
-  group_by(code) %>%
-  summarise(
-    obs_value = sum(OBS_VALUE)
-  ) %>%
-  st_drop_geometry()
-
-oa_data_grouped_all = oa_level_data %>%
-  filter(CELL == 0) %>%
-  group_by(code) %>%
-  summarise(
-    obs_value = sum(OBS_VALUE)
-  ) %>%
-  st_drop_geometry()
-
-oa_data_grouped_home = oa_level_data %>%
-  filter(CELL == 1) %>%
-  group_by(code) %>%
-  summarise(
-    obs_value = sum(OBS_VALUE)
-  ) %>%
-  st_drop_geometry()
-
-oa_data_grouped_unempl = oa_level_data %>%
-  filter(CELL == 12) %>%
-  group_by(code) %>%
-  summarise(
-    obs_value = sum(OBS_VALUE)
-  ) %>%
-  st_drop_geometry()
-
-oa_data_grouped_commuters = inner_join(oa_data_grouped_all,oa_data_grouped_home, by = "code") %>%
-  rename(all = obs_value.x, home = obs_value.y) %>%
-  inner_join(oa_data_grouped_unempl, by = "code") %>%
-  rename(unemployed = obs_value) %>%
-  mutate(commuters = all - home - unemployed) %>%
-  select(code,commuters)
-
-oa_data_grouped = inner_join(oa_data_grouped_cycle, oa_data_grouped_walk, by = "code") %>%
-  rename(cycle = obs_value.x, walk = obs_value.y) %>%
-  inner_join(oa_data_grouped_commuters, by = "code")
-
 ##Join OA and LSOA data
 
-full_dataset_by_lsoa = inner_join(r_whole_weighted,oa_data_grouped, by = c("geo_code1" = "code"))
+oa_data_no_geo = oa_data_grouped %>%
+  st_drop_geometry()
+full_dataset_by_lsoa = inner_join(r_whole_weighted,oa_data_no_geo, by = c("geo_code1" = "code")) %>%
+  mutate(perc_cycle = cycle/commuters, perc_walk = walk/commuters)
 
 ##weight by the number of commuters in OAs within each LSOA (eg avoid Wynyard being dominated by Hartlepool)
 
-full_dataset_by_site =
+full_dataset_by_site = full_dataset_by_lsoa %>%
+  group_by(site) %>%
+  summarise(
+    mean_speed = weighted.mean(mean_speed, commuters),
+    mean_distance = weighted.mean(mean_distance, commuters),
+    mean_busyness = weighted.mean(mean_busyness, commuters),
+    max_busyness = weighted.mean(max_busyness, commuters),
+    perc_cycle = weighted.mean(perc_cycle, commuters),
+    perc_walk = weighted.mean(perc_walk, commuters)
+  )
+
+full_dataset_by_site
+
 
 summary(r_whole_routes[r_whole_routes$site == 1,])
+
 
 
 # create model estimating mode share --------------------------------------
