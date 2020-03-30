@@ -460,6 +460,15 @@ Show maps for all journeys to work and those under Go Dutch scenario.
 
 # Model
 
+## New developments in the 2011 Census
+
+```{r}
+routes_to_site = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/routes-all-sites.geojson")
+plot(sf::st_geometry(routes_to_site))
+names(routes_to_site)
+```
+
+
 # Conclusions
 
 The ACTON project has successfully demonstrated the benefits of providing actionable evidence about active travel provision associated with new developments in a single place.

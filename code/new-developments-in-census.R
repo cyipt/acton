@@ -314,6 +314,7 @@ cbind(lsoa_data_grouped,listcodes)
 
 library(cyclestreets)
 library(parallel)
+remotes::install_github("ropensci/stplanr", "par")
 library(stplanr)
 cl <- makeCluster(detectCores())
 clusterExport(cl, c("journey"))#not needed and not working
@@ -335,25 +336,97 @@ routes_to_site = sf::read_sf("https://github.com/cyipt/acton/releases/download/0
 
 ## Create route network
 
-# r_grouped_census = routes_to_site %>%
-#   rename(fx = start_longitude, fy = start_latitude, tx = finish_longitude, ty = finish_latitude) %>%
-#   group_by(fx, fy, tx, ty) %>%
-#   summarise(
-#     n = n(),
-#     all = mean(all),
-#     average_incline = sum(abs(diff(elevations))) / sum(distances),
-#     distance_m = sum(distances),
-#     busyness = mean(busyness)
-#   ) %>%
-#   ungroup()
-
+r_grouped_census = routes_to_site %>%
+  rename(fx = start_longitude, fy = start_latitude, tx = finish_longitude, ty = finish_latitude) %>%
+  # group_by(fx, fy, tx, ty) %>%
+  group_by(geo_code1, geo_code2) %>%
+  summarise(
+    n = n(),
+    all = mean(all),
+    average_incline = sum(abs(diff(elevations))) / sum(distances),
+    distance_m = sum(distances),
+    busyness = mean(busyness)
+  )
 
 # summary(r_grouped)
 
 # r_grouped_census$go_dutch = pct::uptake_pct_godutch(distance = r_grouped_census$distance_m, gradient = r_grouped_census$average_incline) *
-#   r_grouped_census$all
-# r_grouped_lines_census = r_grouped_census %>% st_cast("LINESTRING")
-# rnet_go_dutch_census = overline2(r_grouped_lines_census, "go_dutch")
+  # r_grouped_census$all
+r_grouped_census$govtarget = pct::uptake_pct_govtarget(distance = r_grouped_census$distance_m, gradient = r_grouped_census$average_incline) *
+  r_grouped_census$all
+# join-on data from census to get % cycling and % walking for each OD pair (route)
+names(lines_both)
+nrow(lines_both)
+nrow(r_grouped_census)
+mapview::mapview(sf::st_geometry(lines_both)[33]) +
+  mapview::mapview(sf::st_geometry(r_grouped_census)[33])
+
+r_grouped_census_joined = inner_join(r_grouped_census, sf::st_drop_geometry(lines_both))
+r_grouped_census_joined$pcycle = r_grouped_census_joined$bicycle / r_grouped_census_joined$all
+
+# train a model to discover parameters associated with business
+
+# trying to replicate PCT model in GLM - not picking up logit link...
+m_cycling = glm(pcycle ~
+                  distance_m + # d1
+                  sqrt(distance_m)  +  # d2
+                  distance_m^2 + # d3
+                  average_incline +    # h1
+                  distance_m * average_incline +  # i1
+                  sqrt(distance_m) * average_incline, # i2
+                  data = sf::st_drop_geometry(r_grouped_census_joined),
+                family = quasibinomial(),
+                weights = all
+                  )
+r_grouped_census_joined$pcycle[r_grouped_census_joined$pcycle < 0.001] = 0.001
+# boot::logit(0)
+# model 2: reproducing pct result on logit of pcycle
+m_cycling = lm(boot::logit(pcycle) ~
+                  distance_m + # d1
+                  sqrt(distance_m)  +  # d2
+                  distance_m^2 + # d3
+                  average_incline +    # h1
+                  distance_m * average_incline +  # i1
+                  sqrt(distance_m) * average_incline, # i2
+                data = sf::st_drop_geometry(r_grouped_census_joined),
+               weights = all
+               )
+
+# model 3: reproducing pct model with busyness
+m_cycling = lm(boot::logit(pcycle) ~
+                 distance_m + # d1
+                 sqrt(distance_m)  +  # d2
+                 distance_m^2 + # d3
+                 average_incline +    # h1
+                 distance_m * average_incline +  # i1
+                 sqrt(distance_m) * average_incline + # i2
+                 busyness,
+               data = sf::st_drop_geometry(r_grouped_census_joined),
+               weights = all
+)
+# model 3: reproducing pct model with busyness
+m_cycling = lm(boot::logit(pcycle) ~
+                 distance_m + # d1
+                 sqrt(distance_m)  +  # d2
+                 average_incline +    # h1
+                 distance_m * average_incline +  # i1
+                 busyness,
+               data = sf::st_drop_geometry(r_grouped_census_joined),
+               weights = all
+)
+fitted.values = m_cycling$fitted.values # for glm
+fitted.values = boot::inv.logit(m_cycling$fitted.values)
+
+summary(m_cycling)
+
+plot(r_grouped_census_joined$distance_m, fitted.values)
+plot(r_grouped_census_joined$average_incline, fitted.values)
+cor(r_grouped_census_joined$pcycle, fitted.values)^2 # explains around 7% of variability
+cor(r_grouped_census_joined$govtarget, fitted.values)^2 # explains around 22% of PCT base scenario
+plot(r_grouped_census_joined$govtarget / 100, fitted.values)^2
+
+r_grouped_lines_census = r_grouped_census %>% st_cast("LINESTRING")
+rnet_go_dutch_census = overline2(r_grouped_lines_census, "go_dutch")
 
 # routes_to_site_census = routes_to_site
 rnet_all_census = overline2(routes_to_site, "all")
