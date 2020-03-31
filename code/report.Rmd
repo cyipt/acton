@@ -12,7 +12,7 @@ citr::tidy_bib_file(rmd_file = "code/report.Rmd", messy_bibliography = "~/uaf/al
 
 
 ```{r setup, include=FALSE, message = FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE, out.width = "80%", fig.align = "center")
 library(acton)
 library(knitr)
 library(dplyr)
@@ -171,7 +171,7 @@ remotes::install_github("cyipt/acton")
 
 After it has been installed, the package can be loaded as follows:
 
-```{r}
+```{r, echo=TRUE}
 library(acton)
 ```
 
@@ -190,8 +190,7 @@ The function `get_jts_data()` enables the downloading of journey time statistics
 
 The package can be used to get data on new developments as follows:
 
-```{r, eval = FALSE}
-library(acton)
+```{r, eval=FALSE, echo=TRUE}
 # data from specific postcode
 planning_data = get_planit_data(pcode = "LS2 9JT", limit = 2, app_size = "large")
 planning_data
@@ -220,7 +219,7 @@ Data from [PlanIt](https://www.planit.org.uk/), accessed using the `acton` R pac
 The following code gets and subsets the relevant PlanIt data for Leeds. This extracts large applications where planning consent has been granted:
 
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo=TRUE}
 applications_leeds = get_planit_data(
   limit = 500,
   auth = "Leeds",
@@ -250,7 +249,7 @@ The result in the `applications_leeds` object contains much rich information abo
 
 From the 281 large planning applications identified as described above, we have selected four of these for which the descriptions reveal a high number of homes have been consented. These can be seen in the following table:
 
-```{r}
+```{r, echo=TRUE}
 ids = c(
   "13/05235/FU",
   "15/04151/FU",
@@ -270,7 +269,7 @@ applications_case_study %>%
 
 An overview of the four case study sites is shown in the map below.
 
-```{r}
+```{r, echo=TRUE}
 applications_case_study$site = as.factor(c("Tyersal","Micklefield","Leeds Climate Innovation District","Allerton Bywater"))
 #tm_shape(applications_case_study) +
   #tm_dots(col = "site", size = 0.1)  +
@@ -299,7 +298,7 @@ We can see that this is classified by PlanIt.org.uk as a large application. The 
 Available fields include links to the full PlanIt record and to planning application information from Leeds City Council. 
 
 
-```{r}
+```{r, echo=TRUE}
 allerton_bywater = applications_case_study[applications_case_study$uid == "13/05235/FU",]
 allerton_bywater$description
 allerton_bywater$link
@@ -314,7 +313,7 @@ allerton_bywater$decided_date
 
 The original outline planning application for the entire Allerton Bywater Millennium Community can be found as follows. This was submitted in November 2000 and approved in August 2002.
 
-```{r}
+```{r, echo=TRUE}
 allerton_bywater_original = get_planit_data(query_type = "planapplic", query_value = "33/311/00/OT@Leeds")
 allerton_bywater_original$description
 allerton_bywater_original$url
@@ -427,7 +426,7 @@ The JTS record travel times from the population weighted centroid of each LSOA. 
 
 Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. As explained earlier, we have combined these three statistics to produce a single measure weighted by the number of jobs. This is shown in the maps below.
 
-```{r, eval = FALSE}
+```{r, eval=FALSE}
 tm_shape(zones_leeds) +
   tm_polygons(c("weightedJobsPTt","weightedJobsCyct","weightedJobsCart"),palette="-cividis",title = c("Walk/PT","Cycle","Car") +
   tm_shape(applications_case_study) +
@@ -472,7 +471,7 @@ Show maps for all journeys to work and those under Go Dutch scenario.
 
 ## New developments in the 2011 Census
 
-```{r}
+```{r, out.width="80%"}
 # routes_to_site = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/routes-all-sites.geojson")
 # plot(sf::st_geometry(routes_to_site))
 # names(routes_to_site)
