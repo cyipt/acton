@@ -50,7 +50,7 @@ This is illustrated in the simple schematic below.
 
 In bringing together these datasets, there are several outputs that we have developed. The further development of these and their use for policy purposes was discussed in workshop held in Leeds in March 2020. 
 
-Firstly, we have created an R package named `acton` that is freely available for download from github. This contains functions that aid with the import of planning application and accessibility data.
+Firstly, we have created an R package named `acton` that is freely available for download from GitHub. This contains functions that aid the import of planning application and accessibility data.
 
 Building on this, we have then produced a case study to investigates the accessibility for active travel of a set of new housing developments in Leeds, West Yorkshire.
 
@@ -74,47 +74,47 @@ Moreover, there is no systematic national recording of where homes are being bui
 
 ### New developments data from PlanIt
 
-To address this problem, the [PlanIt website](https://www.planit.org.uk/) was developed. The website aggregates and maps current and historic planning applications across the UK, scraping the data from all planning authority websites (98% coverage) and making them accessible from a single source. PlanIt collects all types of planning application, not just applications relating to house building.
+To address this problem, the [PlanIt website](https://www.planit.org.uk/) was developed, prior to the present study. The website aggregates and maps current and historic planning applications across the UK, scraping the data from all planning authority websites (98% coverage), converting this into a single database, and making them accessible from a single source. PlanIt collects all types of planning application, not just applications relating to house building. Updates are made daily.
 
 ### PlanIt API
 
-PlanIt has an API which allows users to search for planning applications using a range of criteria, such as address, planning authority, bounding box, date or planning application identifier.
+PlanIt has an API (application programming interface, a data interface usable within a programming context) which allows users to search for planning applications using a range of criteria, such as address, planning authority, bounding box, date or planning application identifier.
 
-As part of ACTON, the PlanIt API has been improved to make it easier to search for particular types of planning application. These updates are currently available on the [dev](https://dev.planit.org.uk/) version of PlanIt. We have derived terms for the following searchable fields:
+As part of ACTON (and using funding from an Innovate UK project, StreetFocus), the PlanIt API has been improved to make it easier to search for particular types of planning application. These updates are currently available on the development version of [PlanIt](https://www.planit.org.uk/). We have derived terms for the following searchable fields:
 
-- 'app_size' (for the scale of the proposed development) - including
-    Large = Major, large scale developments
-    Medium = Other applications involving multiple dwellings
+- 'app_size' (for the scale of the proposed development) - including:
+    Large = Major, large scale developments;
+    Medium = Other applications involving multiple dwellings;
     Small = All others
 
-- 'app_state' (to show the decision status for the application) - including
-    Undecided = The application is currently active, no decision has been made
-    Permitted = The application was approved
-    Conditions = The application was approved, but conditions were imposed
-    Rejected = The application was refused
-    Withdrawn = The application was withdrawn before a decision was taken
-    Referred = The application was referred to government or to another authority
-    Unresolved = The application is no longer active but no decision was made eg split decision
+- 'app_state' (to show the decision status for the application) - including:
+    Undecided = The application is currently active, no decision has been made;
+    Permitted = The application was approved;
+    Conditions = The application was approved, but conditions were imposed;
+    Rejected = The application was refused;
+    Withdrawn = The application was withdrawn before a decision was taken;
+    Referred = The application was referred to government or to another authority;
+    Unresolved = The application is no longer active but no decision was made eg split decision;
     Other = Status not known
 
-- 'app_type' (to show the type of application) - including
-    Full = Full and householder planning applications
-    Outline = Proposals prior to a full application, including assessments, scoping opinions, outline applications etc
-    Amendment = Amendments or alterations arising from existing or previous applications
-    Conditions = Discharge of conditions imposed on existing applications
-    Heritage = Conservation issues and listed buildings
-    Trees = Tree and hedge works
-    Advertising = Advertising and signs
-    Telecoms = Telecommunications including phone masts
+- 'app_type' (to show the type of application) - including:
+    Full = Full and householder planning applications;
+    Outline = Proposals prior to a full application, including assessments, scoping opinions, outline applications etc.;
+    Amendment = Amendments or alterations arising from existing or previous applications;
+    Conditions = Discharge of conditions imposed on existing applications;
+    Heritage = Conservation issues and listed buildings;
+    Trees = Tree and hedge works;
+    Advertising = Advertising and signs;
+    Telecoms = Telecommunications including phone masts;
     Other = All other types eg agricultural, electrical
 
-The number of homes built in a residential development is a key factor of interest, along with any other facilities being constructed. This information is difficult to obtain as it is often missing from the description fields of planning applications. We have therefore used proxy methods for assessing scale, such as the number of documents within a planning application and the length of time allowed before deciding a large scale application. For example, criteria for 'app_size' = large include applications having >100 attached documents and >60 statutory days allowed before a decision is made on the application.
+The number of homes built in a residential development is a key factor of interest, along with any other facilities being constructed. This information is difficult to obtain as it is often not present in the description field of planning applications. Proxy methods for assessing scale have therefore been used, such as the number of documents within a planning application and the length of time allowed before deciding a large scale application. For example, criteria for 'app_size' = large include applications having >100 attached documents and >60 statutory days allowed before a decision is made on the application.
 
-The further development of PlanIt will have many benefits beyond the ACTON project since it will make it easier to find planning applications of interest for all sorts of purposes. For example, [StreetFocus.uk](https://www.streetfocus.uk/) makes PlanIt data more widely available, with a public-facing website that brings the PlanIt planning application data together with street-level data on proposals for local improvements to the public realm or to active travel infrastructure. This can be used to help identify places where new developments could potentially help to fund nearby improvements through mechanisms such as S106 agreements. Enabling these synergies to be identified at an early stage in the planning process allows great scope for assisting both the proponents of local improvement schemes and the developers who desire greater certainty in terms of the level of S106 funding they are called on to provide.
+The ongoing further development of PlanIt will have many benefits beyond the ACTON project, since it will make it easier to find planning applications of interest for all sorts of purposes. For example, [StreetFocus.uk](https://www.streetfocus.uk/) makes PlanIt data more widely available, with a public-facing website that brings the PlanIt planning application data together with street-level data on proposals for local improvements to the public realm or to active travel infrastructure. This can be used to help identify places where new developments could potentially help to fund nearby improvements through mechanisms such as S106 agreements. Enabling these synergies to be identified at an early stage in the planning process allows great scope for assisting both the proponents of local improvement schemes and the developers who desire greater certainty in terms of the level of S106 funding they are called on to provide.
 
 ## Accessibility data
 
-In assessing the suitability of a proposed site for residential development, one of the most important questions will be how accessible the site is. The provision of local services and community facilities is a key enabler of active travel. It's no use building top quality cycle and walking provision within the site if residents are presented with a 30 minute walk from their homes to reach the local shops. 
+In assessing the suitability of a proposed site for residential development, one of the most important questions will be how accessible the site is. The provision of local services and community facilities is a key enabler of active travel. It is no use building top quality cycle and walking provision within the site if residents are presented with a 30 minute walk from their homes to reach the local shops.
 
 Journey time statistics published by the Department for Transport record the time taken to reach a range of services such as primary and secondary schools, food stores, GP surgeries, centres of employment and town centres. These are available at the geographical level of the LSOA, an area covering a population of approximately 1500 people or 650 households. The statistics include journey times by three different modes of travel:
 
@@ -142,11 +142,11 @@ As part of ACTON we have improved the way in which the busyness of particular ty
 
 ### Busyness estimation
 
-New homes often lie close to major roads and bypasses that act as barriers which limit or discourage sustainable modes of travel. By contrast there are sometimes long established bridleways, towpaths or other paths which could be upgraded. 
+New homes often lie close to major roads and bypasses that act as barriers which limit or discourage sustainable modes of travel. By contrast, there are sometimes long established bridleways, towpaths or other paths which could be upgraded.
 
 CycleStreets uses a key metric, known as the 'busyness score' to rate each section of a cycle route. This provides a measure of the cycleability of the route and helps determine the suitability of it for each type of rider. It takes into account many features of the streets and paths used for cycling, including the width, speed limits, presence of cycle lanes or dedicated cycle tracks, and obstacles along the way.
 
-As part of ACTON the process of setting the busyness score by CycleStreets is being further developed. This will allow it to take account of new types of cycling infrastructure and move towards a model that distinguishes between eight different states of cycling that are fundamental to how people choose a route.
+As part of ACTON the process of setting the busyness score by CycleStreets is being further developed. This will allow it to take account of new types of cycling infrastructure and move towards a model that distinguishes between eight different states of cycling that are fundamental to how people choose a route. For instance, this enables a distinction between high-quality, dedicated cycle infrastructure, and shared-use paths which involve sharing often narrow space with pedestrians.
 
 We estimate the busyness of the roads which constitute routes from our case study sites to workplaces or other key destinations. The improved busyness score will allow calculation of an index of average road busyness for the area surrounding each site.
 
@@ -158,7 +158,7 @@ An existing limitation of the PCT is the fact that because it uses 2011 census d
 
 # R package
 
-One of the outputs of this project is the `acton` R package. Available on github, this includes two main functions that allow users to download planning application and accessibility data.
+One of the outputs of this project is the `acton` R package. Available as open source code on GitHub, this includes two main functions that allow users to download planning application and accessibility data, for use in subsequent analysis.
 
 ## Installing the R package
 
@@ -182,7 +182,7 @@ The `acton` package contains two main functions:
 - get_planit_data()
 - get_jts_data()
 
-The function `get_planit_data()` allows R users to search for planning application data without having to use the PlanIt API. This can broaden the use of PlanIt by helping to make its data easier to obtain.
+The function `get_planit_data()` allows R users to search for planning application data without having to use the PlanIt API directly. This can broaden the use of PlanIt by helping to make its data easier to obtain.
 
 The function `get_jts_data()` enables the downloading of journey time statistics. There are 44 tables in total, most of which include annual data for the years 2014 to 2019. 
 
@@ -465,7 +465,7 @@ We can see there are some roads used by commuters from these sites that are part
 
 ## Journeys to work
 
-Show maps for all journeys to work and those under Go Dutch scenario.
+Show maps for all journeys to work and those under the 'Go Dutch' scenario.
 
 # Model
 
