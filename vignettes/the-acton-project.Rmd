@@ -1,6 +1,8 @@
 ---
 title: "Active Transport Options for New Housing Developments: The ACTON project"
 author: "Joey Talbot, Robin Lovelace, Martin Lucas-Smith, Andrew Speakman and Simon Nuttall"
+# output: pdf_document # for pdf report
+# output: pdf_html # for html report
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{The ACTON project}
@@ -49,7 +51,7 @@ This is illustrated in the schematic diagram below.
 ```{r flow2, echo=FALSE, fig.cap="Schematic diagram of the ACTON project and its four main data sources (boxes)"}
 # to be updated in readme code
 # knitr::include_graphics("https://cyipt.github.io/acton/reference/figures/README-workflow-1.png")
-knitr::include_graphics("https://cyipt.github.io/acton/reference/figures/README-workflow-1.png")
+knitr::include_graphics("../man/figures/README-workflow-1.png")
 ```
 
 In bringing together these datasets, there are several outputs that we have developed. The further development of these and their use for policy purposes was discussed in workshop held in Leeds in March 2020. 
