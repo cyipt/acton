@@ -24,7 +24,8 @@ u = "https://borders.ukdataservice.ac.uk/ukborders/easy_download/prebuilt/shape/
 
 oas = ukboundaries::duraz(u = u)
 # oas_pwc = ??? # would be good to get population weighted - it exists, not urgent priority
-oas_centroids = sf::st_centroid(oas)
+oas_centroids = sf::st_centroid(oas) %>%
+  st_transform(4326)
 oas
 
 # leeds_27700 = ukboundaries::leeds %>% sf::st_transform(27700)
@@ -146,10 +147,10 @@ geo_codes_used = unique(oa_level_data$code)
 write_sf(oa_level_data, "oa-level-data.geojson")
 piggyback::pb_upload("oa-level-data.geojson")
 
-# Group OA level data by OA
-
 piggyback::pb_download_url("oa-level-data.geojson")
 oa_level_data = read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/oa-level-data.geojson")
+
+# Group OA level data by LSOA
 
 oa_data_grouped_walk = oa_level_data %>%
   filter(CELL == 10) %>%
@@ -222,6 +223,9 @@ lines_all = rbind(lines_leeds, lines_warrington, lines_northeast, lines_wiltshir
 write_sf(lines_all, "lines-all.geojson")
 piggyback::pb_upload("lines-all.geojson")
 
+piggyback::pb_download_url("lines-all.geojson")
+lines_all = read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/lines-all.geojson")
+
 ##
 
 # Where geo_code1 is in the site
@@ -229,7 +233,8 @@ lines_1 = lines_all %>%
   select(geo_code1, geo_code2, all, bicycle, foot, car_driver
          # dutch_slc etc
   ) %>%
-  filter(geo_code1 %in% geo_codes_used)
+  filter(geo_code1 %in% geo_codes_used) %>%
+  st_drop_geometry()
 
 dim(lines_1)
 
@@ -241,7 +246,8 @@ lines_2 = lines_all %>%
          # dutch_slc etc
   ) %>%
   filter(geo_code2 %in% geo_codes_used & geo_code1 %notin% geo_codes_used) %>%
-  rename(geo_code1 = geo_code2, geo_code2 = geo_code1)
+  rename(geo_code1 = geo_code2, geo_code2 = geo_code1) %>%
+  st_drop_geometry()
 
 dim(lines_2)
 
@@ -256,7 +262,69 @@ site_id = oa_level_data %>%
 
 lines_both = inner_join(lines_both,site_id, by = c("geo_code1" = "code"))
 
-mapview(lines_both)
+
+# Get OA centroids marking the middle of each new homes site --------------
+
+# Group data by OA
+oa_sites = oa_level_data %>%
+  select(GEOGRAPHY, site, code) %>%
+  group_by(GEOGRAPHY)
+oa_sites = unique(oa_sites)
+dim(oa_sites)
+
+# Should really get the population weighted centroid for each OA, and then find the centre of the cluster of points to represent the whole site, but I haven't found an R function that picks the centre of a cluster of points yet
+# http://geoportal.statistics.gov.uk/datasets/output-areas-december-2011-population-weighted-centroids
+# toa = oa_sites[oa_sites$site==9,] %>%
+#   st_transform(27700)
+# tc = st_centroid(toa$geometry)
+# mapview(tc)
+
+# Pick the OA centroids that are closest to the centre of each site
+chosen_oas = c("E00061995", "E00175567", "E00170565", "E00173169", "E00169240", "E00168166", "E00173784", "E00171320", "E00166484", "E00163618", "E00165967", "E00166084")
+
+pickme = filter(oa_sites, GEOGRAPHY %in% chosen_oas)
+
+mapview(pickme)
+
+pickme_centroids = pickme %>%
+  st_drop_geometry()
+pickme_centroids = inner_join(oas_centroids, pickme_centroids, by = c("geo_code" = "GEOGRAPHY"))
+dim(pickme_centroids)
+mapview(pickme_centroids)
+
+## Adding origin geo_codes from pickme_centroids
+lines_both_oac = lines_both %>% inner_join(pickme_centroids, by = "site") %>%
+  select(geo_code, geo_code2, all, bicycle, foot, site)
+
+destinations = lines_both[,2] %>%
+  inner_join(lsoas_centroids, by = c("geo_code2" = "geo_code")) # this misses destinations that are in a different PCT region. Perhaps I could extract the geometry data from lines_both to avoid this problem
+destinations = st_as_sf(as.data.frame(destinations))
+
+# I need to remove the lines where the destination is in a different PCT region, because these are messing up the od2line() function
+dim(lines_both_oac)
+lines_both_oac = lines_both_oac %>%
+  filter(geo_code2 %in% destinations$geo_code2)
+dim(lines_both_oac)
+
+
+
+lines_correct_origin = stplanr::od2line(flow = lines_both_oac, # for the od data
+                                    zones = pickme_centroids, # for the origin geometry
+                                    destinations = destinations # for the destination geometry
+                                        )
+
+mapview(lines_correct_origin)
+
+write_sf(lines_correct_origin, "lines-correct-origin.geojson")
+piggyback::pb_upload("lines-correct-origin.geojson")
+
+
+###
+
+plot(lines_to_sites)
+mapview::mapview(lines_to_sites)
+
+#mapview(lines_both)
 
 write_sf(lines_both, "lines-all-sites.geojson")
 piggyback::pb_upload("lines-all-sites.geojson")
@@ -268,8 +336,8 @@ lines_both = read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/lin
 ###And join with oa_data_grouped and replace `all` `bicycle` `foot` with appropriate proportions
 
 ##grouping the LSOA data for totals for travel to work by foot, bicycle, all, so I can know how much to reduce them by proportionally.
-# lsoa_data_grouped = lines_both %>%
-#   group_by(geo_code1, SITE) %>%
+# lsoa_data_grouped = lines_correct_origin %>%
+#   group_by(geo_code1, site) %>%
 #   summarise(
 #     all = sum(all),
 #     bicycle = sum(bicycle),
@@ -312,14 +380,14 @@ cbind(lsoa_data_grouped,listcodes)
 
 # Convert the lines into routes-------------------------------------------------
 
+remotes::install_github("ropensci/stplanr", "par")
 library(cyclestreets)
 library(parallel)
-remotes::install_github("ropensci/stplanr", "par")
 library(stplanr)
-cl <- makeCluster(detectCores())
-clusterExport(cl, c("journey"))#not needed and not working
-routes_to_site = route(l = lines_both, route_fun = cyclestreets::journey
-                       # , cl = cl  # this isn't working, why?
+cl = makeCluster(detectCores())
+clusterExport(cl, c("journey"))
+routes_to_site = route(l = lines_correct_origin, route_fun = cyclestreets::journey
+                       , cl = cl  # this only works with the "par" version of stplanr
                        )
 
 mapview(routes_to_site)
@@ -337,15 +405,13 @@ routes_to_site = sf::read_sf("https://github.com/cyipt/acton/releases/download/0
 ## Create route network
 
 r_grouped_census = routes_to_site %>%
-  rename(fx = start_longitude, fy = start_latitude, tx = finish_longitude, ty = finish_latitude) %>%
-  # group_by(fx, fy, tx, ty) %>%
   group_by(geo_code1, geo_code2) %>%
   summarise(
-    n = n(),
+    n = n(), # is this the number of route segments each route contains?
     all = mean(all),
     average_incline = sum(abs(diff(elevations))) / sum(distances),
     distance_m = sum(distances),
-    busyness = mean(busyness)
+    busyness = mean(busyness) %>%
   )
 
 # summary(r_grouped)
@@ -355,18 +421,19 @@ r_grouped_census = routes_to_site %>%
 r_grouped_census$govtarget = pct::uptake_pct_govtarget(distance = r_grouped_census$distance_m, gradient = r_grouped_census$average_incline) *
   r_grouped_census$all
 # join-on data from census to get % cycling and % walking for each OD pair (route)
-names(lines_both)
-nrow(lines_both)
+names(lines_correct_origin)
+nrow(lines_correct_origin)
 nrow(r_grouped_census)
-mapview::mapview(sf::st_geometry(lines_both)[33]) +
+mapview::mapview(sf::st_geometry(lines_correct_origin)[33]) +
   mapview::mapview(sf::st_geometry(r_grouped_census)[33])
 
-r_grouped_census_joined = inner_join(r_grouped_census, sf::st_drop_geometry(lines_both))
+r_grouped_census_joined = inner_join(r_grouped_census, sf::st_drop_geometry(lines_correct_origin))
 r_grouped_census_joined$pcycle = r_grouped_census_joined$bicycle / r_grouped_census_joined$all
 
 # train a model to discover parameters associated with business
 
 # trying to replicate PCT model in GLM - not picking up logit link...
+# I think the glm picks up the logit link fine
 m_cycling = glm(pcycle ~
                   distance_m + # d1
                   sqrt(distance_m)  +  # d2
@@ -374,26 +441,26 @@ m_cycling = glm(pcycle ~
                   average_incline +    # h1
                   distance_m * average_incline +  # i1
                   sqrt(distance_m) * average_incline, # i2
-                  data = sf::st_drop_geometry(r_grouped_census_joined),
+                data = sf::st_drop_geometry(r_grouped_census_joined),
                 family = quasibinomial(),
                 weights = all
                   )
 r_grouped_census_joined$pcycle[r_grouped_census_joined$pcycle < 0.001] = 0.001
 # boot::logit(0)
 # model 2: reproducing pct result on logit of pcycle
-m_cycling = lm(boot::logit(pcycle) ~
-                  distance_m + # d1
-                  sqrt(distance_m)  +  # d2
-                  distance_m^2 + # d3
-                  average_incline +    # h1
-                  distance_m * average_incline +  # i1
-                  sqrt(distance_m) * average_incline, # i2
-                data = sf::st_drop_geometry(r_grouped_census_joined),
-               weights = all
-               )
+# m_cycling3 = lm(boot::logit(pcycle) ~
+#                   distance_m + # d1
+#                   sqrt(distance_m)  +  # d2
+#                   distance_m^2 + # d3
+#                   average_incline +    # h1
+#                   distance_m * average_incline +  # i1
+#                   sqrt(distance_m) * average_incline, # i2
+#                 data = sf::st_drop_geometry(r_grouped_census_joined),
+#                weights = all
+#                )
 
 # model 3: reproducing pct model with busyness
-m_cycling = lm(boot::logit(pcycle) ~
+m_cycling2 = glm(pcycle ~
                  distance_m + # d1
                  sqrt(distance_m)  +  # d2
                  distance_m^2 + # d3
@@ -402,20 +469,22 @@ m_cycling = lm(boot::logit(pcycle) ~
                  sqrt(distance_m) * average_incline + # i2
                  busyness,
                data = sf::st_drop_geometry(r_grouped_census_joined),
+               family = quasibinomial(),
                weights = all
 )
 # model 3: reproducing pct model with busyness
-m_cycling = lm(boot::logit(pcycle) ~
+m_cycling4 = glm(pcycle ~
                  distance_m + # d1
                  sqrt(distance_m)  +  # d2
                  average_incline +    # h1
                  distance_m * average_incline +  # i1
                  busyness,
                data = sf::st_drop_geometry(r_grouped_census_joined),
+               family = quasibinomial(),
                weights = all
 )
 fitted.values = m_cycling$fitted.values # for glm
-fitted.values = boot::inv.logit(m_cycling$fitted.values)
+# fitted.values = boot::inv.logit(m_cycling$fitted.values)
 
 summary(m_cycling)
 
