@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The ACTON project • acton</title>
+<title>Active Transport Options for New Housing Developments: The ACTON project • acton</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="The ACTON project">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Active Transport Options for New Housing Developments: The ACTON project">
 <meta property="og:description" content="acton">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -66,7 +66,7 @@
       <a href="../articles/indicators.html">Indicators of active transport provision</a>
     </li>
     <li>
-      <a href="../articles/the-acton-project.html">The ACTON project</a>
+      <a href="../articles/the-acton-project.html">Active Transport Options for New Housing Developments: The ACTON project</a>
     </li>
   </ul>
 </li>
@@ -91,7 +91,8 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>The ACTON project</h1>
+      <h1 data-toc-skip>Active Transport Options for New Housing Developments: The ACTON project</h1>
+                        <h4 class="author">Joey Talbot, Robin Lovelace, Martin Lucas-Smith, Andrew Speakman and Simon Nuttall</h4>
             
       
       <small class="dont-index">Source: <a href="https://github.com/cyipt/acton/blob/master/vignettes/the-acton-project.Rmd"><code>vignettes/the-acton-project.Rmd</code></a></small>
@@ -101,63 +102,388 @@
 
     
     
-<div id="active-transport-options-for-new-developments" class="section level1">
+<div id="introduction" class="section level1">
 <h1 class="hasAnchor">
-<a href="#active-transport-options-for-new-developments" class="anchor"></a>Active Transport Options for New Developments</h1>
-<p>This project will provide evidence for local authorities, developers and civil society groups to support planning and investment in sustainable transport infrastructure that enables trips to new developments to be made by active modes, walking and cycling. It will deliver three main things: evidence on the current level of provision for walking and cycling; evidence on the potential for likely trips to and from the new developments to be made by walking and cycling (including cycling potential to major trip attractors such as cities centres and cycling potential to public transport links); and visualisations of the options available to improve provision.</p>
-<p>See the package website at <a href="https://cyipt.github.io/acton/" class="uri">https://cyipt.github.io/acton/</a></p>
-<div id="project-stages" class="section level2">
+<a href="#introduction" class="anchor"></a>Introduction</h1>
+<p>Decarbonising the transport sector is an urgent yet challenging component of climate change mitigation policies worldwide <span class="citation">(Schock et al. 2007)</span>. Transport sector is now the UK’s largest source of carbon emissions. Unlike other sectors the UK transport system has not seen any reduction in recent years <span class="citation">(Hickman and Banister 2007)</span>. On the contrary, the construction of new residential developments having locations and designs that promote car dependency risks locking us into increasingly unsustainable lifestyles in future.</p>
+<div id="components-of-the-acton-project" class="section level2">
 <h2 class="hasAnchor">
-<a href="#project-stages" class="anchor"></a>Project stages</h2>
-<div id="current-level-of-provision" class="section level3">
-<h3 class="hasAnchor">
-<a href="#current-level-of-provision" class="anchor"></a>Current level of provision:</h3>
+<a href="#components-of-the-acton-project" class="anchor"></a>Components of the ACTON project</h2>
+<p>The ACTON project brings together several key datasets to answer the question how can we improve new housing developments for walking and cycling?</p>
+<p>To do this we use a range of transport and planning data:</p>
 <ul>
-<li>(issue #11, #7) first we need to identify the locations of the developments we are researching. Basic info required will include the date of completion and the number of homes. We will focus on larger developments in Leeds, Cambridge and the A350 corridor - those of 500+ homes - but we could also look at medium-sized developments.</li>
-<li>(issue #8) start with an example housing development in Leeds as a prototype dataset.</li>
-<li>scoping exercise on the nature of OSM data. Is the development properly mapped? Compare Mastermap v OSM, to validate the OSM data.</li>
-<li>routability validation. THe quality of new data can vary. We must be sure the data is topographically correct. Are nodes connected? A visual check can be made using Keepright.</li>
-<li>(issue #5, #10) identify destinations. These could include shops, schools, health centres, major employment centres, town centres, and public transport (rail/bus) nodes.</li>
-<li>identify routes from the development to these destinations. Perhaps use the development centroid as the starting point of these routes?</li>
-<li>(issue #9) assess the quality of the provision. In OSM we can see whether cycleways are separate from traffic/pedestrians, the width etc. We can use this to categorise the quality of cycle infrastructure, potentially into 8 classes or ‘cycling states’.</li>
-<li>similarly, investigate how to categorise the quality of walking routes.</li>
-<li>compare quality of walking/cycle provision within the development with provision beyond the development boundary, on the routes used for accessing key destinations.</li>
-<li>compare the distance of crow-fly v on-road walk/cycle routes</li>
-<li>compare existing walk/cycle route times with driving route times</li>
-<li>(issue #6) look at severance of walk/cycle routes (eg by major roads that cut off the development from nearby areas)</li>
+<li>planning applications</li>
+<li>census data</li>
+<li>accessibility statistics</li>
+<li>routing algorithms</li>
+<li>cycle uptake models</li>
+</ul>
+<p>This is illustrated in the schematic diagram below.</p>
+<div class="figure" style="text-align: center">
+<img src="https://cyipt.github.io/acton/reference/figures/README-workflow-1.png" alt="Schematic diagram of the ACTON project and its four main data sources (boxes)" width="80%"><p class="caption">
+Schematic diagram of the ACTON project and its four main data sources (boxes)
+</p>
+</div>
+<p>In bringing together these datasets, there are several outputs that we have developed. The further development of these and their use for policy purposes was discussed in workshop held in Leeds in March 2020.</p>
+<p>Firstly, we have created an R package named <code>acton</code> that is freely available for download from GitHub. This contains functions that aid the import of planning application and accessibility data.</p>
+<p>Building on this, we have then produced a case study to investigates the accessibility for active travel of a set of new housing developments in Leeds, West Yorkshire.</p>
+<p>Finally, we begun to develop a prototype indicator model designed to predict active travel mode share in new housing developments.</p>
+<p>These will each be described in greater detail in the remaining sections of this report.</p>
+</div>
+</div>
+<div id="the-acton-datasets" class="section level1">
+<h1 class="hasAnchor">
+<a href="#the-acton-datasets" class="anchor"></a>The ACTON Datasets</h1>
+<p>There are a series of datasets which have either been further developed as part of the ACTON project, or where the ACTON project has helped to open them up for a wider range of uses. We will describe these sources in turn.</p>
+<div id="planning-application-data---the-planit-website" class="section level2">
+<h2 class="hasAnchor">
+<a href="#planning-application-data---the-planit-website" class="anchor"></a>Planning application data - the PlanIt website</h2>
+<p>To investigate the accessibility of new housing developments, it is first necessary to identify where new homes are being built.</p>
+<p>There are over 300 local planning authorities across England, including metropolitan boroughs, London boroughs, unitary authorities and non-metropolitan districts. Each of these planning authorities keeps an online record of current and historic planning applications, such as applications to build new homes. The data recorded will include information about the status of the application, the site location, related applications, a description of the proposed application and links to download associated files such as masterplans and transport assessments.</p>
+<p>However, there is no real standardisation of how these planning applications are recorded. For example, various different types of application exist, such as full, outline, reserved matters, and applications for tree works. Yet the codes that record application type vary from one council to the next.</p>
+<p>Moreover, there is no systematic national recording of where homes are being built. The Ministry of Housing, Communities &amp; Local Government produces statistics on the number of new build housing starts and completions in each local planning authority, but this simply records the number of homes in each district. There is no indication of exactly where these homes are being built.</p>
+<div id="new-developments-data-from-planit" class="section level3">
+<h3 class="hasAnchor">
+<a href="#new-developments-data-from-planit" class="anchor"></a>New developments data from PlanIt</h3>
+<p>To address this problem, the <a href="https://www.planit.org.uk/">PlanIt website</a> was developed, prior to the present study. The website aggregates and maps current and historic planning applications across the UK, scraping the data from all planning authority websites (98% coverage), converting this into a single database, and making them accessible from a single source. PlanIt collects all types of planning application, not just applications relating to house building. Updates are made daily.</p>
+</div>
+<div id="planit-api" class="section level3">
+<h3 class="hasAnchor">
+<a href="#planit-api" class="anchor"></a>PlanIt API</h3>
+<p>PlanIt has an API (application programming interface, a data interface usable within a programming context) which allows users to search for planning applications using a range of criteria, such as address, planning authority, bounding box, date or planning application identifier.</p>
+<p>As part of ACTON (and using funding from an Innovate UK project, StreetFocus), the PlanIt API has been improved to make it easier to search for particular types of planning application. These updates are currently available on the development version of <a href="https://www.planit.org.uk/">PlanIt</a>. We have derived terms for the following searchable fields:</p>
+<ul>
+<li><p>‘app_size’ (for the scale of the proposed development) - including: Large = Major, large scale developments; Medium = Other applications involving multiple dwellings; Small = All others</p></li>
+<li><p>‘app_state’ (to show the decision status for the application) - including: Undecided = The application is currently active, no decision has been made; Permitted = The application was approved; Conditions = The application was approved, but conditions were imposed; Rejected = The application was refused; Withdrawn = The application was withdrawn before a decision was taken; Referred = The application was referred to government or to another authority; Unresolved = The application is no longer active but no decision was made eg split decision; Other = Status not known</p></li>
+<li><p>‘app_type’ (to show the type of application) - including: Full = Full and householder planning applications; Outline = Proposals prior to a full application, including assessments, scoping opinions, outline applications etc.; Amendment = Amendments or alterations arising from existing or previous applications; Conditions = Discharge of conditions imposed on existing applications; Heritage = Conservation issues and listed buildings; Trees = Tree and hedge works; Advertising = Advertising and signs; Telecoms = Telecommunications including phone masts; Other = All other types eg agricultural, electrical</p></li>
+</ul>
+<p>The number of homes built in a residential development is a key factor of interest, along with any other facilities being constructed. This information is difficult to obtain as it is often not present in the description field of planning applications. Proxy methods for assessing scale have therefore been used, such as the number of documents within a planning application and the length of time allowed before deciding a large scale application. For example, criteria for ‘app_size’ = large include applications having &gt;100 attached documents and &gt;60 statutory days allowed before a decision is made on the application.</p>
+<p>The ongoing further development of PlanIt will have many benefits beyond the ACTON project, since it will make it easier to find planning applications of interest for all sorts of purposes. For example, <a href="https://www.streetfocus.uk/">StreetFocus.uk</a> makes PlanIt data more widely available, with a public-facing website that brings the PlanIt planning application data together with street-level data on proposals for local improvements to the public realm or to active travel infrastructure. This can be used to help identify places where new developments could potentially help to fund nearby improvements through mechanisms such as S106 agreements. Enabling these synergies to be identified at an early stage in the planning process allows great scope for assisting both the proponents of local improvement schemes and the developers who desire greater certainty in terms of the level of S106 funding they are called on to provide.</p>
+</div>
+</div>
+<div id="accessibility-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#accessibility-data" class="anchor"></a>Accessibility data</h2>
+<p>In assessing the suitability of a proposed site for residential development, one of the most important questions will be how accessible the site is. The provision of local services and community facilities is a key enabler of active travel. It is no use building top quality cycle and walking provision within the site if residents are presented with a 30 minute walk from their homes to reach the local shops.</p>
+<p>Journey time statistics published by the Department for Transport record the time taken to reach a range of services such as primary and secondary schools, food stores, GP surgeries, centres of employment and town centres. These are available at the geographical level of the LSOA, an area covering a population of approximately 1500 people or 650 households. The statistics include journey times by three different modes of travel:</p>
+<ul>
+<li>car</li>
+<li>bicycle</li>
+<li>a combined walking / public transport measure, showing the fastest journey time by these two modes (either walking alone or walking and public transport in combination).</li>
+</ul>
+<p>The <code>acton</code> R package (described below) includes a function for the import of the these journey time statistics into R.</p>
+</div>
+<div id="demographic-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#demographic-data" class="anchor"></a>Demographic data</h2>
+<p>We have obtained demographic data from the 2011 census, including the method of travel for journeys to work and journey origin-destination data. With its comprehensive national coverage, this allows us to investigate journey origins and destinations with the high geographical resolution necessary to differentiate new housing developments from neighbouring areas of older housing stock.</p>
+<p>Of course, the ACTON project aims to enable the investigation of the many new residential developments that have been built since 2011 and for which travel data is not available, but to do this we need an existing data source to allow methods to be developed. Census data is a key data source for the Propensity to Cycle Tool, and we use the <code>pct</code> R package to access this data.</p>
+</div>
+<div id="routing-algorithms" class="section level2">
+<h2 class="hasAnchor">
+<a href="#routing-algorithms" class="anchor"></a>Routing algorithms</h2>
+<p>Sources such as census data provide information on journey origins and destinations. Missing from this are the routes that are used to travel from the origin to the destination. These routes must be inferred using routing algorithms.</p>
+<p><a href="https://www.cyclestreets.net/">CycleStreets.net</a> is a journey planner focusing on routes used for cycling. With a public facing website, CycleStreets helps people find a cycle route that is right for them. Such routes range from direct routes appropriate for confident on-road cyclists to quieter routes for people who want to avoid busy roads.</p>
+<p>CycleStreets includes three routing options, generating ‘fast’, ‘balanced’ or ‘quiet’ cycle routes between journey origins and destinations. For the fast routes, journey time is minimised, with no consideration given to factors such as the busyness of the roads. For the quiet routes, a parameter called “busyness” is minimised. The balanced routes use a combination of these two approaches, in which both journey time and busyness are taken into account.</p>
+<p>As part of ACTON we have improved the way in which the busyness of particular types of cycle lane and path is classified, leading to better quality routing of ‘quiet’ routes through a more accurate characterisation of the cycleability of route segments.</p>
+<div id="busyness-estimation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#busyness-estimation" class="anchor"></a>Busyness estimation</h3>
+<p>New homes often lie close to major roads and bypasses that act as barriers which limit or discourage sustainable modes of travel. By contrast, there are sometimes long established bridleways, towpaths or other paths which could be upgraded.</p>
+<p>CycleStreets uses a key metric, known as the ‘busyness score’ to rate each section of a cycle route. This provides a measure of the cycleability of the route and helps determine the suitability of it for each type of rider. It takes into account many features of the streets and paths used for cycling, including the width, speed limits, presence of cycle lanes or dedicated cycle tracks, and obstacles along the way.</p>
+<p>As part of ACTON the process of setting the busyness score by CycleStreets is being further developed. This will allow it to take account of new types of cycling infrastructure and move towards a model that distinguishes between eight different states of cycling that are fundamental to how people choose a route. For instance, this enables a distinction between high-quality, dedicated cycle infrastructure, and shared-use paths which involve sharing often narrow space with pedestrians.</p>
+<p>We estimate the busyness of the roads which constitute routes from our case study sites to workplaces or other key destinations. The improved busyness score will allow calculation of an index of average road busyness for the area surrounding each site.</p>
+</div>
+</div>
+<div id="uptake-scenarios" class="section level2">
+<h2 class="hasAnchor">
+<a href="#uptake-scenarios" class="anchor"></a>Uptake scenarios</h2>
+<p>The Propensity to Cycle Tool (PCT) is a well-used national tool for cycle infrastructure planning. It uses 2011 Census data and CycleStreets.net routing services to map current cycling levels at high geographic resolutions, as well as a series of scenarios modeling how cycle usage could increase. These scenarios take the same journey origin-destination data from the 2011 Census and estimate how the share of journeys by different methods of travel could change. In particular, the Go Dutch scenario models what would happen if people in the UK cycled as much as those in the Netherlands, accounting for journey distance and hilliness.</p>
+<p>An existing limitation of the PCT is the fact that because it uses 2011 census data it does not account for new developments built since 2011. ACTON exists to bridge this gap, by applying PCT methods to new residential areas. An example of this can be found in the Leeds case study described below, where we take journey to work origin-destination data for the LSOAs (Lower Super Output Areas) closest to the new housing sites, reroute this to move the journey origin to the sites themselves rather than the nearest LSOA centroid, then apply the Go Dutch scenario to investigate expected levels of cycling uptake for these routes.</p>
+</div>
+</div>
+<div id="r-package" class="section level1">
+<h1 class="hasAnchor">
+<a href="#r-package" class="anchor"></a>R package</h1>
+<p>One of the outputs of this project is the <code>acton</code> R package. Available as open source code on GitHub, this includes two main functions that allow users to download planning application and accessibility data, for use in subsequent analysis.</p>
+<div id="installing-the-r-package" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installing-the-r-package" class="anchor"></a>Installing the R package</h2>
+<p>To install the <code>acton</code> package, run the following commands in an R console (see <a href="https://docs.ropensci.org/stats19/articles/stats19-training-setup.html">here</a> for information on installing R):</p>
+<p>After it has been installed, the package can be loaded as follows:</p>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">acton</span>)</pre></body></html></div>
+</div>
+<div id="functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#functions" class="anchor"></a>Functions</h2>
+<p>The <code>acton</code> package contains two main functions:</p>
+<ul>
+<li>get_planit_data()</li>
+<li>get_jts_data()</li>
+</ul>
+<p>The function <code><a href="../reference/get_planit_data.html">get_planit_data()</a></code> allows R users to search for planning application data without having to use the PlanIt API directly. This can broaden the use of PlanIt by helping to make its data easier to obtain.</p>
+<p>The function <code><a href="../reference/get_jts_data.html">get_jts_data()</a></code> enables the downloading of journey time statistics. There are 44 tables in total, most of which include annual data for the years 2014 to 2019.</p>
+</div>
+<div id="brief-demo" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brief-demo" class="anchor"></a>Brief demo</h2>
+<p>The package can be used to get data on new developments as follows:</p>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co"># data from specific postcode</span>
+<span class="no">planning_data</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_planit_data.html">get_planit_data</a></span>(<span class="kw">pcode</span> <span class="kw">=</span> <span class="st">"LS2 9JT"</span>, <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">app_size</span> <span class="kw">=</span> <span class="st">"large"</span>)
+<span class="no">planning_data</span>
+<span class="no">planning_data</span>$<span class="no">name</span>
+<span class="no">planning_data</span>$<span class="no">description</span>
+
+<span class="no">jts_tables</span>
+<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">jts_tables</span>$<span class="no">table_title</span>)
+
+<span class="no">accessibility_data</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_jts_data.html">get_jts_data</a></span>()
+<span class="fu"><a href="../reference/get_jts_data.html">get_jts_data</a></span>(<span class="kw">table</span> <span class="kw">=</span> <span class="st">"jts0101"</span>, <span class="kw">year</span> <span class="kw">=</span> <span class="fl">2017</span>, <span class="kw">skip</span> <span class="kw">=</span> <span class="fl">7</span>)</pre></body></html></div>
+</div>
+<div id="further-r-instructions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#further-r-instructions" class="anchor"></a>Further R instructions</h2>
+<p>To get routes from CycleStreets.net, you will need to set up an API key called CYCLESTREETS. This can be done with <code><a href="https://usethis.r-lib.org/reference/edit.html">usethis::edit_r_environ()</a></code>, as documented here: <a href="https://docs.ropensci.org/stplanr/reference/route_cyclestreets.html#details" class="uri">https://docs.ropensci.org/stplanr/reference/route_cyclestreets.html#details</a></p>
+</div>
+</div>
+<div id="leeds-case-study" class="section level1">
+<h1 class="hasAnchor">
+<a href="#leeds-case-study" class="anchor"></a>Leeds case study</h1>
+<p>Using the data sources described above, we have produced a case study of new housing developments in Leeds. We investigate accessibility across the city for active travel modes. Using CycleStreets.net for journey routing, we look at journeys to work for the residents of four new housing sites.</p>
+<div id="planning-applications" class="section level2">
+<h2 class="hasAnchor">
+<a href="#planning-applications" class="anchor"></a>Planning applications</h2>
+<p>Data from <a href="https://www.planit.org.uk/">PlanIt</a>, accessed using the <code>acton</code> R package, was used to identify recent large planning applications within the city boundaries:</p>
+<p>The following code gets and subsets the relevant PlanIt data for Leeds. This extracts large applications where planning consent has been granted:</p>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">applications_leeds</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_planit_data.html">get_planit_data</a></span>(
+  <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">500</span>,
+  <span class="kw">auth</span> <span class="kw">=</span> <span class="st">"Leeds"</span>,
+  <span class="kw">app_size</span> <span class="kw">=</span> <span class="st">"large"</span>,
+  <span class="kw">app_state</span> <span class="kw">=</span> <span class="st">"permitted"</span>
+  )</pre></body></html></div>
+<!-- ```{r} -->
+<!-- knitr::include_graphics("https://user-images.githubusercontent.com/52210872/77913768-c12a8a80-728c-11ea-963f-e6bad2decd38.png") -->
+<!-- ``` -->
+<p>The result in the <code>applications_leeds</code> object contains much rich information about the planning applications.</p>
+<!-- ```{r} -->
+<!-- DT::datatable(applications_leeds[c(3, 4, 5, 8, 9, 15)]) -->
+<!-- ``` -->
+</div>
+<div id="the-four-chosen-sites" class="section level2">
+<h2 class="hasAnchor">
+<a href="#the-four-chosen-sites" class="anchor"></a>The four chosen sites</h2>
+<p>From the 281 large planning applications identified as described above, we have selected four of these for which the descriptions reveal a high number of homes have been consented. These can be seen in the following table:</p>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">ids</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
+  <span class="st">"13/05235/FU"</span>,
+  <span class="st">"15/04151/FU"</span>,
+  <span class="st">"15/00415/FU"</span>,
+  <span class="st">"15/01973/FU"</span>
+)
+<span class="no">applications_case_study</span> <span class="kw">=</span> <span class="no">applications_leeds</span>[
+  <span class="no">applications_leeds</span>$<span class="no">uid</span> <span class="kw">%in%</span> <span class="no">ids</span>,
+]
+<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">applications_case_study</span>)</pre></body></html></div>
+<pre><code>## [1] 4</code></pre>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">applications_case_study</span> <span class="kw">%&gt;%</span>
+  <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html">st_drop_geometry</a></span>() <span class="kw">%&gt;%</span>
+  <span class="fu">select</span>(<span class="no">description</span>, <span class="no">url</span>) <span class="kw">%&gt;%</span>
+  <span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>()</pre></body></html></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">description</th>
+<th align="left">url</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Residential development of 270 houses with associated roads, sewers and infrastructure</td>
+<td align="left"><a href="https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=NRFIZQJB17S00" class="uri">https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=NRFIZQJB17S00</a></td>
+</tr>
+<tr class="even">
+<td align="left">Development of 290 Residential Dwellings with open space and associated infrastructure</td>
+<td align="left"><a href="https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=NMH4Q7JB17S00" class="uri">https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=NMH4Q7JB17S00</a></td>
+</tr>
+<tr class="odd">
+<td align="left">312 dwellings including new open space and associated works</td>
+<td align="left"><a href="https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=NIMQG0JB1SR00" class="uri">https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=NIMQG0JB1SR00</a></td>
+</tr>
+<tr class="even">
+<td align="left">Full application for 189 new homes including affordable houses and elderly persons apartments, commercial facilities including retail and industrial/employment units and outline application for additional commercial uses</td>
+<td align="left"><a href="https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=MW37KEJB17S00" class="uri">https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=MW37KEJB17S00</a></td>
+</tr>
+</tbody>
+</table>
+<p>An overview of the four case study sites is shown in the map below.</p>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">applications_case_study</span>$<span class="no">site</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Tyersal"</span>,<span class="st">"Micklefield"</span>,<span class="st">"Leeds Climate Innovation District"</span>,<span class="st">"Allerton Bywater"</span>))
+<span class="co">#tm_shape(applications_case_study) +</span>
+  <span class="co">#tm_dots(col = "site", size = 0.1)  +</span>
+ <span class="co"># tm_basemap(server = "CartoDB.Positron")</span></pre></body></html></div>
+<p>We will describe the Allerton Bywater application in more depth and use it to illustrate the data returned by the PlanIt API, before describing the other development sites.</p>
+</div>
+<div id="allerton-bywater-millennium-community" class="section level2">
+<h2 class="hasAnchor">
+<a href="#allerton-bywater-millennium-community" class="anchor"></a>Allerton Bywater Millennium Community</h2>
+<ul>
+<li><p>One of a series of Millennium Communities, the development at Allerton Bywater was announced by John Prescott in 1998. The homes lie on the site of Allerton Colliery, which was the last remaining colliery in Leeds when it closed in 1995. Prior to the development, Allerton Bywater village had a population of around 4,000, and the aim was to incorporate the whole of the village in the project, rather than solely focusing on the site itself. For example, a £500,000 community fund was made available to the parish council to spend on local projects, and community buildings in the village were also refurbished. In total there was £24 million upfront public investment by English Partnerships and the HCA. This included drainage, site clearance and decontamination.</p></li>
+<li><p>The development incorporates new industrial and office units as well as homes, with high environmental standards for both of these. A design code was adopted and development of the site began in 2005. The industrial units at the east of the site were the first in the UK to meet the BREEAM ‘Excellent’ standard, while the new homes were built to the EcoHomes ‘Excellent’ standard or the Code for Sustainable Homes Level 3. A number of homes were built under a ‘Design for Manufacture’ competition for a construction cost of no more than £60,000.</p></li>
+<li><p>In total there are 562 homes in the Millennium Community. A Sustrans cycle route passes through the site and there is good walking and cycling access to the rest of the village and its surrounds, although parts of the cycle route can get very muddy in winter. Local services such as shops, pubs, cafes, a primary school, park, community centre and nature reserve lie on the edge of the site or within easy walking distance.</p></li>
+<li><p>Plans for buses to be routed through the site did not materialise. The village lies eight miles southeast of Leeds and the buses to Leeds run roughly every 30 minutes. There are more frequent services to Garforth and Castleford. The nearest railway station is Castleford, at 43 minutes walk, with a well-built riverside path to follow. Much of the Millennium Community is designed as a HomeZone with shared space streets, although these tend to fill up with parked cars. Initial phases were built with 1.6 parking spaces per dwelling, but the amount of on-street parking lead to calls to increase this and later phases have 2 parking spaces per dwelling.</p></li>
+</ul>
+<div id="data-on-the-application" class="section level3">
+<h3 class="hasAnchor">
+<a href="#data-on-the-application" class="anchor"></a>Data on the application</h3>
+<p>The planning application we have selected for Allerton Bywater relates to the final phase of the Millennium Community. This includes 189 homes and has planning consent 13/05235/FU.</p>
+<p>We can see that this is classified by PlanIt.org.uk as a large application. The application was submitted in December 2013 by Keepmoat Homes and the Homes and Communities Agency and was approved in November 2014.</p>
+<p>Available fields include links to the full PlanIt record and to planning application information from Leeds City Council.</p>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">allerton_bywater</span> <span class="kw">=</span> <span class="no">applications_case_study</span>[<span class="no">applications_case_study</span>$<span class="no">uid</span> <span class="kw">==</span> <span class="st">"13/05235/FU"</span>,]
+<span class="no">allerton_bywater</span>$<span class="no">description</span></pre></body></html></div>
+<pre><code>## [1] "Full application for 189 new homes including affordable houses and elderly persons apartments, commercial facilities including retail and industrial/employment units and outline application for additional commercial uses"</code></pre>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">allerton_bywater</span>$<span class="no">link</span></pre></body></html></div>
+<pre><code>## [1] "https://dev.planit.org.uk/planapplic/Leeds/13/05235/FU/"</code></pre>
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">allerton_bywater</span>$<span class="no">url</span></pre></body></html></div>
+<pre><code>## [1] "https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=MW37KEJB17S00"</code></pre>
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">allerton_bywater</span>$<span class="no">app_state</span></pre></body></html></div>
+<pre><code>## [1] "Permitted"</code></pre>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">allerton_bywater</span>$<span class="no">app_size</span></pre></body></html></div>
+<pre><code>## [1] "Large"</code></pre>
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">allerton_bywater</span>$<span class="no">app_type</span></pre></body></html></div>
+<pre><code>## [1] "Full"</code></pre>
+<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">allerton_bywater</span>$<span class="no">address</span></pre></body></html></div>
+<pre><code>## [1] "Park Lane Allerton Bywater WF10"</code></pre>
+<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">allerton_bywater</span>$<span class="no">start_date</span></pre></body></html></div>
+<pre><code>## [1] "2013-12-05"</code></pre>
+<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">allerton_bywater</span>$<span class="no">decided_date</span></pre></body></html></div>
+<pre><code>## [1] "2014-11-10"</code></pre>
+<p>The original outline planning application for the entire Allerton Bywater Millennium Community can be found as follows. This was submitted in November 2000 and approved in August 2002.</p>
+<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">allerton_bywater_original</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_planit_data.html">get_planit_data</a></span>(<span class="kw">query_type</span> <span class="kw">=</span> <span class="st">"planapplic"</span>, <span class="kw">query_value</span> <span class="kw">=</span> <span class="st">"33/311/00/OT@Leeds"</span>)</pre></body></html></div>
+<pre><code>## Getting data from https://dev.planit.org.uk/planapplic/33/311/00/OT@Leeds/geojson?limit=6&amp;bbox=&amp;end_date=2020-03-31&amp;start_date=2000-02-01&amp;pg_sz=6</code></pre>
+<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="no">allerton_bywater_original</span>$<span class="no">description</span></pre></body></html></div>
+<pre><code>## [1] "Outline application to erect residential commercial and community developments with infrastructure and green space"</code></pre>
+<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="no">allerton_bywater_original</span>$<span class="no">url</span></pre></body></html></div>
+<pre><code>## [1] "https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=ZZZTK2JBXE141"</code></pre>
+<div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="no">allerton_bywater_original</span>$<span class="no">start_date</span></pre></body></html></div>
+<pre><code>## [1] "2000-11-13"</code></pre>
+<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="no">allerton_bywater_original</span>$<span class="no">decided_date</span></pre></body></html></div>
+<pre><code>## [1] "2002-08-20"</code></pre>
+</div>
+<div id="leeds-climate-innovation-district" class="section level3">
+<h3 class="hasAnchor">
+<a href="#leeds-climate-innovation-district" class="anchor"></a>Leeds Climate Innovation District</h3>
+<ul>
+<li><p>Situated on the banks of the River Aire, close to Leeds city centre, the Climate Innovation District is being developed by Leeds-based firm Citu. The development is built around high environmental standards including low carbon timber-framed homes with high levels of insulation and a Mechanical Ventilation Heat Recovery System preventing the need for gas central heating. The homes will be served by solar panels on-site via a private-wire network; a Community Interest Company will be set up that will own the utility cooperative.</p></li>
+<li><p>A new foot/cycle bridge has been erected over the River Aire to connect the two halves of the site and allow a traffic-free route into the city centre. On-site car parking is in an undercroft; these spaces have to be purchased at a cost of £15,000. Cycle parking is available on-site.</p></li>
+<li><p>In total there will be over 520 new homes. Phase 1 to the north of the river will contain 312 dwellings, with planning consent 15/00415/FU.</p></li>
 </ul>
 </div>
-<div id="potential-for-cycling-and-walking" class="section level3">
+<div id="micklefield" class="section level3">
 <h3 class="hasAnchor">
-<a href="#potential-for-cycling-and-walking" class="anchor"></a>Potential for cycling and walking:</h3>
+<a href="#micklefield" class="anchor"></a>Micklefield</h3>
 <ul>
-<li>this would assess optimal cycling and walking from development locations, based on their location in regard to the destinations we have already identified.</li>
-<li>use the fastest route on CycleStreets, but also look at crow-fly distances because new developments are often characterised by very circuitous roads. See <a href="http://www.makingspaceforcycling.org/#principles" class="uri">http://www.makingspaceforcycling.org/#principles</a> for an example of this.</li>
-<li>(issue #9) look at the difference between the quiet and fast routes, as identified by CycleStreets.</li>
-<li>model cycle potential as a function of time taken to cycle v time taken to drive</li>
-<li>(issue #4) for many developments (especially those that tend to represent urban sprawl) the two key areas for improvement are likely to be improvements to major roads to allow cycling/walking, and the creation of new links that don’t exist at present.</li>
+<li><p>Planning consent 15/01973/FU is for a development of 292 residential dwellings by house builders Barratt Homes and Persimmon Homes on greenfield land in the village of Micklefield, nine miles east of Leeds.</p></li>
+<li><p>The site does not fully meet the Leeds Core Strategy Accessibility Standards. There are bus stops nearby but the services are infrequent, with only an hourly service increasing to two an hour at peak times. However, Micklefield station allows access to Leeds city centre with a 20 minute journey time. The S106 agreement includes £8000 for improved cycle facilities at the station. It also mandates 15% affordable housing, of which 60% is for social rent.</p></li>
 </ul>
 </div>
-<div id="options-available-to-improve-provision" class="section level3">
+<div id="tyersal" class="section level3">
 <h3 class="hasAnchor">
-<a href="#options-available-to-improve-provision" class="anchor"></a>Options available to improve provision:</h3>
+<a href="#tyersal" class="anchor"></a>Tyersal</h3>
 <ul>
-<li>generate automated suggestions for innovations - these will be of two main types:
-<ol style="list-style-type: decimal">
-<li>identify the existing streets that should be improved and how they should be improved</li>
-<li>identify the new links that should be added</li>
-</ol>
+<li><p>Planning consent 15/04151/FU was gained in April 2016 for a 270 dwelling development on a greenfield site at Tysersal Lane by developer Gleeson Homes. Although the site lies within ths bounds of Leeds it is actually closer to Bradford, and the only road access is to west, via the Bradford suburb of Holme Wood. Regular buses to Bradford city centre pass by the edge of the site. The proposed parking provision is approximately two spaces per dwelling.</p></li>
+<li><p>The site does not fully meet the Leeds Core Strategy Accessibility Standards. A viability assessment was accepted, stating that the scheme could not provide all of the usual planning gain contributions (S106 monies), with no affordable homes due to be built on site. This is subject on ongoing review. Gleeson’s state that their homes are priced at a level so that they can be afforded by 90% of local people in full time employment.</p></li>
+</ul>
+</div>
+</div>
+<div id="accessibility-indicators" class="section level2">
+<h2 class="hasAnchor">
+<a href="#accessibility-indicators" class="anchor"></a>Accessibility indicators</h2>
+<p>Journey time statistics (JTS) are available from the Department for Transport recording accessibility at the geographical level of the LSOA (an area covering approximately 1500 residents or 650 households). The statistics include average minimum travel times to key local services and destinations, such as town centres, centres of employment, primary schools, secondary schools, food stores and GP surgeries.</p>
+<p>Travel times are calculated for three modes of travel - by car, by cycle, and by a mode that combines walking and public transport.</p>
+<p>In the following code we download data for journey times to the nearest centres of employment, town centres, food stores, primary schools, secondary schools and GP surgeries.</p>
+<p>There are several different statistics representing employment centres. We combine measures for employment centres of different sizes to create a single employment metric. We then combine this with the other journey time statistics to generate a single index of accessibility for each mode of travel.</p>
+<p>Now we can map the journey time statistics across Leeds and West Yorkshire.</p>
+<p>The first map shows the LSOA zones in Leeds together with their working age population. LSOA population should normally be relatively constant, but it is considerably higher in some Leeds LSOAs. This may be due to new residential developments built after the LSOA boundaries were set, in particular student accommodation and the recent growth in city centre living.</p>
+<p>The JTS record travel times from the population weighted centroid of each LSOA. New housing developments can be constructed anywhere within an LSOA, and may not necessarily be close to existing homes. To assess the accessibility of new developments we therefore use statistics that relate to the closest LSOA centroid. For our Tyersal Lane case study site, the closest LSOA centroid is in Bradford.</p>
+<p>Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. As explained earlier, we have combined these three statistics to produce a single measure weighted by the number of jobs. This is shown in the maps below.</p>
+<p>We have then combined the weighted access to employment measure with the measures for access to food stores, town centres, primary schools, secondary schools and GPs. By adding together all of these scores we have generated a single accessibility index for each mode of travel.</p>
+<p>According to these measures, there are many areas that have poor accessibility by active modes and public transport.</p>
+</div>
+<div id="route-busyness" class="section level2">
+<h2 class="hasAnchor">
+<a href="#route-busyness" class="anchor"></a>Route busyness</h2>
+<p>These maps use OD data for journeys to work from the LSOA centroid closest to each site, but changing to point of origin of the journeys so they start at our case study sites. The desire lines are converted to routes using ‘fastest journey’ option of the <code><a href="https://rdrr.io/pkg/cyclestreets/man/journey.html">cyclestreets::journey()</a></code> function.</p>
+<p>The thickness of the lines is proportional to the number of journeys (using all modes of transport), and the colour represents the busyness of the roads.</p>
+<p>We can see there are some roads used by commuters from these sites that are particularly busy. These include the A63 near Garforth and the A61 on the eastern edge of Leeds City Centre (circle these roads). However, an integral component of the Leeds Climate Innovation District is the construction of a new foot and cycle bridge over the River Aire. This bridge is already in place and allows residents to access Leeds city centre via an off-road riverside path, avoiding the need to use the A61. We should model how this bridge impacts the accessiblity of the site.</p>
+</div>
+<div id="journeys-to-work" class="section level2">
+<h2 class="hasAnchor">
+<a href="#journeys-to-work" class="anchor"></a>Journeys to work</h2>
+<p>Show maps for all journeys to work and those under the ‘Go Dutch’ scenario.</p>
+</div>
+</div>
+<div id="model" class="section level1">
+<h1 class="hasAnchor">
+<a href="#model" class="anchor"></a>Model</h1>
+<div id="new-developments-in-the-2011-census" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-developments-in-the-2011-census" class="anchor"></a>New developments in the 2011 Census</h2>
+<p><img src="77967965-2064bb00-72de-11ea-9e23-f703ccde4a39.png" width="80%" style="display: block; margin: auto;"></p>
+</div>
+</div>
+<div id="conclusions" class="section level1">
+<h1 class="hasAnchor">
+<a href="#conclusions" class="anchor"></a>Conclusions</h1>
+<p>The ACTON project has successfully demonstrated the benefits of providing actionable evidence about active travel provision associated with new developments in a single place. Although the input datasets used by ACTON were already in the public domain, they were scattered across multiple websites making them hard to access, let alone use as the basis of evidence-based decision-making.</p>
+<p>The project not only demonstrates the benefits of combining datasets using real-world examples, but it has also resulted in a new tool, the <code>acton</code> R package, that represents a step change in the ease-of-access to two vital sources of data policymakers and planners:</p>
+<ul>
+<li>Data on new developments is now far more accessible to researchers and others without needing to write API queries via the new function <code><a href="../reference/get_planit_data.html">get_planit_data()</a></code>
 </li>
-<li>assess what difference these innovations would make for cycling/walking uptake</li>
+<li>Data on accessibility is now far more accessible to researchers via the new function <code><a href="../reference/get_jts_data.html">get_jts_data()</a></code>, which gets data from DfT’s open Journey Time Statistics</li>
 </ul>
-</div>
-</div>
-<div id="outputs-and-outcomes" class="section level2">
+<p>These functions and the datasets they open-up provide a strong foundation for further work. We plan to work with potential funders to ensure that the value generated in the course of this 3 month project can be made available to everyone, either as a self-standing tool or as part of a wider toolkit for sustainable transport planning.</p>
+<p>Details about follow-on work will be posted on the project’s issue tracker at <a href="https://github.com/cyipt/acton/issues" class="uri">https://github.com/cyipt/acton/issues</a>, where interested stakeholders are welcome to post ideas and follow-on questions.</p>
+<div id="references" class="section level2">
 <h2 class="hasAnchor">
-<a href="#outputs-and-outcomes" class="anchor"></a>Outputs and Outcomes</h2>
-<p>We will generate clean data on cycling and walking provision and potential.</p>
-<p>Create prototype map visualising this data.</p>
-<p>A report setting out the policy impact - potentially a peer-reviewed paper.</p>
+<a href="#references" class="anchor"></a>References</h2>
+<!-- Original content: -->
+<!-- # Active Transport Options for New Developments -->
+<!-- This project will provide evidence for local authorities, developers and civil society groups to support planning and investment in sustainable transport infrastructure that enables trips to new developments to be made by active modes, walking and cycling. -->
+<!-- It will deliver three main things: evidence on the current level of provision for walking and cycling; evidence on the potential for likely trips to and from the new developments to be made by walking and cycling (including cycling potential to major trip attractors such as cities centres and cycling potential to public transport links); and visualisations of the options available to improve provision. -->
+<!-- See the package website at https://cyipt.github.io/acton/ -->
+<!-- ## Project stages -->
+<!-- ### Current level of provision: -->
+<!-- - (issue #11, #7) first we need to identify the locations of the developments we are researching. Basic info required will include the date of completion and the number of homes. We will focus on larger developments in Leeds, Cambridge and the A350 corridor - those of 500+ homes - but we could also look at medium-sized developments. -->
+<!-- - (issue #8) start with an example housing development in Leeds as a prototype dataset. -->
+<!-- - scoping exercise on the nature of OSM data. Is the development properly mapped? Compare Mastermap v OSM, to validate the OSM data.  -->
+<!-- - routability validation. THe quality of new data can vary. We must be sure the data is topographically correct. Are nodes connected? A visual check can be made using Keepright. -->
+<!-- - (issue #5, #10) identify destinations. These could include shops, schools, health centres, major employment centres, town centres, and public transport (rail/bus) nodes.  -->
+<!-- - identify routes from the development to these destinations. Perhaps use the development centroid as the starting point of these routes? -->
+<!-- - (issue #9) assess the quality of the provision. In OSM we can see whether cycleways are separate from traffic/pedestrians, the width etc. We can use this to categorise the quality of cycle infrastructure, potentially into 8 classes or 'cycling states'.  -->
+<!-- - similarly, investigate how to categorise the quality of walking routes. -->
+<!-- - compare quality of walking/cycle provision within the development with provision beyond the development boundary, on the routes used for accessing key destinations. -->
+<!-- - compare the distance of crow-fly v on-road walk/cycle routes -->
+<!-- - compare existing walk/cycle route times with driving route times -->
+<!-- - (issue #6) look at severance of walk/cycle routes (eg by major roads that cut off the development from nearby areas) -->
+<!-- ### Potential for cycling and walking: -->
+<!-- - this would assess optimal cycling and walking from development locations, based on their location in regard to the destinations we have already identified.  -->
+<!-- - use the fastest route on CycleStreets, but also look at crow-fly distances because new developments are often characterised by very circuitous roads. See http://www.makingspaceforcycling.org/#principles for an example of this. -->
+<!-- - (issue #9) look at the difference between the quiet and fast routes, as identified by CycleStreets.  -->
+<!-- - model cycle potential as a function of time taken to cycle v time taken to drive -->
+<!-- - (issue #4) for many developments (especially those that tend to represent urban sprawl) the two key areas for improvement are likely to be improvements to major roads to allow cycling/walking, and the creation of new links that don't exist at present. -->
+<!-- ### Options available to improve provision: -->
+<!-- - generate automated suggestions for innovations - these will be of two main types: -->
+<!--   1) identify the existing streets that should be improved and how they should be improved -->
+<!--   2) identify the new links that should be added  -->
+<!-- - assess what difference these innovations would make for cycling/walking uptake -->
+<!-- ## Outputs and Outcomes -->
+<!-- We will generate clean data on cycling and walking provision and potential. -->
+<!-- Create prototype map visualising this data. -->
+<!-- A report setting out the policy impact - potentially a peer-reviewed paper. -->
+<div id="refs" class="references">
+<div id="ref-hickman_looking_2007">
+<p>Hickman, Robin, and David Banister. 2007. “Looking over the Horizon: Transport and Reduced CO2 Emissions in the UK by 2030.” <em>Transport Policy</em> 14 (5): 377–87. <a href="https://doi.org/10.1016/j.tranpol.2007.04.005" class="uri">https://doi.org/10.1016/j.tranpol.2007.04.005</a>.</p>
+</div>
+<div id="ref-schock_energy_2007">
+<p>Schock, R N, A Adegbululgbe, J Fenhann, I Konstantinaviciute, W Moomaw, H B Nimir, B Schlamadinger, et al. 2007. “Energy Supply.” <em>Climate Change 2007: Mitigation. Contribution of Working Group III to IPCC’s Fourth Assessment Report</em>.</p>
+</div>
+</div>
 </div>
 </div>
   </div>
