@@ -262,15 +262,88 @@ site_id = oa_level_data %>%
 
 lines_both = inner_join(lines_both,site_id, by = c("geo_code1" = "code"))
 
+#mapview(lines_both)
 
-# Get OA centroids marking the middle of each new homes site --------------
+write_sf(lines_both, "lines-all-sites.geojson")
+piggyback::pb_upload("lines-all-sites.geojson")
 
-# Group data by OA
+piggyback::pb_download_url("lines-all-sites.geojson")
+lines_both = read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/lines-all-sites.geojson")
+
+
+# Reduce LSOA commute totals proportionately ------------------------------
+
+
+## Group data by OA
 oa_sites = oa_level_data %>%
   select(GEOGRAPHY, site, code) %>%
   group_by(GEOGRAPHY)
 oa_sites = unique(oa_sites)
 dim(oa_sites)
+
+
+###Join with oa_data_grouped and replace `all` `bicycle` `foot` with appropriate proportions
+
+##grouping the LSOA data for totals for travel to work by foot, bicycle, all, so I can know how much to reduce them by proportionally.
+# lsoa_data_grouped = lines_correct_origin %>%
+#   group_by(geo_code1, site) %>%
+#   summarise(
+#     all = sum(all),
+#     bicycle = sum(bicycle),
+#     foot = sum(foot)
+#   ) %>%
+#   st_drop_geometry()
+#
+# ##
+#
+# both_grouped = lsoa_data_grouped %>%
+#   inner_join(oa_data_grouped, by = c("geo_code1" = "code"))
+
+
+#Getting the total number of OAs contained within each LSOA
+oacodes = NULL
+listcodes = NULL
+for(i in 1:length(geo_codes_used)) {
+  ladcode = geo_codes_used[i]
+  oacodes = getsubgeographies(ladcode, "OA11")
+  listcodes[i] = list(oacodes)
+}
+oacodes
+listcodes
+
+oa_count = NULL
+for(i in 1:length(listcodes)) {
+  oa_count[i] = length(listcodes[[i]])
+}
+oa_count
+
+listed = data.frame(geo_codes_used)
+# listed$listcodes = sapply(listcodes, paste0, collapse=",")
+listed = cbind(listed,oa_count)
+listed
+
+#Getting the number of OAs in each LSOA that are actually within sites we have used
+used = as.data.frame(table(oa_sites$code)) %>%
+  rename(geo_codes_used = Var1, n_oa_in_site = Freq)
+
+#Getting the proportion of OAs in each LSOA that we have used
+proportions = inner_join(listed, used) %>%
+  mutate(p_used = n_oa_in_site/oa_count)
+proportions
+
+#Joining this with the od data
+lines_proportionate = lines_both %>%
+  inner_join(proportions, by = c("geo_code1" = "geo_codes_used"))
+
+# Making the OD data proportionate with the number of OAs used
+lines_proportionate = lines_proportionate %>%
+  mutate(all = all*p_used,
+         bicycle = bicycle*p_used,
+         foot = foot*p_used,
+         car_driver = car_driver*p_used)
+
+
+# Get OA centroids marking the middle of each new homes site --------------
 
 # Should really get the population weighted centroid for each OA, and then find the centre of the cluster of points to represent the whole site, but I haven't found an R function that picks the centre of a cluster of points yet
 # http://geoportal.statistics.gov.uk/datasets/output-areas-december-2011-population-weighted-centroids
@@ -293,11 +366,11 @@ dim(pickme_centroids)
 mapview(pickme_centroids)
 
 ## Adding origin geo_codes from pickme_centroids
-lines_both_oac = lines_both %>% inner_join(pickme_centroids, by = "site") %>%
+lines_both_oac = lines_proportionate %>% inner_join(pickme_centroids, by = "site") %>%
   select(geo_code, geo_code2, all, bicycle, foot, site)
 
-destinations = lines_both[,2] %>%
-  inner_join(lsoas_centroids, by = c("geo_code2" = "geo_code")) # this misses destinations that are in a different PCT region. Perhaps I could extract the geometry data from lines_both to avoid this problem
+destinations = lines_proportionate[,2] %>%
+  inner_join(lsoas_centroids, by = c("geo_code2" = "geo_code")) # this misses destinations that are in a different PCT region. This is biasing the model eg by preventing any long distance commutes from Chapelford to Liverpool/Manchester/St Helens. Perhaps I could extract the destination geometry from lines_proportionate to avoid this problem.
 destinations = st_as_sf(as.data.frame(destinations))
 
 # I need to remove the lines where the destination is in a different PCT region, because these are messing up the od2line() function
@@ -307,7 +380,7 @@ lines_both_oac = lines_both_oac %>%
 dim(lines_both_oac)
 
 
-
+##Get the desire lines
 lines_correct_origin = stplanr::od2line(flow = lines_both_oac, # for the od data
                                     zones = pickme_centroids, # for the origin geometry
                                     destinations = destinations # for the destination geometry
@@ -318,65 +391,6 @@ mapview(lines_correct_origin)
 write_sf(lines_correct_origin, "lines-correct-origin.geojson")
 piggyback::pb_upload("lines-correct-origin.geojson")
 
-
-###
-
-plot(lines_to_sites)
-mapview::mapview(lines_to_sites)
-
-#mapview(lines_both)
-
-write_sf(lines_both, "lines-all-sites.geojson")
-piggyback::pb_upload("lines-all-sites.geojson")
-
-piggyback::pb_download_url("lines-all-sites.geojson")
-lines_both = read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/lines-all-sites.geojson")
-
-####Replace the geometry with more appropriate OA centroids (one for each LSOA or site) so the routing is done from the right places. I can copy the methods from leeds_routes.R for this.
-###And join with oa_data_grouped and replace `all` `bicycle` `foot` with appropriate proportions
-
-##grouping the LSOA data for totals for travel to work by foot, bicycle, all, so I can know how much to reduce them by proportionally.
-# lsoa_data_grouped = lines_correct_origin %>%
-#   group_by(geo_code1, site) %>%
-#   summarise(
-#     all = sum(all),
-#     bicycle = sum(bicycle),
-#     foot = sum(foot)
-#   ) %>%
-#   st_drop_geometry()
-#
-# ##
-#
-# both_grouped = lsoa_data_grouped %>%
-#   inner_join(oa_data_grouped, by = c("geo_code1" = "code"))
-
-
-#reducing totals proportionally by the number of OAs being used
-
-oacodes = NULL
-listcodes = NULL
-for(i in 1:length(geo_codes_used)) {
-  ladcode = geo_codes_used[i]
-  oacodes = getsubgeographies(ladcode, "OA11")
-  listcodes[i] = list(oacodes)
-    }
-oacodes
-listcodes
-
-listed = data.frame(geo_codes_used)
-listed$listcodes <- sapply(listcodes, paste0, collapse=",")
-
-
-joined2 %>% group_by()
-
-listed$all_sites = sapply(all_sites, paste0, collapse=",") # this doesn't work because they are organised by site, not by LSOA
-
-listed
-
-
-
-# Join the list
-cbind(lsoa_data_grouped,listcodes)
 
 # Convert the lines into routes-------------------------------------------------
 
@@ -396,13 +410,13 @@ mapview(routes_to_site)
 routes_to_site$busyness = routes_to_site$busynance / routes_to_site$distances
 routes_to_site = routes_to_site %>% mutate(speed=distances/time)
 
-write_sf(routes_to_site, "routes-all-sites.geojson")
-piggyback::pb_upload("routes-all-sites.geojson")
+write_sf(routes_to_site, "routes-all-sites-new.geojson")
+piggyback::pb_upload("routes-all-sites-new.geojson")
 
-routes_to_site = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/routes-all-sites.geojson")
+routes_to_site = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/routes-all-sites-new.geojson")
 
 
-## Create route network
+## Group route segments into routes
 
 r_grouped_census = routes_to_site %>%
   group_by(geo_code1, geo_code2) %>%
@@ -430,6 +444,9 @@ mapview::mapview(sf::st_geometry(lines_correct_origin)[33]) +
 r_grouped_census_joined = inner_join(r_grouped_census, sf::st_drop_geometry(lines_correct_origin))
 r_grouped_census_joined$pcycle = r_grouped_census_joined$bicycle / r_grouped_census_joined$all
 
+
+r_grouped_census_joined$pcycle[r_grouped_census_joined$pcycle < 0.001] = 0.001
+
 # train a model to discover parameters associated with business
 
 # trying to replicate PCT model in GLM - not picking up logit link...
@@ -445,7 +462,7 @@ m_cycling = glm(pcycle ~
                 family = quasibinomial(),
                 weights = all
                   )
-r_grouped_census_joined$pcycle[r_grouped_census_joined$pcycle < 0.001] = 0.001
+
 # boot::logit(0)
 # model 2: reproducing pct result on logit of pcycle
 # m_cycling3 = lm(boot::logit(pcycle) ~
@@ -490,9 +507,14 @@ summary(m_cycling)
 
 plot(r_grouped_census_joined$distance_m, fitted.values)
 plot(r_grouped_census_joined$average_incline, fitted.values)
-cor(r_grouped_census_joined$pcycle, fitted.values)^2 # explains around 7% of variability
-cor(r_grouped_census_joined$govtarget, fitted.values)^2 # explains around 22% of PCT base scenario
+cor(r_grouped_census_joined$pcycle, fitted.values)^2 # explains around 9% of variability
+cor(r_grouped_census_joined$govtarget, fitted.values)^2 # explains around 19% of PCT base scenario
 plot(r_grouped_census_joined$govtarget / 100, fitted.values)^2
+
+
+
+# Create route network ----------------------------------------------------
+
 
 r_grouped_lines_census = r_grouped_census %>% st_cast("LINESTRING")
 rnet_go_dutch_census = overline2(r_grouped_lines_census, "go_dutch")
