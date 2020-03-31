@@ -2,7 +2,14 @@
 title: "Active Transport Options for New Housing Developments: The ACTON project"
 author: "Robin Lovelace, Joey Talbot, Martin Lucas-Smith, Andrew Speakman and Simon Nuttall"
 output: pdf_document
+bibliography: ../vignettes/acton-references.bib
 ---
+
+```{r, echo=FALSE, eval=FALSE}
+# get citations
+citr::tidy_bib_file(rmd_file = "code/report.Rmd", messy_bibliography = "~/uaf/allrefs.bib", file = "vignettes/acton-references.bib")
+```
+
 
 ```{r setup, include=FALSE, message = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -16,7 +23,10 @@ tmap_mode("view")
 
 # Introduction
 
-In an era where decarbonisation is a must, the transport sector is now the UK's largest source of carbon emissions and one which - unlike other sectors - has not seen any reduction in recent years. On the contrary, the construction of new residential developments having locations and designs that promote car dependency risks locking us into increasingly unsustainable lifestyles in future.
+Decarbonising the transport sector is an urgent yet challenging component of climate change mitigation policies worldwide [@schock_energy_2007].
+Transport sector is now the UK's largest source of carbon emissions.
+Unlike other sectors the UK transport system has not seen any reduction in recent years [@hickman_looking_2007].
+On the contrary, the construction of new residential developments having locations and designs that promote car dependency risks locking us into increasingly unsustainable lifestyles in future.
 
 ## Components of the ACTON project
 
@@ -463,9 +473,11 @@ Show maps for all journeys to work and those under Go Dutch scenario.
 ## New developments in the 2011 Census
 
 ```{r}
-routes_to_site = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/routes-all-sites.geojson")
-plot(sf::st_geometry(routes_to_site))
-names(routes_to_site)
+# routes_to_site = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/routes-all-sites.geojson")
+# plot(sf::st_geometry(routes_to_site))
+# names(routes_to_site)
+system("wget https://user-images.githubusercontent.com/1825120/77967965-2064bb00-72de-11ea-9e23-f703ccde4a39.png")
+knitr::include_graphics("77967965-2064bb00-72de-11ea-9e23-f703ccde4a39.png")
 ```
 
 
@@ -483,3 +495,5 @@ These functions and the datasets they open-up provide a strong foundation for fu
 We plan to work with potential funders to ensure that the value generated in the course of this 3 month project can be made available to everyone, either as a self-standing tool or as part of a wider toolkit for sustainable transport planning.
 
 Details about follow-on work will be posted on the project's issue tracker at https://github.com/cyipt/acton/issues, where interested stakeholders are welcome to post ideas and follow-on questions.
+
+## References
