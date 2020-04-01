@@ -511,10 +511,10 @@ m_cycling4 = glm(pcycle ~
                family = quasibinomial(),
                weights = all
 )
-fitted.values = m_cycling$fitted.values # for glm
+fitted.values = m_cycling4$fitted.values # for glm
 # fitted.values = boot::inv.logit(m_cycling$fitted.values)
 
-summary(m_cycling)
+summary(m_cycling4)
 
 plot(r_grouped_census_joined$distance_m, fitted.values)
 plot(r_grouped_census_joined$average_incline, fitted.values)
