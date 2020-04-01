@@ -490,7 +490,7 @@ For the test version of this model we have used data from 12 sites across Englan
 Desire lines from the 12 sites to places of work are shown below. 
 
 ```{r, out.width="80%"}
-knitr::include_graphics("https://user-images.githubusercontent.com/52210872/78127206-a7fc1800-740b-11ea-9e79-d7351c926e96.png")
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/78140363-cbca5880-7421-11ea-92e7-740543f0e2e6.png")
 ```
 
 We then convert these straight lines into routes on the road network, using the CycleStreets.net routing service.

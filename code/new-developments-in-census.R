@@ -78,14 +78,17 @@ poundbury = c("E00166094", "E00166095", "E00166096", "E00166097", "E00166098", "
 upton = c("E00169237", "E00169240", "E00169239", "E00169242")
 wichelstowe = c("E00166484", "E00166486", "E00166485")
 wynyard = c("E00061995", "E00174145", "E00174146", "E00174147", "E00174188", "E00174185", "E00060314")
-hamptons = c("E00171289", "E00171291", "E00171254", "E00171256", "E00171257", "E00171319",
-             # "E00171260", "E00171272", "E00171275", "E00171276", "E00171284", "E00171295", "E00171322", "E00171323", "E00171330", "E00171320", "E00171271", "E00171273", "E00171277", "E00171302", "E00171308", "E00171321", "E00171299", "E00171274", "E00171298", "E00171300", "E00171301", "E00171303", "E00171304", "E00171306", "E00171307", "E00171290",
+hamptons = c(# "E00171289", "E00171291", "E00171254", "E00171256", "E00171257", "E00171319",
+             # "E00171260", "E00171272", "E00171275", "E00171276", "E00171284", "E00171295",
+             "E00171322", "E00171323", "E00171330", "E00171320", "E00171271", "E00171273",
+             # "E00171277", "E00171302", "E00171308", "E00171321", "E00171299", "E00171274", "E00171298", "E00171300", "E00171301", "E00171303", "E00171304", "E00171306", "E00171307", "E00171290",
              "E00171285", "E00171286", "E00171292", "E00171305", "E00171315", "E00171316",
              # "E00171317", "E00171318", "E00171288", "E00171253", "E00171255", "E00171278", "E00171293", "E00171294", "E00171296", "E00171297", "E00171309", "E00171310", "E00171311", "E00171312",
              "E00171313", "E00171314", "E00171324")
 wixams = c("E00173781", "E00173782", "E00173784")
 stockmoor = c("E00165964", "E00165966", "E00165967", "E00165975")
 
+# chosen_oas = c("E00061995", "E00175567", "E00170565", "E00173169", "E00169240", "E00168166", "E00173784", "E00171320", "E00166484", "E00163618", "E00165967", "E00166084")
 
 geog_new_homes = c(allerton_bywater, chapelford, dickens_heath, newc_great_park, paxcroft, poundbury, upton, wichelstowe, wynyard, hamptons, wixams, stockmoor)
 
@@ -454,6 +457,8 @@ r_grouped_census_joined$pcycle = r_grouped_census_joined$bicycle / r_grouped_cen
 r_grouped_census_joined$pcycle[r_grouped_census_joined$pcycle < 0.001] = 0.001
 
 # train a model to discover parameters associated with business
+r_grouped_census_joined = r_grouped_census_joined %>%
+  filter(distance_m < 25000)
 
 # trying to replicate PCT model in GLM - not picking up logit link...
 # I think the glm picks up the logit link fine
@@ -513,9 +518,9 @@ summary(m_cycling)
 
 plot(r_grouped_census_joined$distance_m, fitted.values)
 plot(r_grouped_census_joined$average_incline, fitted.values)
-cor(r_grouped_census_joined$pcycle, fitted.values)^2 # explains around 9% of variability
-cor(r_grouped_census_joined$govtarget, fitted.values)^2 # explains around 19% of PCT base scenario
-plot(r_grouped_census_joined$govtarget / 100, fitted.values)^2
+cor(r_grouped_census_joined$pcycle, fitted.values)^2 # explains around 12% of variability
+cor(r_grouped_census_joined$govtarget, fitted.values)^2 # explains around 23% of PCT base scenario
+plot(r_grouped_census_joined$govtarget / 100, fitted.values)
 
 
 
