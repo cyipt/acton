@@ -355,7 +355,7 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <pre><code>## [1] "2014-11-10"</code></pre>
 <p>The original outline planning application for the entire Allerton Bywater Millennium Community can be found as follows. This was submitted in November 2000 and approved in August 2002.</p>
 <div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">allerton_bywater_original</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_planit_data.html">get_planit_data</a></span>(<span class="kw">query_type</span> <span class="kw">=</span> <span class="st">"planapplic"</span>, <span class="kw">query_value</span> <span class="kw">=</span> <span class="st">"33/311/00/OT@Leeds"</span>)</pre></body></html></div>
-<pre><code>## Getting data from https://dev.planit.org.uk/planapplic/33/311/00/OT@Leeds/geojson?limit=6&amp;bbox=&amp;end_date=2020-03-31&amp;start_date=2000-02-01&amp;pg_sz=6</code></pre>
+<pre><code>## Getting data from https://dev.planit.org.uk/planapplic/33/311/00/OT@Leeds/geojson?limit=6&amp;bbox=&amp;end_date=2020-04-01&amp;start_date=2000-02-01&amp;pg_sz=6</code></pre>
 <div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="no">allerton_bywater_original</span>$<span class="no">description</span></pre></body></html></div>
 <pre><code>## [1] "Outline application to erect residential commercial and community developments with infrastructure and green space"</code></pre>
 <div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="no">allerton_bywater_original</span>$<span class="no">url</span></pre></body></html></div>
@@ -421,10 +421,25 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <div id="model" class="section level1">
 <h1 class="hasAnchor">
 <a href="#model" class="anchor"></a>Model</h1>
+<p>Using data from new housing developments built prior to the 2011 Census, we have begun to develop a model to predict active travel levels to and from new homes.</p>
+<p>As a response variable we are using the proportion of commuters who cycle to work. This is available at the Output Area level, allowing us to obtain data that precisely matches the geographical bounds of the new development sites.</p>
+<p>Similarly to the Propensity to Cycle Tool, the explanatory variables currently include the distance and hilliness of journeys to work. To calculate these, we route journeys using the CycleStreets.net ‘fast’ route algorithm. Workplace destinations are obtained and routing carried out at LSOA level, to minimise the computational intensity of journey routing.</p>
+<p>The range of explanatory variables can be expanded further as more data becomes available, adding factors such as the busyness and circuity of the routes.</p>
+<p>For the test version of this model we have used data from 12 sites across England, including Allerton Bywater in Leeds. The number of sites can expand as we further develop the model.</p>
 <div id="new-developments-in-the-2011-census" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-developments-in-the-2011-census" class="anchor"></a>New developments in the 2011 Census</h2>
+<p>Desire lines from the 12 sites to places of work are shown below.</p>
+<p><img src="https://user-images.githubusercontent.com/52210872/78127206-a7fc1800-740b-11ea-9e79-d7351c926e96.png" width="80%" style="display: block; margin: auto;"></p>
+<p>We then convert these straight lines into routes on the road network, using the CycleStreets.net routing service.</p>
+<p><img src="https://user-images.githubusercontent.com/52210872/78127314-cfeb7b80-740b-11ea-9d39-ce320930b698.png" width="80%" style="display: block; margin: auto;"></p>
+<p>These route can be combined to form route networks, thus revealing the numbers of people expected to use each road or path segment. Here we show the route network under a Go Dutch scenario in which cycling rates are equivalent to those found in the Netherlands.</p>
 <p><img src="77967965-2064bb00-72de-11ea-9e23-f703ccde4a39.png" width="80%" style="display: block; margin: auto;"></p>
+<p>Zooming in to a single site, we can see the route network in more detail.</p>
+</div>
+<div id="model-fitting" class="section level2">
+<h2 class="hasAnchor">
+<a href="#model-fitting" class="anchor"></a>Model fitting</h2>
 </div>
 </div>
 <div id="conclusions" class="section level1">
