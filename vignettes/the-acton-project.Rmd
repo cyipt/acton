@@ -180,7 +180,7 @@ One of the outputs of this project is the `acton` R package. Available as open s
 
 To install the `acton` package, run the following commands in an R console (see [here](https://docs.ropensci.org/stats19/articles/stats19-training-setup.html) for information on installing R):
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo=TRUE}
 install.packages("remotes")
 remotes::install_github("cyipt/acton")
 ```
@@ -287,9 +287,9 @@ An overview of the four case study sites is shown in the map below.
 
 ```{r, echo=TRUE}
 applications_case_study$site = as.factor(c("Tyersal","Micklefield","Leeds Climate Innovation District","Allerton Bywater"))
-#tm_shape(applications_case_study) +
-  #tm_dots(col = "site", size = 0.1)  +
- # tm_basemap(server = "CartoDB.Positron")
+tm_shape(applications_case_study) +
+  tm_dots(col = "site", size = 0.1)  +
+  tm_basemap(server = "CartoDB.Positron")
 ```
 
 
@@ -311,7 +311,7 @@ The planning application we have selected for Allerton Bywater relates to the fi
 
 We can see that this is classified by PlanIt.org.uk as a large application. The application was submitted in December 2013 by Keepmoat Homes and the Homes and Communities Agency and was approved in November 2014.
 
-Available fields include links to the full PlanIt record and to planning application information from Leeds City Council. 
+Available fields include links to the full PlanIt record and to planning application information from Leeds City Council, as illustrated in the code below.
 
 
 ```{r, echo=TRUE}
@@ -442,9 +442,9 @@ The JTS record travel times from the population weighted centroid of each LSOA. 
 
 Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. As explained earlier, we have combined these three statistics to produce a single measure weighted by the number of jobs. This is shown in the maps below.
 
-```{r, eval=FALSE}
+```{r}
 tm_shape(zones_leeds) +
-  tm_polygons(c("weightedJobsPTt","weightedJobsCyct","weightedJobsCart"),palette="-cividis",title = c("Walk/PT","Cycle","Car") +
+  tm_polygons(c("weightedJobsPTt","weightedJobsCyct","weightedJobsCart"),palette="-cividis",title = c("Walk/PT","Cycle","Car")) +
   tm_shape(applications_case_study) +
   tm_dots(size=0.2) +
   tm_facets(nrow = 1)
@@ -458,7 +458,7 @@ We have then combined the weighted access to employment measure with the measure
 
 ```{r, eval = FALSE}
 tm_shape(zones_leeds) +
-  tm_polygons(c("index_PT","index_Cyc","index_Car"),palette="-viridis",title = c("Walk/PT","Cycle","Car") +
+  tm_polygons(c("index_PT","index_Cyc","index_Car"),palette="-viridis",title = c("Walk/PT","Cycle","Car")) +
   tm_shape(applications_case_study) +
   tm_dots(size=0.2) +
   tm_facets(nrow = 1)
