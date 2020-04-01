@@ -3,7 +3,9 @@ title: "Active Transport Options for New Housing Developments: The ACTON project
 author: "Joey Talbot, Robin Lovelace, Martin Lucas-Smith, Andrew Speakman and Simon Nuttall"
 # output: pdf_document # for pdf report
 # output: pdf_html # for html report
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    number_sections: true
 vignette: >
   %\VignetteIndexEntry{The ACTON project}
   %\VignetteEngine{knitr::rmarkdown}
@@ -147,7 +149,12 @@ Sources such as census data provide information on journey origins and destinati
 
 CycleStreets includes three routing options, generating 'fast', 'balanced' or 'quiet' cycle routes between journey origins and destinations. For the fast routes, journey time is minimised, with no consideration given to factors such as the busyness of the roads. For the quiet routes, a parameter called "busyness" is minimised. The balanced routes use a combination of these two approaches, in which both journey time and busyness are taken into account.   
 
-As part of ACTON we have improved the way in which the busyness of particular types of cycle lane and path is classified, leading to better quality routing of 'quiet' routes through a more accurate characterisation of the cycleability of route segments.
+As part of ACTON we have improved the way in which the busyness of particular types of cycle lane and path is classified, leading to better quality routing of 'quiet' routes through a more accurate characterisation of the cycleability of route segments. The figure below illustrates the improvements to the routing profile that have been made, with increased weighting given to protected cycleways clear from the long green segment on the canal towpath.
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/361987/78147337-464ba600-742b-11ea-921f-6e02d1e58579.png")
+```
+
 
 ### Busyness estimation
 
