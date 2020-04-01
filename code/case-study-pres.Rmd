@@ -335,7 +335,15 @@ knitr::include_graphics("https://user-images.githubusercontent.com/52210872/7646
 # Why not use the quiet routes?
 
 ```{r}
-knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76513464-3fde9580-644e-11ea-81b0-bb90b6a05db3.png")
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/78130265-e34d1580-7410-11ea-8d0a-9a46b7e019ea.png")
+```
+
+---
+
+# Cycle speed on the quiet routes
+
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/78130885-04623600-7412-11ea-881c-b36292fd718a.png")
 ```
 
 ---

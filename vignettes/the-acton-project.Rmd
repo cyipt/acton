@@ -475,7 +475,31 @@ Show maps for all journeys to work and those under the 'Go Dutch' scenario.
 
 # Model
 
+Using data from new housing developments built prior to the 2011 Census, we have begun to develop a model to predict active travel levels to and from new homes.
+
+As a response variable we are using the proportion of commuters who cycle to work. This is available at the Output Area level, allowing us to obtain data that precisely matches the geographical bounds of the new development sites. 
+
+Similarly to the Propensity to Cycle Tool, the explanatory variables currently include the distance and hilliness of journeys to work. To calculate these, we route journeys using the CycleStreets.net 'fast' route algorithm. Workplace destinations are obtained and routing carried out at LSOA level, to minimise the computational intensity of journey routing.
+
+The range of explanatory variables can be expanded further as more data becomes available, adding factors such as the busyness and circuity of the routes. 
+
+For the test version of this model we have used data from 12 sites across England, including Allerton Bywater in Leeds. The number of sites can expand as we further develop the model. 
+
 ## New developments in the 2011 Census
+
+Desire lines from the 12 sites to places of work are shown below. 
+
+```{r, out.width="80%"}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/78127206-a7fc1800-740b-11ea-9e79-d7351c926e96.png")
+```
+
+We then convert these straight lines into routes on the road network, using the CycleStreets.net routing service.
+
+```{r, out.width="80%"}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/78127314-cfeb7b80-740b-11ea-9d39-ce320930b698.png")
+```
+
+These route can be combined to form route networks, thus revealing the numbers of people expected to use each road or path segment. Here we show the route network under a Go Dutch scenario in which cycling rates are equivalent to those found in the Netherlands. 
 
 ```{r, out.width="80%"}
 # routes_to_site = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/routes-all-sites.geojson")
@@ -485,6 +509,23 @@ system("wget https://user-images.githubusercontent.com/1825120/77967965-2064bb00
 knitr::include_graphics("77967965-2064bb00-72de-11ea-9e23-f703ccde4a39.png")
 ```
 
+Zooming in to a single site, we can see the route network in more detail.
+
+## Model fitting
+
+```{r, eval=FALSE}
+m_cycling = glm(pcycle ~
+                  distance_m + # d1
+                  sqrt(distance_m)  +  # d2
+                  distance_m^2 + # d3
+                  average_incline +    # h1
+                  distance_m * average_incline +  # i1
+                  sqrt(distance_m) * average_incline, # i2
+                data = sf::st_drop_geometry(r_grouped_census_joined),
+                family = quasibinomial(),
+                weights = all
+                  )
+```
 
 # Conclusions
 

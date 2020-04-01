@@ -142,10 +142,10 @@ mapview(under20)
 
 # Creating routes ---------------------------------------------------------
 
-
+library(stplanr)
 library(parallel)
 cl <- makeCluster(detectCores())
-# clusterExport(cl, c("journey"))#not needed and not working
+clusterExport(cl, c("journey"))#not needed and not working
 routes_to_site = route(l = lines_to_sites, route_fun = cyclestreets::journey, cl = cl)
 
 
@@ -196,6 +196,7 @@ routes_to_site = routes_to_site %>% mutate(speed=distances/time)
 
 write_sf(routes_to_site,"leeds-routes.geojson")
 write_sf(routes_to_site_m,"leeds-routes-msoa.geojson")
+write_sf(routes_to_site_quietest,"leeds-routes-quiet.geojson")
 
 # mapview(routes_to_site["busyness"],lwd = routes_to_site$all, scale = 1) + mapview(sites_column_name_updated[1,])
 
@@ -349,11 +350,15 @@ tm_shape(routes_to_site_quietest[routes_to_site_quietest$geo_code1 == s3,]) +
 
 ## Speed
 routes_to_site_quietest = routes_to_site_quietest %>% mutate(speed=distances/time)
-routes_to_site_quietest %>%
+
+##Map of sections with speed <1m/s
+walking_pace = routes_to_site_quietest %>%
   filter(speed < 1,
          geo_code1 == s3 # Allerton Bywater
-         ) %>%
-  mapview::mapview()
+         )
+
+tm_shape(walking_pace) +
+  tm_lines(col = "blue", lwd = 2)
 
 routes_to_site = routes_to_site %>% mutate(speed=distances/time)
 
@@ -411,8 +416,11 @@ summary(r_whole_routes_quiet[r_whole_routes_quiet$geo_code1 == s4,])
 
 ###Speed maps - quiet and fast routes
 
+routes_to_site_quietest = routes_to_site_quietest %>%
+  mutate(speed_mph = speed*2.237)
+
 tm_shape(routes_to_site_quietest[routes_to_site_quietest$geo_code1 == s3,]) +
-  tm_lines(col = "speed", palette = "-magma", lwd = "all", scale = 5, legend.col.show = TRUE)
+  tm_lines(col = "speed_mph", palette = "-magma", lwd = "all", scale = 5, legend.col.show = TRUE)
 
 tm_shape(routes_to_site[routes_to_site$geo_code1 == s3,]) +
   tm_lines(col = "speed", palette = "-magma", lwd = "all", scale = 5, legend.col.show = TRUE)

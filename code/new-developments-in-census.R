@@ -78,7 +78,11 @@ poundbury = c("E00166094", "E00166095", "E00166096", "E00166097", "E00166098", "
 upton = c("E00169237", "E00169240", "E00169239", "E00169242")
 wichelstowe = c("E00166484", "E00166486", "E00166485")
 wynyard = c("E00061995", "E00174145", "E00174146", "E00174147", "E00174188", "E00174185", "E00060314")
-hamptons = c("E00171289", "E00171291", "E00171254", "E00171256", "E00171257", "E00171319", "E00171260", "E00171272", "E00171275", "E00171276", "E00171284", "E00171295", "E00171322", "E00171323", "E00171330", "E00171320", "E00171271", "E00171273", "E00171277", "E00171302", "E00171308", "E00171321", "E00171299", "E00171274", "E00171298", "E00171300", "E00171301", "E00171303", "E00171304", "E00171306", "E00171307", "E00171290", "E00171285", "E00171286", "E00171292", "E00171305", "E00171315", "E00171316", "E00171317", "E00171318", "E00171288", "E00171253", "E00171255", "E00171278", "E00171293", "E00171294", "E00171296", "E00171297", "E00171309", "E00171310", "E00171311", "E00171312", "E00171313", "E00171314", "E00171324")
+hamptons = c("E00171289", "E00171291", "E00171254", "E00171256", "E00171257", "E00171319",
+             # "E00171260", "E00171272", "E00171275", "E00171276", "E00171284", "E00171295", "E00171322", "E00171323", "E00171330", "E00171320", "E00171271", "E00171273", "E00171277", "E00171302", "E00171308", "E00171321", "E00171299", "E00171274", "E00171298", "E00171300", "E00171301", "E00171303", "E00171304", "E00171306", "E00171307", "E00171290",
+             "E00171285", "E00171286", "E00171292", "E00171305", "E00171315", "E00171316",
+             # "E00171317", "E00171318", "E00171288", "E00171253", "E00171255", "E00171278", "E00171293", "E00171294", "E00171296", "E00171297", "E00171309", "E00171310", "E00171311", "E00171312",
+             "E00171313", "E00171314", "E00171324")
 wixams = c("E00173781", "E00173782", "E00173784")
 stockmoor = c("E00165964", "E00165966", "E00165967", "E00165975")
 
@@ -139,6 +143,7 @@ dim(joined)
 # Join the result to the LSOA centroid geometry
 joined = st_drop_geometry(joined)
 oa_level_data = inner_join(joined, lsoas_centroids, by = c("code" = "geo_code"))
+oa_level_data = st_as_sf(oa_level_data)
 
 # Get the list of LSOA geo_codes being used
 geo_codes_used = unique(oa_level_data$code)
@@ -301,6 +306,7 @@ dim(oa_sites)
 
 
 #Getting the total number of OAs contained within each LSOA
+library(ukboundaries)
 oacodes = NULL
 listcodes = NULL
 for(i in 1:length(geo_codes_used)) {
@@ -367,7 +373,8 @@ mapview(pickme_centroids)
 
 ## Adding origin geo_codes from pickme_centroids
 lines_both_oac = lines_proportionate %>% inner_join(pickme_centroids, by = "site") %>%
-  select(geo_code, geo_code2, all, bicycle, foot, site)
+  select(geo_code, geo_code2, all, bicycle, foot, site) %>%
+  rename(oa_code = geo_code)
 
 destinations = lines_proportionate[,2] %>%
   inner_join(lsoas_centroids, by = c("geo_code2" = "geo_code")) # this misses destinations that are in a different PCT region. This is biasing the model eg by preventing any long distance commutes from Chapelford to Liverpool/Manchester/St Helens. Perhaps I could extract the destination geometry from lines_proportionate to avoid this problem.
@@ -400,32 +407,32 @@ library(parallel)
 library(stplanr)
 cl = makeCluster(detectCores())
 clusterExport(cl, c("journey"))
-routes_to_site = route(l = lines_correct_origin, route_fun = cyclestreets::journey
+routes_all_sites = route(l = lines_correct_origin, route_fun = cyclestreets::journey
                        , cl = cl  # this only works with the "par" version of stplanr
                        )
 
-mapview(routes_to_site)
+mapview(routes_all_sites)
 
 
-routes_to_site$busyness = routes_to_site$busynance / routes_to_site$distances
-routes_to_site = routes_to_site %>% mutate(speed=distances/time)
+routes_all_sites$busyness = routes_all_sites$busynance / routes_all_sites$distances
+routes_all_sites = routes_all_sites %>% mutate(speed=distances/time)
 
-write_sf(routes_to_site, "routes-all-sites-new.geojson")
+write_sf(routes_all_sites, "routes-all-sites-new.geojson")
 piggyback::pb_upload("routes-all-sites-new.geojson")
 
-routes_to_site = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/routes-all-sites-new.geojson")
+routes_all_sites = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/routes-all-sites-new.geojson")
 
 
 ## Group route segments into routes
 
-r_grouped_census = routes_to_site %>%
-  group_by(geo_code1, geo_code2) %>%
+r_grouped_census = routes_all_sites %>%
+  group_by(oa_code, geo_code2) %>%
   summarise(
     n = n(), # is this the number of route segments each route contains?
     all = mean(all),
     average_incline = sum(abs(diff(elevations))) / sum(distances),
     distance_m = sum(distances),
-    busyness = mean(busyness) %>%
+    busyness = mean(busyness)
   )
 
 # summary(r_grouped)
@@ -443,7 +450,6 @@ mapview::mapview(sf::st_geometry(lines_correct_origin)[33]) +
 
 r_grouped_census_joined = inner_join(r_grouped_census, sf::st_drop_geometry(lines_correct_origin))
 r_grouped_census_joined$pcycle = r_grouped_census_joined$bicycle / r_grouped_census_joined$all
-
 
 r_grouped_census_joined$pcycle[r_grouped_census_joined$pcycle < 0.001] = 0.001
 
@@ -518,9 +524,10 @@ plot(r_grouped_census_joined$govtarget / 100, fitted.values)^2
 
 r_grouped_lines_census = r_grouped_census %>% st_cast("LINESTRING")
 rnet_go_dutch_census = overline2(r_grouped_lines_census, "go_dutch")
+rnet_govtarget_census = overline2(r_grouped_lines_census, "govtarget")
 
-# routes_to_site_census = routes_to_site
-rnet_all_census = overline2(routes_to_site, "all")
+# routes_all_sites_census = routes_all_sites
+rnet_all_census = overline2(routes_all_sites, "all")
 
 write_sf(rnet_all_census, "rnet-all-census.geojson")
 piggyback::pb_upload("rnet-all-census.geojson")
@@ -536,8 +543,8 @@ rnet_all_census = read_sf("https://github.com/cyipt/acton/releases/download/0.0.
 library(tmap)
 tmap_mode("view")
 
-tm_shape(rnet_go_dutch_census) +
-  tm_lines("go_dutch", lwd = "go_dutch", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
+tm_shape(rnet_govtarget_census) +
+  tm_lines("govtarget", lwd = "govtarget", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
 
 tm_shape(rnet_all_census) +
   tm_lines("all", lwd = "all", scale = 9, palette = "plasma", breaks = c(0, 10, 50, 100, 200))
@@ -548,7 +555,7 @@ tm_shape(rnet_all_census) +
 
 ##Group route segments by destination
 
-r_whole_routes = routes_to_site %>%
+r_whole_routes = routes_all_sites %>%
   group_by(geo_code1, geo_code2, site) %>%
   summarise(
     all = mean(all),
