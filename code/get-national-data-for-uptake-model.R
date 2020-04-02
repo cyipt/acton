@@ -26,3 +26,12 @@ property_age_data_full = read_csv(u, col_types = coltypes)
 property_age_data_full
 property_age_lsoa = property_age_data_full %>%
   filter(GEOG == "LSOA")
+
+property_age_lsoa[is.na(property_age_lsoa)] = 0
+property_age_lsoa = property_age_lsoa %>%
+  mutate(total_homes = Pre_1900 + `1900_1918` + `1919_1929` + `1930_1939` + `1945_1954` + `1955_1964` + `1965_1972` + `1973_1982` + `1983_1992` + `1993_1999` + `2000_2009` + `2010_2014` + UNKNOWN,
+         p2000_09 = `2000_2009`/total_homes)
+
+write_rds(property_age_lsoa,"property-age-lsoa.Rds")
+
+

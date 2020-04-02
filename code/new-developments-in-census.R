@@ -247,7 +247,7 @@ lines_1 = lines_all %>%
 dim(lines_1)
 
 # Where geo_code2 is in the site
-`%notin%` <- Negate(`%in%`)
+`%notin%` = Negate(`%in%`)
 
 lines_2 = lines_all %>%
   select(geo_code1, geo_code2, all, bicycle, foot, car_driver
