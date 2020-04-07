@@ -2,34 +2,33 @@
 title: "Active Transport Options for New Housing Developments: The ACTON project"
 # author: "Joey Talbot, Robin Lovelace, Martin Lucas-Smith, Andrew Speakman and Simon Nuttall"
 author: "<br><br><br><br><br><br><br><br><br>Joey Talbot, Robin Lovelace<br>(University of Leeds)<br>Martin Lucas-Smith, Simon Nuttall<br>(CycleStreets)<br>Andrew Speakman (PlanIt)<br>Website: cyipt.github.io/acton"
-# output: pdf_document # for pdf report
+bibliography: ../vignettes/acton-references.bib
+output:
+  rmarkdown::html_vignette:
+    number_sections: true
+vignette: >
+  %\VignetteIndexEntry{The ACTON project}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+# for pdf format report: # # # 
 # output: pdf_html # for html report
 # output:
-#   rmarkdown::html_vignette:
-#     number_sections: true
-# vignette: >
-#   %\VignetteIndexEntry{The ACTON project}
-#   %\VignetteEngine{knitr::rmarkdown}
-#   %\VignetteEncoding{UTF-8}
-# for pdf format report:
-# output: bookdown::html_document2
-output:
-  pagedown::html_paged:
-    toc: true
-    front_cover: https://user-images.githubusercontent.com/1825120/75694077-db7a4400-5c9f-11ea-8817-2a024e32c52b.png
-    # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
-    self_contained: true
+#   pagedown::html_paged:
+#     toc: true
+#     front_cover: https://user-images.githubusercontent.com/1825120/75694077-db7a4400-5c9f-11ea-8817-2a024e32c52b.png
+#     # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
+#     self_contained: true
 # uncomment this line to produce HTML and PDF in RStudio:
 # knit: pagedown::chrome_print
-bibliography: ../vignettes/acton-references.bib
 ---
 
 ```{r, echo=FALSE, eval=FALSE}
 # Update report
 # get citations - replace 'allrefs' with your references file
 citr::tidy_bib_file(rmd_file = "vignettes/the-acton-project.Rmd", messy_bibliography = "~/uaf/allrefs.bib", file = "vignettes/acton-references.bib")
-pagedown::chrome_print("http://127.0.0.1:4321/vignettes/the-acton-project.html", output = "acton-report.pdf")
+pagedown::chrome_print("file:///tmp/Rtmpu79Sai/preview-49a56c04b8c1.dir/the-acton-project.html", output = "acton-report.pdf", wait = 30, timeout = 300)
 browseURL("acton-report.pdf")
+file.size("acton-report.pdf")
 piggyback::pb_upload("acton-report.pdf")
 piggyback::pb_download_url("acton-report.pdf")
 ```
@@ -253,7 +252,7 @@ Data from [PlanIt](https://www.planit.org.uk/), accessed using the `acton` R pac
 The following code gets and subsets the relevant PlanIt data for Leeds. This extracts large applications where planning consent has been granted:
 
 
-```{r, eval=FALSE, echo=TRUE}
+```{r, echo=TRUE}
 applications_leeds = get_planit_data(
   limit = 500,
   auth = "Leeds",
