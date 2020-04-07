@@ -1,7 +1,7 @@
 ---
 title: "Active Transport Options for New Housing Developments: The ACTON project"
 # author: "Joey Talbot, Robin Lovelace, Martin Lucas-Smith, Andrew Speakman and Simon Nuttall"
-author: "<br><br><br><br><br><br><br><br><br>Joey Talbot, Robin Lovelace<br>(University of Leeds)<br>Martin Lucas-Smith, Simon Nuttall<br>(CycleStreets)<br>Andrew Speakman<br>(PlanIt)"
+author: "<br><br><br><br><br><br><br><br><br>Joey Talbot, Robin Lovelace<br>(University of Leeds)<br>Martin Lucas-Smith, Simon Nuttall<br>(CycleStreets)<br>Andrew Speakman (PlanIt)<br>Website: cyipt.github.io/acton"
 # output: pdf_document # for pdf report
 # output: pdf_html # for html report
 # output:
@@ -18,7 +18,7 @@ output:
     toc: true
     front_cover: https://user-images.githubusercontent.com/1825120/75694077-db7a4400-5c9f-11ea-8817-2a024e32c52b.png
     # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
-    self_contained: false
+    self_contained: true
 # uncomment this line to produce HTML and PDF in RStudio:
 # knit: pagedown::chrome_print
 bibliography: ../vignettes/acton-references.bib
@@ -236,7 +236,7 @@ get_jts_data(table = "jts0101", year = 2017, skip = 7)
 
 ## Further R instructions
 
-To get routes from CycleStreets.net, you will need to set up an API key called CYCLESTREETS. This can be done with `usethis::edit_r_environ()`, as documented here: https://docs.ropensci.org/stplanr/reference/route_cyclestreets.html#details
+To get routes from CycleStreets.net, you will need to set up an API key called CYCLESTREETS. This can be done with `usethis::edit_r_environ()`, as documented at https://docs.ropensci.org/stplanr/.
 
 # Leeds case study
 
@@ -291,21 +291,23 @@ applications_case_study = applications_leeds[
 ]
 nrow(applications_case_study)
 
-applications_case_study %>% 
-  sf::st_drop_geometry() %>% 
-  select(description, url) %>% 
-  knitr::kable()
+# applications_case_study %>% 
+#   sf::st_drop_geometry() %>% 
+#   select(description, url) %>% 
+#   knitr::kable()
 ```
 
 An overview of the four case study sites is shown in the map below.
 
-```{r, echo=TRUE}
-applications_case_study$site = as.factor(c("Tyersal","Micklefield","Leeds Climate Innovation District","Allerton Bywater"))
-tm_shape(applications_case_study) +
-  tm_dots(col = "site", size = 0.1)  +
-  tm_basemap(server = "CartoDB.Positron")
+```{r, echo=FALSE}
+# applications_case_study$site = as.factor(c("Tyersal","Micklefield","Leeds Climate Innovation District","Allerton Bywater"))
+# tm_shape(applications_case_study) +
+#   tm_dots(col = "site", size = 0.1)  +
+#   tm_basemap(server = "CartoDB.Positron")
+knitr::include_graphics("https://user-images.githubusercontent.com/1825120/78660650-5e0ca980-78c5-11ea-81c7-dc446965ce51.png")
 ```
 
+See https://cyipt.github.io/acton/articles/case-studies.html for more on the case study sites.
 
 We will describe the Allerton Bywater application in more depth and use it to illustrate the data returned by the PlanIt API, before describing the other development sites.
 
@@ -325,31 +327,33 @@ The planning application we have selected for Allerton Bywater relates to the fi
 
 We can see that this is classified by PlanIt.org.uk as a large application. The application was submitted in December 2013 by Keepmoat Homes and the Homes and Communities Agency and was approved in November 2014.
 
-Available fields include links to the full PlanIt record and to planning application information from Leeds City Council, as illustrated in the code below.
+Available fields include links to the full PlanIt record and to planning application information from Leeds City Council, as illustrated in
+the online version of this report at
+https://cyipt.github.io/acton/articles/the-acton-project.html.
 
 
-```{r, echo=TRUE}
-allerton_bywater = applications_case_study[applications_case_study$uid == "13/05235/FU",]
-allerton_bywater$description
-allerton_bywater$link
-allerton_bywater$url
-allerton_bywater$app_state
-allerton_bywater$app_size
-allerton_bywater$app_type
-allerton_bywater$address
-allerton_bywater$start_date
-allerton_bywater$decided_date
-```
+<!-- ```{r, echo=TRUE} -->
+<!-- allerton_bywater = applications_case_study[applications_case_study$uid == "13/05235/FU",] -->
+<!-- allerton_bywater$description -->
+<!-- allerton_bywater$link -->
+<!-- allerton_bywater$url -->
+<!-- allerton_bywater$app_state -->
+<!-- allerton_bywater$app_size -->
+<!-- allerton_bywater$app_type -->
+<!-- allerton_bywater$address -->
+<!-- allerton_bywater$start_date -->
+<!-- allerton_bywater$decided_date -->
+<!-- ``` -->
 
-The original outline planning application for the entire Allerton Bywater Millennium Community can be found as follows. This was submitted in November 2000 and approved in August 2002.
+<!-- The original outline planning application for the entire Allerton Bywater Millennium Community can be found as follows. This was submitted in November 2000 and approved in August 2002. -->
 
-```{r, echo=TRUE}
-allerton_bywater_original = get_planit_data(query_type = "planapplic", query_value = "33/311/00/OT@Leeds")
-allerton_bywater_original$description
-allerton_bywater_original$url
-allerton_bywater_original$start_date
-allerton_bywater_original$decided_date
-```
+<!-- ```{r, echo=TRUE} -->
+<!-- allerton_bywater_original = get_planit_data(query_type = "planapplic", query_value = "33/311/00/OT@Leeds") -->
+<!-- allerton_bywater_original$description -->
+<!-- allerton_bywater_original$url -->
+<!-- allerton_bywater_original$start_date -->
+<!-- allerton_bywater_original$decided_date -->
+<!-- ``` -->
 
 
 ### Leeds Climate Innovation District
