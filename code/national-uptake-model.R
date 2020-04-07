@@ -5,6 +5,8 @@ library(tidyverse)
 property_age_lsoa = read_rds("property-age-lsoa.Rds")
 dim(property_age_lsoa)
 
+
+# Find LSOAs with high proportions of new homes
 over_80pc = property_age_lsoa %>%
   filter(p2000_09 > 0.8)
 dim(over_80pc)
@@ -51,6 +53,8 @@ names(centroids_lsoa)
 nrow(centroids_lsoa)
 nrow(lsoas)
 
+summary(centroids_lsoa$all) # this records intrazonal commutes only
+
 u3 = "https://github.com/npct/pct-outputs-national/raw/master/commute/lsoa/z_all.Rds"
 zones_lsoa_national_sp = readRDS(url(u3))
 zones_lsoa = sf::st_as_sf(zones_lsoa_national_sp)
@@ -58,16 +62,24 @@ names(zones_lsoa)
 nrow(zones_lsoa)
 nrow(lsoas)
 
+summary(zones_lsoa$all)
+
 object.size(zones_lsoa) / object.size(lsoas)
 
-pct_lsoa_selected_variables = zones_lsoa %>% 
-  dplyr::select(geo_code, all:taxi_other, govtarget_slc, dutch_slc, lad_name) 
+# Why do many of these LSOAs have such low commuter totals??
+pct_lsoa_selected_variables = centroids_lsoa %>%
+  dplyr::select(geo_code, all:taxi_other, govtarget_slc, dutch_slc, lad_name)
 
 lsoas = inner_join(pct_lsoa_selected_variables, property_age_lsoa, by = c("geo_code" = "lsoa"))
 library(sf)
-plot(lsoas %>% filter(lad_name == "Leeds")) 
-plot(lsoas %>% filter(lad_name == "Leeds") %>% select(Pre_1900:p2000_09)) 
-plot(lsoas %>% filter(lad_name == "Leeds") %>% select(p2000_09)) 
+plot(lsoas %>% filter(lad_name == "Leeds"))
+plot(lsoas %>% filter(lad_name == "Leeds") %>% select(Pre_1900:p2000_09))
+plot(lsoas %>% filter(lad_name == "Leeds") %>% select(p2000_09))
+
+
+
+# National LSOA OD data ---------------------------------------------------
+
 
 #        commissioned dataset = WM12EW[CT0489]_lsoa ; save to 'pct-inputs\01_raw\02_travel_data\commute\lsoa\WM12EW[CT0489]_lsoa.zip'
 # from PCT project
@@ -86,30 +98,103 @@ plot(lsoas %>% filter(lad_name == "Leeds") %>% select(p2000_09))
 piggyback::pb_download("od_lsoa_16_plus_10_plus.Rds", repo = "cyipt/icicle")
 od_lsoa_16_plus_10_plus = readRDS("od_lsoa_16_plus_10_plus.Rds")
 od_lsoa = od_lsoa_16_plus_10_plus %>%
-  select(matches("AllSexes_Age16Plus")) 
+  select(geocode1 = "Area of usual residence", geocode2 = "Area of Workplace", matches("AllSexes_Age16Plus"))
 names(od_lsoa) = gsub(pattern = "AllSexes_Age16Plus|_", "", names(od_lsoa))
 summary(rowSums(od_lsoa %>% select(WorkAtHome:OtherMethod)) == od_lsoa$AllMethods)
 # od_lsoa$AllMethods = NULL
 
-# get LSOA OD data
+remotes::install_github("itsleeds/od") # open issue on od package. It allows lines with NA coordinates. 2 - it doesnt copy crs system
+library(od)
+
+od_lsoa_sf = od_to_sf(od_lsoa, z = centroids_lsoa) # 433331 rows
+sf::st_crs(centroids_lsoa)
+sf::st_crs(od_lsoa_sf) = 4326
+
+od_lsoas_sf_interzonal = od_lsoa_sf %>%
+  filter(geocode1 != geocode2) # 410559 rows
+
+od_lsoas_sf_interzonal = od_lsoas_sf_interzonal %>%
+  filter(geocode1 %in% centroids_lsoa$geo_code) # still the same
+
+od_lsoas_sf_interzonal = od_lsoas_sf_interzonal %>%
+  filter(geocode2 %in% centroids_lsoa$geo_code) # 340595 rows
+
+sum(od_lsoas_sf_interzonal$AllMethods) / sum(od_lsoa_sf$AllMethods) # 56% remain
+
+
+od_lsoas_sf_interzonal$distance_euclidean = as.numeric(sf::st_length(od_lsoas_sf_interzonal))
+summary(od_lsoas_sf_interzonal$distance)
+
+
+#Divide into lines over and under 20km
+od_lsoas_short = od_lsoas_sf_interzonal %>%
+  filter(distance_euclidean < 20000)
+
+dim(od_lsoas_short) # 330567 rows
+
+remotes::install_github("ropensci/stplanr")
+
+library(stplanr)
+
+  library(parallel)
+  library(cyclestreets)
+  cl <- makeCluster(detectCores())
+  clusterExport(cl, c("journey"))
+  routes_lsoa <- route(od_lsoas_short[1:100,], route_fun = cyclestreets::journey, cl = cl)
+  stopCluster(cl)
+
+  routes_lsoa1 <- route(od_lsoas_short[1:10000,], route_fun = cyclestreets::journey, cl = cl)
+  routes_lsoa2 <- route(od_lsoas_short[10001:20000,], route_fun = cyclestreets::journey, cl = cl)
+  routes_lsoa3 <- route(od_lsoas_short[20001:30000,], route_fun = cyclestreets::journey, cl = cl)
+  routes_lsoa4 <- route(od_lsoas_short[30001:40000,], route_fun = cyclestreets::journey, cl = cl)
+  routes_lsoa5 <- route(od_lsoas_short[40001:50000,], route_fun = cyclestreets::journey, cl = cl)
+  routes_lsoa6 <- route(od_lsoas_short[50001:60000,], route_fun = cyclestreets::journey, cl = cl)
+  routes_lsoa7 <- route(od_lsoas_short[60001:70000,], route_fun = cyclestreets::journey, cl = cl)
+  routes_lsoa8 <- route(od_lsoas_short[70001:80000,], route_fun = cyclestreets::journey, cl = cl)
+  routes_lsoa9 <- route(od_lsoas_short[80001:90000,], route_fun = cyclestreets::journey, cl = cl)
+  routes_lsoa10 <- route(od_lsoas_short[90001:100000,], route_fun = cyclestreets::journey, cl = cl)
+
+# 69964 NA where geocode2 is a destination outside the country or other unusual place
+View(od_lsoas_sf_interzonal[is.na(od_lsoas_sf_interzonal$distance_euclidean),])
+
+od_lsoas_sf_interzonal = od_lsoas_sf_interzonal %>%
+  filter(is)
+
+plot(od_lsoa_sf[1:100,])
+
+# library(pct)
+# lsoas_reg = inner_join(lsoas, pct_regions_lookup, by = c("lad_name" = "lad16nm"))
+# dim(lsoas_reg)
+# summary(factor(lsoas_reg$region_name))
+#
+# View(lsoas_reg[is.na(lsoas_reg$region_name),])
+
+
+# Join with centroids from PCT to get geometry --------------------------------------------
+# this joins with the geometry of the origin
+od_national = inner_join(od_lsoa, lsoas, by = c("geocode1" = "geo_code"))
+
+# destination geometry
+
+
 
 # subset the files of interest
-lsoa_line_aggregated = l %>% 
+lsoa_line_aggregated = l %>%
   group_by()
 
 
 # get high res data -------------------------------------------------------
-# 
+#
 # u = "https://borders.ukdataservice.ac.uk/ukborders/easy_download/prebuilt/shape/England_lsoa_2011_clipped.zip"
 # u2 = "https://borders.ukdataservice.ac.uk/ukborders/easy_download/prebuilt/shape/Wales_lsoa_2011_clipped.zip"
-# 
+#
 # lsoas_eng = ukboundaries::duraz(u = u)
 # lsoas_wales = ukboundaries::duraz(u = u2)
 # lsoas = rbind(lsoas_eng,lsoas_wales)
-# 
+#
 # new_homes_2000_09 = new_homes_2000_09 %>%
-#   inner_join(lsoas, ., by = c("code" = "lsoa")) 
-# 
+#   inner_join(lsoas, ., by = c("code" = "lsoa"))
+#
 # class(new_homes_2000_09)
 # summary(new_homes_2000_09)
 # plot(new_homes_2000_09[1, ])
