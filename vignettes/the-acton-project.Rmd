@@ -28,8 +28,10 @@ bibliography: ../vignettes/acton-references.bib
 # Update report
 # get citations - replace 'allrefs' with your references file
 citr::tidy_bib_file(rmd_file = "vignettes/the-acton-project.Rmd", messy_bibliography = "~/uaf/allrefs.bib", file = "vignettes/acton-references.bib")
-pagedown::chrome_print("file:///tmp/RtmpmD47bN/preview-7654589e7bac.dir/the-acton-project.html", output = "acton-report.pdf")
+pagedown::chrome_print("file:///tmp/RtmpmD47bN/preview-76545363a8fe.dir/the-acton-project.html", output = "acton-report.pdf")
 browseURL("acton-report.pdf")
+piggyback::pb_upload("acton-report.pdf")
+piggyback::pb_download_url("acton-report.pdf")
 ```
 
 
@@ -458,23 +460,24 @@ The first map shows the LSOA zones in Leeds together with their working age popu
 
 The JTS record travel times from the population weighted centroid of each LSOA. New housing developments can be constructed anywhere within an LSOA, and may not necessarily be close to existing homes. To assess the accessibility of new developments we therefore use statistics that relate to the closest LSOA centroid. For our Tyersal Lane case study site, the closest LSOA centroid is in Bradford.
 
-Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. As explained earlier, we have combined these three statistics to produce a single measure weighted by the number of jobs. This is shown in the maps below.
+Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. As explained earlier, we have combined these three statistics to produce a single measure weighted by the number of jobs.
+This is shown in maps below.
 
-```{r}
-tm_shape(zones_leeds) +
-  tm_polygons(c("weightedJobsPTt","weightedJobsCyct","weightedJobsCart"),palette="-cividis",title = c("Walk/PT","Cycle","Car")) +
-  tm_shape(applications_case_study) +
-  tm_dots(size=0.2) +
-  tm_facets(nrow = 1)
+```{r, message=FALSE}
+# tm_shape(zones_leeds) +
+#   tm_polygons(c("weightedJobsPTt","weightedJobsCyct","weightedJobsCart"),palette="-cividis",title = c("Walk/PT","Cycle","Car")) +
+#   tm_shape(applications_case_study) +
+#   tm_dots(size=0.2) +
+#   tm_facets(nrow = 1)
 ```
 
-```{r, echo = FALSE}
-#knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76424159-c7b99680-639f-11ea-95c5-1198d977be1f.png")
+```{r, echo=FALSE}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76424159-c7b99680-639f-11ea-95c5-1198d977be1f.png")
 ```
 
 We have then combined the weighted access to employment measure with the measures for access to food stores, town centres, primary schools, secondary schools and GPs. By adding together all of these scores we have generated a single accessibility index for each mode of travel. 
 
-```{r, eval = FALSE}
+```{r, eval=FALSE}
 tm_shape(zones_leeds) +
   tm_polygons(c("index_PT","index_Cyc","index_Car"),palette="-viridis",title = c("Walk/PT","Cycle","Car")) +
   tm_shape(applications_case_study) +
@@ -482,28 +485,28 @@ tm_shape(zones_leeds) +
   tm_facets(nrow = 1)
 ```
 
-```{r, echo = FALSE}
-#knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76458014-bdb08b80-63d1-11ea-88dd-a5da8020ea5d.png")
+```{r, echo=FALSE}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76458014-bdb08b80-63d1-11ea-88dd-a5da8020ea5d.png")
 ```
 
 According to these measures, there are many areas that have poor accessibility by active modes and public transport. 
 
 ## Route busyness
 
+Route busyness is calculated from OD data, based on journeys to work from the LSOA centroid closest to each site in the first instance, allocated to the transport network.
+The point of origin was updated so routes start at in the case study sites. The desire lines were converted to routes using 'fastest journey' option of the `cyclestreets::journey()` function and the routing capabilities in the R package **stplanr** [@lovelace_stplanr_2018]. 
 
-These maps use OD data for journeys to work from the LSOA centroid closest to each site, but changing to point of origin of the journeys so they start at our case study sites. The desire lines are converted to routes using 'fastest journey' option of the `cyclestreets::journey()` function. 
+The thickness of the lines in the map below, which illustrates route busyness data, is proportional to the number of journeys (using all modes of transport), and the colour represents the busyness of the roads. 
+For other maps, see the Case Studies report on the ACTON website.
 
-The thickness of the lines is proportional to the number of journeys (using all modes of transport), and the colour represents the busyness of the roads. 
 
-We can see there are some roads used by commuters from these sites that are particularly busy. These include the A63 near Garforth and the A61 on the eastern edge of Leeds City Centre (circle these roads). However, an integral component of the Leeds Climate Innovation District is the construction of a new foot and cycle bridge over the River Aire. This bridge is already in place and allows residents to access Leeds city centre via an off-road riverside path, avoiding the need to use the A61. We should model how this bridge impacts the accessiblity of the site.  
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73958076-43d34100-48ff-11ea-80a3-f06f8205e8d2.png")
+```
 
-## Journeys to work
+# Modelling walkability and cyclability
 
-Show maps for all journeys to work and those under the 'Go Dutch' scenario.
-
-# Model
-
-Using data from new housing developments built prior to the 2011 Census, we have begun to develop a model to predict active travel levels to and from new homes.
+Using data from new housing developments built prior to the 2011 Census, we started development of a model to predict active travel levels to and from new homes.
 
 As a response variable we are using the proportion of commuters who cycle to work. This is available at the Output Area level, allowing us to obtain data that precisely matches the geographical bounds of the new development sites. 
 
@@ -539,7 +542,7 @@ knitr::include_graphics("77967965-2064bb00-72de-11ea-9e23-f703ccde4a39.png")
 
 Zooming in to a single site, we can see the route network in more detail.
 
-## Model fitting
+<!-- ## Model fitting -->
 
 ```{r, eval=FALSE}
 m_cycling = glm(pcycle ~
