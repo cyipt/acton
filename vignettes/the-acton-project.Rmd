@@ -10,15 +10,15 @@ vignette: >
    %\VignetteIndexEntry{The ACTON project}
    %\VignetteEngine{knitr::rmarkdown}
    %\VignetteEncoding{UTF-8}
-# for pdf format report: # # # 
 # output: pdf_html # for html report
+# for pdf format report: # # # 
 # output:
 #   pagedown::html_paged:
-#     css: ["custom-report-styling.css", "default-page", "default"]
+#     css: ["custom-report-styling.css", "default-fonts", "default-page", "default"]
 #     toc: true
 #     front_cover: https://user-images.githubusercontent.com/1825120/75694077-db7a4400-5c9f-11ea-8817-2a024e32c52b.png
-#     # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
-#     self_contained: true
+    # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
+    self_contained: true
 # uncomment this line to produce HTML and PDF in RStudio:
 # knit: pagedown::chrome_print
 ---
