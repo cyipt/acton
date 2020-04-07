@@ -1,0 +1,10 @@
+/*
+@import 'https://fonts.googleapis.com/css?family=Old+Standard+TT';
+body {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+*/
+body {
+  font-family: 'Old Standard TT', Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, 'source-han-serif-sc', 'Source Han Serif SC', 'Source Han Serif CN', 'Source Han Serif TC', 'Source Han Serif TW', 'Source Han Serif', 'Songti SC', 'Microsoft YaHei', serif;
+}
+

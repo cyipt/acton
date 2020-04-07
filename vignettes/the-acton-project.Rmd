@@ -4,16 +4,17 @@ title: "Active Transport Options for New Housing Developments: The ACTON project
 author: "<br><br><br><br><br><br><br><br><br>Joey Talbot, Robin Lovelace<br>(University of Leeds)<br>Martin Lucas-Smith, Simon Nuttall<br>(CycleStreets)<br>Andrew Speakman (PlanIt)<br>Website: cyipt.github.io/acton"
 bibliography: ../vignettes/acton-references.bib
 output:
-  rmarkdown::html_vignette:
-    number_sections: true
-vignette: >
-  %\VignetteIndexEntry{The ACTON project}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+   rmarkdown::html_vignette:
+     number_sections: true
+ vignette: >
+   %\VignetteIndexEntry{The ACTON project}
+   %\VignetteEngine{knitr::rmarkdown}
+   %\VignetteEncoding{UTF-8}
 # for pdf format report: # # # 
 # output: pdf_html # for html report
 # output:
 #   pagedown::html_paged:
+#     css: ["custom-report-styling.css", "default-page", "default"]
 #     toc: true
 #     front_cover: https://user-images.githubusercontent.com/1825120/75694077-db7a4400-5c9f-11ea-8817-2a024e32c52b.png
 #     # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
