@@ -108,7 +108,10 @@ To address this problem, the [PlanIt website](https://www.planit.org.uk/) was de
 
 PlanIt has an API (application programming interface, a data interface usable within a programming context) which allows users to search for planning applications using a range of criteria, such as address, planning authority, bounding box, date or planning application identifier.
 
-As part of ACTON (and using funding from an Innovate UK project, StreetFocus), the PlanIt API has been improved to make it easier to search for particular types of planning application. These updates are currently available on the development version of [PlanIt](https://www.planit.org.uk/). We derived terms for the following searchable fields:
+As part of ACTON (and using funding from an Innovate UK project, StreetFocus), the PlanIt API has been improved to make it easier to search for particular types of planning application.
+These updates are were based on a development version of PlanIt API that will be incorporated into the [main PlanIt website](https://www.planit.org.uk/) by end of May 2020.
+
+We derived terms for the following searchable fields:
 
 - 'app_size' (for the scale of the proposed development) - including:
     Large = Major, large scale developments;
