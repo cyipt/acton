@@ -1,21 +1,35 @@
 ---
 title: "Active Transport Options for New Housing Developments: The ACTON project"
-author: "Joey Talbot, Robin Lovelace, Martin Lucas-Smith, Andrew Speakman and Simon Nuttall"
+# author: "Joey Talbot, Robin Lovelace, Martin Lucas-Smith, Andrew Speakman and Simon Nuttall"
+author: "<br><br><br><br><br><br><br><br><br>Joey Talbot, Robin Lovelace<br>(University of Leeds)<br>Martin Lucas-Smith, Simon Nuttall<br>(CycleStreets)<br>Andrew Speakman<br>(PlanIt)"
 # output: pdf_document # for pdf report
 # output: pdf_html # for html report
+# output:
+#   rmarkdown::html_vignette:
+#     number_sections: true
+# vignette: >
+#   %\VignetteIndexEntry{The ACTON project}
+#   %\VignetteEngine{knitr::rmarkdown}
+#   %\VignetteEncoding{UTF-8}
+# for pdf format report:
+# output: bookdown::html_document2
 output:
-  rmarkdown::html_vignette:
-    number_sections: true
-vignette: >
-  %\VignetteIndexEntry{The ACTON project}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  pagedown::html_paged:
+    toc: true
+    front_cover: https://user-images.githubusercontent.com/1825120/75694077-db7a4400-5c9f-11ea-8817-2a024e32c52b.png
+    # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
+    self_contained: false
+# uncomment this line to produce HTML and PDF in RStudio:
+# knit: pagedown::chrome_print
 bibliography: ../vignettes/acton-references.bib
 ---
 
 ```{r, echo=FALSE, eval=FALSE}
-# get citations
-citr::tidy_bib_file(rmd_file = "vignettes/report.Rmd", messy_bibliography = "~/uaf/allrefs.bib", file = "vignettes/acton-references.bib")
+# Update report
+# get citations - replace 'allrefs' with your references file
+citr::tidy_bib_file(rmd_file = "vignettes/the-acton-project.Rmd", messy_bibliography = "~/uaf/allrefs.bib", file = "vignettes/acton-references.bib")
+pagedown::chrome_print("file:///tmp/RtmpmD47bN/preview-7654589e7bac.dir/the-acton-project.html", output = "acton-report.pdf")
+browseURL("acton-report.pdf")
 ```
 
 
@@ -36,7 +50,7 @@ Transport is now the UK's largest and fastest growing source of carbon emissions
 Unlike other sectors the UK transport system has not seen any reduction in recent years [@hickman_looking_2007].
 The government's agressive and legally binding climate targets, plus overwhelming evidence of the health and social benefits of active travel, make it vital that new developments are conducive to low-carbon lifestyles including low levels of car ownership and use, and high levels of walking and cycling for everyday trips.
 Unfortunately the trend has been in the opposite direction.
-New residential developments, and even recently planned but not yet approved sites, tend to be located in places, and have designs, that lock residents into car dependent lifestyles.
+New residential developments, and even recently planned but not yet approved sites, tend to be located in places, and have designs, that lock residents into car dependent lifestyles, something that central government aims to tackle in future policies [@mhclg_planning_2020].
 This project tackles this issue head-on, by creating actionable evidence to modify plans and adapt existing new developments to ensure they can support car-free and active lifestyles.
 
 ## Components of the ACTON project
@@ -552,7 +566,7 @@ We plan to work with potential funders to ensure that the value generated in the
 
 Details about follow-on work will be posted on the project's issue tracker at https://github.com/cyipt/acton/issues, where interested stakeholders are welcome to post ideas and follow-on questions.
 
-## References
+# References
 
 <!-- Original content: -->
 
