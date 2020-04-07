@@ -28,12 +28,11 @@ bibliography: ../vignettes/acton-references.bib
 # Update report
 # get citations - replace 'allrefs' with your references file
 citr::tidy_bib_file(rmd_file = "vignettes/the-acton-project.Rmd", messy_bibliography = "~/uaf/allrefs.bib", file = "vignettes/acton-references.bib")
-pagedown::chrome_print("file:///tmp/RtmpmD47bN/preview-76545363a8fe.dir/the-acton-project.html", output = "acton-report.pdf")
+pagedown::chrome_print("http://127.0.0.1:4321/vignettes/the-acton-project.html", output = "acton-report.pdf")
 browseURL("acton-report.pdf")
 piggyback::pb_upload("acton-report.pdf")
 piggyback::pb_download_url("acton-report.pdf")
 ```
-
 
 ```{r setup, include=FALSE, message = FALSE}
 knitr::opts_chunk$set(echo = FALSE, out.width = "80%", fig.align = "center")
@@ -75,13 +74,16 @@ This is illustrated in the schematic diagram below.
 knitr::include_graphics("../man/figures/README-workflow-1.png")
 ```
 
-In bringing together these datasets, there are several outputs that we have developed. The further development of these and their use for policy purposes was discussed in workshop held in Leeds in March 2020. 
+Several outputs that were developed during the course of the project.
+These, and the potential for further work to inform regional and national development policies, were discussed in workshop held in Leeds in March 2020. 
 
-Firstly, we have created an R package named `acton` that is freely available for download from GitHub. This contains functions that aid the import of planning application and accessibility data.
+On the technical side, we developed open source software to support the project, an R package named `acton`, to ensure reproducibility and to provide a strong foundation for further work.
+The package contains functions that aid the import of planning application and accessibility data.
 
-Building on this, we have then produced a case study to investigates the accessibility for active travel of a set of new housing developments in Leeds, West Yorkshire.
+We tested the methods on a case study of Leeds to investigates the accessibility for active travel of a set of new housing developments in Leeds, West Yorkshire.
+This is documented in the case studies report.
 
-Finally, we begun to develop a prototype indicator model designed to predict active travel mode share in new housing developments. 
+Finally have laid the foundations needed to develop a nationally scalable indicator to predict active travel mode shares associated with new housing developments. 
 
 These will each be described in greater detail in the remaining sections of this report. 
 
@@ -107,7 +109,7 @@ To address this problem, the [PlanIt website](https://www.planit.org.uk/) was de
 
 PlanIt has an API (application programming interface, a data interface usable within a programming context) which allows users to search for planning applications using a range of criteria, such as address, planning authority, bounding box, date or planning application identifier.
 
-As part of ACTON (and using funding from an Innovate UK project, StreetFocus), the PlanIt API has been improved to make it easier to search for particular types of planning application. These updates are currently available on the development version of [PlanIt](https://www.planit.org.uk/). We have derived terms for the following searchable fields:
+As part of ACTON (and using funding from an Innovate UK project, StreetFocus), the PlanIt API has been improved to make it easier to search for particular types of planning application. These updates are currently available on the development version of [PlanIt](https://www.planit.org.uk/). We derived terms for the following searchable fields:
 
 - 'app_size' (for the scale of the proposed development) - including:
     Large = Major, large scale developments;
@@ -153,7 +155,7 @@ The `acton` R package (described below) includes a function for the import of th
 
 ## Demographic data
 
-We have obtained demographic data from the 2011 census, including the method of travel for journeys to work and journey origin-destination data. With its comprehensive national coverage, this allows us to investigate journey origins and destinations with the high geographical resolution necessary to differentiate new housing developments from neighbouring areas of older housing stock.
+We obtained demographic data from the 2011 census, including the method of travel for journeys to work and journey origin-destination data. With its comprehensive national coverage, this allows us to investigate journey origins and destinations with the high geographical resolution necessary to differentiate new housing developments from neighbouring areas of older housing stock.
 
 Of course, the ACTON project aims to enable the investigation of the many new residential developments that have been built since 2011 and for which travel data is not available, but to do this we need an existing data source to allow methods to be developed. Census data is a key data source for the Propensity to Cycle Tool, and we use the `pct` R package to access this data.
 
@@ -242,7 +244,7 @@ To get routes from CycleStreets.net, you will need to set up an API key called C
 
 # Leeds case study
 
-Using the data sources described above, we have produced a case study of new housing developments in Leeds. We investigate accessibility across the city for active travel modes. Using CycleStreets.net for journey routing, we look at journeys to work for the residents of four new housing sites.  
+The data sources described above were explored for case study of new housing developments in Leeds. We investigated accessibility across the city for active travel modes. Using CycleStreets.net for journey routing, we look at journeys to work for the residents of four new housing sites.  
 
 ## Planning applications
 
@@ -261,17 +263,17 @@ applications_leeds = get_planit_data(
 ```
 
 ```{r, echo=FALSE}
-applications_leeds = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/applications-leeds.geojson")
+# applications_leeds = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/applications-leeds.geojson")
 #tm_shape(applications_leeds) + tm_dots(col = "app_type") +
  # tm_basemap(server = "CartoDB.Positron")
 ```
 
 
-<!-- ```{r} -->
-<!-- knitr::include_graphics("https://user-images.githubusercontent.com/52210872/77913768-c12a8a80-728c-11ea-963f-e6bad2decd38.png") -->
-<!-- ``` -->
+```{r}
+knitr::include_graphics("https://user-images.githubusercontent.com/52210872/77913768-c12a8a80-728c-11ea-963f-e6bad2decd38.png")
+```
 
-The result in the `applications_leeds` object contains much rich information about the planning applications.
+The resulting data rich information about the planning applications, an overview of which is shown in the figure above.
 
 <!-- ```{r} -->
 <!-- DT::datatable(applications_leeds[c(3, 4, 5, 8, 9, 15)]) -->
@@ -279,9 +281,10 @@ The result in the `applications_leeds` object contains much rich information abo
 
 ## The four chosen sites
 
-From the 281 large planning applications identified as described above, we have selected four of these for which the descriptions reveal a high number of homes have been consented. These can be seen in the following table:
+From the 281 large planning applications identified as described above, we have selected four of these for which the descriptions reveal a high number of homes have been consented.
+<!-- These can be seen in the following table: -->
 
-```{r, echo=TRUE}
+```{r, echo=FALSE}
 ids = c(
   "13/05235/FU",
   "15/04151/FU",
@@ -460,7 +463,7 @@ The first map shows the LSOA zones in Leeds together with their working age popu
 
 The JTS record travel times from the population weighted centroid of each LSOA. New housing developments can be constructed anywhere within an LSOA, and may not necessarily be close to existing homes. To assess the accessibility of new developments we therefore use statistics that relate to the closest LSOA centroid. For our Tyersal Lane case study site, the closest LSOA centroid is in Bradford.
 
-Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. As explained earlier, we have combined these three statistics to produce a single measure weighted by the number of jobs.
+Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. As explained earlier, we combined these three statistics to produce a single measure weighted by the number of jobs.
 This is shown in maps below.
 
 ```{r, message=FALSE}
@@ -499,14 +502,13 @@ The point of origin was updated so routes start at in the case study sites. The 
 The thickness of the lines in the map below, which illustrates route busyness data, is proportional to the number of journeys (using all modes of transport), and the colour represents the busyness of the roads. 
 For other maps, see the Case Studies report on the ACTON website.
 
-
 ```{r}
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/73958076-43d34100-48ff-11ea-80a3-f06f8205e8d2.png")
 ```
 
 # Modelling walkability and cyclability
 
-Using data from new housing developments built prior to the 2011 Census, we started development of a model to predict active travel levels to and from new homes.
+Using data from new housing developments built prior to the 2011 Census, we started development of a model to predict active travel levels to and from new homes, building on the methods underlying the Propensity to Cycle Tool [@lovelace_propensity_2017].
 
 As a response variable we are using the proportion of commuters who cycle to work. This is available at the Output Area level, allowing us to obtain data that precisely matches the geographical bounds of the new development sites. 
 
