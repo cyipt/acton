@@ -565,15 +565,17 @@ m_cycling = glm(pcycle ~
 
 # Conclusions
 
-The ACTON project has successfully demonstrated the benefits of providing actionable evidence about active travel provision associated with new developments in a single place.
+The ACTON project has successfully demonstrated that combining multiple sources of data in a single analysis can provide a strong, actionable evidence-base for improving active travel provision associated with new developments.
 Although the input datasets used by ACTON were already in the public domain, they were scattered across multiple websites making them hard to access, let alone use as the basis of evidence-based decision-making.
 
-The project not only demonstrates the benefits of combining datasets using real-world examples, but it has also resulted in a new tool, the `acton` R package, that represents a step change in the ease-of-access to two vital sources of data policymakers and planners:
+The methods have been demonstrated using real-world developments from a case study of Leeds.
+Furthermore, these methods have been implemented in new software, the `acton` R package, which represents a step change in the accessibility of vital sources of data for policymakers and planners:
 
 - Data on new developments is now far more accessible to researchers and others without needing to write API queries via the new function `get_planit_data()`
 - Data on accessibility is now far more accessible to researchers via the new function `get_jts_data()`, which gets data from DfT's open Journey Time Statistics
 
 These functions and the datasets they open-up provide a strong foundation for further work.
+The methods are modular, meaning they can be combined with additional approaches such as spatial network analysis [@cooper_predictive_2018] and pre-existing scenarios of active transport uptake [@goodman_scenarios_2019].
 We plan to work with potential funders to ensure that the value generated in the course of this 3 month project can be made available to everyone, either as a self-standing tool or as part of a wider toolkit for sustainable transport planning.
 
 Details about follow-on work will be posted on the project's issue tracker at https://github.com/cyipt/acton/issues, where interested stakeholders are welcome to post ideas and follow-on questions.
