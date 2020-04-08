@@ -182,10 +182,23 @@ route_chunks_list = lapply(1:n_chunks, {
 )
 length(route_chunks_list)
 length(route_chunks_list[1:33])
-system.time({od_lsoas_short_routes = do.call(rbind, route_chunks_list[1:33])})
+system.time({od_lsoas_short_routes = do.call(rbind, route_chunks_list[1:33])}) # time taken for 10%... ~2 minutes
+# Guess: it will take around 2*10 = 20 minutes
+system.time({od_lsoas_short_routes = do.call(rbind, route_chunks_list)}) #
 
 setwd(old_working_directory)
 
+saveRDS(od_lsoas_short_routes, "od_lsoas_short_routes.Rds")
+piggyback::pb_upload("od_lsoas_short_routes.Rds")
+
+
+# analysis with route data ------------------------------------------------
+
+# summarise with average steepness, median, 75% percentile, 90% percentile, 95th percentile, 99th percentile, 100th percent...
+
+
+
+# join-on data from origins
 stopCluster(cl)
 # 69964 NA where geocode2 is a destination outside the country or other unusual place
 View(od_lsoas_sf_interzonal[is.na(od_lsoas_sf_interzonal$distance_euclidean),])
