@@ -183,6 +183,7 @@ route_chunks_list = lapply(1:n_chunks, {
 length(route_chunks_list)
 length(route_chunks_list[1:33])
 system.time({od_lsoas_short_routes = do.call(rbind, route_chunks_list[1:33])}) # time taken for 10%... ~2 minutes
+system.time({od_lsoas_short_routes = data.table::rbindlist(route_chunks_list[1:33])}) # less than 1 second!
 # Guess: it will take around 2*10 = 20 minutes
 system.time({od_lsoas_short_routes = do.call(rbind, route_chunks_list)}) #
 
