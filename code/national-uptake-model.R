@@ -37,8 +37,6 @@ dim(new_homes_2000_09)
 summary(factor(new_homes_2000_09$region))
 
 # View(new_homes_2000_09)
-plot(new_homes_2000_09 %>% filter(region == "Leeds"))
-mapview::mapview(new_homes_2000_09 %>% filter(region == "Leeds"))
 
 # add pct data ------------------------------------------------------------
 
@@ -121,39 +119,87 @@ od_lsoas_sf_interzonal = od_lsoas_sf_interzonal %>%
 
 sum(od_lsoas_sf_interzonal$AllMethods) / sum(od_lsoa_sf$AllMethods) # 56% remain
 
-
 od_lsoas_sf_interzonal$distance_euclidean = as.numeric(sf::st_length(od_lsoas_sf_interzonal))
 summary(od_lsoas_sf_interzonal$distance)
 
-
-#Divide into lines over and under 20km
+# Divide into lines over and under 20km
 od_lsoas_short = od_lsoas_sf_interzonal %>%
   filter(distance_euclidean < 20000)
 
-dim(od_lsoas_short) # 330567 rows
+od_lsoas_long = od_lsoas_sf_interzonal %>%
+  filter(distance_euclidean >= 20000)
 
+saveRDS(od_lsoas_short, "od_lsoas_short.Rds")
+saveRDS(od_lsoas_long, "od_lsoas_long.Rds")
+
+# routing script ----------------------------------------------------------
+
+od_lsoas_short = readRDS("od_lsoas_short.Rds")
+dim(od_lsoas_short) # 330567 rows
 remotes::install_github("ropensci/stplanr")
 
+library(sf)
 library(stplanr)
+library(parallel)
+library(cyclestreets)
+cl = makeCluster(detectCores())
+clusterExport(cl, c("journey"))
+# test run:
+l_test = od_lsoas_short[1:100,]
+routes_lsoa = stplanr::route(l_test, route_fun = cyclestreets::journey, cl = cl)
+names(routes_lsoa) # df variables have been lost
+routes_lsoa = stplanr::route(l = l_test, route_fun = cyclestreets::journey, cl = cl)
+names(routes_lsoa) # df variables have been lost
 
-  library(parallel)
-  library(cyclestreets)
-  cl <- makeCluster(detectCores())
-  clusterExport(cl, c("journey"))
-  routes_lsoa <- route(od_lsoas_short[1:100,], route_fun = cyclestreets::journey, cl = cl)
-  stopCluster(cl)
+N = 1000
+# split_grouping_variable = cut(1:nrow(od_lsoas_short), breaks = N, labels = 1:N)
+split_grouping_variable = rep(1:34000, each = 1000)[1:nrow(od_lsoas_short)]
+summary(split_grouping_variable)[1:10]
+od_lsoas_short_list = split(od_lsoas_short, split_grouping_variable)
+class(od_lsoas_short_list)
+length(od_lsoas_short_list)
+nrow(od_lsoas_short_list[[1]])
+head(od_lsoas_short_list[[1]])
+# test it's the same
+identical(od_lsoas_short[1:1000,], od_lsoas_short_list[[1]])
 
-  routes_lsoa1 <- route(od_lsoas_short[1:10000,], route_fun = cyclestreets::journey, cl = cl)
-  routes_lsoa2 <- route(od_lsoas_short[10001:20000,], route_fun = cyclestreets::journey, cl = cl)
-  routes_lsoa3 <- route(od_lsoas_short[20001:30000,], route_fun = cyclestreets::journey, cl = cl)
-  routes_lsoa4 <- route(od_lsoas_short[30001:40000,], route_fun = cyclestreets::journey, cl = cl)
-  routes_lsoa5 <- route(od_lsoas_short[40001:50000,], route_fun = cyclestreets::journey, cl = cl)
-  routes_lsoa6 <- route(od_lsoas_short[50001:60000,], route_fun = cyclestreets::journey, cl = cl)
-  routes_lsoa7 <- route(od_lsoas_short[60001:70000,], route_fun = cyclestreets::journey, cl = cl)
-  routes_lsoa8 <- route(od_lsoas_short[70001:80000,], route_fun = cyclestreets::journey, cl = cl)
-  routes_lsoa9 <- route(od_lsoas_short[80001:90000,], route_fun = cyclestreets::journey, cl = cl)
-  routes_lsoa10 <- route(od_lsoas_short[90001:100000,], route_fun = cyclestreets::journey, cl = cl)
+system.time({routes_lsoa_1 = route(od_lsoas_short_list[[1]], route_fun = cyclestreets::journey, cl = cl)})
+# 70 seconds, implying ~ 20 hrs for all routes
 
+data_dir = "od_lsoa_routes_20020-04-07-chunks-of-1000-rows"
+dir.create(data_dir)
+old_working_directory = setwd(data_dir)
+n_chunks = length(od_lsoas_short_list)
+# started at 23:05
+for(i in 1:n_chunks) {
+  message("Routing batch ", i, " of ", n_chunks)
+  system.time({routes_lsoa_n = route(l = od_lsoas_short_list[[i]], route_fun = cyclestreets::journey, cl = cl)})
+  saveRDS(routes_lsoa_n, paste0("routes_lsoa_", i, ".Rds"))
+}
+route_chunks_list = lapply(1:n_chunks, {
+  function(i) readRDS(paste0("routes_lsoa_", i, ".Rds"))
+}
+)
+length(route_chunks_list)
+length(route_chunks_list[1:33])
+system.time({od_lsoas_short_routes = do.call(rbind, route_chunks_list[1:33])}) # time taken for 10%... ~2 minutes
+# Guess: it will take around 2*10 = 20 minutes
+system.time({od_lsoas_short_routes = do.call(rbind, route_chunks_list)}) #
+
+setwd(old_working_directory)
+
+saveRDS(od_lsoas_short_routes, "od_lsoas_short_routes.Rds")
+piggyback::pb_upload("od_lsoas_short_routes.Rds")
+
+
+# analysis with route data ------------------------------------------------
+
+# summarise with average steepness, median, 75% percentile, 90% percentile, 95th percentile, 99th percentile, 100th percent...
+
+
+
+# join-on data from origins
+stopCluster(cl)
 # 69964 NA where geocode2 is a destination outside the country or other unusual place
 View(od_lsoas_sf_interzonal[is.na(od_lsoas_sf_interzonal$distance_euclidean),])
 

@@ -13,3 +13,4 @@
 ^data-raw$
 ^.*\.geojson$
 ^\.Ruserdata$
+^acton-report\.pdf$
