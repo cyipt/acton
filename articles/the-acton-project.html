@@ -393,14 +393,14 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <div id="conclusions" class="section level1">
 <h1 class="hasAnchor">
 <a href="#conclusions" class="anchor"></a>Conclusions</h1>
-<p>The ACTON project has successfully demonstrated the benefits of providing actionable evidence about active travel provision associated with new developments in a single place. Although the input datasets used by ACTON were already in the public domain, they were scattered across multiple websites making them hard to access, let alone use as the basis of evidence-based decision-making.</p>
-<p>The project not only demonstrates the benefits of combining datasets using real-world examples, but it has also resulted in a new tool, the <code>acton</code> R package, that represents a step change in the ease-of-access to two vital sources of data policymakers and planners:</p>
+<p>The ACTON project has successfully demonstrated that combining multiple sources of data in a single analysis can provide a strong, actionable evidence-base for improving active travel provision associated with new developments. Although the input datasets used by ACTON were already in the public domain, they were scattered across multiple websites making them hard to access, let alone use as the basis of evidence-based decision-making.</p>
+<p>The methods have been demonstrated using real-world developments from a case study of Leeds. Furthermore, these methods have been implemented in new software, the <code>acton</code> R package, which represents a step change in the accessibility of vital sources of data for policymakers and planners:</p>
 <ul>
 <li>Data on new developments is now far more accessible to researchers and others without needing to write API queries via the new function <code><a href="../reference/get_planit_data.html">get_planit_data()</a></code>
 </li>
 <li>Data on accessibility is now far more accessible to researchers via the new function <code><a href="../reference/get_jts_data.html">get_jts_data()</a></code>, which gets data from DfT’s open Journey Time Statistics</li>
 </ul>
-<p>These functions and the datasets they open-up provide a strong foundation for further work. We plan to work with potential funders to ensure that the value generated in the course of this 3 month project can be made available to everyone, either as a self-standing tool or as part of a wider toolkit for sustainable transport planning.</p>
+<p>These functions and the datasets they open-up provide a strong foundation for further work. The methods are modular, meaning they can be combined with additional approaches such as spatial network analysis <span class="citation">(Cooper 2018)</span> and pre-existing scenarios of active transport uptake <span class="citation">(Goodman et al. 2019)</span>. We plan to work with potential funders to ensure that the value generated in the course of this 3 month project can be made available to everyone, either as a self-standing tool or as part of a wider toolkit for sustainable transport planning.</p>
 <p>Details about follow-on work will be posted on the project’s issue tracker at <a href="https://github.com/cyipt/acton/issues" class="uri">https://github.com/cyipt/acton/issues</a>, where interested stakeholders are welcome to post ideas and follow-on questions.</p>
 </div>
 <div id="references" class="section level1">
@@ -441,6 +441,12 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <!-- Create prototype map visualising this data. -->
 <!-- A report setting out the policy impact - potentially a peer-reviewed paper. -->
 <div id="refs" class="references">
+<div id="ref-cooper_predictive_2018">
+<p>Cooper, Crispin H. V. 2018. “Predictive Spatial Network Analysis for High-Resolution Transport Modeling, Applied to Cyclist Flows, Mode Choice, and Targeting Investment.” <em>International Journal of Sustainable Transportation</em> 0 (0): 1–11. <a href="https://doi.org/10.1080/15568318.2018.1432730" class="uri">https://doi.org/10.1080/15568318.2018.1432730</a>.</p>
+</div>
+<div id="ref-goodman_scenarios_2019">
+<p>Goodman, Anna, Ilan Fridman Rojas, James Woodcock, Rachel Aldred, Nikolai Berkoff, Malcolm Morgan, Ali Abbas, and Robin Lovelace. 2019. “Scenarios of Cycling to School in England, and Associated Health and Carbon Impacts: Application of the ‘Propensity to Cycle Tool’.” <em>Journal of Transport &amp; Health</em> 12 (March): 263–78. <a href="https://doi.org/10.1016/j.jth.2019.01.008" class="uri">https://doi.org/10.1016/j.jth.2019.01.008</a>.</p>
+</div>
 <div id="ref-hickman_looking_2007">
 <p>Hickman, Robin, and David Banister. 2007. “Looking over the Horizon: Transport and Reduced CO2 Emissions in the UK by 2030.” <em>Transport Policy</em> 14 (5): 377–87. <a href="https://doi.org/10.1016/j.tranpol.2007.04.005" class="uri">https://doi.org/10.1016/j.tranpol.2007.04.005</a>.</p>
 </div>
