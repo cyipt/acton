@@ -185,7 +185,7 @@ length(route_chunks_list[1:33])
 system.time({od_lsoas_short_routes = do.call(rbind, route_chunks_list[1:33])}) # time taken for 10%... ~2 minutes
 system.time({od_lsoas_short_routes = data.table::rbindlist(route_chunks_list[1:33])}) # less than 1 second!
 # Guess: it will take around 2*10 = 20 minutes
-system.time({od_lsoas_short_routes = do.call(rbind, route_chunks_list)}) #
+system.time({od_lsoas_short_routes = data.table::rbindlist(route_chunks_list)}) #
 
 setwd(old_working_directory)
 
@@ -194,6 +194,11 @@ piggyback::pb_upload("od_lsoas_short_routes.Rds")
 
 
 # analysis with route data ------------------------------------------------
+
+od_lsoas_short_routes = readRDS(url("https://github.com/cyipt/acton/releases/download/0.0.1/od_lsoas_short_routes.Rds"))
+nrow(od_lsoas_short_routes)
+nrow(od_lsoas_short_routes) / nrow(od_lsoas_short)
+
 
 # summarise with average steepness, median, 75% percentile, 90% percentile, 95th percentile, 99th percentile, 100th percent...
 
