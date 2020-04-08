@@ -176,6 +176,14 @@ for(i in 1:n_chunks) {
   system.time({routes_lsoa_n = route(l = od_lsoas_short_list[[i]], route_fun = cyclestreets::journey, cl = cl)})
   saveRDS(routes_lsoa_n, paste0("routes_lsoa_", i, ".Rds"))
 }
+route_chunks_list = lapply(1:n_chunks, {
+  function(i) readRDS(paste0("routes_lsoa_", i, ".Rds"))
+}
+)
+length(route_chunks_list)
+length(route_chunks_list[1:33])
+system.time({od_lsoas_short_routes = do.call(rbind, route_chunks_list[1:33])})
+
 setwd(old_working_directory)
 
 stopCluster(cl)
