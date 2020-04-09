@@ -214,7 +214,7 @@ r_grouped_tyersal = routes_to_site[routes_to_site$geo_code1 == s1,] %>%
     all = mean(all),
     average_incline = sum(abs(diff(elevations))) / sum(distances),
     distance_m = sum(distances),
-    busyness = mean(busyness)
+    busyness = weighted.mean(busyness, distances)
   ) %>%
   ungroup()
 
@@ -246,7 +246,7 @@ r_grouped_micklefield = routes_to_site[routes_to_site$geo_code1 == s2,] %>%
     all = mean(all),
     average_incline = sum(abs(diff(elevations))) / sum(distances),
     distance_m = sum(distances),
-    busyness = mean(busyness)
+    busyness = weighted.mean(busyness, distances)
   ) %>%
   ungroup()
 
@@ -276,7 +276,7 @@ r_grouped_allerton = routes_to_site[routes_to_site$geo_code1 == s3,] %>%
     all = mean(all),
     average_incline = sum(abs(diff(elevations))) / sum(distances),
     distance_m = sum(distances),
-    busyness = mean(busyness)
+    busyness = weighted.mean(busyness, distances)
   ) %>%
   ungroup()
 
@@ -311,7 +311,7 @@ r_grouped_lcid = routes_to_site[routes_to_site$geo_code1 == s4,] %>%
     all = mean(all),
     average_incline = sum(abs(diff(elevations))) / sum(distances),
     distance_m = sum(distances),
-    busyness = mean(busyness)
+    busyness = weighted.mean(busyness, distances)
   ) %>%
   ungroup()
 

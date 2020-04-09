@@ -101,7 +101,7 @@ names(od_lsoa) = gsub(pattern = "AllSexes_Age16Plus|_", "", names(od_lsoa))
 summary(rowSums(od_lsoa %>% select(WorkAtHome:OtherMethod)) == od_lsoa$AllMethods)
 # od_lsoa$AllMethods = NULL
 
-remotes::install_github("itsleeds/od") # open issue on od package. It allows lines with NA coordinates. 2 - it doesnt copy crs system
+remotes::install_github("itsleeds/od")
 library(od)
 
 od_lsoa_sf = od_to_sf(od_lsoa, z = centroids_lsoa) # 433331 rows
@@ -115,7 +115,7 @@ od_lsoas_sf_interzonal = od_lsoas_sf_interzonal %>%
   filter(geocode1 %in% centroids_lsoa$geo_code) # still the same
 
 od_lsoas_sf_interzonal = od_lsoas_sf_interzonal %>%
-  filter(geocode2 %in% centroids_lsoa$geo_code) # 340595 rows
+  filter(geocode2 %in% centroids_lsoa$geo_code) # 340595 rows (in the other 69964 NA geocode2 is a destination outside the country or other unusual place)
 
 sum(od_lsoas_sf_interzonal$AllMethods) / sum(od_lsoa_sf$AllMethods) # 56% remain
 
@@ -194,6 +194,163 @@ piggyback::pb_upload("od_lsoas_short_routes.Rds")
 
 
 # analysis with route data ------------------------------------------------
+
+
+
+piggyback::pb_download("od_lsoas_short_routes.Rds")
+od_lsoas_short_routes = read_rds("od_lsoas_short_routes.Rds")
+
+od_short_nogeo = od_lsoas_short_routes %>%
+  st_drop_geometry() %>%
+  select(geocode1:elevations)
+
+od_short_nogeo = od_short_nogeo %>%
+  mutate(
+    all = AllMethods,
+    bicycle = Bicycle,
+    foot = OnFoot,
+    car_driver = CarOrVan,
+    car_passenger = Passenger,
+    motorbike = Motorcycle,
+    train_tube = Underground + Train,
+    bus = Bus,
+    taxi_other = Taxi + OtherMethod
+  )
+
+# od_lsoas_short_routes$busyness = od_lsoas_short_routes$busynance / od_lsoas_short_routes$distances
+
+# group route segments into routes
+# summarise with average steepness, median, 75% percentile, 90% percentile, 95th percentile, 99th percentile, 100th percent...
+system.time({routes_whole_nogeo = od_short_nogeo %>%
+  group_by(geocode1, geocode2, all, bicycle, foot, car_driver, car_passenger, motorbike, train_tube, bus, taxi_other, distance_euclidean, route_number) %>%
+  summarise(
+    n = n(),
+    average_incline = sum(abs(diff(elevations))) / sum(distances),
+    median_incline = median(abs(diff(elevations))/distances),
+    p75_incline = quantile(abs(diff(elevations))/distances,0.75),
+    p90_incline = quantile(abs(diff(elevations))/distances,0.90),
+    p95_incline = quantile(abs(diff(elevations))/distances,0.95),
+    p99_incline = quantile(abs(diff(elevations))/distances,0.99),
+    max_incline = max(abs(diff(elevations))/distances),
+    distance_m = sum(distances),
+    time_s = sum(time),
+    mean_busyness = sum(busynance)/sum(distances)
+  ) %>%
+  ungroup()
+})
+
+dim(routes_whole_nogeo) # 329464 rows - why is this less than od_lsoas_short?
+
+od_geocodes = unique(od_lsoas_short$geocode2)
+route_geocodes = unique(routes_whole_nogeo$geocode2)
+
+od_geocodes[! od_geocodes %in% route_geocodes] # there are 120 geocode2 found in od_lsoas_short but not in routes_whole_nogeo. why is this?
+
+missing = od_lsoas_short[! od_lsoas_short$geocode2 %in% od_lsoas_short_routes$geocode2,]
+dim(missing) # there are 1066 rows in od_lsoas_short where the geocode2 didn't make it into od_lsoas_short_routes. These are normal geocodes, within the UK
+
+unique(od_lsoas_short$geocode2[! od_lsoas_short$geocode2 %in% od_lsoas_short_routes$geocode2]) # 120
+unique(od_lsoas_short$geocode1[! od_lsoas_short$geocode1 %in% od_lsoas_short_routes$geocode1]) # 0
+
+length(unique(od_lsoas_short$geocode1))
+length(unique(od_lsoas_short$geocode2))
+
+missing2 = od_lsoas_short_routes[! od_lsoas_short_routes$geocode2 %in% routes_whole_nogeo$geocode2,]
+dim(missing2) # everything from od_lsoas_short_routes made it into routes_whole_nogeo
+
+write_rds(routes_whole_nogeo, "routes-whole-nogeo.Rds")
+piggyback::pb_upload("routes-whole-nogeo.Rds")
+
+
+
+# join-on housing data from origins
+routes_full_data = routes_whole_nogeo %>%
+  inner_join(property_age_lsoa, by = c("geocode1" = "lsoa"))
+
+
+routes_full_data$pcycle = routes_full_data$bicycle / routes_full_data$all
+routes_full_data$pwalk = routes_full_data$foot / routes_full_data$all
+routes_full_data$pcycle[routes_full_data$pcycle < 0.001] = 0.001
+routes_full_data$pwalk[routes_full_data$pwalk < 0.001] = 0.001
+
+
+
+# The uptake model --------------------------------------------------------
+
+# Could use AICcmodavg() for model selection
+# Or use a Bayesian approach
+
+m_national = glm(pcycle ~
+                   distance_m + # d1
+                   sqrt(distance_m)  +  # d2
+                   average_incline +    # h1
+                   distance_m * average_incline +  # i1
+                   mean_busyness +
+                   p2000_09,
+                 data = routes_full_data,
+                 family = quasibinomial(),
+                 weights = all
+)
+summary(m_national)
+
+m_national2 = glm(pcycle ~
+                    distance_m + # d1
+                    sqrt(distance_m)  +  # d2
+                    average_incline +    # h1
+                    distance_m * average_incline +  # i1
+                    mean_busyness,
+                  data = routes_full_data,
+                  family = quasibinomial(),
+                  weights = all
+)
+summary(m_national2)
+
+m_national3 = glm(pcycle ~
+                    distance_m + # d1
+                    sqrt(distance_m)  +  # d2
+                    distance_m^2 + # d3
+                    average_incline +    # h1
+                    distance_m * average_incline +  # i1
+                    mean_busyness +
+                    p2000_09,
+                  data = routes_full_data,
+                  family = quasibinomial(),
+                  weights = all
+)
+summary(m_national3)
+
+anova(m_national, test = "Chi")
+
+m_national4 = glm(pcycle ~
+                    distance_m + # d1
+                    sqrt(distance_m)  +  # d2
+                    distance_m^2 + # d3
+                    average_incline +    # h1
+                    distance_m * average_incline +  # i1
+                    sqrt(distance_m) * average_incline + # i2
+                    mean_busyness +
+                    p2000_09,
+                  data = routes_full_data,
+                  family = quasibinomial(),
+                  weights = all
+)
+summary(m_national4)
+
+
+fitted.values = m_national$fitted.values
+
+plot(routes_full_data$distance_m, fitted.values)
+plot(routes_full_data$average_incline, fitted.values)
+plot(routes_full_data$p2000_09, fitted.values)
+cor(routes_full_data$pcycle, fitted.values)^2 # explains around 11% of variability
+
+
+
+
+
+
+----------------------------
+
 
 od_lsoas_short_routes = readRDS(url("https://github.com/cyipt/acton/releases/download/0.0.1/od_lsoas_short_routes.Rds"))
 nrow(od_lsoas_short_routes)
