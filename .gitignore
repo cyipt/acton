@@ -12,3 +12,5 @@ ssh.exe.stackdump
 large_old_apps.csv
 vignettes/*.png*
 *.pdf
+*.docx
+*.zip
