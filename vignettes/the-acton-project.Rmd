@@ -4,25 +4,25 @@ title: "Active Transport Options for New Housing Developments: The ACTON project
 author: "<img src='https://user-images.githubusercontent.com/1825120/75694077-db7a4400-5c9f-11ea-8817-2a024e32c52b.png' width='100%'><br>Joey Talbot, Robin Lovelace<br>(University of Leeds)<br>Martin Lucas-Smith, Simon Nuttall<br>(CycleStreets)<br>Andrew Speakman (PlanIt)<br>Website: cyipt.github.io/acton"
 # author: "<br><br><br><br><br><br><br><br><br>Joey Talbot, Robin Lovelace<br>(University of Leeds)<br>Martin Lucas-Smith, Simon Nuttall<br>(CycleStreets)<br>Andrew Speakman (PlanIt)<br>Website: cyipt.github.io/acton"
 bibliography: acton-references.bib
-# output:
-#    rmarkdown::html_vignette:
-#      number_sections: true
-# vignette: >
-#    %\VignetteIndexEntry{The ACTON project}
-#    %\VignetteEngine{knitr::rmarkdown}
-#    %\VignetteEncoding{UTF-8}
+output:
+   rmarkdown::html_vignette:
+     number_sections: true
+vignette: >
+   %\VignetteIndexEntry{The ACTON project}
+   %\VignetteEngine{knitr::rmarkdown}
+   %\VignetteEncoding{UTF-8}
 # output: bookdown::word_document2 # for docx report
 # for pdf format report: # # # 
-output:
-  pagedown::html_paged:
-    # css: ["default-fonts", "default-page", "default"] # not the same
-    css: ["custom-report-styling.css", "default-page", "default"]
-    # css: ["custom-report-styling.css", "default-fonts", "default-page", "default"]
-    toc: true
-    # front_cover: https://user-images.githubusercontent.com/1825120/75694077-db7a4400-5c9f-11ea-8817-2a024e32c52b.png
-    self_contained: true
-# uncomment this line to produce HTML and PDF in RStudio:
-# knit: pagedown::chrome_print
+# output:
+#   pagedown::html_paged:
+#     # css: ["default-fonts", "default-page", "default"] # not the same
+#     css: ["custom-report-styling.css", "default-page", "default"]
+#     # css: ["custom-report-styling.css", "default-fonts", "default-page", "default"]
+#     toc: true
+#     # front_cover: https://user-images.githubusercontent.com/1825120/75694077-db7a4400-5c9f-11ea-8817-2a024e32c52b.png
+#     self_contained: true
+# # uncomment this line to produce HTML and PDF in RStudio:
+# # knit: pagedown::chrome_print
 ---
 
 ```{r, echo=FALSE, eval=FALSE}
