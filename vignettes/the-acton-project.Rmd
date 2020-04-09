@@ -1,7 +1,8 @@
 ---
 title: "Active Transport Options for New Housing Developments: The ACTON project"
 # author: "Joey Talbot, Robin Lovelace, Martin Lucas-Smith, Andrew Speakman and Simon Nuttall"
-author: "<br><br><br><br><br><br><br><br><br>Joey Talbot, Robin Lovelace<br>(University of Leeds)<br>Martin Lucas-Smith, Simon Nuttall<br>(CycleStreets)<br>Andrew Speakman (PlanIt)<br>Website: cyipt.github.io/acton"
+author: "<img src='https://user-images.githubusercontent.com/1825120/75694077-db7a4400-5c9f-11ea-8817-2a024e32c52b.png' width='100%'><br>Joey Talbot, Robin Lovelace<br>(University of Leeds)<br>Martin Lucas-Smith, Simon Nuttall<br>(CycleStreets)<br>Andrew Speakman (PlanIt)<br>Website: cyipt.github.io/acton"
+# author: "<br><br><br><br><br><br><br><br><br>Joey Talbot, Robin Lovelace<br>(University of Leeds)<br>Martin Lucas-Smith, Simon Nuttall<br>(CycleStreets)<br>Andrew Speakman (PlanIt)<br>Website: cyipt.github.io/acton"
 bibliography: acton-references.bib
 output:
    rmarkdown::html_vignette:
