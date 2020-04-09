@@ -29,11 +29,11 @@ output:
 # Update report
 # get citations - replace 'allrefs' with your references file
 citr::tidy_bib_file(rmd_file = "vignettes/the-acton-project.Rmd", messy_bibliography = "~/uaf/allrefs.bib", file = "vignettes/acton-references.bib")
-pagedown::chrome_print("http://127.0.0.1:4321/vignettes/the-acton-project.html", output = "acton-report.pdf", wait = 5, timeout = 300)
-browseURL("acton-report.pdf")
-file.size("acton-report.pdf")
-piggyback::pb_upload("acton-report.pdf")
-piggyback::pb_download_url("acton-report.pdf")
+pagedown::chrome_print("file:///tmp/RtmpFEuqIL/preview-2d9b2602f22c.dir/the-acton-project.html", output = "the-acton-project.pdf", wait = 5, timeout = 300)
+browseURL("the-acton-project.pdf")
+file.size("the-acton-project.pdf")
+piggyback::pb_upload("the-acton-project.pdf")
+piggyback::pb_download_url("the-acton-project.pdf")
 ```
 
 ```{r setup, include=FALSE, message = FALSE}
