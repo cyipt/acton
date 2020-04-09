@@ -1,10 +1,10 @@
 /* font location goes here:*/
 
-@import 'https://fonts.googleapis.com/css?family=Comic+Neue';
+@import 'https://fonts.googleapis.com/css?family=Open+Sans';
 
 body {
-  font-family: "Comic Neue";
-  font-size: .80em;
+  font-family: "Open Sans";
+  font-size: .70em;
 }
 
 blockquote {
