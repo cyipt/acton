@@ -192,10 +192,7 @@ setwd(old_working_directory)
 saveRDS(od_lsoas_short_routes, "od_lsoas_short_routes.Rds")
 piggyback::pb_upload("od_lsoas_short_routes.Rds")
 
-
 # analysis with route data ------------------------------------------------
-
-
 
 piggyback::pb_download("od_lsoas_short_routes.Rds")
 od_lsoas_short_routes = read_rds("od_lsoas_short_routes.Rds")
@@ -228,16 +225,27 @@ system.time({routes_whole_nogeo = od_short_nogeo %>%
     average_incline = sum(abs(diff(elevations))) / sum(distances),
     median_incline = median(abs(diff(elevations))/distances),
     p75_incline = quantile(abs(diff(elevations))/distances,0.75),
+    p85_incline = quantile(abs(diff(elevations))/distances,0.85),
     p90_incline = quantile(abs(diff(elevations))/distances,0.90),
     p95_incline = quantile(abs(diff(elevations))/distances,0.95),
     p99_incline = quantile(abs(diff(elevations))/distances,0.99),
     max_incline = max(abs(diff(elevations))/distances),
     distance_m = sum(distances),
     time_s = sum(time),
-    mean_busyness = sum(busynance)/sum(distances)
+    mean_speed = sum(distances) / sum(time),
+    min_speed = min(time / distances), # steps
+    mean_busyness = sum(busynance)/sum(distances),
+    p75_busyness = quantile(busynance/distances, 0.75),
+    p85_busyness = quantile(busynance/distances, 0.85),
+    p90_busyness = quantile(busynance/distances, 0.90),
+    p95_busyness = quantile(busynance/distances, 0.95),
+    p99_busyness = quantile(busynance/distances, 0.99),
+    max_busyness = max(busynance/distances)
   ) %>%
   ungroup()
 })
+
+# explore/verify route data -----------------------------------------------
 
 dim(routes_whole_nogeo) # 329464 rows - why is this less than od_lsoas_short?
 
@@ -261,7 +269,7 @@ dim(missing2) # everything from od_lsoas_short_routes made it into routes_whole_
 write_rds(routes_whole_nogeo, "routes-whole-nogeo.Rds")
 piggyback::pb_upload("routes-whole-nogeo.Rds")
 
-
+routes_whole_nogeo = read_rds(piggyback::pb_download_url("routes-whole-nogeo.Rds"))
 
 # join-on housing data from origins
 routes_full_data = routes_whole_nogeo %>%
