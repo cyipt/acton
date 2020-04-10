@@ -94,7 +94,7 @@ plot(lsoas %>% filter(lad_name == "Leeds") %>% select(p2000_09))
 # saveRDS(od_lsoa_16_plus_10_plus, "od_lsoa_16_plus_10_plus.Rds")
 # piggyback::pb_upload("od_lsoa_16_plus_10_plus.Rds", repo = "cyipt/icicle")
 piggyback::pb_download("od_lsoa_16_plus_10_plus.Rds", repo = "cyipt/icicle")
-od_lsoa_16_plus_10_plus = readRDS("od_lsoa_16_plus_10_plus.Rds")
+od_lsoa_16_plus_10_plus = readRDS("od_lsoa_16_plus_10_plus.Rds") # routes used by at least 10 commuters, aged 16+
 od_lsoa = od_lsoa_16_plus_10_plus %>%
   select(geocode1 = "Area of usual residence", geocode2 = "Area of Workplace", matches("AllSexes_Age16Plus"))
 names(od_lsoa) = gsub(pattern = "AllSexes_Age16Plus|_", "", names(od_lsoa))
@@ -124,13 +124,19 @@ summary(od_lsoas_sf_interzonal$distance)
 
 # Divide into lines over and under 20km
 od_lsoas_short = od_lsoas_sf_interzonal %>%
-  filter(distance_euclidean < 20000)
+  filter(distance_euclidean < 20000) # 330567 rows
 
 od_lsoas_long = od_lsoas_sf_interzonal %>%
-  filter(distance_euclidean >= 20000)
+  filter(distance_euclidean >= 20000) # 10028 rows
 
 saveRDS(od_lsoas_short, "od_lsoas_short.Rds")
 saveRDS(od_lsoas_long, "od_lsoas_long.Rds")
+
+piggyback::pb_upload("od_lsoas_short.Rds")
+piggyback::pb_upload("od_lsoas_long.Rds")
+
+
+od_lsoas_short$rownum = as.numeric(rownames(od_lsoas_short))
 
 # routing script ----------------------------------------------------------
 
@@ -233,7 +239,7 @@ system.time({routes_whole_nogeo = od_short_nogeo %>%
     distance_m = sum(distances),
     time_s = sum(time),
     mean_speed = sum(distances) / sum(time),
-    min_speed = min(time / distances), # steps
+    min_speed = min(time / distances), # steps/road crossings/gates
     mean_busyness = sum(busynance)/sum(distances),
     p75_busyness = quantile(busynance/distances, 0.75),
     p85_busyness = quantile(busynance/distances, 0.85),
@@ -244,6 +250,11 @@ system.time({routes_whole_nogeo = od_short_nogeo %>%
   ) %>%
   ungroup()
 })
+
+write_rds(routes_whole_nogeo, "routes-whole-nogeo.Rds")
+piggyback::pb_upload("routes-whole-nogeo.Rds")
+
+routes_whole_nogeo = read_rds(piggyback::pb_download_url("routes-whole-nogeo.Rds"))
 
 # explore/verify route data -----------------------------------------------
 
@@ -266,10 +277,15 @@ length(unique(od_lsoas_short$geocode2))
 missing2 = od_lsoas_short_routes[! od_lsoas_short_routes$geocode2 %in% routes_whole_nogeo$geocode2,]
 dim(missing2) # everything from od_lsoas_short_routes made it into routes_whole_nogeo
 
-write_rds(routes_whole_nogeo, "routes-whole-nogeo.Rds")
-piggyback::pb_upload("routes-whole-nogeo.Rds")
 
-routes_whole_nogeo = read_rds(piggyback::pb_download_url("routes-whole-nogeo.Rds"))
+mapview::mapview(missing) # these are all in northamptonshire or west sussex (Adur and Worthing)
+summary(missing$rownum) # are they particular rows ie a section of od_lsoas_short?
+
+r218 = read_csv()
+
+###
+
+
 
 # join-on housing data from origins
 routes_full_data = routes_whole_nogeo %>%
