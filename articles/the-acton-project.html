@@ -106,7 +106,7 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>Decarbonising the transport sector is an urgent yet challenging component of climate change mitigation policies worldwide <span class="citation">(Schock et al. 2007)</span>. Transport was the UK’s largest and fastest growing source of carbon emissions before the Covid-19 pandemic <span class="citation">(Department for Transport 2020)</span>. The government’s agressive and legally binding climate targets, plus overwhelming evidence of the health and social benefits of active travel, make it vital that new developments are conducive to low-carbon lifestyles. This means low levels of car ownership and use, and high levels of walking and cycling for everyday trips. Unfortunately recent trends have been in the opposite direction <span class="citation">(Hickman and Banister 2007)</span> and it is possible that unsustainable ‘business as usual’ transport systems become embedded again after social distancing measures are relaxed. New residential developments have tended to be located in places that lock residents into car dependent lifestyles, something that central government aims to tackle <span class="citation">(MHCLG 2020)</span>. This project aims to support the changes that are needed for healthy transport systems to become the norm, rather the exception, for new developments. The methods presented in this report provide a strong foundation for evidence-based planning at local, regional and national levels to help make this happen.</p>
+<p>Decarbonising the transport sector is an urgent yet challenging component of climate change mitigation policies worldwide <span class="citation">(Schock et al. 2007)</span>. Transport was the UK’s largest and fastest growing source of carbon emissions before the Covid-19 pandemic <span class="citation">(Department for Transport 2020)</span>. The government’s aggressive and legally binding climate targets, plus overwhelming evidence of the health and social benefits of active travel, make it vital that new developments are conducive to low-carbon lifestyles. This means low levels of car ownership and use, and high levels of walking and cycling for everyday trips. Unfortunately recent trends have been in the opposite direction <span class="citation">(Hickman and Banister 2007)</span> and it is possible that unsustainable ‘business as usual’ transport systems become embedded again after social distancing measures are relaxed. New residential developments have tended to be located in places that lock residents into car dependent lifestyles, something that central government aims to tackle <span class="citation">(MHCLG 2020)</span>. This project aims to support the changes that are needed for healthy transport systems to become the norm, rather than the exception, for new developments. The methods presented in this report provide a strong foundation for evidence-based planning at local, regional and national levels to help make this happen.</p>
 <div id="components-of-the-acton-project" class="section level2">
 <h2 class="hasAnchor">
 <a href="#components-of-the-acton-project" class="anchor"></a>Components of the ACTON project</h2>
@@ -254,7 +254,7 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <div id="leeds-case-study" class="section level1">
 <h1 class="hasAnchor">
 <a href="#leeds-case-study" class="anchor"></a>Leeds case study</h1>
-<p>The data sources described above were explored for case study of new housing developments in Leeds. We investigated accessibility across the city for active travel modes. Using CycleStreets.net for journey routing, we look at journeys to work for the residents of four new housing sites.</p>
+<p>The data sources described above were explored for a case study of new housing developments in Leeds. We investigated accessibility across the city by active travel modes. Using CycleStreets.net for journey routing, we look at journeys to work for the residents of four new housing sites.</p>
 <div id="planning-applications" class="section level2">
 <h2 class="hasAnchor">
 <a href="#planning-applications" class="anchor"></a>Planning applications</h2>
@@ -264,11 +264,11 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
   <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">500</span>,
   <span class="kw">auth</span> <span class="kw">=</span> <span class="st">"Leeds"</span>,
   <span class="kw">app_size</span> <span class="kw">=</span> <span class="st">"large"</span>,
-  <span class="kw">app_state</span> <span class="kw">=</span> <span class="st">"permitted"</span>
+  <span class="kw">app_state</span> <span class="kw">=</span> <span class="st">"permitted"</span>,
+  <span class="kw">silent</span> <span class="kw">=</span> <span class="fl">TRUE</span>
   )</pre></body></html></div>
-<pre><code>## Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=500&amp;bbox=&amp;end_date=2020-04-10&amp;start_date=2000-02-01&amp;pg_sz=500&amp;auth=Leeds&amp;app_size=large&amp;app_state=permitted</code></pre>
 <p><img src="https://user-images.githubusercontent.com/52210872/77913768-c12a8a80-728c-11ea-963f-e6bad2decd38.png" width="80%" style="display: block; margin: auto;"></p>
-<p>The resulting data rich information about the planning applications, an overview of which is shown in the figure above.</p>
+<p>The resulting data provides rich information about the planning applications, an overview of which is shown in the figure above.</p>
 <!-- ```{r} -->
 <!-- DT::datatable(applications_leeds[c(3, 4, 5, 8, 9, 15)]) -->
 <!-- ``` -->
@@ -350,16 +350,13 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <a href="#accessibility-indicators" class="anchor"></a>Accessibility indicators</h2>
 <p>Journey time statistics (JTS) are available from the Department for Transport recording accessibility at the geographical level of the LSOA (an area covering approximately 1500 residents or 650 households). The statistics include average minimum travel times to key local services and destinations, such as town centres, centres of employment, primary schools, secondary schools, food stores and GP surgeries.</p>
 <p>Travel times are calculated for three modes of travel - by car, by cycle, and by a mode that combines walking and public transport.</p>
-<p>In the following code we download data for journey times to the nearest centres of employment, town centres, food stores, primary schools, secondary schools and GP surgeries.</p>
-<p>There are several different statistics representing employment centres. We combine measures for employment centres of different sizes to create a single employment metric. We then combine this with the other journey time statistics to generate a single index of accessibility for each mode of travel.</p>
-<p>Now we can map the journey time statistics across Leeds and West Yorkshire.</p>
-<p>The first map shows the LSOA zones in Leeds together with their working age population. LSOA population should normally be relatively constant, but it is considerably higher in some Leeds LSOAs. This may be due to new residential developments built after the LSOA boundaries were set, in particular student accommodation and the recent growth in city centre living.</p>
-<p>The JTS record travel times from the population weighted centroid of each LSOA. New housing developments can be constructed anywhere within an LSOA, and may not necessarily be close to existing homes. To assess the accessibility of new developments we therefore use statistics that relate to the closest LSOA centroid. For our Tyersal Lane case study site, the closest LSOA centroid is in Bradford.</p>
-<p>Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. As explained earlier, we combined these three statistics to produce a single measure weighted by the number of jobs. This is shown in maps below.</p>
+<p>For an example of the code used to download journey time data, see the <a href="https://cyipt.github.io/acton/articles/case-studies.html">case studies vignette</a> on the ACTON website. We use this to map journey times across Leeds and West Yorkshire.</p>
+<p>The travel times in these statistics are recorded from the population weighted centroid of each LSOA. New housing developments can be constructed anywhere within an LSOA, and may not necessarily be close to existing homes. To assess the accessibility of new developments we therefore use statistics that relate to the closest LSOA centroid. For our Tyersal Lane case study site, the closest LSOA centroid is in Bradford.</p>
+<p>Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. We combined these three statistics to produce a single employment metric weighted by the number of jobs. This is shown in maps below.</p>
 <p><img src="https://user-images.githubusercontent.com/52210872/76424159-c7b99680-639f-11ea-95c5-1198d977be1f.png" width="80%" style="display: block; margin: auto;"></p>
-<p>We have then combined the weighted access to employment measure with the measures for access to food stores, town centres, primary schools, secondary schools and GPs. By adding together all of these scores we have generated a single accessibility index for each mode of travel.</p>
+<p>We have then combined the weighted access to employment measure with the measures for access to food stores, town centres, primary schools, secondary schools and GP surgeries, to calculate the average journey time across these six destination types. By adding together all of these scores we have generated a single accessibility index for each mode of travel.</p>
 <p><img src="https://user-images.githubusercontent.com/52210872/76458014-bdb08b80-63d1-11ea-88dd-a5da8020ea5d.png" width="80%" style="display: block; margin: auto;"></p>
-<p>According to these measures, there are many areas that have poor accessibility by active modes and public transport.</p>
+<p>According to these measures, there are many areas that have poor accessibility by active modes and public transport. We can see that three of the four case study sites are located in areas that have relatively poor accessibility to local services. Tyserall, Micklefield and Allerton Bywater are all in areas where, according to our combined index, local services are &gt;15 minutes distant on average by walking or public transport. Micklefield is in an area where local services are &gt;20 minutes distant by cycling.</p>
 </div>
 <div id="route-busyness" class="section level2">
 <h2 class="hasAnchor">
