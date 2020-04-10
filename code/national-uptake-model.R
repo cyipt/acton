@@ -198,12 +198,89 @@ setwd(old_working_directory)
 saveRDS(od_lsoas_short_routes, "od_lsoas_short_routes.Rds")
 piggyback::pb_upload("od_lsoas_short_routes.Rds")
 
+
+
+# Identify missing route data -----------------------------------------------
+
+
+dim(routes_whole_nogeo) # 329464 rows - why is this less than od_lsoas_short?
+
+od_geocodes = unique(od_lsoas_short$geocode2)
+route_geocodes = unique(routes_whole_nogeo$geocode2)
+
+od_geocodes[! od_geocodes %in% route_geocodes] # there are 120 geocode2 found in od_lsoas_short but not in routes_whole_nogeo. why is this?
+
+missing = od_lsoas_short[! od_lsoas_short$geocode2 %in% od_lsoas_short_routes$geocode2,]
+dim(missing) # there are 1066 rows in od_lsoas_short where the geocode2 didn't make it into od_lsoas_short_routes. These are normal geocodes, within the UK
+
+unique(od_lsoas_short$geocode2[! od_lsoas_short$geocode2 %in% od_lsoas_short_routes$geocode2]) # 120
+unique(od_lsoas_short$geocode1[! od_lsoas_short$geocode1 %in% od_lsoas_short_routes$geocode1]) # 0
+
+length(unique(od_lsoas_short$geocode1))
+length(unique(od_lsoas_short$geocode2))
+
+missing2 = od_lsoas_short_routes[! od_lsoas_short_routes$geocode2 %in% routes_whole_nogeo$geocode2,]
+dim(missing2) # everything from od_lsoas_short_routes made it into routes_whole_nogeo
+
+
+mapview::mapview(missing) # these are all in northamptonshire or west sussex (Adur and Worthing)
+summary(missing$rownum) # are they particular rows ie a section of od_lsoas_short?
+View(missing$rownum)
+
+
+# Add in missing route data -----------------------------------------------
+
+
+routes_lsoa_219 = route(l = od_lsoas_short_list[[219]], route_fun = cyclestreets::journey, cl = cl)
+length(unique(routes_lsoa_219$rownum))
+saveRDS(routes_lsoa_219, "routes_lsoa_219.Rds")
+routes_lsoa_219 = read_rds("routes_lsoa_219.Rds")
+
+routes_lsoa_258 = route(l = od_lsoas_short_list[[258]], route_fun = cyclestreets::journey, cl = cl)
+length(unique(routes_lsoa_258$rownum))
+saveRDS(routes_lsoa_258, "routes_lsoa_258.Rds")
+routes_lsoa_258 = read_rds("routes_lsoa_258.Rds")
+
+
+routes_lsoa_219_tojoin = routes_lsoa_219 %>%
+  filter(rownum %in% missing$rownum)
+length(unique(routes_lsoa_219_tojoin$rownum))
+
+routes_lsoa_258_tojoin = routes_lsoa_258 %>%
+  filter(rownum %in% missing$rownum)
+length(unique(routes_lsoa_258_tojoin$rownum))
+
+names(od_lsoas_short_routes)
+names(routes_lsoa_219_tojoin)
+names(routes_lsoa_258_tojoin)
+
+routes_lsoa_219_tojoin = routes_lsoa_219_tojoin %>%
+  select(geocode1:distance_euclidean, route_number, name:finish_latitude)
+routes_lsoa_258_tojoin = routes_lsoa_258_tojoin %>%
+  select(geocode1:distance_euclidean, route_number, name:finish_latitude)
+
+names(od_lsoas_short_routes)
+names(routes_lsoa_219_tojoin)
+names(routes_lsoa_258_tojoin)
+
+route_list = list(od_lsoas_short_routes,routes_lsoa_219_tojoin,routes_lsoa_258_tojoin)
+system.time({od_lsoas_short_routes_j = data.table::rbindlist(l = route_list)}) # less than 1 second!
+
+still_missing = od_lsoas_short[! od_lsoas_short$geocode2 %in% od_lsoas_short_routes_j$geocode2,]
+dim(still_missing) # 0
+
+od_lsoas_short_routes_j = st_as_sf(od_lsoas_short_routes_j)
+
+write_rds(od_lsoas_short_routes_j, "od_lsoas_short_routes_j.Rds")
+piggyback::pb_upload("od_lsoas_short_routes_j.Rds")
+
+
 # analysis with route data ------------------------------------------------
 
-piggyback::pb_download("od_lsoas_short_routes.Rds")
-od_lsoas_short_routes = read_rds("od_lsoas_short_routes.Rds")
+piggyback::pb_download("od_lsoas_short_routes_j.geojson")
+od_lsoas_short_routes_j = read_rds("od_lsoas_short_routes_j.geojson")
 
-od_short_nogeo = od_lsoas_short_routes %>%
+od_short_nogeo = od_lsoas_short_routes_j %>%
   st_drop_geometry() %>%
   select(geocode1:elevations)
 
@@ -219,6 +296,9 @@ od_short_nogeo = od_short_nogeo %>%
     bus = Bus,
     taxi_other = Taxi + OtherMethod
   )
+
+write_rds(od_short_nogeo, "od-short-nogeo.Rds")
+piggyback::pb_upload("od-short-nogeo.Rds")
 
 # od_lsoas_short_routes$busyness = od_lsoas_short_routes$busynance / od_lsoas_short_routes$distances
 
@@ -256,34 +336,10 @@ piggyback::pb_upload("routes-whole-nogeo.Rds")
 
 routes_whole_nogeo = read_rds(piggyback::pb_download_url("routes-whole-nogeo.Rds"))
 
-# explore/verify route data -----------------------------------------------
 
-dim(routes_whole_nogeo) # 329464 rows - why is this less than od_lsoas_short?
-
-od_geocodes = unique(od_lsoas_short$geocode2)
-route_geocodes = unique(routes_whole_nogeo$geocode2)
-
-od_geocodes[! od_geocodes %in% route_geocodes] # there are 120 geocode2 found in od_lsoas_short but not in routes_whole_nogeo. why is this?
-
-missing = od_lsoas_short[! od_lsoas_short$geocode2 %in% od_lsoas_short_routes$geocode2,]
-dim(missing) # there are 1066 rows in od_lsoas_short where the geocode2 didn't make it into od_lsoas_short_routes. These are normal geocodes, within the UK
-
-unique(od_lsoas_short$geocode2[! od_lsoas_short$geocode2 %in% od_lsoas_short_routes$geocode2]) # 120
-unique(od_lsoas_short$geocode1[! od_lsoas_short$geocode1 %in% od_lsoas_short_routes$geocode1]) # 0
-
-length(unique(od_lsoas_short$geocode1))
-length(unique(od_lsoas_short$geocode2))
-
-missing2 = od_lsoas_short_routes[! od_lsoas_short_routes$geocode2 %in% routes_whole_nogeo$geocode2,]
-dim(missing2) # everything from od_lsoas_short_routes made it into routes_whole_nogeo
-
-
-mapview::mapview(missing) # these are all in northamptonshire or west sussex (Adur and Worthing)
-summary(missing$rownum) # are they particular rows ie a section of od_lsoas_short?
-
-r218 = read_csv()
 
 ###
+
 
 
 
