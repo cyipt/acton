@@ -169,9 +169,9 @@ Of course, the ACTON project aims to enable the investigation of the many new re
 
 Sources such as census data provide information on journey origins and destinations. Missing from this are the routes that are used to travel from the origin to the destination. These routes must be inferred using routing algorithms.
 
-[CycleStreets.net](https://www.cyclestreets.net/) is a journey planner focusing on routes used for cycling. With a public facing website, CycleStreets helps people find a cycle route that is right for them. Such routes range from direct routes appropriate for confident on-road cyclists to quieter routes for people who want to avoid busy roads.
+[CycleStreets.net](https://www.cyclestreets.net/) is a journey planner focusing on routes used for cycling. With a public facing website, CycleStreets.net helps people find a cycle route that is right for them. Such routes range from direct routes appropriate for confident on-road cyclists to quieter routes for people who want to avoid busy roads.
 
-CycleStreets includes three routing options, generating 'fast', 'balanced' or 'quiet' cycle routes between journey origins and destinations. For the fast routes, journey time is minimised, with no consideration given to factors such as the busyness of the roads. For the quiet routes, a parameter called "busyness" is minimised. The balanced routes use a combination of these two approaches, in which both journey time and busyness are taken into account.   
+CycleStreets.net includes three routing options, generating 'fast', 'balanced' or 'quiet' cycle routes between journey origins and destinations. For the fast routes, journey time is minimised, with no consideration given to factors such as the busyness of the roads. For the quiet routes, a parameter called "busyness" is minimised. The balanced routes use a combination of these two approaches, in which both journey time and busyness are taken into account.   
 
 As part of ACTON we have improved the way in which the busyness of particular types of cycle lane and path is classified, leading to better quality routing of 'quiet' routes through a more accurate characterisation of the cycleability of route segments. The figure below illustrates the improvements to the routing profile that have been made, with increased weighting given to protected cycleways clear from the long green segment on the canal towpath.
 
@@ -184,9 +184,9 @@ knitr::include_graphics("https://user-images.githubusercontent.com/361987/781473
 
 New homes often lie close to major roads and bypasses that act as barriers which limit or discourage sustainable modes of travel. By contrast, there are sometimes long established bridleways, towpaths or other paths which could be upgraded.
 
-CycleStreets uses a key metric, known as the 'busyness score' to rate each section of a cycle route. This provides a measure of the cycleability of the route and helps determine the suitability of it for each type of rider. It takes into account many features of the streets and paths used for cycling, including the width, speed limits, presence of cycle lanes or dedicated cycle tracks, and obstacles along the way.
+CycleStreets.net uses a key metric, known as the 'busyness score' to rate each section of a cycle route. This provides a measure of the cycleability of the route and helps determine the suitability of it for each type of rider. It takes into account many features of the streets and paths used for cycling, including the width, speed limits, presence of cycle lanes or dedicated cycle tracks, and obstacles along the way.
 
-As part of ACTON the process of setting the busyness score by CycleStreets is being further developed. This will allow it to take account of new types of cycling infrastructure and move towards a model that distinguishes between eight different states of cycling that are fundamental to how people choose a route. For instance, this enables a distinction between high-quality, dedicated cycle infrastructure, and shared-use paths which involve sharing often narrow space with pedestrians.
+As part of ACTON the process of setting the busyness score by CycleStreets.net is being further developed. This will allow it to take account of new types of cycling infrastructure and move towards a model that distinguishes between eight different states of cycling that are fundamental to how people choose a route. For instance, this enables a distinction between high-quality, dedicated cycle infrastructure, and shared-use paths which involve sharing often narrow space with pedestrians.
 
 We estimate the busyness of the roads which constitute routes from our case study sites to workplaces or other key destinations. The improved busyness score will allow calculation of an index of average road busyness for the area surrounding each site.
 
@@ -269,12 +269,6 @@ applications_leeds = get_planit_data(
   )
 ```
 
-```{r, echo=FALSE}
-# applications_leeds = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/applications-leeds.geojson")
-#tm_shape(applications_leeds) + tm_dots(col = "app_type") +
- # tm_basemap(server = "CartoDB.Positron")
-```
-
 
 ```{r}
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/77913768-c12a8a80-728c-11ea-963f-e6bad2decd38.png")
@@ -282,40 +276,13 @@ knitr::include_graphics("https://user-images.githubusercontent.com/52210872/7791
 
 The resulting data provides rich information about the planning applications, an overview of which is shown in the figure above.
 
-<!-- ```{r} -->
-<!-- DT::datatable(applications_leeds[c(3, 4, 5, 8, 9, 15)]) -->
-<!-- ``` -->
-
 ## The four chosen sites
 
 From the 281 large planning applications identified as described above, we have selected four of these for which the descriptions reveal a high number of homes have been consented.
-<!-- These can be seen in the following table: -->
-
-```{r, echo=FALSE}
-ids = c(
-  "13/05235/FU",
-  "15/04151/FU",
-  "15/00415/FU",
-  "15/01973/FU"
-)
-applications_case_study = applications_leeds[
-  applications_leeds$uid %in% ids,
-]
-nrow(applications_case_study)
-
-# applications_case_study %>% 
-#   sf::st_drop_geometry() %>% 
-#   select(description, url) %>% 
-#   knitr::kable()
-```
 
 An overview of the four case study sites is shown in the map below.
 
 ```{r, echo=FALSE}
-# applications_case_study$site = as.factor(c("Tyersal","Micklefield","Leeds Climate Innovation District","Allerton Bywater"))
-# tm_shape(applications_case_study) +
-#   tm_dots(col = "site", size = 0.1)  +
-#   tm_basemap(server = "CartoDB.Positron")
 knitr::include_graphics("https://user-images.githubusercontent.com/1825120/78660650-5e0ca980-78c5-11ea-81c7-dc446965ce51.png")
 ```
 
@@ -337,35 +304,11 @@ We will describe the Allerton Bywater application in more depth and use it to il
 
 The planning application we have selected for Allerton Bywater relates to the final phase of the Millennium Community. This includes 189 homes and has planning consent 13/05235/FU.
 
-We can see that this is classified by PlanIt.org.uk as a large application. The application was submitted in December 2013 by Keepmoat Homes and the Homes and Communities Agency and was approved in November 2014.
+This is classified by PlanIt.org.uk as a large application. The application was submitted in December 2013 by Keepmoat Homes and the Homes and Communities Agency and was approved in November 2014.
 
 Available fields include links to the full PlanIt record and to planning application information from Leeds City Council, as illustrated in
 the online version of this report at
 https://cyipt.github.io/acton/articles/the-acton-project.html.
-
-
-<!-- ```{r, echo=TRUE} -->
-<!-- allerton_bywater = applications_case_study[applications_case_study$uid == "13/05235/FU",] -->
-<!-- allerton_bywater$description -->
-<!-- allerton_bywater$link -->
-<!-- allerton_bywater$url -->
-<!-- allerton_bywater$app_state -->
-<!-- allerton_bywater$app_size -->
-<!-- allerton_bywater$app_type -->
-<!-- allerton_bywater$address -->
-<!-- allerton_bywater$start_date -->
-<!-- allerton_bywater$decided_date -->
-<!-- ``` -->
-
-<!-- The original outline planning application for the entire Allerton Bywater Millennium Community can be found as follows. This was submitted in November 2000 and approved in August 2002. -->
-
-<!-- ```{r, echo=TRUE} -->
-<!-- allerton_bywater_original = get_planit_data(query_type = "planapplic", query_value = "33/311/00/OT@Leeds") -->
-<!-- allerton_bywater_original$description -->
-<!-- allerton_bywater_original$url -->
-<!-- allerton_bywater_original$start_date -->
-<!-- allerton_bywater_original$decided_date -->
-<!-- ``` -->
 
 
 ### Leeds Climate Innovation District
@@ -416,10 +359,12 @@ knitr::include_graphics("https://user-images.githubusercontent.com/52210872/7645
 
 According to these measures, there are many areas that have poor accessibility by active modes and public transport. We can see that three of the four case study sites are located in areas that have relatively poor accessibility to local services. Tyserall, Micklefield and Allerton Bywater are all in areas where, according to our combined index, local services are >15 minutes distant on average by walking or public transport. Micklefield is in an area where local services are >20 minutes distant by cycling.
 
-## Route busyness
+## Travel to work and route busyness
 
-Route busyness is calculated from OD data, based on journeys to work from the LSOA centroid closest to each site in the first instance, allocated to the transport network.
-The point of origin was updated so routes start at in the case study sites. The desire lines were converted to routes using 'fastest journey' option of the `cyclestreets::journey()` function and the routing capabilities in the R package **stplanr** [@lovelace_stplanr_2018]. 
+Journeys to work by case study site residents are estimated based on OD data for commutes for the LSOA which has its population weighted centroid closest to each site. These journeys are allocated to the transport network using CycleStreets.net routing algorithms.
+The point of origin was updated so rather than starting at the nearest LSOA centroid, the routes start within the case study sites themselves. These desire lines were then converted to routes using 'fastest journey' option of the `cyclestreets::journey()` function and the routing capabilities in the R package **stplanr** [@lovelace_stplanr_2018]. 
+
+The busyness of each route segment is estimated according to CycleStreets.net protocols. These allocate busyness values to roads and paths according to factors such as the quality of cycle provision and the road classification.
 
 The thickness of the lines in the map below, which illustrates route busyness data, is proportional to the number of journeys (using all modes of transport), and the colour represents the busyness of the roads. 
 For other maps, see the Case Studies report on the ACTON website.
@@ -430,17 +375,18 @@ knitr::include_graphics("https://user-images.githubusercontent.com/52210872/7395
 
 # Modelling walkability and cyclability
 
-Using data from new housing developments built prior to the 2011 Census, we started development of a model to predict active travel levels to and from new homes, building on the methods underlying the Propensity to Cycle Tool [@lovelace_propensity_2017].
+The final component of the ACTON project is a prototype indicator for active travel levels in new homes.
+Using data from new housing developments built prior to the 2011 Census, we started development of a model to predict cycling levels to and from new homes, building on the methods underlying the Propensity to Cycle Tool [@lovelace_propensity_2017].
 
-As a response variable we are using the proportion of commuters who cycle to work. This is available at the Output Area level, allowing us to obtain data that precisely matches the geographical bounds of the new development sites. 
+As a response variable we use the proportion of commuters who cycle to work. This is available at the Output Area level, allowing us to obtain high resolution data that precisely matches the geographical bounds of the new development sites. 
 
-Similarly to the Propensity to Cycle Tool, the explanatory variables currently include the distance and hilliness of journeys to work. To calculate these, we route journeys using the CycleStreets.net 'fast' route algorithm. Workplace destinations are obtained and routing carried out at LSOA level, to minimise the computational intensity of journey routing.
+Similarly to the Propensity to Cycle Tool, the explanatory variables include the distance and hilliness of journeys to work. However, we also include the average busyness of the streets, which is not one of the parameters in the PCT. To calculate these, we route journeys using the CycleStreets.net 'fast' route algorithm. Workplace destinations are obtained and routing carried out at LSOA level, to minimise the computational intensity of journey routing.
 
-The range of explanatory variables can be expanded further as more data becomes available, adding factors such as the busyness and circuity of the routes. 
+The range of explanatory variables can be expanded further as more data becomes available, adding factors such as the circuity of the routes. 
 
-For the test version of this model we have used data from 12 sites across England, including Allerton Bywater in Leeds. The number of sites can expand as we further develop the model. 
+For the prototype version of this model we have used data from 12 sites across England, including Allerton Bywater in Leeds. The number of sites will expand as we further develop the model. 
 
-## New developments in the 2011 Census
+## Sites used in the prototype model
 
 Desire lines from the 12 sites to places of work are shown below. 
 
@@ -466,9 +412,13 @@ knitr::include_graphics("77967965-2064bb00-72de-11ea-9e23-f703ccde4a39.png")
 
 Zooming in to a single site, we can see the route network in more detail.
 
-<!-- ## Model fitting -->
+## Model fitting
 
-```{r, eval=FALSE}
+We use the `glm()` R package, with a quasibinomial probability distribution and a logit link function, since the proportion of commuters who cycle can be represented as the result of a series of binomial trials.
+
+Having investigated various candidate explanatory variables for distance and hilliness, the following model was found to have the lowest deviance.
+
+```{r, eval=FALSE, echo = TRUE}
 m_cycling = glm(pcycle ~
                   distance_m + # d1
                   sqrt(distance_m)  +  # d2
@@ -531,8 +481,8 @@ Details about follow-on work will be posted on the project's issue tracker at ht
 <!-- ### Potential for cycling and walking: -->
 
 <!-- - this would assess optimal cycling and walking from development locations, based on their location in regard to the destinations we have already identified.  -->
-<!-- - use the fastest route on CycleStreets, but also look at crow-fly distances because new developments are often characterised by very circuitous roads. See http://www.makingspaceforcycling.org/#principles for an example of this. -->
-<!-- - (issue #9) look at the difference between the quiet and fast routes, as identified by CycleStreets.  -->
+<!-- - use the fastest route on CycleStreets.net, but also look at crow-fly distances because new developments are often characterised by very circuitous roads. See http://www.makingspaceforcycling.org/#principles for an example of this. -->
+<!-- - (issue #9) look at the difference between the quiet and fast routes, as identified by CycleStreets.net.  -->
 <!-- - model cycle potential as a function of time taken to cycle v time taken to drive -->
 <!-- - (issue #4) for many developments (especially those that tend to represent urban sprawl) the two key areas for improvement are likely to be improvements to major roads to allow cycling/walking, and the creation of new links that don't exist at present. -->
 
