@@ -78,7 +78,7 @@ knitr::include_graphics("../man/figures/README-workflow-1.png")
 ```
 
 Several outputs that were developed during the course of the project.
-These, and the potential for further work to inform regional and national development policies, were discussed in workshop held in Leeds in March 2020. 
+These, and the potential for further work to inform regional and national development policies, were discussed in a workshop held in Leeds in March 2020. 
 
 On the technical side, we developed open source software to support the project, an R package named `acton`, to ensure reproducibility and to provide a strong foundation for further work.
 The package contains functions that aid the import of planning application and accessibility data.
@@ -86,7 +86,7 @@ The package contains functions that aid the import of planning application and a
 We tested the methods on a case study of Leeds to investigates the accessibility for active travel of a set of new housing developments in Leeds, West Yorkshire.
 This is documented in the case studies report.
 
-Finally have laid the foundations needed to develop a nationally scalable indicator to predict active travel mode shares associated with new housing developments. 
+Finally we have laid the foundations needed to develop a nationally scalable indicator to predict active travel mode shares associated with new housing developments. 
 
 These will each be described in greater detail in the remaining sections of this report. 
 
@@ -157,7 +157,7 @@ Journey time statistics published by the Department for Transport record the tim
 - bicycle
 - a combined walking / public transport measure, showing the fastest journey time by these two modes (either walking alone or walking and public transport in combination).
 
-The `acton` R package (described below) includes a function for the import of the these journey time statistics into R.
+The `acton` R package (described below) includes a function for the import of the journey time statistics into R.
 
 ## Demographic data
 
