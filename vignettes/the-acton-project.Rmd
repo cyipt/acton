@@ -254,7 +254,7 @@ The data sources described above were explored for a case study of new housing d
 
 ## Planning applications
 
-Data from [PlanIt](https://www.planit.org.uk/), accessed using the `acton` R package, was used to identify recent large planning applications within the city boundaries: 
+Data from [PlanIt](https://www.planit.org.uk/), accessed using the `acton` R package, was used to identify recent large planning applications within the city boundaries.
 
 The following code gets and subsets the relevant PlanIt data for Leeds. This extracts large applications where planning consent has been granted:
 
@@ -292,9 +292,9 @@ We will describe the Allerton Bywater application in more depth and use it to il
 
 ## Allerton Bywater Millennium Community
 
-- One of a series of Millennium Communities, the development at Allerton Bywater was announced by John Prescott in 1998. The homes lie on the site of Allerton Colliery, which was the last remaining colliery in Leeds when it closed in 1995. Prior to the development, Allerton Bywater village had a population of around 4,000, and the aim was to incorporate the whole of the village in the project, rather than solely focusing on the site itself. For example, a £500,000 community fund was made available to the parish council to spend on local projects, and community buildings in the village were also refurbished. In total there was £24 million upfront public investment by English Partnerships and the HCA. This included drainage, site clearance and decontamination. 
+- One of a series of Millennium Communities, the development at Allerton Bywater was announced by John Prescott in 1998. The homes lie on the site of Allerton Colliery, which was the last remaining colliery in Leeds when it closed in 1995. Prior to the development, Allerton Bywater village had a population of around 4,000, and the aim was to incorporate the whole of the village in the project, rather than solely focusing on the site itself. For example, a £500,000 community fund was made available to the parish council to spend on local projects, and community buildings in the village were also refurbished. In total there was £24 million upfront public investment by English Partnerships and the Homes and Communities Agency. This included drainage, site clearance and decontamination. 
 
-- The development incorporates new industrial and office units as well as homes, with high environmental standards for both of these. A design code was adopted and development of the site began in 2005. The industrial units at the east of the site were the first in the UK to meet the BREEAM 'Excellent' standard, while the new homes were built to the EcoHomes 'Excellent' standard or the Code for Sustainable Homes Level 3. A number of homes were built under a 'Design for Manufacture' competition for a construction cost of no more than £60,000.
+- The development incorporates new industrial and office units as well as homes, with high environmental standards for both of these. A design code was adopted and development of the site began in 2005. The industrial units at the east of the site were the first in the UK to meet the Building Research Establishment Environmental Assessment Method (BREEAM) 'Excellent' standard, while the new homes were built to the EcoHomes 'Excellent' standard or the Code for Sustainable Homes Level 3. A number of homes were built under a 'Design for Manufacture' competition for a construction cost of no more than £60,000.
 
 - In total there are 562 homes in the Millennium Community. A Sustrans cycle route passes through the site and there is good walking and cycling access to the rest of the village and its surrounds, although parts of the cycle route can get very muddy in winter. Local services such as shops, pubs, cafes, a primary school, park, community centre and nature reserve lie on the edge of the site or within easy walking distance.
 
