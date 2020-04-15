@@ -276,8 +276,6 @@ The first map shows the LSOA zones in West Yorkshire together with their working
 qtm(zones_leeds, "Empl_pop")
 ```
 
-The JTS record travel times from the population weighted centroid of each LSOA. New housing developments can be constructed anywhere within an LSOA, and may not necessarily be close to existing homes. To assess the accessibility of new developments we therefore use statistics that relate to the closest LSOA centroid. For our Tyersal Lane case study site, the closest LSOA centroid is in Bradford.
-
 Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. As explained earlier, we have combined these three statistics to produce a single measure weighted by the number of jobs. This is shown in the maps below.
 
 ```{r, eval = FALSE}

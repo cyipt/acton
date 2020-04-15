@@ -62,11 +62,10 @@ The ACTON project brings together several key datasets to answer the question ho
 
 To do this we use a range of transport and planning data: 
 
-- planning applications
-- census data
-- accessibility statistics
-- routing algorithms
-- cycle uptake models
+- data on UK planning applications accessed using www.PlanIt.org.uk
+- statistics on accessibility and journey times, from the Department for Transport
+- demographic and travel data from the 2011 Census, interpreted using cycle uptake models from the Propensity to Cycle Tool
+- routing algorithms developed by CycleStreets.net
 
 This is illustrated in the schematic diagram below.
 
@@ -142,7 +141,9 @@ We derived terms for the following searchable fields:
     Telecoms = Telecommunications including phone masts;
     Other = All other types eg agricultural, electrical
 
-The number of homes built in a residential development is a key factor of interest, along with any other facilities being constructed. This information is difficult to obtain as it is often not present in the description field of planning applications. Proxy methods for assessing scale have therefore been used, such as the number of documents within a planning application and the length of time allowed before deciding a large scale application. For example, criteria for `'app_size' = large` include applications having >100 attached documents and >60 statutory days allowed before a decision is made on the application.
+The number of homes built in a residential development is a key factor of interest, along with any other facilities being constructed. This information is difficult to obtain as it is often not present in the description field of planning applications. Proxy methods for assessing scale have therefore been used, such as the number of documents within a planning application and the length of time allowed before deciding a large scale application. For example, criteria for `'app_size' = large` include applications having >100 attached documents and >60 statutory days allowed before a decision is made on the application. 
+
+To ensure this proxy adequately captured the applications of interest we tested it for applications in Leeds, manually identifying applications of differing sizes and ensuring they were correctly classified.
 
 The ongoing further development of PlanIt will have many benefits beyond the ACTON project, since it will make it easier to find planning applications of interest for all sorts of purposes. For example, [StreetFocus.uk](https://www.streetfocus.uk/) makes PlanIt data more widely available, with a public-facing website that brings the PlanIt planning application data together with street-level data on proposals for local improvements to the public realm or to active travel infrastructure. This can be used to help identify places where new developments could potentially help to fund nearby improvements through mechanisms such as S106 agreements. Enabling these synergies to be identified at an early stage in the planning process allows great scope for assisting both the proponents of local improvement schemes and the developers who desire greater certainty in terms of the level of S106 funding they are called on to provide.
 
@@ -150,7 +151,7 @@ The ongoing further development of PlanIt will have many benefits beyond the ACT
 
 In assessing the suitability of a proposed site for residential development, one of the most important questions will be how accessible the site is. The provision of local services and community facilities is a key enabler of active travel. It is no use building top quality cycle and walking provision within the site if residents are presented with a 30 minute walk from their homes to reach the local shops.
 
-Journey time statistics published by the Department for Transport record the time taken to reach a range of services such as primary and secondary schools, food stores, GP surgeries, centres of employment and town centres. These are available at the geographical level of the LSOA, an area covering a population of approximately 1500 people or 650 households. The statistics include journey times by three different modes of travel:
+Journey time statistics published by the Department for Transport record the time taken to reach a range of services such as primary and secondary schools, food stores, GP surgeries, centres of employment and town centres. These are available at the geographical level of the LSOA, an area covering a population of approximately 1500 people or 650 households. They are compiled based on the journey times to the ten closest destinations of each category from each Output Area (OA) centroid within a given LSOA. The statistics are available for all years between 2014 and 2017, and include journey times by three different modes of travel:
 
 - car
 - bicycle
@@ -178,7 +179,7 @@ As part of ACTON we have improved the way in which the busyness of particular ty
 
 New homes often lie close to major roads and bypasses that act as barriers which limit or discourage sustainable modes of travel. By contrast, there are sometimes long established bridleways, towpaths or other paths which could be upgraded.
 
-CycleStreets.net uses a key metric, known as the 'busyness score' to rate each section of a cycle route. This provides a measure of the cycleability of the route and helps determine the suitability of it for each type of rider. It takes into account many features of the streets and paths used for cycling, including the width, speed limits, presence of cycle lanes or dedicated cycle tracks, and obstacles along the way. As part of ACTON the process of setting the busyness score by CycleStreets.net has been further developed. For instance, the scores make a distinction between high-quality, dedicated cycle infrastructure, and shared-use paths which involve sharing often narrow space with pedestrians.
+CycleStreets.net uses a key metric known as 'busyness' to rate each section of a cycle route. This provides a measure of the cycleability of the route and helps determine the suitability of it for each type of rider. It takes into account many features of the streets and paths used for cycling, including the width, speed limits, presence of cycle lanes or dedicated cycle tracks, and obstacles along the way. As part of ACTON the process of setting the busyness score by CycleStreets.net has been further developed. For instance, the scores make a distinction between high-quality, dedicated cycle infrastructure, and shared-use paths which involve sharing often narrow space with pedestrians.
 
 We estimate the busyness of the roads which constitute routes from our case study sites to workplaces or other key destinations. The improved busyness score will allow calculation of an index of average road busyness for the area surrounding each site.
 
@@ -191,7 +192,7 @@ knitr::include_graphics("https://user-images.githubusercontent.com/361987/781473
 
 ## Uptake scenarios
 
-The Propensity to Cycle Tool (PCT) is a well-used national tool for cycle infrastructure planning. It uses 2011 Census data and CycleStreets.net routing services to map current cycling levels at high geographic resolutions, as well as a series of scenarios modeling how cycle usage could increase. These scenarios take the same journey origin-destination data from the 2011 Census and estimate how the share of journeys by different methods of travel could change. In particular, the Go Dutch scenario models what would happen if people in the UK cycled as much as those in the Netherlands, accounting for journey distance and hilliness.
+The Propensity to Cycle Tool (PCT) is a well-used national tool for cycle infrastructure planning [@lovelace_pct]. It uses 2011 Census data and CycleStreets.net routing services to map current cycling levels at high geographic resolutions, as well as a series of scenarios modeling how cycle usage could increase. These scenarios take the same journey origin-destination data from the 2011 Census and estimate how the share of journeys by different methods of travel could change. In particular, the Go Dutch scenario models what would happen if people in the UK cycled as much as those in the Netherlands, accounting for journey distance and hilliness.
 
 An existing limitation of the PCT is the fact that because it uses 2011 census data it does not account for new developments built since 2011. ACTON exists to bridge this gap, by applying PCT methods to new residential areas. An example of this can be found in the Leeds case study described below, where we take journey to work origin-destination data for the LSOAs (Lower Super Output Areas) closest to the new housing sites, reroute this to move the journey origin to the sites themselves rather than the nearest LSOA centroid, then apply the Go Dutch scenario to investigate expected levels of cycling uptake for these routes.
 
@@ -223,7 +224,7 @@ The `acton` package contains two main functions:
 
 The function `get_planit_data()` allows R users to search for planning application data without having to use the PlanIt API directly. This can broaden the use of PlanIt by helping to make its data easier to obtain.
 
-The function `get_jts_data()` enables the downloading of journey time statistics. There are 44 tables in total, most of which include annual data for the years 2014 to 2019. 
+The function `get_jts_data()` enables the downloading of journey time statistics. There are 44 tables in total, which include annual data for the years 2014 to 2017. 
 
 ## Brief demo
 
@@ -250,7 +251,14 @@ View(accessibility_data)
 
 ## Further R instructions
 
-To get routes from CycleStreets.net, you will need to set up an API key called CYCLESTREETS. This can be done with `usethis::edit_r_environ()`, as documented at https://docs.ropensci.org/stplanr/.
+To get routes from CycleStreets.net, you will need to set up an API key called CYCLESTREETS. This can be done by installing the `usethis` package and using it to edit the R environment. 
+
+```{r, eval=FALSE, echo=TRUE}
+install.packages("usethis")
+usethis::edit_r_environ()
+```
+
+You can then add the CYCLESTREETS key to the R environment by typing `CYCLESTREETS=<insert API key name>`
 
 # Leeds case study
 
@@ -282,7 +290,7 @@ The resulting data provides rich information about the planning applications, an
 
 ## The four chosen sites
 
-From the 281 large planning applications identified as described above, we have selected four of these for which the descriptions reveal a high number of homes have been consented.
+From the 281 large planning applications identified as described above, we have selected four of these in which the descriptions reveal that more than 100 homes have been consented.
 
 An overview of the four case study sites is shown in the map below.
 
@@ -342,10 +350,8 @@ Travel times are calculated for three modes of travel - by car, by cycle, and by
 For an example of the code used to download journey time data, see the [case studies vignette](https://cyipt.github.io/acton/articles/case-studies.html) on the ACTON website. 
 We use this to map journey times across Leeds and West Yorkshire.
 
-The travel times in these statistics are recorded from the population weighted centroid of each LSOA. New housing developments can be constructed anywhere within an LSOA, and may not necessarily be close to existing homes. To assess the accessibility of new developments we therefore use statistics that relate to the closest LSOA centroid. For our Tyersal Lane case study site, the closest LSOA centroid is in Bradford.
-
-Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. We combined these three statistics to produce a single employment metric weighted by the number of jobs.
-This is shown in maps below.
+Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. We combined these three statistics, giving them weightings of 100, 500 and 5000 respectively, to produce a single weighted access to employment metric.
+This is shown in the maps below.
 
 ```{r, echo=FALSE}
 knitr::include_graphics("https://user-images.githubusercontent.com/52210872/76424159-c7b99680-639f-11ea-95c5-1198d977be1f.png")
@@ -362,7 +368,7 @@ According to these measures, there are many areas that have poor accessibility b
 ## Travel to work and route busyness
 
 Journeys to work by case study site residents are estimated based on origin-destination (OD) data of commuter journeys for the LSOA having a population weighted centroid closest to each site. These journeys are allocated to the transport network using CycleStreets.net routing algorithms.
-The point of origin was updated so rather than starting at the nearest LSOA centroid, the routes start within the case study sites themselves. This gives 'desire lines' which were then converted to routes using the 'fastest journey' option of the `cyclestreets::journey()` function and the routing capabilities in the R package **stplanr** [@lovelace_stplanr_2018]. 
+The point of origin was updated so rather than starting at the nearest LSOA centroid, the routes start within the case study sites themselves. This gives 'desire lines' from the origin to the destination, which were then converted to routes using the 'fastest journey' option of the `cyclestreets::journey()` function and the routing capabilities in the R package **stplanr** [@lovelace_stplanr_2018]. 
 
 The busyness of each route segment is estimated according to CycleStreets.net protocols. These allocate busyness values to roads and paths according to factors such as the quality of cycle provision and the road classification.
 
