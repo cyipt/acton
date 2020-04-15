@@ -3,7 +3,9 @@ title: "Active Transport Options for New Housing Developments: The ACTON project
 # author: "Joey Talbot, Robin Lovelace, Martin Lucas-Smith, Andrew Speakman and Simon Nuttall"
 author: "<img src='https://user-images.githubusercontent.com/1825120/75694077-db7a4400-5c9f-11ea-8817-2a024e32c52b.png' width='100%'><br>Joey Talbot, Robin Lovelace<br>(University of Leeds)<br>Martin Lucas-Smith, Simon Nuttall<br>(CycleStreets)<br>Andrew Speakman (PlanIt)<br>Website: cyipt.github.io/acton"
 # author: "<br><br><br><br><br><br><br><br><br>Joey Talbot, Robin Lovelace<br>(University of Leeds)<br>Martin Lucas-Smith, Simon Nuttall<br>(CycleStreets)<br>Andrew Speakman (PlanIt)<br>Website: cyipt.github.io/acton"
-bibliography: acton-references.bib
+bibliography:
+  - acton-references.bib
+  - acton.bib
 # output:
 #    rmarkdown::html_vignette:
 #      number_sections: true
@@ -49,10 +51,10 @@ tmap_mode("view")
 # Introduction
 
 Decarbonising the transport sector is an urgent yet challenging component of climate change mitigation policies worldwide [@schock_energy_2007].
-Transport was the UK's largest and fastest growing source of carbon emissions before the Covid-19 pandemic [@departmentfortransport_decarbonising_2020], and these emissions must be tackled in order to meet the UK government's legally binding target of net zero carbon emissions by 2050 [@ccc_net_2019]. There are a raft of reasons to tackle car dependency, including overwhelming evidence of the health and social benefits of active travel [@bma_steps_2019;@mueller_health_2015] and the harms caused by air pollution [@shraufnagel_air_2019], which may even include exacerbating the lethality of Covid-19 [@conticini_can_2020]. For all of these reasons it is vital that new housing developments are conducive to low-carbon lifestyles, which means low levels of car ownership and use, and high levels of walking and cycling for everyday trips.
+Transport was the UK's largest and fastest growing source of carbon emissions before the Covid-19 pandemic [@departmentfortransport_decarbonising_2020], and these emissions must be tackled in order to meet the UK government's legally binding target of net zero carbon emissions by 2050 [@committeeonclimatechange_net_2019]. There are a raft of reasons to tackle car dependency, including overwhelming evidence of the health and social benefits of active travel [@bma_steps_2019;@mueller_health_2015] and the harms caused by air pollution [@shraufnagel_air_2019], which may even include exacerbating the lethality of Covid-19 [@conticini_can_2020]. For all of these reasons it is vital that new housing developments are conducive to low-carbon lifestyles, which means low levels of car ownership and use, and high levels of walking and cycling for everyday trips.
 
 Unfortunately, recent trends have been in the opposite direction to this [@hickman_looking_2007] and it is possible that unsustainable 'business as usual' transport systems become embedded again after social distancing measures are relaxed.
-New residential developments have tended to be located in places that lock residents into car dependent lifestyles [@transportfornewhomes_2018], something that central government aims to tackle [@mhclg_planning_2020].
+New residential developments have tended to be located in places that lock residents into car dependent lifestyles [@transportfornewhomes_transport_2018], something that central government aims to tackle [@mhclg_planning_2020].
 This project aims to support the changes that are needed for healthy transport systems to become the norm, rather than the exception, for new developments.
 The methods presented in this report provide a strong foundation for evidence-based planning at local, regional and national levels to help make this happen.
 
