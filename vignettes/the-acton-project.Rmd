@@ -4,14 +4,14 @@ title: "Active Transport Options for New Housing Developments: The ACTON project
 author: "<img src='https://user-images.githubusercontent.com/1825120/75694077-db7a4400-5c9f-11ea-8817-2a024e32c52b.png' width='100%'><br>Joey Talbot, Robin Lovelace<br>(University of Leeds)<br>Martin Lucas-Smith, Simon Nuttall<br>(CycleStreets)<br>Andrew Speakman (PlanIt)<br>Website: cyipt.github.io/acton"
 # author: "<br><br><br><br><br><br><br><br><br>Joey Talbot, Robin Lovelace<br>(University of Leeds)<br>Martin Lucas-Smith, Simon Nuttall<br>(CycleStreets)<br>Andrew Speakman (PlanIt)<br>Website: cyipt.github.io/acton"
 bibliography: acton-references.bib
-output:
-   rmarkdown::html_vignette:
-     number_sections: true
-vignette: >
-   %\VignetteIndexEntry{The ACTON project}
-   %\VignetteEngine{knitr::rmarkdown}
-   %\VignetteEncoding{UTF-8}
-# output: bookdown::word_document2 # for docx report
+# output:
+#    rmarkdown::html_vignette:
+#      number_sections: true
+# vignette: >
+#    %\VignetteIndexEntry{The ACTON project}
+#    %\VignetteEngine{knitr::rmarkdown}
+#    %\VignetteEncoding{UTF-8}
+output: bookdown::word_document2 # for docx report
 # for pdf format report: # # # 
 # output:
 #   pagedown::html_paged:
@@ -192,7 +192,7 @@ knitr::include_graphics("https://user-images.githubusercontent.com/361987/781473
 
 ## Uptake scenarios
 
-The Propensity to Cycle Tool (PCT) is a well-used national tool for cycle infrastructure planning [@lovelace_pct]. It uses 2011 Census data and CycleStreets.net routing services to map current cycling levels at high geographic resolutions, as well as a series of scenarios modeling how cycle usage could increase. These scenarios take the same journey origin-destination data from the 2011 Census and estimate how the share of journeys by different methods of travel could change. In particular, the Go Dutch scenario models what would happen if people in the UK cycled as much as those in the Netherlands, accounting for journey distance and hilliness.
+The Propensity to Cycle Tool (PCT) is a well-used national tool for cycle infrastructure planning [@lovelace_propensity_2017]. It uses 2011 Census data and CycleStreets.net routing services to map current cycling levels at high geographic resolutions, as well as a series of scenarios modeling how cycle usage could increase. These scenarios take the same journey origin-destination data from the 2011 Census and estimate how the share of journeys by different methods of travel could change. In particular, the Go Dutch scenario models what would happen if people in the UK cycled as much as those in the Netherlands, accounting for journey distance and hilliness.
 
 An existing limitation of the PCT is the fact that because it uses 2011 census data it does not account for new developments built since 2011. ACTON exists to bridge this gap, by applying PCT methods to new residential areas. An example of this can be found in the Leeds case study described below, where we take journey to work origin-destination data for the LSOAs (Lower Super Output Areas) closest to the new housing sites, reroute this to move the journey origin to the sites themselves rather than the nearest LSOA centroid, then apply the Go Dutch scenario to investigate expected levels of cycling uptake for these routes.
 
