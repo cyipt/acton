@@ -401,6 +401,8 @@ mapview(lines_correct_origin)
 write_sf(lines_correct_origin, "lines-correct-origin.geojson")
 piggyback::pb_upload("lines-correct-origin.geojson")
 
+lines_correct_origin = sf::read_sf("https://github.com/cyipt/acton/releases/download/0.0.1/lines-correct-origin.geojson")
+
 
 # Convert the lines into routes-------------------------------------------------
 
@@ -468,53 +470,83 @@ m_cycling = glm(pcycle ~
                   distance_m^2 + # d3
                   average_incline +    # h1
                   distance_m * average_incline +  # i1
-                  sqrt(distance_m) * average_incline, # i2
+                  sqrt(distance_m) * average_incline + # i2
+                  busyness,
                 data = sf::st_drop_geometry(r_grouped_census_joined),
                 family = quasibinomial(),
                 weights = all
                   )
 
-# boot::logit(0)
-# model 2: reproducing pct result on logit of pcycle
-# m_cycling3 = lm(boot::logit(pcycle) ~
-#                   distance_m + # d1
-#                   sqrt(distance_m)  +  # d2
-#                   distance_m^2 + # d3
-#                   average_incline +    # h1
-#                   distance_m * average_incline +  # i1
-#                   sqrt(distance_m) * average_incline, # i2
-#                 data = sf::st_drop_geometry(r_grouped_census_joined),
-#                weights = all
-#                )
+dropterm(m_cycling2, test = "F")
 
-# model 3: reproducing pct model with busyness
+# model 2: reproducing pct model with busyness
 m_cycling2 = glm(pcycle ~
                  distance_m + # d1
                  sqrt(distance_m)  +  # d2
                  distance_m^2 + # d3
                  average_incline +    # h1
                  distance_m * average_incline +  # i1
-                 sqrt(distance_m) * average_incline + # i2
                  busyness,
                data = sf::st_drop_geometry(r_grouped_census_joined),
                family = quasibinomial(),
                weights = all
 )
+
+dropterm(m_cycling2, test = "F")
+
+
 # model 3: reproducing pct model with busyness
-m_cycling4 = glm(pcycle ~
+m_cycling3 = glm(pcycle ~
                  distance_m + # d1
                  sqrt(distance_m)  +  # d2
+                distance_m^2 + # d3
                  average_incline +    # h1
-                 distance_m * average_incline +  # i1
                  busyness,
                data = sf::st_drop_geometry(r_grouped_census_joined),
                family = quasibinomial(),
                weights = all
 )
-fitted.values = m_cycling4$fitted.values # for glm
+
+dropterm(m_cycling3, test = "F")
+
+#minimal mondel
+# model 4: reproducing pct model with busyness
+m_cycling4 = glm(pcycle ~
+                   distance_m + # d1
+                   distance_m^2 + # d3
+                   average_incline +    # h1
+                   busyness,
+                 data = sf::st_drop_geometry(r_grouped_census_joined),
+                 family = quasibinomial(),
+                 weights = all
+)
+
+dropterm(m_cycling4, test = "F")
+
+#previous model
+m_cycling5 = glm(pcycle ~
+                  distance_m + # d1
+                  sqrt(distance_m)  +  # d2
+                  distance_m^2 + # d3
+                  average_incline +    # h1
+                  distance_m * average_incline +  # i1
+                  sqrt(distance_m) * average_incline, # i2
+                data = sf::st_drop_geometry(r_grouped_census_joined),
+                family = quasibinomial(),
+                weights = all
+)
+
+
+fitted.values = m_cycling5$fitted.values # for glm
 # fitted.values = boot::inv.logit(m_cycling$fitted.values)
 
+
+
+disp = sum(residuals(m_cycling,type="deviance")^2/m_cycling$df.residual)
+
 summary(m_cycling4)
+c_hat(m_cycling)
+AICc(mod = m_cycling,return.K = FALSE, second.ord = TRUE)
 
 plot(r_grouped_census_joined$distance_m, fitted.values)
 plot(r_grouped_census_joined$average_incline, fitted.values)
