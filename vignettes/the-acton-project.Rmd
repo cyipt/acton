@@ -6,14 +6,14 @@ author: "<img src='https://user-images.githubusercontent.com/1825120/75694077-db
 bibliography:
   - acton-references.bib
   - acton.bib
-# output:
-#    rmarkdown::html_vignette:
-#      number_sections: true
-# vignette: >
-#    %\VignetteIndexEntry{The ACTON project}
-#    %\VignetteEngine{knitr::rmarkdown}
-#    %\VignetteEncoding{UTF-8}
-output: bookdown::word_document2 # for docx report
+output:
+   rmarkdown::html_vignette:
+     number_sections: true
+vignette: >
+   %\VignetteIndexEntry{The ACTON project}
+   %\VignetteEngine{knitr::rmarkdown}
+   %\VignetteEncoding{UTF-8}
+# output: bookdown::word_document2 # for docx report
 # for pdf format report: # # # 
 # output:
 #   pagedown::html_paged:
