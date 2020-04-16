@@ -14,3 +14,7 @@
 ^.*\.geojson$
 ^\.Ruserdata$
 ^acton-report\.pdf$
+^\.ccache$
+^\.github$
+^clang-.*
+^gfortran.*
