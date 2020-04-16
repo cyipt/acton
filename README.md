@@ -5,15 +5,17 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.com/cyipt/acton.svg?branch=master)](https://travis-ci.com/cyipt/acton)
+<!-- [![Travis build status](https://travis-ci.com/cyipt/acton.svg?branch=master)](https://travis-ci.com/cyipt/acton) -->
+
 [![CircleCI](https://circleci.com/gh/cyipt/acton.svg?style=svg)](https://circleci.com/gh/cyipt/acton)
+[![R CMD Check via
+{tic}](https://github.com/cyipt/acton/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg)](https://github.com/cyipt/acton/actions)
 <!-- badges: end -->
 
 ## Introduction
 
 **ACTON** stands for active transport options for new developments.
-ACTON a research project to provide evidence for local authorities,
+ACTON is a research project to provide evidence for local authorities,
 developers and civil society groups to support planning and investment
 in sustainable transport infrastructure in and around new developments.
 To make the results of the research more reproducible and accessible to
@@ -48,9 +50,10 @@ ACTON seeks to make these datasets more widely accessible and actionable
 by combining them and using them to assess walking and cycling provision
 in and around new developments, to inform policies and investment
 
-For more information about the research project, see the in-progress
-[ACTON
+For more information about the research project, see the [ACTON
 report](https://cyipt.github.io/acton/articles/the-acton-project.html)
+(PDF version available
+[here](https://github.com/cyipt/acton/files/4482361/the-acton-project.pdf))
 and [case
 study](https://cyipt.github.io/acton/articles/case-studies.html)
 articles.
@@ -82,14 +85,13 @@ The package can be used to get data on new developments as follows:
 library(acton)
 # data from specific postcode
 planning_data = get_planit_data(pcode = "LS2 9JT", limit = 2, app_size = "large")
-#> Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2020-03-08&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT&app_size=large
+#> Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2020-04-16&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT&app_size=large
 planning_data
 #> Simple feature collection with 2 features and 26 fields
 #> geometry type:  POINT
 #> dimension:      XY
 #> bbox:           xmin: -1.553865 ymin: 53.80698 xmax: -1.552019 ymax: 53.80897
-#> epsg (SRID):    4326
-#> proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#> geographic CRS: WGS 84
 #> # A tibble: 2 x 27
 #>   address altid app_size app_state app_type associated_id authority_id
 #>   <chr>   <chr> <chr>    <chr>     <chr>    <chr>                <int>
