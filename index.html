@@ -95,12 +95,13 @@
 <h2 class="hasAnchor">
 <a href="#acton" class="anchor"></a>acton</h2>
 <!-- badges: start -->
+<!-- [![Travis build status](https://travis-ci.com/cyipt/acton.svg?branch=master)](https://travis-ci.com/cyipt/acton) -->
 
 </div>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p><strong>ACTON</strong> stands for active transport options for new developments. ACTON a research project to provide evidence for local authorities, developers and civil society groups to support planning and investment in sustainable transport infrastructure in and around new developments. To make the results of the research more reproducible and accessible to others, it is also an R package.</p>
+<p><strong>ACTON</strong>, which stands for active transport options for new developments, is a research project that provides provide evidence for local authorities, housing developers and civil society groups to support planning and investment that enables the walking and cycling revolution that is needed to tackle health and environmental issues. To make the results of the research more reproducible and accessible to others, it is also an R package.</p>
 <p>In first place, ACTON is about evidence-based planning and that means it is about data. ACTON provides easy access to actionable data from 4 main sources, each of which is already in the public domain, which had never before been made available in a single place or analysed together to support planning, as illustrated in the schematic diagram below.</p>
 <p><img src="reference/figures/README-workflow-1.png" width="100%"></p>
 <p>The four main data sources shown above are:</p>
@@ -111,7 +112,7 @@
 <li>Route data from routing services such as CycleStreets.net, providing information on the transport networks surrounding new development sites, with variables such as busyness and speed limits along roads nearby new and planned development sites</li>
 </ul>
 <p>ACTON seeks to make these datasets more widely accessible and actionable by combining them and using them to assess walking and cycling provision in and around new developments, to inform policies and investment</p>
-<p>For more information about the research project, see the in-progress <a href="https://cyipt.github.io/acton/articles/the-acton-project.html">ACTON report</a> and <a href="https://cyipt.github.io/acton/articles/case-studies.html">case study</a> articles.</p>
+<p>For more information about the research project, see the <a href="https://cyipt.github.io/acton/articles/the-acton-project.html">ACTON report</a> (PDF version available <a href="https://github.com/cyipt/acton/files/4482361/the-acton-project.pdf">here</a>) and <a href="https://cyipt.github.io/acton/articles/case-studies.html">case study</a> articles.</p>
 </div>
 <div id="installing-the-r-package" class="section level2">
 <h2 class="hasAnchor">
@@ -132,14 +133,13 @@
 <div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">acton</span>)
 <span class="co"># data from specific postcode</span>
 <span class="no">planning_data</span> <span class="kw">=</span> <span class="fu"><a href="reference/get_planit_data.html">get_planit_data</a></span>(<span class="kw">pcode</span> <span class="kw">=</span> <span class="st">"LS2 9JT"</span>, <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">app_size</span> <span class="kw">=</span> <span class="st">"large"</span>)
-<span class="co">#&gt; Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=2&amp;bbox=&amp;end_date=2020-03-08&amp;start_date=2000-02-01&amp;pg_sz=2&amp;pcode=LS2%209JT&amp;app_size=large</span>
+<span class="co">#&gt; Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=2&amp;bbox=&amp;end_date=2020-04-16&amp;start_date=2000-02-01&amp;pg_sz=2&amp;pcode=LS2%209JT&amp;app_size=large</span>
 <span class="no">planning_data</span>
 <span class="co">#&gt; Simple feature collection with 2 features and 26 fields</span>
 <span class="co">#&gt; geometry type:  POINT</span>
 <span class="co">#&gt; dimension:      XY</span>
 <span class="co">#&gt; bbox:           xmin: -1.553865 ymin: 53.80698 xmax: -1.552019 ymax: 53.80897</span>
-<span class="co">#&gt; epsg (SRID):    4326</span>
-<span class="co">#&gt; proj4string:    +proj=longlat +datum=WGS84 +no_defs</span>
+<span class="co">#&gt; geographic CRS: WGS 84</span>
 <span class="co">#&gt; # A tibble: 2 x 27</span>
 <span class="co">#&gt;   address altid app_size app_state app_type associated_id authority_id</span>
 <span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;                &lt;int&gt;</span>
@@ -206,8 +206,8 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.com/cyipt/acton"><img src="https://travis-ci.com/cyipt/acton.svg?branch=master" alt="Travis build status"></a></li>
 <li><a href="https://circleci.com/gh/cyipt/acton"><img src="https://circleci.com/gh/cyipt/acton.svg?style=svg" alt="CircleCI"></a></li>
+<li><a href="https://github.com/cyipt/acton/actions"><img src="https://github.com/cyipt/acton/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg" alt="R CMD Check via {tic}"></a></li>
 </ul>
 </div>
 </div>
