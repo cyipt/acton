@@ -38,7 +38,7 @@ jobs:
       RGL_USE_NULL: true
       # if you use bookdown or blogdown, replace "PKGDOWN" by the respective
       # capitalized term. This also might need to be done in tic.R
-      BUILD_PKGDOWN: ${{ matrix.config.pkgdown }} 
+      BUILD_PKGDOWN: ${{ matrix.config.pkgdown }}
       # macOS >= 10.15.4 linking
       SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
 
@@ -88,6 +88,23 @@ jobs:
           path: ${{ env.CCACHE_DIR}}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-${{steps.datew.outputs.datew}}
           restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-ccache-${{steps.datew.outputs.datew}}
+
+      - name: Install system dependencies
+        if: runner.os == 'Linux'
+        env:
+          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
+        run: |
+          Rscript -e "remotes::install_github('r-hub/sysreqs')"
+          sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
+          sudo -s eval "$sysreqs"
+          # install spatial dependencies
+          sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+          sudo apt update
+          sudo apt install \
+            libudunits2-dev \
+            libgdal-dev \
+            libgeos-dev \
+            libproj-dev
 
       # install ccache and write config file
       - name: "[Linux] ccache"
