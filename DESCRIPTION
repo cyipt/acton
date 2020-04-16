@@ -38,5 +38,7 @@ Suggests:
     cyclestreets,
     DT,
     lwgeom
-Remotes: ropensci/stplanr
+Remotes:
+    ropensci/stplanr,
+    r-spatial/lwgeom
 VignetteBuilder: knitr
