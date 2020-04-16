@@ -106,18 +106,18 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>Decarbonising the transport sector is an urgent yet challenging component of climate change mitigation policies worldwide <span class="citation">(Schock et al. 2007)</span>. Transport was the UK’s largest and fastest growing source of carbon emissions before the Covid-19 pandemic <span class="citation">(Department for Transport 2020)</span>. The government’s aggressive and legally binding climate targets, plus overwhelming evidence of the health and social benefits of active travel, make it vital that new developments are conducive to low-carbon lifestyles. This means low levels of car ownership and use, and high levels of walking and cycling for everyday trips. Unfortunately recent trends have been in the opposite direction <span class="citation">(Hickman and Banister 2007)</span> and it is possible that unsustainable ‘business as usual’ transport systems become embedded again after social distancing measures are relaxed. New residential developments have tended to be located in places that lock residents into car dependent lifestyles, something that central government aims to tackle <span class="citation">(MHCLG 2020)</span>. This project aims to support the changes that are needed for healthy transport systems to become the norm, rather than the exception, for new developments. The methods presented in this report provide a strong foundation for evidence-based planning at local, regional and national levels to help make this happen.</p>
+<p>Decarbonising the transport sector is an urgent yet challenging component of climate change mitigation policies worldwide <span class="citation">(Schock et al. 2007)</span>. Transport was the UK’s largest and fastest growing source of carbon emissions before the Covid-19 pandemic <span class="citation">(Department for Transport 2020)</span>, and these emissions must be tackled in order to meet the UK government’s legally binding target of net zero carbon emissions by 2050 <span class="citation">(Committee on Climate Change 2019)</span>. There are a raft of reasons to tackle car dependency, including overwhelming evidence of the health and social benefits of active travel <span class="citation">(Goodman et al. 2019; Mueller et al. 2018)</span> and the harms caused by air pollution <span class="citation">(Schraufnagel et al. 2019)</span>, which may even include exacerbating the lethality of Covid-19 <span class="citation">(Conticini, Frediani, and Caro 2020)</span>. For all of these reasons it is vital that new housing developments are conducive to low-carbon lifestyles, which means low levels of car ownership and use, and high levels of walking and cycling for everyday trips.</p>
+<p>Unfortunately, recent trends have been in the opposite direction to this <span class="citation">(Hickman and Banister 2007)</span> and it is possible that unsustainable ‘business as usual’ transport systems become embedded again after social distancing measures are relaxed. New residential developments have tended to be located in places that lock residents into car dependent lifestyles <span class="citation">(Transport for New Homes 2018)</span>, something that central government aims to tackle <span class="citation">(MHCLG 2020)</span>. This project aims to support the changes that are needed for healthy transport systems to become the norm, rather than the exception, for new developments. The methods presented in this report provide a strong foundation for evidence-based planning at local, regional and national levels to help make this happen.</p>
 <div id="components-of-the-acton-project" class="section level2">
 <h2 class="hasAnchor">
 <a href="#components-of-the-acton-project" class="anchor"></a>Components of the ACTON project</h2>
 <p>The ACTON project brings together several key datasets to answer the question how can we improve new housing developments for walking and cycling?</p>
 <p>To do this we use a range of transport and planning data:</p>
 <ul>
-<li>planning applications</li>
-<li>census data</li>
-<li>accessibility statistics</li>
-<li>routing algorithms</li>
-<li>cycle uptake models</li>
+<li>data on UK planning applications accessed using www.PlanIt.org.uk</li>
+<li>statistics on accessibility and journey times, from the Department for Transport</li>
+<li>demographic and travel data from the 2011 Census, interpreted using cycle uptake models from the Propensity to Cycle Tool</li>
+<li>routing algorithms developed by CycleStreets.net</li>
 </ul>
 <p>This is illustrated in the schematic diagram below.</p>
 <div class="figure" style="text-align: center">
@@ -125,9 +125,9 @@
 Schematic diagram of the ACTON project and its four main data sources (boxes)
 </p>
 </div>
-<p>Several outputs that were developed during the course of the project. These, and the potential for further work to inform regional and national development policies, were discussed in a workshop held in Leeds in March 2020.</p>
-<p>On the technical side, we developed open source software to support the project, an R package named <code>acton</code>, to ensure reproducibility and to provide a strong foundation for further work. The package contains functions that aid the import of planning application and accessibility data.</p>
-<p>We tested the methods on a case study of Leeds to investigates the accessibility for active travel of a set of new housing developments in Leeds, West Yorkshire. This is documented in the case studies report.</p>
+<p>Several outputs were developed during the course of the project. These, and the potential for further work to inform regional and national development policies, were discussed in workshop held in Leeds in March 2020.</p>
+<p>On the technical side, we have developed open source software to support the project, an R package named <code>acton</code>, to ensure reproducibility and to provide a strong foundation for further work. This package contains functions that aid the import of planning application and accessibility data.</p>
+<p>We have tested the methods using a case study of Leeds, to investigate the accessibility for active travel of a set of new housing developments in Leeds, West Yorkshire. This is documented in the case studies report.</p>
 <p>Finally we have laid the foundations needed to develop a nationally scalable indicator to predict active travel mode shares associated with new housing developments.</p>
 <p>These will each be described in greater detail in the remaining sections of this report.</p>
 </div>
@@ -152,14 +152,15 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <h3 class="hasAnchor">
 <a href="#planit-api" class="anchor"></a>PlanIt API</h3>
 <p>PlanIt has an API (application programming interface, a data interface usable within a programming context) which allows users to search for planning applications using a range of criteria, such as address, planning authority, bounding box, date or planning application identifier.</p>
-<p>As part of ACTON (and using funding from an Innovate UK project, StreetFocus), the PlanIt API has been improved to make it easier to search for particular types of planning application. These updates are were based on a development version of PlanIt API that will be incorporated into the <a href="https://www.planit.org.uk/">main PlanIt website</a> by end of May 2020.</p>
+<p>As part of ACTON (and using funding from an Innovate UK project, StreetFocus), the PlanIt API has been improved to make it easier to search for particular types of planning application. These updates are based on a development version of PlanIt API that will be incorporated into the <a href="https://www.planit.org.uk/">main PlanIt website</a> by end of May 2020.</p>
 <p>We derived terms for the following searchable fields:</p>
 <ul>
 <li><p>‘app_size’ (for the scale of the proposed development) - including: Large = Major, large scale developments; Medium = Other applications involving multiple dwellings; Small = All others</p></li>
 <li><p>‘app_state’ (to show the decision status for the application) - including: Undecided = The application is currently active, no decision has been made; Permitted = The application was approved; Conditions = The application was approved, but conditions were imposed; Rejected = The application was refused; Withdrawn = The application was withdrawn before a decision was taken; Referred = The application was referred to government or to another authority; Unresolved = The application is no longer active but no decision was made eg split decision; Other = Status not known</p></li>
 <li><p>‘app_type’ (to show the type of application) - including: Full = Full and householder planning applications; Outline = Proposals prior to a full application, including assessments, scoping opinions, outline applications etc.; Amendment = Amendments or alterations arising from existing or previous applications; Conditions = Discharge of conditions imposed on existing applications; Heritage = Conservation issues and listed buildings; Trees = Tree and hedge works; Advertising = Advertising and signs; Telecoms = Telecommunications including phone masts; Other = All other types eg agricultural, electrical</p></li>
 </ul>
-<p>The number of homes built in a residential development is a key factor of interest, along with any other facilities being constructed. This information is difficult to obtain as it is often not present in the description field of planning applications. Proxy methods for assessing scale have therefore been used, such as the number of documents within a planning application and the length of time allowed before deciding a large scale application. For example, criteria for ‘app_size’ = large include applications having &gt;100 attached documents and &gt;60 statutory days allowed before a decision is made on the application.</p>
+<p>The number of homes built in a residential development is a key factor of interest, along with any other facilities being constructed. This information is difficult to obtain as it is often not present in the description field of planning applications. Proxy methods for assessing scale have therefore been used, such as the number of documents within a planning application and the length of time allowed before deciding a large scale application. For example, criteria for <code>'app_size' = large</code> include applications having &gt;100 attached documents and &gt;60 statutory days allowed before a decision is made on the application.</p>
+<p>To ensure this proxy adequately captured the applications of interest we tested it for applications in Leeds, manually identifying applications of differing sizes and ensuring they were correctly classified.</p>
 <p>The ongoing further development of PlanIt will have many benefits beyond the ACTON project, since it will make it easier to find planning applications of interest for all sorts of purposes. For example, <a href="https://www.streetfocus.uk/">StreetFocus.uk</a> makes PlanIt data more widely available, with a public-facing website that brings the PlanIt planning application data together with street-level data on proposals for local improvements to the public realm or to active travel infrastructure. This can be used to help identify places where new developments could potentially help to fund nearby improvements through mechanisms such as S106 agreements. Enabling these synergies to be identified at an early stage in the planning process allows great scope for assisting both the proponents of local improvement schemes and the developers who desire greater certainty in terms of the level of S106 funding they are called on to provide.</p>
 </div>
 </div>
@@ -167,13 +168,13 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <h2 class="hasAnchor">
 <a href="#accessibility-data" class="anchor"></a>Accessibility data</h2>
 <p>In assessing the suitability of a proposed site for residential development, one of the most important questions will be how accessible the site is. The provision of local services and community facilities is a key enabler of active travel. It is no use building top quality cycle and walking provision within the site if residents are presented with a 30 minute walk from their homes to reach the local shops.</p>
-<p>Journey time statistics published by the Department for Transport record the time taken to reach a range of services such as primary and secondary schools, food stores, GP surgeries, centres of employment and town centres. These are available at the geographical level of the LSOA, an area covering a population of approximately 1500 people or 650 households. The statistics include journey times by three different modes of travel:</p>
+<p>Journey time statistics published by the Department for Transport record the time taken to reach a range of services such as primary and secondary schools, food stores, GP surgeries, centres of employment and town centres. These are available at the geographical level of the LSOA, an area covering a population of approximately 1500 people or 650 households. They are compiled based on the journey times to the ten closest destinations of each category from each Output Area (OA) centroid within a given LSOA. The statistics are available for all years between 2014 and 2017, and include journey times by three different modes of travel:</p>
 <ul>
 <li>car</li>
 <li>bicycle</li>
 <li>a combined walking / public transport measure, showing the fastest journey time by these two modes (either walking alone or walking and public transport in combination).</li>
 </ul>
-<p>The <code>acton</code> R package (described below) includes a function for the import of the journey time statistics into R.</p>
+<p>The <code>acton</code> R package (described below) includes a function for the import of these journey time statistics into R.</p>
 </div>
 <div id="demographic-data" class="section level2">
 <h2 class="hasAnchor">
@@ -186,22 +187,22 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <a href="#routing-algorithms" class="anchor"></a>Routing algorithms</h2>
 <p>Sources such as census data provide information on journey origins and destinations. Missing from this are the routes that are used to travel from the origin to the destination. These routes must be inferred using routing algorithms.</p>
 <p><a href="https://www.cyclestreets.net/">CycleStreets.net</a> is a journey planner focusing on routes used for cycling. With a public facing website, CycleStreets.net helps people find a cycle route that is right for them. Such routes range from direct routes appropriate for confident on-road cyclists to quieter routes for people who want to avoid busy roads.</p>
-<p>CycleStreets.net includes three routing options, generating ‘fast’, ‘balanced’ or ‘quiet’ cycle routes between journey origins and destinations. For the fast routes, journey time is minimised, with no consideration given to factors such as the busyness of the roads. For the quiet routes, a parameter called “busyness” is minimised. The balanced routes use a combination of these two approaches, in which both journey time and busyness are taken into account.</p>
-<p>As part of ACTON we have improved the way in which the busyness of particular types of cycle lane and path is classified, leading to better quality routing of ‘quiet’ routes through a more accurate characterisation of the cycleability of route segments. The figure below illustrates the improvements to the routing profile that have been made, with increased weighting given to protected cycleways clear from the long green segment on the canal towpath.</p>
-<p><img src="https://user-images.githubusercontent.com/361987/78147337-464ba600-742b-11ea-921f-6e02d1e58579.png" width="80%" style="display: block; margin: auto;"></p>
+<p>CycleStreets.net includes three routing options, generating ‘fast’, ‘balanced’ or ‘quiet’ cycle routes between journey origins and destinations. For the fast routes, journey time is minimised, with no consideration given to factors such as the busyness of the roads. For the quiet routes, a parameter called ‘busyness’ is minimised. The balanced routes use a combination of these two approaches, in which both journey time and busyness are taken into account.</p>
+<p>As part of ACTON we have improved the way in which the busyness of particular types of roads, cycle lanes and paths is classified, leading to better quality routing of ‘quiet’ routes through a more accurate characterisation of the cycleability of route segments.</p>
 <div id="busyness-estimation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#busyness-estimation" class="anchor"></a>Busyness estimation</h3>
 <p>New homes often lie close to major roads and bypasses that act as barriers which limit or discourage sustainable modes of travel. By contrast, there are sometimes long established bridleways, towpaths or other paths which could be upgraded.</p>
-<p>CycleStreets.net uses a key metric, known as the ‘busyness score’ to rate each section of a cycle route. This provides a measure of the cycleability of the route and helps determine the suitability of it for each type of rider. It takes into account many features of the streets and paths used for cycling, including the width, speed limits, presence of cycle lanes or dedicated cycle tracks, and obstacles along the way.</p>
-<p>As part of ACTON the process of setting the busyness score by CycleStreets.net is being further developed. This will allow it to take account of new types of cycling infrastructure and move towards a model that distinguishes between eight different states of cycling that are fundamental to how people choose a route. For instance, this enables a distinction between high-quality, dedicated cycle infrastructure, and shared-use paths which involve sharing often narrow space with pedestrians.</p>
+<p>CycleStreets.net uses a key metric known as ‘busyness’ to rate each section of a cycle route. This provides a measure of the cycleability of the route and helps determine the suitability of it for each type of rider. It takes into account many features of the streets and paths used for cycling, including the width, speed limits, presence of cycle lanes or dedicated cycle tracks, and obstacles along the way. As part of ACTON the process of setting the busyness score by CycleStreets.net has been further developed. For instance, the scores make a distinction between high-quality, dedicated cycle infrastructure, and shared-use paths which involve sharing often narrow space with pedestrians.</p>
 <p>We estimate the busyness of the roads which constitute routes from our case study sites to workplaces or other key destinations. The improved busyness score will allow calculation of an index of average road busyness for the area surrounding each site.</p>
+<p>The figure below illustrates the improvements to the routing profile that have been made, with the increased weighting given to protected cycleways clear from the long green segment on the canal towpath. This work has inputted into our Leeds case study, allowing us to estimate the busyness of the roads which constitute routes from case study sites to workplaces or other key destinations, and thus to calculate average road busyness for the area surrounding each site.</p>
+<p><img src="https://user-images.githubusercontent.com/361987/78147337-464ba600-742b-11ea-921f-6e02d1e58579.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="uptake-scenarios" class="section level2">
 <h2 class="hasAnchor">
 <a href="#uptake-scenarios" class="anchor"></a>Uptake scenarios</h2>
-<p>The Propensity to Cycle Tool (PCT) is a well-used national tool for cycle infrastructure planning. It uses 2011 Census data and CycleStreets.net routing services to map current cycling levels at high geographic resolutions, as well as a series of scenarios modeling how cycle usage could increase. These scenarios take the same journey origin-destination data from the 2011 Census and estimate how the share of journeys by different methods of travel could change. In particular, the Go Dutch scenario models what would happen if people in the UK cycled as much as those in the Netherlands, accounting for journey distance and hilliness.</p>
+<p>The Propensity to Cycle Tool (PCT) is a well-used national tool for cycle infrastructure planning <span class="citation">(Lovelace et al. 2017)</span>. It uses 2011 Census data and CycleStreets.net routing services to map current cycling levels at high geographic resolutions, as well as a series of scenarios modeling how cycle usage could increase. These scenarios take the same journey origin-destination data from the 2011 Census and estimate how the share of journeys by different methods of travel could change. In particular, the Go Dutch scenario models what would happen if people in the UK cycled as much as those in the Netherlands, accounting for journey distance and hilliness.</p>
 <p>An existing limitation of the PCT is the fact that because it uses 2011 census data it does not account for new developments built since 2011. ACTON exists to bridge this gap, by applying PCT methods to new residential areas. An example of this can be found in the Leeds case study described below, where we take journey to work origin-destination data for the LSOAs (Lower Super Output Areas) closest to the new housing sites, reroute this to move the journey origin to the sites themselves rather than the nearest LSOA centroid, then apply the Go Dutch scenario to investigate expected levels of cycling uptake for these routes.</p>
 </div>
 </div>
@@ -227,28 +228,36 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <li>get_jts_data()</li>
 </ul>
 <p>The function <code><a href="../reference/get_planit_data.html">get_planit_data()</a></code> allows R users to search for planning application data without having to use the PlanIt API directly. This can broaden the use of PlanIt by helping to make its data easier to obtain.</p>
-<p>The function <code><a href="../reference/get_jts_data.html">get_jts_data()</a></code> enables the downloading of journey time statistics. There are 44 tables in total, most of which include annual data for the years 2014 to 2019.</p>
+<p>The function <code><a href="../reference/get_jts_data.html">get_jts_data()</a></code> enables the downloading of journey time statistics. There are 44 tables in total, which include annual data for the years 2014 to 2017.</p>
 </div>
 <div id="brief-demo" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brief-demo" class="anchor"></a>Brief demo</h2>
-<p>The package can be used to get data on new developments as follows:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># data from specific postcode</span>
+<p>The package can be used to get data on new developments and accessibility as follows:</p>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># download planning application data from a specific postcode (large planning applications only)</span>
 <span class="no">planning_data</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_planit_data.html">get_planit_data</a></span>(<span class="kw">pcode</span> <span class="kw">=</span> <span class="st">"LS2 9JT"</span>, <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">app_size</span> <span class="kw">=</span> <span class="st">"large"</span>)
 <span class="no">planning_data</span>
 <span class="no">planning_data</span>$<span class="no">name</span>
 <span class="no">planning_data</span>$<span class="no">description</span>
 
+<span class="co"># download planning application data from a specific planning authority (large planning applications only)</span>
+<span class="no">planning_data</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_planit_data.html">get_planit_data</a></span>(<span class="kw">auth</span> <span class="kw">=</span> <span class="st">"Leeds"</span>, <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">app_size</span> <span class="kw">=</span> <span class="st">"large"</span>)
+
+<span class="co"># these commands show which data is available in each of the Journey Time Statistics tables</span>
 <span class="no">jts_tables</span>
 <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">jts_tables</span>$<span class="no">table_title</span>)
 
-<span class="no">accessibility_data</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_jts_data.html">get_jts_data</a></span>()
-<span class="fu"><a href="../reference/get_jts_data.html">get_jts_data</a></span>(<span class="kw">table</span> <span class="kw">=</span> <span class="st">"jts0101"</span>, <span class="kw">year</span> <span class="kw">=</span> <span class="fl">2017</span>, <span class="kw">skip</span> <span class="kw">=</span> <span class="fl">7</span>)</pre></body></html></div>
+<span class="co"># this extracts the data from table jts_0101 for the year 2017, skipping the first 7 rows as they are empty</span>
+<span class="no">accessibility_data</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_jts_data.html">get_jts_data</a></span>(<span class="kw">table</span> <span class="kw">=</span> <span class="st">"jts0101"</span>, <span class="kw">year</span> <span class="kw">=</span> <span class="fl">2017</span>, <span class="kw">skip</span> <span class="kw">=</span> <span class="fl">7</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span>(<span class="no">accessibility_data</span>)</pre></body></html></div>
 </div>
 <div id="further-r-instructions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#further-r-instructions" class="anchor"></a>Further R instructions</h2>
-<p>To get routes from CycleStreets.net, you will need to set up an API key called CYCLESTREETS. This can be done with <code><a href="https://usethis.r-lib.org/reference/edit.html">usethis::edit_r_environ()</a></code>, as documented at <a href="https://docs.ropensci.org/stplanr/" class="uri">https://docs.ropensci.org/stplanr/</a>.</p>
+<p>To get routes from CycleStreets.net, you will need to set up an API key called CYCLESTREETS. This can be done by installing the <code>usethis</code> package and using it to edit the R environment.</p>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"usethis"</span>)
+<span class="kw pkg">usethis</span><span class="kw ns">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/edit.html">edit_r_environ</a></span>()</pre></body></html></div>
+<p>You can then add the CYCLESTREETS key to the R environment by typing <code>CYCLESTREETS=&lt;insert API key name&gt;</code></p>
 </div>
 </div>
 <div id="leeds-case-study" class="section level1">
@@ -258,9 +267,9 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <div id="planning-applications" class="section level2">
 <h2 class="hasAnchor">
 <a href="#planning-applications" class="anchor"></a>Planning applications</h2>
-<p>Data from <a href="https://www.planit.org.uk/">PlanIt</a>, accessed using the <code>acton</code> R package, was used to identify recent large planning applications within the city boundaries:</p>
+<p>Data from <a href="https://www.planit.org.uk/">PlanIt</a>, accessed using the <code>acton</code> R package, was used to identify recent large planning applications within the city boundaries.</p>
 <p>The following code gets and subsets the relevant PlanIt data for Leeds. This extracts large applications where planning consent has been granted:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">applications_leeds</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_planit_data.html">get_planit_data</a></span>(
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">applications_leeds</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_planit_data.html">get_planit_data</a></span>(
   <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">500</span>,
   <span class="kw">auth</span> <span class="kw">=</span> <span class="st">"Leeds"</span>,
   <span class="kw">app_size</span> <span class="kw">=</span> <span class="st">"large"</span>,
@@ -273,27 +282,23 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <div id="the-four-chosen-sites" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-four-chosen-sites" class="anchor"></a>The four chosen sites</h2>
-<p>From the 281 large planning applications identified as described above, we have selected four of these for which the descriptions reveal a high number of homes have been consented.</p>
+<p>From the 281 large planning applications identified as described above, we have selected four of these in which the descriptions reveal that more than 100 homes have been consented.</p>
 <p>An overview of the four case study sites is shown in the map below.</p>
 <p><img src="https://user-images.githubusercontent.com/1825120/78660650-5e0ca980-78c5-11ea-81c7-dc446965ce51.png" width="80%" style="display: block; margin: auto;"></p>
 <p>See <a href="https://cyipt.github.io/acton/articles/case-studies.html" class="uri">https://cyipt.github.io/acton/articles/case-studies.html</a> for more on the case study sites.</p>
-<p>We will describe the Allerton Bywater application in more depth and use it to illustrate the data returned by the PlanIt API, before describing the other development sites.</p>
-</div>
-<div id="allerton-bywater-millennium-community" class="section level2">
-<h2 class="hasAnchor">
-<a href="#allerton-bywater-millennium-community" class="anchor"></a>Allerton Bywater Millennium Community</h2>
+<p>We will describe the Allerton Bywater application in more depth as we use this site to illustrate our investigation of road busyness and routing, before describing the other development sites.</p>
+<div id="allerton-bywater-millennium-community" class="section level3">
+<h3 class="hasAnchor">
+<a href="#allerton-bywater-millennium-community" class="anchor"></a>Allerton Bywater Millennium Community</h3>
 <ul>
-<li><p>One of a series of Millennium Communities, the development at Allerton Bywater was announced by John Prescott in 1998. The homes lie on the site of Allerton Colliery, which was the last remaining colliery in Leeds when it closed in 1995. Prior to the development, Allerton Bywater village had a population of around 4,000, and the aim was to incorporate the whole of the village in the project, rather than solely focusing on the site itself. For example, a £500,000 community fund was made available to the parish council to spend on local projects, and community buildings in the village were also refurbished. In total there was £24 million upfront public investment by English Partnerships and the HCA. This included drainage, site clearance and decontamination.</p></li>
-<li><p>The development incorporates new industrial and office units as well as homes, with high environmental standards for both of these. A design code was adopted and development of the site began in 2005. The industrial units at the east of the site were the first in the UK to meet the BREEAM ‘Excellent’ standard, while the new homes were built to the EcoHomes ‘Excellent’ standard or the Code for Sustainable Homes Level 3. A number of homes were built under a ‘Design for Manufacture’ competition for a construction cost of no more than £60,000.</p></li>
+<li><p>One of a series of Millennium Communities, the development at Allerton Bywater was announced by John Prescott in 1998. The homes lie on the site of Allerton Colliery, which was the last remaining colliery in Leeds when it closed in 1995. Prior to the development, Allerton Bywater village had a population of around 4,000, and the aim was to incorporate the whole of the village in the project, rather than solely focusing on the site itself. For example, a £500,000 community fund was made available to the parish council to spend on local projects, and community buildings in the village were also refurbished. In total there was £24 million upfront public investment by English Partnerships and the Homes and Communities Agency. This included drainage, site clearance and decontamination.</p></li>
+<li><p>The development incorporates new industrial and office units as well as homes, with high environmental standards for both of these. A design code was adopted and development of the site began in 2005. The industrial units at the east of the site were the first in the UK to meet the Building Research Establishment Environmental Assessment Method (BREEAM) ‘Excellent’ standard, while the new homes were built to the EcoHomes ‘Excellent’ standard or the Code for Sustainable Homes Level 3. A number of homes were built under a ‘Design for Manufacture’ competition for a construction cost of no more than £60,000.</p></li>
 <li><p>In total there are 562 homes in the Millennium Community. A Sustrans cycle route passes through the site and there is good walking and cycling access to the rest of the village and its surrounds, although parts of the cycle route can get very muddy in winter. Local services such as shops, pubs, cafes, a primary school, park, community centre and nature reserve lie on the edge of the site or within easy walking distance.</p></li>
 <li><p>Plans for buses to be routed through the site did not materialise. The village lies eight miles southeast of Leeds and the buses to Leeds run roughly every 30 minutes. There are more frequent services to Garforth and Castleford. The nearest railway station is Castleford, at 43 minutes walk, with a well-built riverside path to follow. Much of the Millennium Community is designed as a HomeZone with shared space streets, although these tend to fill up with parked cars. Initial phases were built with 1.6 parking spaces per dwelling, but the amount of on-street parking lead to calls to increase this and later phases have 2 parking spaces per dwelling.</p></li>
 </ul>
-<div id="data-on-the-application" class="section level3">
-<h3 class="hasAnchor">
-<a href="#data-on-the-application" class="anchor"></a>Data on the application</h3>
-<p>The planning application we have selected for Allerton Bywater relates to the final phase of the Millennium Community. This includes 189 homes and has planning consent 13/05235/FU.</p>
+<p>The planning application we have selected from PlanIt.org.uk to represent the Allerton Bywater site relates to the final phase of the Millennium Community. This includes 189 homes and has planning consent 13/05235/FU.</p>
 <p>This is classified by PlanIt.org.uk as a large application. The application was submitted in December 2013 by Keepmoat Homes and the Homes and Communities Agency and was approved in November 2014.</p>
-<p>Available fields include links to the full PlanIt record and to planning application information from Leeds City Council, as illustrated in the online version of this report at <a href="https://cyipt.github.io/acton/articles/the-acton-project.html" class="uri">https://cyipt.github.io/acton/articles/the-acton-project.html</a>.</p>
+<p>Data available through the <code>acton</code> R package includes links to the full PlanIt record and to planning application information from Leeds City Council, as illustrated in the online version of this report at <a href="https://cyipt.github.io/acton/articles/the-acton-project.html" class="uri">https://cyipt.github.io/acton/articles/the-acton-project.html</a>.</p>
 </div>
 <div id="leeds-climate-innovation-district" class="section level3">
 <h3 class="hasAnchor">
@@ -327,30 +332,32 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <p>Journey time statistics (JTS) are available from the Department for Transport recording accessibility at the geographical level of the LSOA (an area covering approximately 1500 residents or 650 households). The statistics include average minimum travel times to key local services and destinations, such as town centres, centres of employment, primary schools, secondary schools, food stores and GP surgeries.</p>
 <p>Travel times are calculated for three modes of travel - by car, by cycle, and by a mode that combines walking and public transport.</p>
 <p>For an example of the code used to download journey time data, see the <a href="https://cyipt.github.io/acton/articles/case-studies.html">case studies vignette</a> on the ACTON website. We use this to map journey times across Leeds and West Yorkshire.</p>
-<p>The travel times in these statistics are recorded from the population weighted centroid of each LSOA. New housing developments can be constructed anywhere within an LSOA, and may not necessarily be close to existing homes. To assess the accessibility of new developments we therefore use statistics that relate to the closest LSOA centroid. For our Tyersal Lane case study site, the closest LSOA centroid is in Bradford.</p>
-<p>Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. We combined these three statistics to produce a single employment metric weighted by the number of jobs. This is shown in maps below.</p>
+<p>Multiple statistics are available for access to centres of employment, including travel time to locations with 100-499 jobs, to locations with 500-4999 jobs, and to locations with 5000+ jobs. We combined these three statistics, giving them weightings of 100, 500 and 5000 respectively, to produce a single weighted access to employment metric. This is shown in the maps below.</p>
 <p><img src="https://user-images.githubusercontent.com/52210872/76424159-c7b99680-639f-11ea-95c5-1198d977be1f.png" width="80%" style="display: block; margin: auto;"></p>
 <p>We have then combined the weighted access to employment measure with the measures for access to food stores, town centres, primary schools, secondary schools and GP surgeries, to calculate the average journey time across these six destination types. By adding together all of these scores we have generated a single accessibility index for each mode of travel.</p>
 <p><img src="https://user-images.githubusercontent.com/52210872/76458014-bdb08b80-63d1-11ea-88dd-a5da8020ea5d.png" width="80%" style="display: block; margin: auto;"></p>
-<p>According to these measures, there are many areas that have poor accessibility by active modes and public transport. We can see that three of the four case study sites are located in areas that have relatively poor accessibility to local services. Tyserall, Micklefield and Allerton Bywater are all in areas where, according to our combined index, local services are &gt;15 minutes distant on average by walking or public transport. Micklefield is in an area where local services are &gt;20 minutes distant by cycling.</p>
+<p>According to these measures, there are many areas that have poor accessibility by active modes and public transport. We can see that three of the four case study sites are located in areas that have relatively poor accessibility to local services. Tyersal, Micklefield and Allerton Bywater are all in areas where, according to our combined index, local services are &gt;15 minutes distant on average by walking or public transport. Micklefield is in an area where local services are &gt;20 minutes distant by cycling.</p>
 </div>
 <div id="travel-to-work-and-route-busyness" class="section level2">
 <h2 class="hasAnchor">
 <a href="#travel-to-work-and-route-busyness" class="anchor"></a>Travel to work and route busyness</h2>
-<p>Journeys to work by case study site residents are estimated based on OD data for commutes for the LSOA which has its population weighted centroid closest to each site. These journeys are allocated to the transport network using CycleStreets.net routing algorithms. The point of origin was updated so rather than starting at the nearest LSOA centroid, the routes start within the case study sites themselves. These desire lines were then converted to routes using ‘fastest journey’ option of the <code><a href="https://rdrr.io/pkg/cyclestreets/man/journey.html">cyclestreets::journey()</a></code> function and the routing capabilities in the R package <strong>stplanr</strong> <span class="citation">(Lovelace and Ellison 2018)</span>.</p>
+<p>Journeys to work by case study site residents are estimated based on origin-destination (OD) data of commuter journeys for the LSOA having a population weighted centroid closest to each site. These journeys are allocated to the transport network using CycleStreets.net routing algorithms. The point of origin was updated so rather than starting at the nearest LSOA centroid, the routes start within the case study sites themselves. This gives ‘desire lines’ from the origin to the destination, which were then converted to routes using the ‘fastest journey’ option of the <code><a href="https://rdrr.io/pkg/cyclestreets/man/journey.html">cyclestreets::journey()</a></code> function and the routing capabilities in the R package <strong>stplanr</strong> <span class="citation">(Lovelace and Ellison 2018)</span>.</p>
 <p>The busyness of each route segment is estimated according to CycleStreets.net protocols. These allocate busyness values to roads and paths according to factors such as the quality of cycle provision and the road classification.</p>
-<p>The thickness of the lines in the map below, which illustrates route busyness data, is proportional to the number of journeys (using all modes of transport), and the colour represents the busyness of the roads. For other maps, see the Case Studies report on the ACTON website.</p>
+<p>We will illustrate this for the Allerton Bywater case study site. The thickness of the lines in the map below, which illustrates route busyness data, is proportional to the number of journeys (using all modes of transport), and the colour represents the busyness of the roads.</p>
 <p><img src="https://user-images.githubusercontent.com/52210872/73958076-43d34100-48ff-11ea-80a3-f06f8205e8d2.png" width="80%" style="display: block; margin: auto;"></p>
+<p>The image below shows the total number of commuter journeys to each destination. These numbers represent total commuter journeys from the closest LSOA at the time of the 2011 Census.</p>
+<p><img src="https://user-images.githubusercontent.com/52210872/76435138-8977a380-63ae-11ea-8569-7bb3ec4441c9.png" width="80%" style="display: block; margin: auto;"></p>
+<p>Here we can see which of these commutes would be made by bicycle under a Go Dutch scenario in which cycling uptake is equivalent to that in the Netherlands. It is clear that shorter journeys, such as from Allerton Bywater south to Castleford, have greater cycling uptake than longer journeys such as those to Leeds city centre.</p>
+<p><img src="https://user-images.githubusercontent.com/52210872/75472896-24728580-598c-11ea-8ab5-94809a8bb404.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
 </div>
-<div id="modelling-walkability-and-cyclability" class="section level1">
+<div id="modelling-active-travel" class="section level1">
 <h1 class="hasAnchor">
-<a href="#modelling-walkability-and-cyclability" class="anchor"></a>Modelling walkability and cyclability</h1>
-<p>The final component of the ACTON project is a prototype indicator for active travel levels in new homes. Using data from new housing developments built prior to the 2011 Census, we started development of a model to predict cycling levels to and from new homes, building on the methods underlying the Propensity to Cycle Tool <span class="citation">(Lovelace et al. 2017)</span>.</p>
+<a href="#modelling-active-travel" class="anchor"></a>Modelling active travel</h1>
+<p>The final component of the ACTON project is a prototype indicator for active travel levels of new homes. Using data from new housing developments built prior to the 2011 Census, we started development of a model to predict cycling levels to and from new homes, building on the methods underlying the Propensity to Cycle Tool <span class="citation">(Lovelace et al. 2017)</span>.</p>
 <p>As a response variable we use the proportion of commuters who cycle to work. This is available at the Output Area level, allowing us to obtain high resolution data that precisely matches the geographical bounds of the new development sites.</p>
 <p>Similarly to the Propensity to Cycle Tool, the explanatory variables include the distance and hilliness of journeys to work. However, we also include the average busyness of the streets, which is not one of the parameters in the PCT. To calculate these, we route journeys using the CycleStreets.net ‘fast’ route algorithm. Workplace destinations are obtained and routing carried out at LSOA level, to minimise the computational intensity of journey routing.</p>
-<p>The range of explanatory variables can be expanded further as more data becomes available, adding factors such as the circuity of the routes.</p>
-<p>For the prototype version of this model we have used data from 12 sites across England, including Allerton Bywater in Leeds. The number of sites will expand as we further develop the model.</p>
+<p>For the prototype version of this model we have used data from 12 sites across England, including Allerton Bywater in Leeds. The number of sites will expand as we further develop this into a national model. The range of explanatory variables can also be expanded further as more data becomes available, adding factors such as the circuity of the routes.</p>
 <div id="sites-used-in-the-prototype-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sites-used-in-the-prototype-model" class="anchor"></a>Sites used in the prototype model</h2>
@@ -365,19 +372,17 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <div id="model-fitting" class="section level2">
 <h2 class="hasAnchor">
 <a href="#model-fitting" class="anchor"></a>Model fitting</h2>
-<p>We use the <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code> R package, with a quasibinomial probability distribution and a logit link function, since the proportion of commuters who cycle can be represented as the result of a series of binomial trials.</p>
-<p>Having investigated various candidate explanatory variables for distance and hilliness, the following model was found to have the lowest deviance.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">m_cycling</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">pcycle</span> ~
-                  <span class="no">distance_m</span> + <span class="co"># d1</span>
-                  <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="no">distance_m</span>)  +  <span class="co"># d2</span>
-                  <span class="no">distance_m</span>^<span class="fl">2</span> + <span class="co"># d3</span>
-                  <span class="no">average_incline</span> +    <span class="co"># h1</span>
-                  <span class="no">distance_m</span> * <span class="no">average_incline</span> +  <span class="co"># i1</span>
-                  <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="no">distance_m</span>) * <span class="no">average_incline</span>, <span class="co"># i2</span>
-                <span class="kw">data</span> <span class="kw">=</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html">st_drop_geometry</a></span>(<span class="no">r_grouped_census_joined</span>),
-                <span class="kw">family</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">quasibinomial</a></span>(),
-                <span class="kw">weights</span> <span class="kw">=</span> <span class="no">all</span>
-                  )</pre></body></html></div>
+<p>We use the <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code> R package, with a quasibinomial probability distribution and a logit link function, since the proportion of commuters who cycle represents the result of a series of binomial trials.</p>
+<p>Having investigated various candidate explanatory variables for distance and hilliness, including interaction terms, the following model was found to provide the best fit, with an R squared of 8.9%.</p>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">m_cycling</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">pcycle</span> ~
+                   <span class="no">distance_m</span> + <span class="co"># d1</span>
+                   <span class="no">distance_m</span>^<span class="fl">2</span> + <span class="co"># d3</span>
+                   <span class="no">average_incline</span> +    <span class="co"># h1</span>
+                   <span class="no">busyness</span>,
+                 <span class="kw">data</span> <span class="kw">=</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html">st_drop_geometry</a></span>(<span class="no">r_grouped_census_joined</span>),
+                 <span class="kw">family</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">quasibinomial</a></span>(),
+                 <span class="kw">weights</span> <span class="kw">=</span> <span class="no">all</span>
+)</pre></body></html></div>
 </div>
 </div>
 <div id="conclusions" class="section level1">
@@ -431,29 +436,44 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <!-- Create prototype map visualising this data. -->
 <!-- A report setting out the policy impact - potentially a peer-reviewed paper. -->
 <div id="refs" class="references">
+<div id="ref-committeeonclimatechange_net_2019">
+<p>Committee on Climate Change. 2019. “Net Zero the UK’s Contribution Tostopping Global Warming.” Committee on Climate Change.</p>
+</div>
+<div id="ref-conticini_can_2020">
+<p>Conticini, Edoardo, Bruno Frediani, and Dario Caro. 2020. “Can Atmospheric Pollution Be Considered a Co-Factor in Extremely High Level of SARS-CoV-2 Lethality in Northern Italy?” <em>Environmental Pollution</em>, April, 114465. <a href="https://doi.org/10.1016/j.envpol.2020.114465">https://doi.org/10.1016/j.envpol.2020.114465</a>.</p>
+</div>
 <div id="ref-cooper_predictive_2018">
-<p>Cooper, Crispin H. V. 2018. “Predictive Spatial Network Analysis for High-Resolution Transport Modeling, Applied to Cyclist Flows, Mode Choice, and Targeting Investment.” <em>International Journal of Sustainable Transportation</em> 0 (0): 1–11. <a href="https://doi.org/10.1080/15568318.2018.1432730" class="uri">https://doi.org/10.1080/15568318.2018.1432730</a>.</p>
+<p>Cooper, Crispin H. V. 2018. “Predictive Spatial Network Analysis for High-Resolution Transport Modeling, Applied to Cyclist Flows, Mode Choice, and Targeting Investment.” <em>International Journal of Sustainable Transportation</em> 0 (0): 1–11. <a href="https://doi.org/10.1080/15568318.2018.1432730">https://doi.org/10.1080/15568318.2018.1432730</a>.</p>
 </div>
 <div id="ref-departmentfortransport_decarbonising_2020">
 <p>Department for Transport. 2020. “Decarbonising Transport: Setting the Challenge.” Department for Transport.</p>
 </div>
 <div id="ref-goodman_scenarios_2019">
-<p>Goodman, Anna, Ilan Fridman Rojas, James Woodcock, Rachel Aldred, Nikolai Berkoff, Malcolm Morgan, Ali Abbas, and Robin Lovelace. 2019. “Scenarios of Cycling to School in England, and Associated Health and Carbon Impacts: Application of the ‘Propensity to Cycle Tool’.” <em>Journal of Transport &amp; Health</em> 12 (March): 263–78. <a href="https://doi.org/10.1016/j.jth.2019.01.008" class="uri">https://doi.org/10.1016/j.jth.2019.01.008</a>.</p>
+<p>Goodman, Anna, Ilan Fridman Rojas, James Woodcock, Rachel Aldred, Nikolai Berkoff, Malcolm Morgan, Ali Abbas, and Robin Lovelace. 2019. “Scenarios of Cycling to School in England, and Associated Health and Carbon Impacts: Application of the ‘Propensity to Cycle Tool’.” <em>Journal of Transport &amp; Health</em> 12 (March): 263–78. <a href="https://doi.org/10.1016/j.jth.2019.01.008">https://doi.org/10.1016/j.jth.2019.01.008</a>.</p>
 </div>
 <div id="ref-hickman_looking_2007">
-<p>Hickman, Robin, and David Banister. 2007. “Looking over the Horizon: Transport and Reduced CO2 Emissions in the UK by 2030.” <em>Transport Policy</em> 14 (5): 377–87. <a href="https://doi.org/10.1016/j.tranpol.2007.04.005" class="uri">https://doi.org/10.1016/j.tranpol.2007.04.005</a>.</p>
+<p>Hickman, Robin, and David Banister. 2007. “Looking over the Horizon: Transport and Reduced CO2 Emissions in the UK by 2030.” <em>Transport Policy</em> 14 (5): 377–87. <a href="https://doi.org/10.1016/j.tranpol.2007.04.005">https://doi.org/10.1016/j.tranpol.2007.04.005</a>.</p>
 </div>
 <div id="ref-lovelace_stplanr_2018">
-<p>Lovelace, Robin, and Richard Ellison. 2018. “Stplanr: A Package for Transport Planning.” <em>The R Journal</em> 10 (2): 7–23. <a href="https://doi.org/10.32614/RJ-2018-053" class="uri">https://doi.org/10.32614/RJ-2018-053</a>.</p>
+<p>Lovelace, Robin, and Richard Ellison. 2018. “Stplanr: A Package for Transport Planning.” <em>The R Journal</em> 10 (2): 7–23. <a href="https://doi.org/10.32614/RJ-2018-053">https://doi.org/10.32614/RJ-2018-053</a>.</p>
 </div>
 <div id="ref-lovelace_propensity_2017">
-<p>Lovelace, Robin, Anna Goodman, Rachel Aldred, Nikolai Berkoff, Ali Abbas, and James Woodcock. 2017. “The Propensity to Cycle Tool: An Open Source Online System for Sustainable Transport Planning.” <em>Journal of Transport and Land Use</em> 10 (1). <a href="https://doi.org/10.5198/jtlu.2016.862" class="uri">https://doi.org/10.5198/jtlu.2016.862</a>.</p>
+<p>Lovelace, Robin, Anna Goodman, Rachel Aldred, Nikolai Berkoff, Ali Abbas, and James Woodcock. 2017. “The Propensity to Cycle Tool: An Open Source Online System for Sustainable Transport Planning.” <em>Journal of Transport and Land Use</em> 10 (1). <a href="https://doi.org/10.5198/jtlu.2016.862">https://doi.org/10.5198/jtlu.2016.862</a>.</p>
 </div>
 <div id="ref-mhclg_planning_2020">
 <p>MHCLG. 2020. “Planning for the Future.” Ministry of Housing, Communities &amp; Local Government.</p>
 </div>
+<div id="ref-mueller_health_2018">
+<p>Mueller, Natalie, David Rojas-Rueda, Maëlle Salmon, David Martinez, Albert Ambros, Christian Brand, Audrey de Nazelle, et al. 2018. “Health Impact Assessment of Cycling Network Expansions in European Cities.” <em>Preventive Medicine</em>, January. <a href="https://doi.org/10.1016/j.ypmed.2017.12.011">https://doi.org/10.1016/j.ypmed.2017.12.011</a>.</p>
+</div>
 <div id="ref-schock_energy_2007">
 <p>Schock, R N, A Adegbululgbe, J Fenhann, I Konstantinaviciute, W Moomaw, H B Nimir, B Schlamadinger, et al. 2007. “Energy Supply.” <em>Climate Change 2007: Mitigation. Contribution of Working Group III to IPCC’s Fourth Assessment Report</em>.</p>
+</div>
+<div id="ref-schraufnagel_air_2019">
+<p>Schraufnagel, Dean E., John R. Balmes, Clayton T. Cowl, Sara De Matteis, Soon-Hee Jung, Kevin Mortimer, Rogelio Perez-Padilla, et al. 2019. “Air Pollution and Noncommunicable Diseases.” <em>Chest</em> 155 (2): 409–16. <a href="https://doi.org/10.1016/j.chest.2018.10.042">https://doi.org/10.1016/j.chest.2018.10.042</a>.</p>
+</div>
+<div id="ref-transportfornewhomes_transport_2018">
+<p>Transport for New Homes. 2018. “Transport for New Homes Project Summary and Recommendations.” Transport for New Homes.</p>
 </div>
 </div>
 </div>

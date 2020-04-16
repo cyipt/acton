@@ -177,20 +177,20 @@ And the tables beginning JTS10 contain add other variables.</p>
 <p>Data is provided every year from 2014 to 2019 in many cases</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>jts_tables</span></div><div class='output co'>#&gt; # A tibble: 223 x 5
+    <pre class="examples"><div class='input'><span class='no'>jts_tables</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 223 x 5</span><span>
 #&gt;    table_code csv_file_name  table_title         table_url        csv_url       
-#&gt;    &lt;chr&gt;      &lt;chr&gt;          &lt;chr&gt;               &lt;chr&gt;            &lt;chr&gt;         
-#&gt;  1 jts0101    jts0101-2014.… Average minimum tr… https://assets.… https://githu…
-#&gt;  2 jts0101    jts0101-2015.… Average minimum tr… https://assets.… https://githu…
-#&gt;  3 jts0101    jts0101-2016.… Average minimum tr… https://assets.… https://githu…
-#&gt;  4 jts0101    jts0101-2017.… Average minimum tr… https://assets.… https://githu…
-#&gt;  5 jts0101    jts0101-JTS01… Average minimum tr… https://assets.… https://githu…
-#&gt;  6 jts0102    jts0102-2014.… Average minimum tr… https://assets.… https://githu…
-#&gt;  7 jts0102    jts0102-2015.… Average minimum tr… https://assets.… https://githu…
-#&gt;  8 jts0102    jts0102-2016.… Average minimum tr… https://assets.… https://githu…
-#&gt;  9 jts0102    jts0102-2017.… Average minimum tr… https://assets.… https://githu…
-#&gt; 10 jts0103    jts0103-2014.… Average minimum tr… https://assets.… https://githu…
-#&gt; # … with 213 more rows</div><div class='input'><span class='no'>jts_tables</span>$<span class='no'>table_title</span></div><div class='output co'>#&gt;   [1] "Average minimum travel time to reach the nearest key services by mode of travel: England"                                         
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         
+#&gt; </span><span style='color: #555555;'> 1</span><span> jts0101    jts0101-2014.… Average minimum tr… https://assets.… https://githu…
+#&gt; </span><span style='color: #555555;'> 2</span><span> jts0101    jts0101-2015.… Average minimum tr… https://assets.… https://githu…
+#&gt; </span><span style='color: #555555;'> 3</span><span> jts0101    jts0101-2016.… Average minimum tr… https://assets.… https://githu…
+#&gt; </span><span style='color: #555555;'> 4</span><span> jts0101    jts0101-2017.… Average minimum tr… https://assets.… https://githu…
+#&gt; </span><span style='color: #555555;'> 5</span><span> jts0101    jts0101-JTS01… Average minimum tr… https://assets.… https://githu…
+#&gt; </span><span style='color: #555555;'> 6</span><span> jts0102    jts0102-2014.… Average minimum tr… https://assets.… https://githu…
+#&gt; </span><span style='color: #555555;'> 7</span><span> jts0102    jts0102-2015.… Average minimum tr… https://assets.… https://githu…
+#&gt; </span><span style='color: #555555;'> 8</span><span> jts0102    jts0102-2016.… Average minimum tr… https://assets.… https://githu…
+#&gt; </span><span style='color: #555555;'> 9</span><span> jts0102    jts0102-2017.… Average minimum tr… https://assets.… https://githu…
+#&gt; </span><span style='color: #555555;'>10</span><span> jts0103    jts0103-2014.… Average minimum tr… https://assets.… https://githu…
+#&gt; </span><span style='color: #555555;'># … with 213 more rows</span><span></div><div class='input'><span class='no'>jts_tables</span>$<span class='no'>table_title</span></div><div class='output co'>#&gt;   [1] "Average minimum travel time to reach the nearest key services by mode of travel: England"                                         
 #&gt;   [2] "Average minimum travel time to reach the nearest key services by mode of travel: England"                                         
 #&gt;   [3] "Average minimum travel time to reach the nearest key services by mode of travel: England"                                         
 #&gt;   [4] "Average minimum travel time to reach the nearest key services by mode of travel: England"                                         
@@ -418,42 +418,42 @@ And the tables beginning JTS10 contain add other variables.</p>
 #&gt; <span class='message'>jts0101-2017.csv</span>
 #&gt; <span class='message'>jts0101-JTS0101.csv</span></div><div class='output co'>#&gt; <span class='message'>Reading in file https://github.com/cyipt/acton/releases/download/0.0.1/jts0101-2017.csv</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Missing column names filled in: 'X15' [15], 'X16' [16]</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
 #&gt; <span class='message'>cols(</span>
-#&gt; <span class='message'>  Year = col_character(),</span>
-#&gt; <span class='message'>  Mode = col_character(),</span>
-#&gt; <span class='message'>  `Area type 1` = col_character(),</span>
-#&gt; <span class='message'>  `Places with 100-499 jobs` = col_double(),</span>
-#&gt; <span class='message'>  `Places with 500-4999 jobs` = col_double(),</span>
-#&gt; <span class='message'>  `Places with 5000 or more jobs` = col_double(),</span>
-#&gt; <span class='message'>  `Primary school` = col_double(),</span>
-#&gt; <span class='message'>  `Secondary school` = col_double(),</span>
-#&gt; <span class='message'>  `Further Education` = col_double(),</span>
-#&gt; <span class='message'>  GP = col_double(),</span>
-#&gt; <span class='message'>  Hospital = col_double(),</span>
-#&gt; <span class='message'>  `Food store` = col_double(),</span>
-#&gt; <span class='message'>  `Town Centres` = col_double(),</span>
-#&gt; <span class='message'>  `Average of 8 services2` = col_character(),</span>
-#&gt; <span class='message'>  X15 = col_logical(),</span>
-#&gt; <span class='message'>  X16 = col_logical()</span>
-#&gt; <span class='message'>)</span></div><div class='output co'>#&gt; # A tibble: 47 x 14
+#&gt; <span class='message'>  Year = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
+#&gt; <span class='message'>  Mode = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
+#&gt; <span class='message'>  `Area type 1` = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
+#&gt; <span class='message'>  `Places with 100-499 jobs` = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  `Places with 500-4999 jobs` = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  `Places with 5000 or more jobs` = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  `Primary school` = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  `Secondary school` = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  `Further Education` = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  GP = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  Hospital = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  `Food store` = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  `Town Centres` = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  `Average of 8 services2` = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
+#&gt; <span class='message'>  X15 = </span><span style='color: #BBBB00;'>col_logical()</span><span>,</span>
+#&gt; <span class='message'>  X16 = </span><span style='color: #BBBB00;'>col_logical()</span><span></span>
+#&gt; <span class='message'>)</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 47 x 14</span><span>
 #&gt;    Year  Mode  `Area type 1` `Places with Jo… `Places with Jo… `Places with Jo…
-#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;                    &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
-#&gt;  1 2017  Publ… Urban major …              6.6              9.2             23.6
-#&gt;  2 &lt;NA&gt;  &lt;NA&gt;  Urban minor …              7.5             10.9             26.1
-#&gt;  3 &lt;NA&gt;  &lt;NA&gt;  Urban city a…              8.3             11               30.1
-#&gt;  4 &lt;NA&gt;  &lt;NA&gt;  Urban city a…              9.8              9.7             76.4
-#&gt;  5 &lt;NA&gt;  &lt;NA&gt;  Rural town a…             10.7             13.9             45.3
-#&gt;  6 &lt;NA&gt;  &lt;NA&gt;  Rural town a…             14.3             11.6             81.9
-#&gt;  7 &lt;NA&gt;  &lt;NA&gt;  Rural village             22.3             23.6             59.9
-#&gt;  8 &lt;NA&gt;  &lt;NA&gt;  Rural villag…             32.8             34.3             97.5
-#&gt;  9 &lt;NA&gt;  &lt;NA&gt;  Rural hamlet…             29.9             31               67.6
-#&gt; 10 &lt;NA&gt;  &lt;NA&gt;  Rural hamlet…             52.2             56              105. 
-#&gt; # … with 37 more rows, and 8 more variables: `Primary school` &lt;dbl&gt;, `Secondary
-#&gt; #   school` &lt;dbl&gt;, `Further Education` &lt;dbl&gt;, GP &lt;dbl&gt;, Hospital &lt;dbl&gt;, `Food
-#&gt; #   store` &lt;dbl&gt;, `Town Centres` &lt;dbl&gt;, `Average of 8 services2` &lt;chr&gt;</div><div class='input'># uncomment on released version
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> 2017  Publ… Urban major …              6.6              9.2             23.6
+#&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    Urban minor …              7.5             10.9             26.1
+#&gt; </span><span style='color: #555555;'> 3</span><span> </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    Urban city a…              8.3             11               30.1
+#&gt; </span><span style='color: #555555;'> 4</span><span> </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    Urban city a…              9.8              9.7             76.4
+#&gt; </span><span style='color: #555555;'> 5</span><span> </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    Rural town a…             10.7             13.9             45.3
+#&gt; </span><span style='color: #555555;'> 6</span><span> </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    Rural town a…             14.3             11.6             81.9
+#&gt; </span><span style='color: #555555;'> 7</span><span> </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    Rural village             22.3             23.6             59.9
+#&gt; </span><span style='color: #555555;'> 8</span><span> </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    Rural villag…             32.8             34.3             97.5
+#&gt; </span><span style='color: #555555;'> 9</span><span> </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    Rural hamlet…             29.9             31               67.6
+#&gt; </span><span style='color: #555555;'>10</span><span> </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    Rural hamlet…             52.2             56              105. 
+#&gt; </span><span style='color: #555555;'># … with 37 more rows, and 8 more variables: `Primary school` </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, `Secondary</span><span>
+#&gt; </span><span style='color: #555555;'>#   school` </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, `Further Education` </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, GP </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Hospital </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, `Food</span><span>
+#&gt; </span><span style='color: #555555;'>#   store` </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, `Town Centres` </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, `Average of 8 services2` </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'># uncomment on released version
 # get_jts_data(table = "jts0401", year = 2017)
 # get_jts_data(table = "jts0402", year = 2017)
 # get_jts_data(table = "jts0402", year = 2014)
-</div></pre>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
