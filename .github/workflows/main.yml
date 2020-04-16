@@ -20,7 +20,7 @@ jobs:
         config:
           # comment out lines if you do not want to build on certain platforms
           - { os: ubuntu-latest, r: "release", pkgdown: "true" }
-          - { os: windows-latest, r: "release" }
+          # - { os: windows-latest, r: "release" }
 
     env:
       # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
