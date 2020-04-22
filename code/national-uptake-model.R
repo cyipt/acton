@@ -143,6 +143,7 @@ od_lsoas_short$rownum = as.numeric(rownames(od_lsoas_short))
 od_lsoas_short = readRDS("od_lsoas_short.Rds")
 dim(od_lsoas_short) # 330567 rows
 remotes::install_github("ropensci/stplanr")
+remotes::install_github("Robinlovelace/cyclestreets")
 
 library(sf)
 library(stplanr)
@@ -152,14 +153,14 @@ cl = makeCluster(detectCores())
 clusterExport(cl, c("journey"))
 # test run:
 l_test = od_lsoas_short[1:100,]
-routes_lsoa = stplanr::route(l_test, route_fun = cyclestreets::journey, cl = cl)
-names(routes_lsoa) # df variables have been lost
-routes_lsoa = stplanr::route(l = l_test, route_fun = cyclestreets::journey, cl = cl)
+# routes_lsoa = stplanr::route(l_test, route_fun = cyclestreets::journey, cl = cl)
+# names(routes_lsoa) # df variables have been lost
+system.time({routes_lsoa = stplanr::route(l = l_test, route_fun = cyclestreets::journey, cl = cl, smooth_gradient = TRUE)})
 names(routes_lsoa) # df variables have been lost
 
 N = 1000
 # split_grouping_variable = cut(1:nrow(od_lsoas_short), breaks = N, labels = 1:N)
-split_grouping_variable = rep(1:34000, each = 1000)[1:nrow(od_lsoas_short)]
+split_grouping_variable = rep(1:331, each = 1000)[1:nrow(od_lsoas_short)]
 summary(split_grouping_variable)[1:10]
 od_lsoas_short_list = split(od_lsoas_short, split_grouping_variable)
 class(od_lsoas_short_list)
@@ -169,7 +170,7 @@ head(od_lsoas_short_list[[1]])
 # test it's the same
 identical(od_lsoas_short[1:1000,], od_lsoas_short_list[[1]])
 
-system.time({routes_lsoa_1 = route(od_lsoas_short_list[[1]], route_fun = cyclestreets::journey, cl = cl)})
+system.time({routes_lsoa_1 = route(l = od_lsoas_short_list[[1]], route_fun = cyclestreets::journey, cl = cl, smooth_gradient = TRUE)})
 # 70 seconds, implying ~ 20 hrs for all routes
 
 data_dir = "od_lsoa_routes_20020-04-07-chunks-of-1000-rows"
@@ -179,7 +180,7 @@ n_chunks = length(od_lsoas_short_list)
 # started at 23:05
 for(i in 1:n_chunks) {
   message("Routing batch ", i, " of ", n_chunks)
-  system.time({routes_lsoa_n = route(l = od_lsoas_short_list[[i]], route_fun = cyclestreets::journey, cl = cl)})
+  system.time({routes_lsoa_n = route(l = od_lsoas_short_list[[i]], route_fun = cyclestreets::journey, cl = cl, smooth_gradient = TRUE)})
   saveRDS(routes_lsoa_n, paste0("routes_lsoa_", i, ".Rds"))
 }
 route_chunks_list = lapply(1:n_chunks, {
@@ -415,6 +416,8 @@ m_national4 = glm(pcycle ~
                   weights = all
 )
 summary(m_national4)
+
+anova(m_national4, test = "F")
 
 
 fitted.values = m_national$fitted.values
