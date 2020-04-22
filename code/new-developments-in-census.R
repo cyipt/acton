@@ -435,7 +435,7 @@ r_grouped_census = routes_all_sites %>%
   summarise(
     n = n(), # is this the number of route segments each route contains?
     all = mean(all),
-    average_incline = sum(abs(diff(elevations))) / sum(distances),
+    average_incline = weighted.mean(gradient_segment, w = distances),
     distance_m = sum(distances),
     busyness = mean(busyness)
   )
@@ -477,7 +477,8 @@ m_cycling = glm(pcycle ~
                 weights = all
                   )
 
-dropterm(m_cycling2, test = "F")
+drop1(m_cycling, test = "F")
+anova(m_cycling, test = "F")
 
 # model 2: reproducing pct model with busyness
 m_cycling2 = glm(pcycle ~
@@ -492,7 +493,9 @@ m_cycling2 = glm(pcycle ~
                weights = all
 )
 
-dropterm(m_cycling2, test = "F")
+drop1(m_cycling2, test = "F")
+anova(m_cycling2, test = "F")
+
 
 
 # model 3: reproducing pct model with busyness
@@ -507,7 +510,8 @@ m_cycling3 = glm(pcycle ~
                weights = all
 )
 
-dropterm(m_cycling3, test = "F")
+drop1(m_cycling3, test = "F")
+anova(m_cycling3, test = "F")
 
 #minimal mondel
 # model 4: reproducing pct model with busyness
@@ -521,7 +525,8 @@ m_cycling4 = glm(pcycle ~
                  weights = all
 )
 
-dropterm(m_cycling4, test = "F")
+drop1(m_cycling4, test = "F")
+anova(m_cycling4, test = "F")
 
 #previous model
 m_cycling5 = glm(pcycle ~
@@ -537,7 +542,7 @@ m_cycling5 = glm(pcycle ~
 )
 
 
-fitted.values = m_cycling5$fitted.values # for glm
+fitted.values = m_cycling4$fitted.values # for glm
 # fitted.values = boot::inv.logit(m_cycling$fitted.values)
 
 
@@ -551,7 +556,7 @@ AICc(mod = m_cycling,return.K = FALSE, second.ord = TRUE)
 plot(r_grouped_census_joined$distance_m, fitted.values)
 plot(r_grouped_census_joined$average_incline, fitted.values)
 cor(r_grouped_census_joined$pcycle, fitted.values)^2 # explains around 12% of variability
-cor(r_grouped_census_joined$govtarget, fitted.values)^2 # explains around 23% of PCT base scenario
+cor(r_grouped_census_joined$govtarget, fitted.values)^2 # explains around 21% of PCT base scenario
 plot(r_grouped_census_joined$govtarget / 100, fitted.values)
 
 
