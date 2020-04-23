@@ -149,66 +149,43 @@
 <div id="accessibility-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#accessibility-data" class="anchor"></a>Accessibility data</h2>
-<p>Having identified our case study sites, the next step is to investigate their accessibility. Government journey time statistics record the time taken to reach a range of services such as primary schools, food stores, GP surgeries, centres of employment and town centres. These are available at the geographical level of the LSOA, an area covering a population of approximately 1500 people or 650 households.</p>
+<p>A vital question regarding any potential site for new homes is whether the residents will be able to readily access local shops and services, or whether the site’s remoteness risks forcing residents into car dependency. Government journey time statistics record the time taken to reach a range of services such as primary schools, food stores, GP surgeries, centres of employment and town centres. These are available at the geographical level of the LSOA, an area covering a population of approximately 1500 people or 650 households.</p>
+<p>We have created an overall accessibility index that measures the mean time required to reach six different types of destination. This is available for three modes of transport - by car, by bicycle, and by a combined walking / public transport mode.</p>
 <p>As part of the <code>acton</code> package, <code><a href="../reference/get_jts_data.html">get_jts_data()</a></code> is an R function that returns these journey time statistics for a specified year and table number. We have used these to estimate the accessibility of four sites in Leeds, the results of which can be seen in the article <a href="https://cyipt.github.io/acton/articles/case-studies.html">ACTON case studies</a>.</p>
 </div>
 <div id="travel-behaviour-and-census-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#travel-behaviour-and-census-data" class="anchor"></a>Travel behaviour and census data</h2>
-<div id="origin-destination-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#origin-destination-data" class="anchor"></a>Origin-destination data</h3>
-<p>work in progress…</p>
-</div>
-<div id="identifying-key-destinations" class="section level3">
-<h3 class="hasAnchor">
-<a href="#identifying-key-destinations" class="anchor"></a>Identifying key destinations</h3>
-<p>To further investigate accessibility, destinations of interest must be identified. These could include:</p>
-<ul>
-<li><p>town centres (we can use the same dataset as is used in the journey time statistics)</p></li>
-<li><p>railway stations</p></li>
-<li><p>centres of employment</p></li>
-<li><p>retail areas</p></li>
-<li><p>schools and other educational establishments</p></li>
-</ul>
-</div>
+<p>The 2011 Census provides a wealth of demographic and travel data, including information on home and work locations and the main method of travel to work. We use this, together with cycling uptake scenarios developed through the Propensity to Cycle Tool, to identify where and how people travel.</p>
+<p>New developments will not feature in the 2011 Census, but the likely workplaces of residents can be inferred by identifying local travel patterns in the 2011 data. This also reveals the proportion of local residents who walk or cycle to work.</p>
 </div>
 <div id="route-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#route-data" class="anchor"></a>Route data</h2>
-<p>We will look at the journeys from case study sites to key destinations. Is it possible to reach these destinations by foot or cycle? How busy are the roads? What are the barriers that sever potential routes? We will investigate the circuitousness of walking and cycling routes, and how they compare to travel times by car.</p>
-<p>The <a href="https://www.cyclestreets.net/">CycleStreets.net</a> journey planner algorithm generates ‘fast’, ‘balanced’ and ‘quiet’ cycle routes between origins and destinations. As part of ACTON we are improving the way particular types of cycle lane and path are classified. This will lead to better quality routing of ‘quiet’ routes, through a more accurate characterisation of the cycleability of route segments.</p>
+<p>We look at the journeys to work from case study sites. Is it possible to reach these destinations by foot or cycle? How busy are the roads? What are the barriers that sever potential routes?</p>
+<p>The <a href="https://www.cyclestreets.net/">CycleStreets.net</a> journey planner algorithm generates ‘fast’, ‘balanced’ and ‘quiet’ cycle routes between origins and destinations. As part of ACTON we have improved the way particular types of cycle lane and path are classified. This allows better quality routing of ‘quiet’ routes, through a more accurate characterisation of the cycleability of route segments.</p>
 <div id="busyness-estimation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#busyness-estimation" class="anchor"></a>Busyness estimation</h3>
 <p>New homes often lie close to major roads and bypasses that act as barriers which limit or discourage sustainable modes of travel. By contrast there are sometimes long established bridleways, towpaths or other paths which could be upgraded. CycleStreets is a journey planner that helps people find a cycle route that is right for them. Such routes range from direct routes appropriate to confident on-road cyclists to quieter routes for people who want to avoid busy roads.</p>
 <p>CycleStreets uses a key metric, known as the ‘busyness score’ to rate each section of a cycle route. This provides a measure of the cycleability of the route and helps determine the suitability of it for each type of rider. It takes into account many features of the streets and paths used for cycling, including the width, speed limits, presence of cycle lanes or dedicated cycle tracks, and obstacles along the way.</p>
-<p>As part of ACTON the process of setting the busyness score by CycleStreets is being further developed. This will allow it to take account of new types of cycling infrastructure and move towards a model that distinguishes between eight different states of cycling that are fundamental to how people choose a route.</p>
-<p>We estimate the busyness of the roads which constitute routes from our case study sites to workplaces or other key destinations. The improved busyness score will allow calculation of an index of average road busyness for the area surrounding each site.</p>
-</div>
-<div id="spatial-network-analysis-and-walkability" class="section level3">
-<h3 class="hasAnchor">
-<a href="#spatial-network-analysis-and-walkability" class="anchor"></a>Spatial network analysis and walkability</h3>
+<p>As part of ACTON the process of setting the busyness score by CycleStreets has been further developed, taking account of the various types of cycling infrastructure.</p>
+<p>We estimate the busyness of the roads which constitute routes from our case study sites to workplaces or other key destinations. The improved busyness score allows calculation of an index of average road busyness for the area surrounding each site.</p>
 </div>
 </div>
 </div>
 <div id="case-study-sites" class="section level1">
 <h1 class="hasAnchor">
 <a href="#case-study-sites" class="anchor"></a>Case study sites</h1>
-<p>Using the improved PlanIt functionality and R package, we will identify a set of housing developments to use as case study sites. These will be located in three regions, covering a diverse range of conditions across the country:</p>
-<ul>
-<li><p>Leeds</p></li>
-<li><p>Cambridge</p></li>
-<li><p>A350 corridor towns in Wiltshire (Trowbridge/Melksham/Chippenham)</p></li>
-</ul>
-<p>So far we have identified four sites in Leeds with planning approval for &gt;100 homes.</p>
-<div id="analysis-to-support-interventions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#analysis-to-support-interventions" class="anchor"></a>Analysis to support interventions</h2>
-<!-- ## Methods to identify severance and interventions -->
-<p>New housing developments are often located close to major roads or other features that can represent a physical barrier preventing walking or cycle access. As part of the routing process we will identify the barriers that lead to severance of the routes between new homes and key destinations. We will then explore options to overcome these barriers at our case study sites.</p>
+<p>Using the improved PlanIt functionality and R package, we have identified a set of housing developments to use as case study sites. Located within Leeds City Council, these are classified by PlanIt as large applications and each have planning consent for &gt;100 homes.</p>
+<p>We have investigated accessibility to key services such as food stores, schools and doctor’s surgeries. We then look at mode of travel and distances for travel to work from these sites, and the busyness of the road networks on these routes to work. This aids in assessing the sites’ suitability for new homes and in identifying key barriers and opportunities to improve sustainable access to these sites.</p>
+<p>New housing developments are often located close to major roads or other features that can represent a physical barrier preventing walking or cycle access. Assessment of road busyness and cycling speeds allows us to identify the barriers that lead to severance of the routes between new homes and key destinations, which may include awkward road crossings, bridges, or steps along cycling routes, as well as busy roads on the routes from home to work.</p>
 <p>Options to overcome barriers could include improving conditions on existing roads (such as through traffic calming measures), or providing new links or crossing points that enable connections to be made for walking and cycling.</p>
 </div>
+<div id="prototype-national-indicator-model" class="section level1">
+<h1 class="hasAnchor">
+<a href="#prototype-national-indicator-model" class="anchor"></a>Prototype national indicator model</h1>
+<p>Using data from new housing developments built in the years leading up to 2011, the final component of the project is the initial development of a model to predict active travel levels for commuter journeys by the residents of new homes, using variables such as the journey distance, hilliness and road busyness. This has the potential to scale nationally, and could provide an indicator of the expected potential for sustainable access to sites where new homes are proposed.</p>
 </div>
 <div id="discussion-and-next-steps" class="section level1">
 <h1 class="hasAnchor">
