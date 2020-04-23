@@ -158,7 +158,18 @@ l_test = od_lsoas_short[1:100,]
 system.time({routes_lsoa = stplanr::route(l = l_test, route_fun = cyclestreets::journey, cl = cl, smooth_gradient = TRUE)})
 names(routes_lsoa) # df variables have been lost
 
-N = 1000
+# N = 10
+split_grouping_variable = rep(1:33100, each = 10)[1:nrow(od_lsoas_short)]
+summary(split_grouping_variable)[1:10]
+od_lsoas_short_list_10 = split(od_lsoas_short, split_grouping_variable)
+nrow(od_lsoas_short_list_10[[1]])
+head(od_lsoas_short_list_10[[1]])
+# test it's the same
+identical(od_lsoas_short[1:10,], od_lsoas_short_list_10[[1]])
+
+system.time({routes_lsoa_1 = route(l = od_lsoas_short_list_10[[82]], route_fun = cyclestreets::journey, cl = cl, smooth_gradient = TRUE, output_list = TRUE, raw_output = TRUE)})
+
+# N = 1000
 # split_grouping_variable = cut(1:nrow(od_lsoas_short), breaks = N, labels = 1:N)
 split_grouping_variable = rep(1:331, each = 1000)[1:nrow(od_lsoas_short)]
 summary(split_grouping_variable)[1:10]
