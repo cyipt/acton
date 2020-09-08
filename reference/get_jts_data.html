@@ -143,7 +143,7 @@
 [gov.uk website](https://www.gov.uk/government/statistical-data-sets/journey-time-statistics-data-tables-jts).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_jts_data</span>(<span class='no'>table</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>u_csv</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>6</span>)</pre>
+    <pre class="usage"><span class='fu'>get_jts_data</span>(<span class='kw'>table</span>, year = <span class='kw'>NULL</span>, u_csv = <span class='kw'>NULL</span>, skip = <span class='fl'>6</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,7 +177,8 @@ And the tables beginning JTS10 contain add other variables.</p>
 <p>Data is provided every year from 2014 to 2019 in many cases</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>jts_tables</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 223 x 5</span><span>
+    <pre class="examples"><div class='input'><span class='kw'>jts_tables</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 223 x 5</span><span>
 #&gt;    table_code csv_file_name  table_title         table_url        csv_url       
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         
 #&gt; </span><span style='color: #555555;'> 1</span><span> jts0101    jts0101-2014.… Average minimum tr… https://assets.… https://githu…
@@ -190,7 +191,8 @@ And the tables beginning JTS10 contain add other variables.</p>
 #&gt; </span><span style='color: #555555;'> 8</span><span> jts0102    jts0102-2016.… Average minimum tr… https://assets.… https://githu…
 #&gt; </span><span style='color: #555555;'> 9</span><span> jts0102    jts0102-2017.… Average minimum tr… https://assets.… https://githu…
 #&gt; </span><span style='color: #555555;'>10</span><span> jts0103    jts0103-2014.… Average minimum tr… https://assets.… https://githu…
-#&gt; </span><span style='color: #555555;'># … with 213 more rows</span><span></div><div class='input'><span class='no'>jts_tables</span>$<span class='no'>table_title</span></div><div class='output co'>#&gt;   [1] "Average minimum travel time to reach the nearest key services by mode of travel: England"                                         
+#&gt; </span><span style='color: #555555;'># … with 213 more rows</span><span></div><div class='input'><span class='kw'>jts_tables</span><span class='op'>$</span><span class='kw'>table_title</span>
+</div><div class='output co'>#&gt;   [1] "Average minimum travel time to reach the nearest key services by mode of travel: England"                                         
 #&gt;   [2] "Average minimum travel time to reach the nearest key services by mode of travel: England"                                         
 #&gt;   [3] "Average minimum travel time to reach the nearest key services by mode of travel: England"                                         
 #&gt;   [4] "Average minimum travel time to reach the nearest key services by mode of travel: England"                                         
@@ -412,7 +414,8 @@ And the tables beginning JTS10 contain add other variables.</p>
 #&gt; [220] "Average travel time to job centres in England"                                                                                    
 #&gt; [221] "Average travel time to job centres in England"                                                                                    
 #&gt; [222] "Average travel time to job centres in England"                                                                                    
-#&gt; [223] "Average travel time to job centres in England"                                                                                    </div><div class='input'><span class='fu'>get_jts_data</span>(<span class='kw'>table</span> <span class='kw'>=</span> <span class='st'>"jts0101"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2017</span>, <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>7</span>)</div><div class='output co'>#&gt; <span class='message'>This table's title is Average minimum travel time to reach the nearest key services by mode of travel: England</span></div><div class='output co'>#&gt; <span class='message'>These data files are available for that table code: jts0101-2014.csv</span>
+#&gt; [223] "Average travel time to job centres in England"                                                                                    </div><div class='input'><span class='fu'>get_jts_data</span>(table = <span class='st'>"jts0101"</span>, year = <span class='fl'>2017</span>, skip = <span class='fl'>7</span>)
+</div><div class='output co'>#&gt; <span class='message'>This table's title is Average minimum travel time to reach the nearest key services by mode of travel: England</span></div><div class='output co'>#&gt; <span class='message'>These data files are available for that table code: jts0101-2014.csv</span>
 #&gt; <span class='message'>jts0101-2015.csv</span>
 #&gt; <span class='message'>jts0101-2016.csv</span>
 #&gt; <span class='message'>jts0101-2017.csv</span>
@@ -449,10 +452,10 @@ And the tables beginning JTS10 contain add other variables.</p>
 #&gt; </span><span style='color: #555555;'>10</span><span> </span><span style='color: #BB0000;'>NA</span><span>    </span><span style='color: #BB0000;'>NA</span><span>    Rural hamlet…             52.2             56              105. 
 #&gt; </span><span style='color: #555555;'># … with 37 more rows, and 8 more variables: `Primary school` </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, `Secondary</span><span>
 #&gt; </span><span style='color: #555555;'>#   school` </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, `Further Education` </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, GP </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, Hospital </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, `Food</span><span>
-#&gt; </span><span style='color: #555555;'>#   store` </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, `Town Centres` </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, `Average of 8 services2` </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'># uncomment on released version
-# get_jts_data(table = "jts0401", year = 2017)
-# get_jts_data(table = "jts0402", year = 2017)
-# get_jts_data(table = "jts0402", year = 2014)
+#&gt; </span><span style='color: #555555;'>#   store` </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, `Town Centres` </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, `Average of 8 services2` </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'><span class='co'># uncomment on released version</span>
+<span class='co'># get_jts_data(table = "jts0401", year = 2017)</span>
+<span class='co'># get_jts_data(table = "jts0402", year = 2017)</span>
+<span class='co'># get_jts_data(table = "jts0402", year = 2014)</span>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -469,7 +472,7 @@ And the tables beginning JTS10 contain add other variables.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

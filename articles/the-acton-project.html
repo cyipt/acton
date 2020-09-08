@@ -214,10 +214,14 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <h2 class="hasAnchor">
 <a href="#installing-the-r-package" class="anchor"></a>Installing the R package</h2>
 <p>To install the <code>acton</code> package, run the following commands in an R console (see <a href="https://docs.ropensci.org/stats19/articles/stats19-training-setup.html">here</a> for information on installing R):</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"remotes"</span>)
-<span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"cyipt/acton"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"remotes"</span>)
+<span class="kw">remotes</span>::<span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"cyipt/acton"</span>)
+</pre></div>
 <p>After it has been installed, the package can be loaded as follows:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">acton</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/cyipt/acton">acton</a></span>)
+</pre></div>
 </div>
 <div id="functions" class="section level2">
 <h2 class="hasAnchor">
@@ -234,29 +238,33 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <h2 class="hasAnchor">
 <a href="#brief-demo" class="anchor"></a>Brief demo</h2>
 <p>The package can be used to get data on new developments and accessibility as follows:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># download planning application data from a specific postcode (large planning applications only)</span>
-<span class="no">planning_data</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_planit_data.html">get_planit_data</a></span>(<span class="kw">pcode</span> <span class="kw">=</span> <span class="st">"LS2 9JT"</span>, <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">app_size</span> <span class="kw">=</span> <span class="st">"large"</span>)
-<span class="no">planning_data</span>
-<span class="no">planning_data</span>$<span class="no">name</span>
-<span class="no">planning_data</span>$<span class="no">description</span>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="co"># download planning application data from a specific postcode (large planning applications only)</span>
+<span class="kw">planning_data</span> <span class="op">=</span> <span class="fu"><a href="../reference/get_planit_data.html">get_planit_data</a></span>(pcode = <span class="st">"LS2 9JT"</span>, limit = <span class="fl">2</span>, app_size = <span class="st">"large"</span>)
+<span class="kw">planning_data</span>
+<span class="kw">planning_data</span><span class="op">$</span><span class="kw">name</span>
+<span class="kw">planning_data</span><span class="op">$</span><span class="kw">description</span>
 
 <span class="co"># download planning application data from a specific planning authority (large planning applications only)</span>
-<span class="no">planning_data</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_planit_data.html">get_planit_data</a></span>(<span class="kw">auth</span> <span class="kw">=</span> <span class="st">"Leeds"</span>, <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">app_size</span> <span class="kw">=</span> <span class="st">"large"</span>)
+<span class="kw">planning_data</span> <span class="op">=</span> <span class="fu"><a href="../reference/get_planit_data.html">get_planit_data</a></span>(auth = <span class="st">"Leeds"</span>, limit = <span class="fl">2</span>, app_size = <span class="st">"large"</span>)
 
 <span class="co"># these commands show which data is available in each of the Journey Time Statistics tables</span>
-<span class="no">jts_tables</span>
-<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">jts_tables</span>$<span class="no">table_title</span>)
+<span class="kw">jts_tables</span>
+<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">jts_tables</span><span class="op">$</span><span class="kw">table_title</span>)
 
 <span class="co"># this extracts the data from table jts_0101 for the year 2017, skipping the first 7 rows as they are empty</span>
-<span class="no">accessibility_data</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_jts_data.html">get_jts_data</a></span>(<span class="kw">table</span> <span class="kw">=</span> <span class="st">"jts0101"</span>, <span class="kw">year</span> <span class="kw">=</span> <span class="fl">2017</span>, <span class="kw">skip</span> <span class="kw">=</span> <span class="fl">7</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span>(<span class="no">accessibility_data</span>)</pre></body></html></div>
+<span class="kw">accessibility_data</span> <span class="op">=</span> <span class="fu"><a href="../reference/get_jts_data.html">get_jts_data</a></span>(table = <span class="st">"jts0101"</span>, year = <span class="fl">2017</span>, skip = <span class="fl">7</span>) 
+<span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span>(<span class="kw">accessibility_data</span>)
+</pre></div>
 </div>
 <div id="further-r-instructions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#further-r-instructions" class="anchor"></a>Further R instructions</h2>
 <p>To get routes from CycleStreets.net, you will need to set up an API key called CYCLESTREETS. This can be done by installing the <code>usethis</code> package and using it to edit the R environment.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"usethis"</span>)
-<span class="kw pkg">usethis</span><span class="kw ns">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/edit.html">edit_r_environ</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"usethis"</span>)
+<span class="kw">usethis</span>::<span class="fu"><a href="https://usethis.r-lib.org/reference/edit.html">edit_r_environ</a></span>()
+</pre></div>
 <p>You can then add the CYCLESTREETS key to the R environment by typing <code>CYCLESTREETS=&lt;insert API key name&gt;</code></p>
 </div>
 </div>
@@ -269,13 +277,15 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <a href="#planning-applications" class="anchor"></a>Planning applications</h2>
 <p>Data from <a href="https://www.planit.org.uk/">PlanIt</a>, accessed using the <code>acton</code> R package, was used to identify recent large planning applications within the city boundaries.</p>
 <p>The following code gets and subsets the relevant PlanIt data for Leeds. This extracts large applications where planning consent has been granted:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">applications_leeds</span> <span class="kw">=</span> <span class="fu"><a href="../reference/get_planit_data.html">get_planit_data</a></span>(
-  <span class="kw">limit</span> <span class="kw">=</span> <span class="fl">500</span>,
-  <span class="kw">auth</span> <span class="kw">=</span> <span class="st">"Leeds"</span>,
-  <span class="kw">app_size</span> <span class="kw">=</span> <span class="st">"large"</span>,
-  <span class="kw">app_state</span> <span class="kw">=</span> <span class="st">"permitted"</span>,
-  <span class="kw">silent</span> <span class="kw">=</span> <span class="fl">TRUE</span>
-  )</pre></body></html></div>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="kw">applications_leeds</span> <span class="op">=</span> <span class="fu"><a href="../reference/get_planit_data.html">get_planit_data</a></span>(
+  limit = <span class="fl">500</span>,
+  auth = <span class="st">"Leeds"</span>,
+  app_size = <span class="st">"large"</span>,
+  app_state = <span class="st">"permitted"</span>,
+  silent = <span class="fl">TRUE</span>
+  )
+</pre></div>
 <p><img src="https://user-images.githubusercontent.com/52210872/77913768-c12a8a80-728c-11ea-963f-e6bad2decd38.png" width="80%" style="display: block; margin: auto;"></p>
 <p>The resulting data provides rich information about the planning applications, an overview of which is shown in the figure above.</p>
 </div>
@@ -374,15 +384,17 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 <a href="#model-fitting" class="anchor"></a>Model fitting</h2>
 <p>We use the <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code> R package, with a quasibinomial probability distribution and a logit link function, since the proportion of commuters who cycle represents the result of a series of binomial trials.</p>
 <p>Having investigated various candidate explanatory variables for distance and hilliness, including interaction terms, the following model was found to provide the best fit, with an R squared of 8.9%.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">m_cycling</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">pcycle</span> ~
-                   <span class="no">distance_m</span> + <span class="co"># d1</span>
-                   <span class="no">distance_m</span>^<span class="fl">2</span> + <span class="co"># d3</span>
-                   <span class="no">average_incline</span> +    <span class="co"># h1</span>
-                   <span class="no">busyness</span>,
-                 <span class="kw">data</span> <span class="kw">=</span> <span class="kw pkg">sf</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html">st_drop_geometry</a></span>(<span class="no">r_grouped_census_joined</span>),
-                 <span class="kw">family</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">quasibinomial</a></span>(),
-                 <span class="kw">weights</span> <span class="kw">=</span> <span class="no">all</span>
-)</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">m_cycling</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="kw">pcycle</span> <span class="op">~</span>
+                   <span class="kw">distance_m</span> <span class="op">+</span> <span class="co"># d1</span>
+                   <span class="kw">distance_m</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="co"># d3</span>
+                   <span class="kw">average_incline</span> <span class="op">+</span>    <span class="co"># h1</span>
+                   <span class="kw">busyness</span>,
+                 data = <span class="kw">sf</span>::<span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_geometry.html">st_drop_geometry</a></span>(<span class="kw">r_grouped_census_joined</span>),
+                 family = <span class="fu"><a href="https://rdrr.io/r/stats/family.html">quasibinomial</a></span>(),
+                 weights = <span class="kw">all</span>
+)
+</pre></div>
 </div>
 </div>
 <div id="conclusions" class="section level1">
@@ -494,7 +506,7 @@ Schematic diagram of the ACTON project and its four main data sources (boxes)
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>
