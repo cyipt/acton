@@ -239,7 +239,7 @@ To be used only when `query_type` is not `"applics"`.</p></td>
     <pre class="examples"><div class='input'><span class='co'># tmaptools::bb("university leeds") # find a bounding box</span>
 <span class='kw'>bbox</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='op'>-</span><span class='fl'>1.5</span>, <span class='fl'>53.7</span>, <span class='op'>-</span><span class='fl'>1.3</span>, <span class='fl'>53.8</span>)
 <span class='kw'>res</span> <span class='op'>=</span> <span class='fu'>get_planit_data</span>(bbox = <span class='kw'>bbox</span>, silent = <span class='fl'>FALSE</span>) <span class='co'># return geographic (`sf`) object</span>
-</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=6&amp;bbox=-1.5%2C53.7%2C-1.3%2C53.8&amp;end_date=2020-09-12&amp;start_date=2000-02-01&amp;pg_sz=6</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>res</span>)
+</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=6&amp;bbox=-1.5%2C53.7%2C-1.3%2C53.8&amp;end_date=2020-09-13&amp;start_date=2000-02-01&amp;pg_sz=6</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>res</span>)
 </div><div class='output co'>#&gt; [1] "sf"         "tbl_df"     "tbl"        "data.frame"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>res</span>)
 </div><div class='output co'>#&gt;  [1] "address"        "altid"          "app_size"       "app_state"     
 #&gt;  [5] "app_type"       "associated_id"  "authority_id"   "authority_name"
@@ -249,41 +249,41 @@ To be used only when `query_type` is not `"applics"`.</p></td>
 #&gt; [21] "reference"      "source_url"     "start_date"     "uid"           
 #&gt; [25] "url"            "when_updated"   "geometry"      </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>sf</span>::<span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_geometry.html'>st_geometry</a></span>(<span class='kw'>res</span>))
 </div><div class='img'><img src='get_planit_data-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>get_planit_data</span>(fmt = <span class='st'>"json"</span>, limit = <span class='fl'>2</span>, bbox = <span class='kw'>bbox</span>) <span class='co'># return data frame with limit</span>
-</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/json?limit=2&amp;bbox=-1.5%2C53.7%2C-1.3%2C53.8&amp;end_date=2020-09-12&amp;start_date=2000-02-01&amp;pg_sz=2</span></div><div class='output co'>#&gt;                               address altid app_size app_state app_type
-#&gt; 1 Chequers Inn Ledsham Leeds LS25 5LP    NA    Small Undecided    Trees
-#&gt; 2 7A Leeds Road Kippax Leeds LS25 7HG    NA    Small Undecided    Trees
+</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/json?limit=2&amp;bbox=-1.5%2C53.7%2C-1.3%2C53.8&amp;end_date=2020-09-13&amp;start_date=2000-02-01&amp;pg_sz=2</span></div><div class='output co'>#&gt;                                     address altid app_size app_state app_type
+#&gt; 1 8 Spibey Crescent Rothwell Leeds LS26 0NR    NA    Small Undecided     Full
+#&gt; 2       Chequers Inn Ledsham Leeds LS25 5LP    NA    Small Undecided    Trees
 #&gt;   associated_id authority_id authority_name consulted_date decided_date
-#&gt; 1      NoticeT1          292          Leeds             NA           NA
-#&gt; 2          &lt;NA&gt;          292          Leeds             NA           NA
+#&gt; 1          &lt;NA&gt;          292          Leeds             NA           NA
+#&gt; 2      NoticeT1          292          Leeds             NA           NA
 #&gt;                                                                                                                           description
-#&gt; 1 5 Day NoticeT1 Ash - Fell due to suspected chalara fraxinea, dropping limbs onto outside area in carpark near members of the public
-#&gt; 2                                                             T1 and T2 - Crown reduce by 40% and crown clean, as outgrowing location
-#&gt;   distance      lat                                                    link
-#&gt; 1       NA 53.76205 https://dev.planit.org.uk/planapplic/Leeds/20/05739/TR/
-#&gt; 2       NA 53.76920 https://dev.planit.org.uk/planapplic/Leeds/20/05702/TR/
-#&gt;         lng              name postcode   rec_type reference
-#&gt; 1 -1.310460 Leeds/20/05739/TR LS25 5LP PlanApplic        NA
-#&gt; 2 -1.370938 Leeds/20/05702/TR LS25 7HG PlanApplic        NA
+#&gt; 1                                                            4.0m single storey rear extension, 3.35m to ridge height, 2.45m to eaves
+#&gt; 2 5 Day NoticeT1 Ash - Fell due to suspected chalara fraxinea, dropping limbs onto outside area in carpark near members of the public
+#&gt;   distance      lat                                                     link
+#&gt; 1       NA 53.75630 https://dev.planit.org.uk/planapplic/Leeds/20/05660/DHH/
+#&gt; 2       NA 53.76205  https://dev.planit.org.uk/planapplic/Leeds/20/05739/TR/
+#&gt;         lng               name postcode   rec_type reference
+#&gt; 1 -1.488053 Leeds/20/05660/DHH LS26 0NR PlanApplic        NA
+#&gt; 2 -1.310460  Leeds/20/05739/TR LS25 5LP PlanApplic        NA
 #&gt;                                                                        source_url
 #&gt; 1 https://publicaccess.leeds.gov.uk/online-applications/search.do?action=advanced
 #&gt; 2 https://publicaccess.leeds.gov.uk/online-applications/search.do?action=advanced
-#&gt;   start_date         uid
-#&gt; 1 2020-09-09 20/05739/TR
-#&gt; 2 2020-09-09 20/05702/TR
+#&gt;   start_date          uid
+#&gt; 1 2020-09-10 20/05660/DHH
+#&gt; 2 2020-09-09  20/05739/TR
 #&gt;                                                                                                                  url
-#&gt; 1 https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=QGEE79JB2QX00
-#&gt; 2 https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=QGC9FYJBH2D00
+#&gt; 1 https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?activeTab=summary&amp;keyVal=QGAETMJB0FZ00
+#&gt; 2 https://publicaccess.leeds.gov.uk/online-applications/applicationDetails.do?keyVal=QGEE79JB2QX00&amp;activeTab=summary
 #&gt;                       when_updated
-#&gt; 1 2020-09-10T07:39:52.498000+01:00
-#&gt; 2 2020-09-10T07:39:52.499000+01:00</div><div class='input'><span class='fu'>get_planit_data</span>(fmt = <span class='st'>"json"</span>, limit = <span class='fl'>2</span>, auth = <span class='st'>"leeds"</span>)<span class='op'>$</span><span class='kw'>description</span>
-</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/json?limit=2&amp;bbox=&amp;end_date=2020-09-12&amp;start_date=2000-02-01&amp;pg_sz=2&amp;auth=leeds</span></div><div class='output co'>#&gt; [1] "5 Day NoticeT1 Ash - Fell due to suspected chalara fraxinea, dropping limbs onto outside area in carpark near members of the public"                                                                                                 
-#&gt; [2] "T1 Sycamore - Remove 3 lower limbs on western side the overhang in No7. Lift 2 small limbs the over hang No5.G1 2 Ash and 1 Sycamore - Crown thin by 15% and remove deadwood. G2 10 x Self Seeded Trees - Reduce height by 4 meters."</div><div class='input'><span class='fu'>get_planit_data</span>(end_date = <span class='st'>"2008-01-01"</span>, limit = <span class='fl'>2</span>, bbox = <span class='kw'>bbox</span>)<span class='op'>$</span><span class='kw'>description</span> <span class='co'># historic data</span>
+#&gt; 1 2020-09-11T15:47:42.994000+01:00
+#&gt; 2 2020-09-10T07:39:52.498000+01:00</div><div class='input'><span class='fu'>get_planit_data</span>(fmt = <span class='st'>"json"</span>, limit = <span class='fl'>2</span>, auth = <span class='st'>"leeds"</span>)<span class='op'>$</span><span class='kw'>description</span>
+</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/json?limit=2&amp;bbox=&amp;end_date=2020-09-13&amp;start_date=2000-02-01&amp;pg_sz=2&amp;auth=leeds</span></div><div class='output co'>#&gt; [1] "T1 Mature Sycamore - Remove as severley damaged (possibly old fire damage)"                                                                                                                                         
+#&gt; [2] "T1 Willow - Request removal of tree as partial collapse during heavy rain or pollard to balance out the misshape or heavily cut back to promote future even growth. If removed plan to replace with a blossom tree."</div><div class='input'><span class='fu'>get_planit_data</span>(end_date = <span class='st'>"2008-01-01"</span>, limit = <span class='fl'>2</span>, bbox = <span class='kw'>bbox</span>)<span class='op'>$</span><span class='kw'>description</span> <span class='co'># historic data</span>
 </div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=2&amp;bbox=-1.5%2C53.7%2C-1.3%2C53.8&amp;end_date=2008-01-01&amp;start_date=2000-02-01&amp;pg_sz=2</span></div><div class='output co'>#&gt; [1] "Conversion of garage to habitable room"                                  
 #&gt; [2] "Change of use of first floor toning bed salon to holistic fitness studio"</div><div class='input'><span class='fu'>get_planit_data</span>(pcode = <span class='st'>"LS2 9JT"</span>, limit = <span class='fl'>2</span>, bbox = <span class='kw'>bbox</span>)<span class='op'>$</span><span class='kw'>description</span> <span class='co'># data from specific postcode</span>
-</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=2&amp;bbox=-1.5%2C53.7%2C-1.3%2C53.8&amp;end_date=2020-09-12&amp;start_date=2000-02-01&amp;pg_sz=2&amp;pcode=LS2%209JT</span></div><div class='output co'>#&gt; [1] "Alterations to entrance and windows to front of university building"                       
+</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=2&amp;bbox=-1.5%2C53.7%2C-1.3%2C53.8&amp;end_date=2020-09-13&amp;start_date=2000-02-01&amp;pg_sz=2&amp;pcode=LS2%209JT</span></div><div class='output co'>#&gt; [1] "Alterations to entrance and windows to front of university building"                       
 #&gt; [2] "Consent, agreement or approval required by condition 2 of Planning Application 08/04348/FU"</div><div class='input'><span class='fu'>get_planit_data</span>(query_type = <span class='st'>"planapplic"</span>, query_value = <span class='st'>"13/05235/FU@Leeds"</span>)<span class='op'>$</span><span class='kw'>description</span>
-</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/planapplic/13/05235/FU@Leeds/geojson?limit=6&amp;bbox=&amp;end_date=2020-09-12&amp;start_date=2000-02-01&amp;pg_sz=6</span></div><div class='output co'>#&gt; [1] "Full application for 189 new homes including affordable houses and elderly persons apartments, commercial facilities including retail and industrial/employment units and outline application for additional commercial uses"</div><div class='input'><span class='fu'>get_planit_data</span>(query_type = <span class='st'>"planarea"</span>, query_value = <span class='st'>"leeds"</span>)<span class='op'>$</span><span class='kw'>description</span>
-</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/planarea/leeds/geojson?limit=6&amp;bbox=&amp;end_date=2020-09-12&amp;start_date=2000-02-01&amp;pg_sz=6</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Unknown or uninitialised column: `description`.</span></div><div class='output co'>#&gt; NULL</div><div class='input'><span class='kw'>leeds_area</span> <span class='op'>=</span> <span class='fu'>get_planit_data</span>(query_type = <span class='st'>"areas"</span>, limit = <span class='fl'>2</span>, auth = <span class='st'>"Leeds"</span>)
+</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/planapplic/13/05235/FU@Leeds/geojson?limit=6&amp;bbox=&amp;end_date=2020-09-13&amp;start_date=2000-02-01&amp;pg_sz=6</span></div><div class='output co'>#&gt; [1] "Full application for 189 new homes including affordable houses and elderly persons apartments, commercial facilities including retail and industrial/employment units and outline application for additional commercial uses"</div><div class='input'><span class='fu'>get_planit_data</span>(query_type = <span class='st'>"planarea"</span>, query_value = <span class='st'>"leeds"</span>)<span class='op'>$</span><span class='kw'>description</span>
+</div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/planarea/leeds/geojson?limit=6&amp;bbox=&amp;end_date=2020-09-13&amp;start_date=2000-02-01&amp;pg_sz=6</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Unknown or uninitialised column: `description`.</span></div><div class='output co'>#&gt; NULL</div><div class='input'><span class='kw'>leeds_area</span> <span class='op'>=</span> <span class='fu'>get_planit_data</span>(query_type = <span class='st'>"areas"</span>, limit = <span class='fl'>2</span>, auth = <span class='st'>"Leeds"</span>)
 </div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/areas/geojson?auth=Leeds&amp;pg_sz=2</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>leeds_area</span>) <span class='co'># geographic outline of the area</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: plotting the first 9 out of 25 attributes; use max.plot = 25 to plot all</span></div><div class='img'><img src='get_planit_data-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>planitareas</span> <span class='op'>=</span> <span class='fu'>get_planit_data</span>(query_type = <span class='st'>"areas"</span>, limit = <span class='fl'>2</span>)
 </div><div class='output co'>#&gt; <span class='message'>Getting data from https://dev.planit.org.uk/api/areas/geojson?pg_sz=2</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>planitareas</span>)
@@ -320,7 +320,7 @@ To be used only when `query_type` is not `"applics"`.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
