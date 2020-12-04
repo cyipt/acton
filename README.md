@@ -4,12 +4,12 @@
 ## acton
 
 <!-- badges: start -->
-
 <!-- [![Travis build status](https://travis-ci.com/cyipt/acton.svg?branch=master)](https://travis-ci.com/cyipt/acton) -->
 
 [![CircleCI](https://circleci.com/gh/cyipt/acton.svg?style=svg)](https://circleci.com/gh/cyipt/acton)
 [![R CMD Check via
 {tic}](https://github.com/cyipt/acton/workflows/R%20CMD%20Check%20via%20%7Btic%7D/badge.svg)](https://github.com/cyipt/acton/actions)
+[![R-CMD-check](https://github.com/cyipt/acton/workflows/R-CMD-check/badge.svg)](https://github.com/cyipt/acton/actions)
 <!-- badges: end -->
 
 ## Introduction
@@ -32,17 +32,17 @@ support planning, as illustrated in the schematic diagram below.
 
 The four main data sources shown above are:
 
-  - PlanIt data on new developments based on planning documents
+-   PlanIt data on new developments based on planning documents
     submitted to local government planning departments
-  - Accessibility data, including travel times by mode for different
+-   Accessibility data, including travel times by mode for different
     trip purposes, e.g. the average time taken to cycle to the shops,
     for small administrative zones (MSOA and LSOA level)
-  - Trave/demographic data from surveys (the 2011 Census in the first
+-   Trave/demographic data from surveys (the 2011 Census in the first
     instance), providing information about the number of people in
     different groups in administrative zones and likely work
     destinations at the origin-destination level (plus data derived from
     the Census via the Propensity to Cycle Tool project)
-  - Route data from routing services such as CycleStreets.net, providing
+-   Route data from routing services such as CycleStreets.net, providing
     information on the transport networks surrounding new development
     sites, with variables such as busyness and speed limits along roads
     nearby new and planned development sites
@@ -86,7 +86,7 @@ The package can be used to get data on new developments as follows:
 library(acton)
 # data from specific postcode
 planning_data = get_planit_data(pcode = "LS2 9JT", limit = 2, app_size = "large")
-#> Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2020-04-16&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT&app_size=large
+#> Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2020-12-04&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT&app_size=large
 planning_data
 #> Simple feature collection with 2 features and 26 fields
 #> geometry type:  POINT
