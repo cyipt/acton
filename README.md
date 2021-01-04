@@ -86,7 +86,7 @@ The package can be used to get data on new developments as follows:
 library(acton)
 # data from specific postcode
 planning_data = get_planit_data(pcode = "LS2 9JT", limit = 2, app_size = "large")
-#> Getting data from https://dev.planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2020-12-04&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT&app_size=large
+#> Getting data from https://planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2020-12-04&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT&app_size=large
 planning_data
 #> Simple feature collection with 2 features and 26 fields
 #> geometry type:  POINT

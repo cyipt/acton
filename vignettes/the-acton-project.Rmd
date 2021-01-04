@@ -274,7 +274,7 @@ Data from [PlanIt](https://www.planit.org.uk/), accessed using the `acton` R pac
 The following code gets and subsets the relevant PlanIt data for Leeds. This extracts large applications where planning consent has been granted:
 
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, eval=FALSE}
 applications_leeds = get_planit_data(
   limit = 500,
   auth = "Leeds",

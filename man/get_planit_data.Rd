@@ -8,7 +8,7 @@ get_planit_data(
   query_type = "applics",
   query_value = NULL,
   fmt = "geojson",
-  base_url = "https://dev.planit.org.uk",
+  base_url = "https://planit.org.uk",
   limit = 6,
   end_date = as.character(Sys.Date()),
   start_date = "2000-02-01",
