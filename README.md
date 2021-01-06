@@ -10,13 +10,14 @@
 
 ## Introduction
 
-**ACTON**, which stands for active transport options for new
-developments, is a research project that provides provide evidence for
-local authorities, housing developers and civil society groups to
-support planning and investment that enables the walking and cycling
-revolution that is needed to tackle health and environmental issues. To
-make the results of the research more reproducible and accessible to
-others, it is also an R package.
+**ACTON** is a research project for assessing active transport options
+for new developments to inform development decisions. The aim is to
+provide an open, consistent and scalable evidence base for local
+authorities, housing developers and civil society groups to support
+planning and investment that enables the walking and cycling revolution
+that is needed to tackle health and environmental issues. To make the
+results of the research more reproducible and accessible to others, it
+is also an R package.
 
 In first place, ACTON is about evidence-based planning and that means it
 is about data. ACTON provides easy access to actionable data from 4 main
@@ -82,7 +83,7 @@ The package can be used to get data on new developments as follows:
 library(acton)
 # data from specific postcode
 planning_data = get_planit_data(pcode = "LS2 9JT", limit = 2, app_size = "large")
-#> Getting data from https://planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2021-01-04&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT&app_size=large
+#> Getting data from https://planit.org.uk/api/applics/geojson?limit=2&bbox=&end_date=2021-01-06&start_date=2000-02-01&pg_sz=2&pcode=LS2%209JT&app_size=large
 planning_data
 #> Simple feature collection with 2 features and 27 fields
 #> geometry type:  POINT
