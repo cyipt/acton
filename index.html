@@ -100,7 +100,7 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p><strong>ACTON</strong>, which stands for active transport options for new developments, is a research project that provides provide evidence for local authorities, housing developers and civil society groups to support planning and investment that enables the walking and cycling revolution that is needed to tackle health and environmental issues. To make the results of the research more reproducible and accessible to others, it is also an R package.</p>
+<p><strong>ACTON</strong> is a research project for assessing active transport options for new developments to inform development decisions. The aim is to provide an open, consistent and scalable evidence base for local authorities, housing developers and civil society groups to support planning and investment that enables the walking and cycling revolution that is needed to tackle health and environmental issues. To make the results of the research more reproducible and accessible to others, it is also an R package.</p>
 <p>In first place, ACTON is about evidence-based planning and that means it is about data. ACTON provides easy access to actionable data from 4 main sources, each of which is already in the public domain, which had never before been made available in a single place or analysed together to support planning, as illustrated in the schematic diagram below.</p>
 <p><img src="reference/figures/README-workflow-1.png" width="100%"></p>
 <p>The four main data sources shown above are:</p>
@@ -134,7 +134,7 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/cyipt/acton">acton</a></span><span class="op">)</span>
 <span class="co"># data from specific postcode</span>
 <span class="va">planning_data</span> <span class="op">=</span> <span class="fu"><a href="reference/get_planit_data.html">get_planit_data</a></span><span class="op">(</span>pcode <span class="op">=</span> <span class="st">"LS2 9JT"</span>, limit <span class="op">=</span> <span class="fl">2</span>, app_size <span class="op">=</span> <span class="st">"large"</span><span class="op">)</span>
-<span class="co">#&gt; Getting data from https://planit.org.uk/api/applics/geojson?limit=2&amp;bbox=&amp;end_date=2021-01-04&amp;start_date=2000-02-01&amp;pg_sz=2&amp;pcode=LS2%209JT&amp;app_size=large</span>
+<span class="co">#&gt; Getting data from https://planit.org.uk/api/applics/geojson?limit=2&amp;bbox=&amp;end_date=2021-01-06&amp;start_date=2000-02-01&amp;pg_sz=2&amp;pcode=LS2%209JT&amp;app_size=large</span>
 <span class="va">planning_data</span>
 <span class="co">#&gt; Simple feature collection with 2 features and 27 fields</span>
 <span class="co">#&gt; geometry type:  POINT</span>
