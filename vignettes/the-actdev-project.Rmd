@@ -37,32 +37,49 @@ c) Makes the case for further work to create an interactive web application (inc
 
 # Planning data
 
-The [PlanIt API](https://www.planit.org.uk/) provides access to planning application data from Local Authorities across the UK. Options without the API include the ability to specifiy `app_size`, `app_state` and `app_type`. 
+The [PlanIt API](https://www.planit.org.uk/) provides access to planning application data from Local Authorities across the UK. 
+Options without the API include the ability to specifiy `app_size`, `app_state` and `app_type`. 
 
 - `app_size` is classified as small, medium or large. 
 - `app_state` is the decision status of the application, classified as undecided, permitted, conditions, rejected, withdrawn, referred, or other.
 - `app_type` is classified as full, outline, amendment, conditions, heritage, trees, advertising, telecoms, or other.
 
-Applications for major new housing developments should be classified as Large. As part of ActDev, we are improving the `app_size` classification by validating it against a set of around 30 known large housing developments across England. We are also investigating how the proportion of planning applications classified as large varies from one Local Authority to another.
+Applications for major new housing developments should be classified as Large. 
+As part of ActDev, we are improving the `app_size` classification by validating it against a set of around 30 known large housing developments across England. 
+We are also investigating how the proportion of planning applications classified as large varies from one Local Authority to another.
 
 # Accessibility
 
-For Local Authorities and smaller areas of interest (LSOAs), government Journey Time Statistics show the average travel times to a range of destinations, by three different modes of travel. The destinations include workplaces, supermarkets, primary schools, secondary schools, pharmacies, doctor's surgeries, hospitals, and town centres. The three modes of travel are car, bicycle and a measure that gives the quickest travel time by a combination of walking and/or public transport.
+For Local Authorities and smaller areas of interest (LSOAs), government Journey Time Statistics show the average travel times to a range of destinations, by three different modes of travel. 
+The destinations include workplaces, supermarkets, primary schools, secondary schools, pharmacies, doctor's surgeries, hospitals, and town centres. 
+The three modes of travel are car, bicycle and a measure that gives the quickest travel time by a combination of walking and/or public transport.
 
-We have created a new R package that improves the accessibility of these statistics. This allows users to easily download the data provided in these tables. It allow provides the option to view the metadata, to discover which tables are available and what columns they contain. The new R package is open source and available to be viewed or installed from https://github.com/itsleeds/jts. The key function in this package is `get_jts_data()`.
+We have created a new R package that improves the accessibility of these statistics. 
+This allows users to easily download the data provided in these tables. 
+It allow provides the option to view the metadata, to discover which tables are available and what columns they contain. 
+The new R package is open source and available to be viewed or installed from https://github.com/itsleeds/jts. 
+The key function in this package is `get_jts_data()`.
 
 # Case study sites
 
-Using known large housing developments we will pick out case studies across England for more detailed investigation, including cycle journey routing on local road networks. The case study sites include a range of new settlements, urban extensions and city centre developments, incorporating examples from the Garden Settlement programme. 
+Using known large housing developments we will pick out case studies across England for more detailed investigation, including cycle journey routing on local road networks. 
+The case study sites include a range of new settlements, urban extensions and city centre developments, incorporating examples from the Garden Settlement programme. 
 
 # Journey routing
 
-A range of factors influence ease of access by walking and cycling. Distance to key destinations such as workplaces is relevant of course, but equally important is the type of roads that must be followed and the presence or absence of good quality walking and cycling infrastructure.
+A range of factors influence ease of access by walking and cycling. 
+Distance to key destinations such as workplaces is relevant of course, but equally important is the type of roads that must be followed and the presence or absence of good quality walking and cycling infrastructure.
 
-For case study sites, we will investigate measures affecting modal choice. These may include the ratio of journey times/distances to local destinations by car as compared to by bicycle, the busyness of the roads, and the circuity of the routes. We will also study access to public transport nodes such as rail stations.
+For case study sites, we will investigate measures affecting modal choice. 
+These may include the ratio of journey times/distances to local destinations by car as compared to by bicycle, the busyness of the roads, and the circuity of the routes. 
+We will also study access to public transport nodes such as rail stations.
 
 # Web development
 
-We aim to make the results of our work publicly available through the creation of an interactive web tool. This will show how the accessibility by active travel varies across England, with user options to view data for different years, destination types, or modes of travel. There may also be the option to view data at different spatial resolutions. This can be used to investigate potential sites for new homes, to see how different locations might compare to one another in terms of their accessibility.
+We aim to make the results of our work publicly available through the creation of an interactive web tool. 
+This will show how the accessibility by active travel varies across England, with user options to view data for different years, destination types, or modes of travel. 
+There may also be the option to view data at different spatial resolutions. 
+This can be used to investigate potential sites for new homes, to see how different locations might compare to one another in terms of their accessibility.
 
-For case study sites, the web tool will show on-road routings for cycle journeys to work and other destinations. We can differentiate between fast routes and quiet routes, and show the busyness of the roads cyclists use.
+For case study sites, the web tool will show on-road routings for cycle journeys to work and other destinations. 
+We can differentiate between fast routes and quiet routes, and show the busyness of the roads cyclists use.
