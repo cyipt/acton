@@ -1,6 +1,6 @@
 ---
 title: "The ActDev project"
-author: "Joey Talbot, Robin Lovelace<br>(University of Leeds)<br>Martin Lucas-Smith, Simon Nuttall<br>(CycleStreets)<br>Andrew Speakman (PlanIt)<br>Patrick Johansson"
+author: "Joey Talbot, Robin Lovelace<br>(University of Leeds)<br>Martin Lucas-Smith, Simon Nuttall<br>(CycleStreets)<br>Andrew Speakman (PlanIt)<br>Patrick Johansson<br>Dustin Carlino (A/B street)"
 date: "08/01/2021"
 output:
    rmarkdown::html_vignette:
